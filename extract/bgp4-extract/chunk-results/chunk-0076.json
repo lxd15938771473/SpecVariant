@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0076",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "- If the local AS appears in the AS path of the new route being\n        considered, then that new route cannot be viewed as better than\n        any other route (provided that the speaker is configured to\n        accept such routes).  If such a route were ever used, a routing\n        loop could result.",
+      "line_start": 4950,
+      "line_end": 4954,
+      "condition": "The speaker is configured to accept a new route whose AS path contains the local AS.",
+      "required_behavior": "",
+      "forbidden_behavior": "View that new route as better than any other route.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Route comparison can be checked with a candidate AS path containing the local AS and acceptance enabled.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- In order to achieve a successful distributed operation, only\n        routes with a likelihood of stability can be chosen.  Thus, an\n        AS SHOULD avoid using unstable routes, and it SHOULD NOT make\n        rapid, spontaneous changes to its choice of route.  Quantifying\n        the terms \"unstable\" and \"rapid\" (from the previous sentence)\n        will require experience, but the principle is clear.  Routes\n        that are unstable can be \"penalized\" (e.g., by using the\n        procedures described in [RFC2439]).",
+      "line_start": 4956,
+      "line_end": 4963,
+      "condition": "Selecting a route for distributed operation.",
+      "required_behavior": "Only routes with a likelihood of stability can be chosen.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The passage explicitly leaves instability and rapid route changes unquantified. It supplies no operational classification or threshold for a concrete implementation check; the referenced external procedure is not part of this chunk. Retained as excluded guidance.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "- In order to achieve a successful distributed operation, only\n        routes with a likelihood of stability can be chosen.  Thus, an\n        AS SHOULD avoid using unstable routes, and it SHOULD NOT make\n        rapid, spontaneous changes to its choice of route.  Quantifying\n        the terms \"unstable\" and \"rapid\" (from the previous sentence)\n        will require experience, but the principle is clear.  Routes\n        that are unstable can be \"penalized\" (e.g., by using the\n        procedures described in [RFC2439]).",
+      "line_start": 4956,
+      "line_end": 4963,
+      "condition": "Selecting a route for distributed operation.",
+      "required_behavior": "An AS SHOULD avoid using unstable routes.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The passage explicitly leaves instability and rapid route changes unquantified. It supplies no operational classification or threshold for a concrete implementation check; the referenced external procedure is not part of this chunk. Retained as excluded guidance.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "- In order to achieve a successful distributed operation, only\n        routes with a likelihood of stability can be chosen.  Thus, an\n        AS SHOULD avoid using unstable routes, and it SHOULD NOT make\n        rapid, spontaneous changes to its choice of route.  Quantifying\n        the terms \"unstable\" and \"rapid\" (from the previous sentence)\n        will require experience, but the principle is clear.  Routes\n        that are unstable can be \"penalized\" (e.g., by using the\n        procedures described in [RFC2439]).",
+      "line_start": 4956,
+      "line_end": 4963,
+      "condition": "An AS changes its choice of route.",
+      "required_behavior": "",
+      "forbidden_behavior": "The AS SHOULD NOT make rapid, spontaneous changes to its choice of route.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The passage explicitly leaves instability and rapid route changes unquantified. It supplies no operational classification or threshold for a concrete implementation check; the referenced external procedure is not part of this chunk. Retained as excluded guidance.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "- In order to achieve a successful distributed operation, only\n        routes with a likelihood of stability can be chosen.  Thus, an\n        AS SHOULD avoid using unstable routes, and it SHOULD NOT make\n        rapid, spontaneous changes to its choice of route.  Quantifying\n        the terms \"unstable\" and \"rapid\" (from the previous sentence)\n        will require experience, but the principle is clear.  Routes\n        that are unstable can be \"penalized\" (e.g., by using the\n        procedures described in [RFC2439]).",
+      "line_start": 4956,
+      "line_end": 4963,
+      "condition": "A route is unstable.",
+      "required_behavior": "The route may be penalized; the referenced procedures are an example, not a required mechanism.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The passage explicitly leaves instability and rapid route changes unquantified. It supplies no operational classification or threshold for a concrete implementation check; the referenced external procedure is not part of this chunk. Retained as excluded guidance.",
+      "eligibility": "exclude"
+    }
+  ]
+}

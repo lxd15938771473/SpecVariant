@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0097",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A packet MUST NOT be acknowledged until packet protection has been\n   successfully removed and all frames contained in the packet have been\n   processed.  For STREAM frames, this means the data has been enqueued\n   in preparation to be received by the application protocol, but it\n   does not require that data be delivered and consumed.",
+      "line_start": 4060,
+      "line_end": 4064,
+      "condition": "Before packet protection has been successfully removed from a received packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "The receiver must not acknowledge the packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can delay or fail packet-protection removal and verify that no acknowledgment covering the packet is sent beforehand.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A packet MUST NOT be acknowledged until packet protection has been\n   successfully removed and all frames contained in the packet have been\n   processed.  For STREAM frames, this means the data has been enqueued\n   in preparation to be received by the application protocol, but it\n   does not require that data be delivered and consumed.",
+      "line_start": 4060,
+      "line_end": 4064,
+      "condition": "Before all frames contained in a received packet have been processed.",
+      "required_behavior": "",
+      "forbidden_behavior": "The receiver must not acknowledge the packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can hold at least one contained frame unprocessed and verify that no acknowledgment covering the packet is sent.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A packet MUST NOT be acknowledged until packet protection has been\n   successfully removed and all frames contained in the packet have been\n   processed.  For STREAM frames, this means the data has been enqueued\n   in preparation to be received by the application protocol, but it\n   does not require that data be delivered and consumed.",
+      "line_start": 4060,
+      "line_end": 4064,
+      "condition": "When determining whether a STREAM frame has been processed for acknowledgment eligibility.",
+      "required_behavior": "The STREAM data must have been enqueued in preparation for receipt by the application protocol.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Instrumentation can verify that STREAM data is enqueued before the containing packet becomes eligible for acknowledgment.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A packet MUST NOT be acknowledged until packet protection has been\n   successfully removed and all frames contained in the packet have been\n   processed.  For STREAM frames, this means the data has been enqueued\n   in preparation to be received by the application protocol, but it\n   does not require that data be delivered and consumed.",
+      "line_start": 4060,
+      "line_end": 4064,
+      "condition": "When STREAM data has been enqueued in preparation for receipt by the application protocol but has not yet been delivered to or consumed by that protocol.",
+      "required_behavior": "The STREAM frame may be considered processed for purposes of acknowledging the containing packet.",
+      "forbidden_behavior": "The receiver must not require application delivery or consumption as a prerequisite for considering the STREAM frame processed for acknowledgment.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can leave enqueued STREAM data undelivered and unconsumed and verify that this alone does not prevent acknowledgment after all other processing prerequisites are satisfied.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Once the packet has been fully processed, a receiver acknowledges\n   receipt by sending one or more ACK frames containing the packet\n   number of the received packet.",
+      "line_start": 4066,
+      "line_end": 4068,
+      "condition": "Once a received packet has been fully processed and the receiver acknowledges its receipt.",
+      "required_behavior": "The receiver sends one or more ACK frames.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The receiver's output can be inspected to verify that acknowledgment is expressed using at least one ACK frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Once the packet has been fully processed, a receiver acknowledges\n   receipt by sending one or more ACK frames containing the packet\n   number of the received packet.",
+      "line_start": 4066,
+      "line_end": 4068,
+      "condition": "When a receiver sends ACK frames to acknowledge a fully processed received packet.",
+      "required_behavior": "At least one of the ACK frames must contain the packet number of the received packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "ACK frame ranges can be decoded and checked for inclusion of the acknowledged packet number.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint SHOULD treat receipt of an acknowledgment for a packet it\n   did not send as a connection error of type PROTOCOL_VIOLATION, if it\n   is able to detect the condition.  For further discussion of how this\n   might be achieved, see Section 21.4.",
+      "line_start": 4070,
+      "line_end": 4073,
+      "condition": "The endpoint detects receipt of an acknowledgment for a packet that it did not send.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The endpoint should treat the condition as a connection error of type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A peer can send an ACK covering a packet number never sent by the endpoint, and the resulting connection error and error type can be observed when the endpoint detects the condition.",
+      "eligibility": "eligible"
+    }
+  ]
+}

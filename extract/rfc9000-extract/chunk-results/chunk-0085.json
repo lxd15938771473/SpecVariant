@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0085",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   An endpoint MUST ensure that every Stateless Reset that it sends is\n   smaller than the packet that triggered it, unless it maintains state\n   sufficient to prevent looping.  In the event of a loop, this results\n   in packets eventually being too small to trigger a response.",
+      "line_start": 3584,
+      "line_end": 3587,
+      "condition": "When an endpoint sends a Stateless Reset and does not maintain state sufficient to prevent looping.",
+      "required_behavior": "The Stateless Reset must be smaller than the packet that triggered it.",
+      "forbidden_behavior": "The endpoint must not send a Stateless Reset that is equal to or larger than the triggering packet unless it maintains state sufficient to prevent looping.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can trigger a Stateless Reset, compare its encoded length with the triggering packet's length, and determine whether sufficient anti-loop state is maintained when the reset is not smaller.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0053",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If the number of labels in an RRset's owner name is greater than the\n   Labels field of the covering RRSIG RR, then the RRset and its\n   covering RRSIG RR were created as a result of wildcard expansion.",
+      "line_start": 1776,
+      "line_end": 1778,
+      "condition": "The number of labels in an RRset's owner name is greater than the Labels field of its covering RRSIG RR.",
+      "required_behavior": "Interpret the RRset and its covering RRSIG RR as having resulted from wildcard expansion.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The owner-name label count and the covering RRSIG Labels value provide a concrete predicate for identifying wildcard expansion.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the number of labels in an RRset's owner name is greater than the\n   Labels field of the covering RRSIG RR, then the RRset and its\n   covering RRSIG RR were created as a result of wildcard expansion.\n   Once the validator has verified the signature, as described in\n   Section 5.3, it must take additional steps to verify the non-\n   existence of an exact match or closer wildcard match for the query.",
+      "line_start": 1776,
+      "line_end": 1781,
+      "condition": "The number of labels in an RRset's owner name exceeds the Labels field of the covering RRSIG RR, and the validator has verified the signature.",
+      "required_behavior": "The validator must take additional steps to verify the non-existence of an exact match for the query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The validator can be checked for an exact-match non-existence verification following successful signature verification for a wildcard-expanded RRset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the number of labels in an RRset's owner name is greater than the\n   Labels field of the covering RRSIG RR, then the RRset and its\n   covering RRSIG RR were created as a result of wildcard expansion.\n   Once the validator has verified the signature, as described in\n   Section 5.3, it must take additional steps to verify the non-\n   existence of an exact match or closer wildcard match for the query.",
+      "line_start": 1776,
+      "line_end": 1781,
+      "condition": "The number of labels in an RRset's owner name exceeds the Labels field of the covering RRSIG RR, and the validator has verified the signature.",
+      "required_behavior": "The validator must take additional steps to verify the non-existence of a closer wildcard match for the query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The validator can be checked for a closer-wildcard non-existence verification following successful signature verification for a wildcard-expanded RRset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "5.3.4.  Authenticating a Wildcard Expanded RRset Positive Response\n\n   If the number of labels in an RRset's owner name is greater than the\n   Labels field of the covering RRSIG RR, then the RRset and its\n   covering RRSIG RR were created as a result of wildcard expansion.\n   Once the validator has verified the signature, as described in\n   Section 5.3, it must take additional steps to verify the non-\n   existence of an exact match or closer wildcard match for the query.\n   Section 5.4 discusses these steps.\n\n   Note that the response received by the resolver should include all\n   NSEC RRs needed to authenticate the response (see Section 3.1.3).",
+      "line_start": 1774,
+      "line_end": 1785,
+      "condition": "A resolver receives a wildcard-expanded RRset positive response.",
+      "required_behavior": "The response should include all NSEC RRs needed to authenticate it.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The NSEC RRs present in the received response can be compared with those needed for authentication; this is an advisory completeness constraint.",
+      "eligibility": "eligible"
+    }
+  ]
+}

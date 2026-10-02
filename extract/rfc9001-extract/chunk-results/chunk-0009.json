@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0009",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "In this document, the TLS handshake is considered confirmed at the\n   server when the handshake completes.",
+      "line_start": 415,
+      "line_end": 416,
+      "condition": "When the TLS handshake completes at the server.",
+      "required_behavior": "Transition the server's handshake state to confirmed.",
+      "forbidden_behavior": "Do not leave the server's handshake state unconfirmed after local handshake completion.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Instrumentation can correlate the server's local handshake-complete event with its handshake-confirmed state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The server MUST send a\n   HANDSHAKE_DONE frame as soon as the handshake is complete.",
+      "line_start": 416,
+      "line_end": 417,
+      "condition": "As soon as the handshake is complete at the server.",
+      "required_behavior": "Send a HANDSHAKE_DONE frame without avoidable delay.",
+      "forbidden_behavior": "Do not omit or unnecessarily defer the HANDSHAKE_DONE frame after handshake completion.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A trace can compare the server's completion event with its first subsequent transmission opportunity and the HANDSHAKE_DONE transmission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "At the\n   client, the handshake is considered confirmed when a HANDSHAKE_DONE\n   frame is received.",
+      "line_start": 417,
+      "line_end": 419,
+      "condition": "When the client receives a HANDSHAKE_DONE frame.",
+      "required_behavior": "Transition the client's handshake state to confirmed.",
+      "forbidden_behavior": "Do not leave the client's handshake state unconfirmed after receiving HANDSHAKE_DONE.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can deliver HANDSHAKE_DONE and inspect whether the client's handshake-confirmed state is entered.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Additionally, a client MAY consider the handshake to be confirmed\n   when it receives an acknowledgment for a 1-RTT packet.",
+      "line_start": 421,
+      "line_end": 422,
+      "condition": "When a client receives an acknowledgment for a packet it sent with 1-RTT keys.",
+      "required_behavior": "Permit the client to transition the handshake state to confirmed.",
+      "forbidden_behavior": "Do not reject an implementation solely because it confirms the handshake on this acknowledgment.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can acknowledge a client-sent 1-RTT packet and observe that confirmation at that event is an allowed state transition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This can be\n   implemented by recording the lowest packet number sent with 1-RTT\n   keys and comparing it to the Largest Acknowledged field in any\n   received 1-RTT ACK frame: once the latter is greater than or equal to\n   the former, the handshake is confirmed.",
+      "line_start": 422,
+      "line_end": 426,
+      "condition": "If an implementation chooses the described lowest-packet-number comparison method for detecting acknowledgment of a 1-RTT packet.",
+      "required_behavior": "Record the lowest packet number sent with 1-RTT keys and confirm when a received 1-RTT ACK frame's Largest Acknowledged value is at least that number.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The algorithm is mechanically testable, but the text presents it only as one possible implementation of the preceding permission and does not require implementations to use it.",
+      "eligibility": "exclude"
+    }
+  ]
+}

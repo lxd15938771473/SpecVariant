@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0024",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server returning a referral includes DNSSEC data\n   along with the NS RRset.",
+      "line_start": 767,
+      "line_end": 769,
+      "condition": "A security-aware authoritative name server is returning a referral in response to a query with the DO bit set.",
+      "required_behavior": "Include DNSSEC data along with the NS RRset in the referral response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The referral response can be inspected for DNSSEC data accompanying its NS RRset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server returning a referral includes DNSSEC data\n   along with the NS RRset.\n\n   If a DS RRset is present at the delegation point, the name server\n   MUST return both the DS RRset and its associated RRSIG RR(s) in the\n   Authority section along with the NS RRset.",
+      "line_start": 767,
+      "line_end": 773,
+      "condition": "A security-aware authoritative name server is returning a referral in response to a query with the DO bit set, and a DS RRset is present at the delegation point.",
+      "required_behavior": "The name server MUST return the DS RRset in the Authority section.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A referral from a delegation containing a DS RRset can be checked for that RRset in its Authority section.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server returning a referral includes DNSSEC data\n   along with the NS RRset.\n\n   If a DS RRset is present at the delegation point, the name server\n   MUST return both the DS RRset and its associated RRSIG RR(s) in the\n   Authority section along with the NS RRset.",
+      "line_start": 767,
+      "line_end": 773,
+      "condition": "A security-aware authoritative name server is returning a referral in response to a query with the DO bit set, and a DS RRset is present at the delegation point.",
+      "required_behavior": "The name server MUST return the DS RRset's associated RRSIG RR(s) in the Authority section.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The Authority section can be checked for the signatures associated with the delegation's DS RRset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server returning a referral includes DNSSEC data\n   along with the NS RRset.\n\n   If a DS RRset is present at the delegation point, the name server\n   MUST return both the DS RRset and its associated RRSIG RR(s) in the\n   Authority section along with the NS RRset.",
+      "line_start": 767,
+      "line_end": 773,
+      "condition": "A security-aware authoritative name server is returning a referral in response to a query with the DO bit set, and a DS RRset is present at the delegation point.",
+      "required_behavior": "The name server MUST return the NS RRset in the Authority section along with the DS RRset and its associated RRSIG RR(s).",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The referral can be checked for placement of its NS RRset in the Authority section containing the DS records and signatures.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server returning a referral includes DNSSEC data\n   along with the NS RRset.\n\n   If a DS RRset is present at the delegation point, the name server\n   MUST return both the DS RRset and its associated RRSIG RR(s) in the\n   Authority section along with the NS RRset.\n\n   If no DS RRset is present at the delegation point, the name server\n   MUST return both the NSEC RR that proves that the DS RRset is not\n   present and the NSEC RR's associated RRSIG RR(s) along with the NS\n   RRset.  The name server MUST place the NS RRset before the NSEC RRset\n   and its associated RRSIG RR(s).",
+      "line_start": 767,
+      "line_end": 779,
+      "condition": "A security-aware authoritative name server is returning a referral in response to a query with the DO bit set, and no DS RRset is present at the delegation point.",
+      "required_behavior": "The name server MUST return the NSEC RR that proves the DS RRset is absent, along with the NS RRset.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A referral from a delegation without DS records can be checked for an NSEC RR proving that absence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server returning a referral includes DNSSEC data\n   along with the NS RRset.\n\n   If a DS RRset is present at the delegation point, the name server\n   MUST return both the DS RRset and its associated RRSIG RR(s) in the\n   Authority section along with the NS RRset.\n\n   If no DS RRset is present at the delegation point, the name server\n   MUST return both the NSEC RR that proves that the DS RRset is not\n   present and the NSEC RR's associated RRSIG RR(s) along with the NS\n   RRset.  The name server MUST place the NS RRset before the NSEC RRset\n   and its associated RRSIG RR(s).",
+      "line_start": 767,
+      "line_end": 779,
+      "condition": "A security-aware authoritative name server is returning a referral in response to a query with the DO bit set, and no DS RRset is present at the delegation point.",
+      "required_behavior": "The name server MUST return the associated RRSIG RR(s) of the NSEC RR proving DS absence, along with the NS RRset.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The referral can be checked for signatures associated with its NSEC proof of DS absence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server returning a referral includes DNSSEC data\n   along with the NS RRset.\n\n   If a DS RRset is present at the delegation point, the name server\n   MUST return both the DS RRset and its associated RRSIG RR(s) in the\n   Authority section along with the NS RRset.\n\n   If no DS RRset is present at the delegation point, the name server\n   MUST return both the NSEC RR that proves that the DS RRset is not\n   present and the NSEC RR's associated RRSIG RR(s) along with the NS\n   RRset.  The name server MUST place the NS RRset before the NSEC RRset\n   and its associated RRSIG RR(s).",
+      "line_start": 767,
+      "line_end": 779,
+      "condition": "A security-aware authoritative name server is returning a referral in response to a query with the DO bit set, and no DS RRset is present at the delegation point.",
+      "required_behavior": "The name server MUST place the NS RRset before the NSEC RRset in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The serialized response ordering of the NS and NSEC RRsets can be compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server returning a referral includes DNSSEC data\n   along with the NS RRset.\n\n   If a DS RRset is present at the delegation point, the name server\n   MUST return both the DS RRset and its associated RRSIG RR(s) in the\n   Authority section along with the NS RRset.\n\n   If no DS RRset is present at the delegation point, the name server\n   MUST return both the NSEC RR that proves that the DS RRset is not\n   present and the NSEC RR's associated RRSIG RR(s) along with the NS\n   RRset.  The name server MUST place the NS RRset before the NSEC RRset\n   and its associated RRSIG RR(s).",
+      "line_start": 767,
+      "line_end": 779,
+      "condition": "A security-aware authoritative name server is returning a referral in response to a query with the DO bit set, and no DS RRset is present at the delegation point.",
+      "required_behavior": "The name server MUST place the NS RRset before the NSEC RRset's associated RRSIG RR(s) in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The serialized response ordering of the NS RRset and signatures associated with the NSEC RRset can be compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server returning a referral includes DNSSEC data\n   along with the NS RRset.\n\n   If a DS RRset is present at the delegation point, the name server\n   MUST return both the DS RRset and its associated RRSIG RR(s) in the\n   Authority section along with the NS RRset.\n\n   If no DS RRset is present at the delegation point, the name server\n   MUST return both the NSEC RR that proves that the DS RRset is not\n   present and the NSEC RR's associated RRSIG RR(s) along with the NS\n   RRset.  The name server MUST place the NS RRset before the NSEC RRset\n   and its associated RRSIG RR(s).\n\n   Including these DS, NSEC, and RRSIG RRs increases the size of\n   referral messages and may cause some or all glue RRs to be omitted.\n   If space does not permit inclusion of the DS or NSEC RRset and\n   associated RRSIG RRs, the name server MUST set the TC bit (see\n   Section 3.1.1).",
+      "line_start": 767,
+      "line_end": 785,
+      "condition": "A security-aware authoritative name server is returning a referral in response to a query with the DO bit set, and space does not permit inclusion of the DS or NSEC RRset and associated RRSIG RRs.",
+      "required_behavior": "The name server MUST set the TC bit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A referral constrained to insufficient message space can be inspected for the TC bit.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0029",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   TCP connection remains in the TIME_WAIT state.  Therefore, a proxy\n   cannot rely on SETTINGS_MAX_CONCURRENT_STREAMS alone to limit the\n   resources consumed by CONNECT requests.",
+      "line_start": 3517,
+      "line_end": 3519,
+      "condition": "When a proxy limits resources consumed by CONNECT requests.",
+      "required_behavior": "The proxy must use resource-limiting measures beyond SETTINGS_MAX_CONCURRENT_STREAMS alone.",
+      "forbidden_behavior": "The proxy must not rely solely on SETTINGS_MAX_CONCURRENT_STREAMS to limit resources consumed by CONNECT requests.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Implementation configuration and resource-control paths can be inspected or tested to determine whether CONNECT resource limits depend exclusively on the concurrent-stream setting.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Implementations communicating on a secure channel MUST NOT compress\n   content that includes both confidential and attacker-controlled data\n   unless separate compression dictionaries are used for each source of\n   data.  Compression MUST NOT be used if the source of data cannot be",
+      "line_start": 3535,
+      "line_end": 3538,
+      "condition": "When an implementation communicates on a secure channel and content contains both confidential and attacker-controlled data without separate compression dictionaries for the two sources.",
+      "required_behavior": "",
+      "forbidden_behavior": "The implementation must not compress the content.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can supply mixed confidential and attacker-controlled content over a secure channel and verify that compression is disabled unless separate dictionaries are used.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   data.  Compression MUST NOT be used if the source of data cannot be\n   reliably determined.  Generic stream compression, such as that\n   provided by TLS, MUST NOT be used with HTTP/2 (see Section 9.2).",
+      "line_start": 3538,
+      "line_end": 3540,
+      "condition": "When the source of data cannot be reliably determined.",
+      "required_behavior": "",
+      "forbidden_behavior": "Compression must not be used.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests or static inspection can verify that compression is disabled when data provenance is indeterminate.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   data.  Compression MUST NOT be used if the source of data cannot be\n   reliably determined.  Generic stream compression, such as that\n   provided by TLS, MUST NOT be used with HTTP/2 (see Section 9.2).",
+      "line_start": 3538,
+      "line_end": 3540,
+      "condition": "When HTTP/2 is used.",
+      "required_behavior": "",
+      "forbidden_behavior": "Generic stream compression, including compression provided by TLS, must not be used.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Connection configuration and negotiation can be inspected or exercised to determine whether generic stream compression is enabled for HTTP/2.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Intermediaries SHOULD retain padding for DATA frames but MAY drop\n   padding for HEADERS and PUSH_PROMISE frames.  A valid reason for an",
+      "line_start": 3570,
+      "line_end": 3571,
+      "condition": "When an intermediary forwards a padded DATA frame.",
+      "required_behavior": "The intermediary should retain the DATA frame padding.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A padded DATA frame can be passed through an intermediary and the forwarded frame checked for retained padding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Intermediaries SHOULD retain padding for DATA frames but MAY drop\n   padding for HEADERS and PUSH_PROMISE frames.  A valid reason for an",
+      "line_start": 3570,
+      "line_end": 3571,
+      "condition": "When an intermediary forwards a padded HEADERS or PUSH_PROMISE frame.",
+      "required_behavior": "The intermediary is permitted to drop the frame padding.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Forwarded HEADERS and PUSH_PROMISE frames can be observed to confirm that dropping their padding is an allowed implementation behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Ensuring that processing time is not dependent on the value of a\n   secret is the best defense against any form of timing attack.",
+      "line_start": 3608,
+      "line_end": 3609,
+      "condition": "When request processing uses a secret and resistance to remote timing attacks is required.",
+      "required_behavior": "Processing time should not depend on the value of the secret.",
+      "forbidden_behavior": "Processing behavior must not expose secret-dependent timing variation.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Focused timing tests can compare processing-time distributions across different secret values to detect secret-dependent variation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

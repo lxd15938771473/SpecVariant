@@ -1,0 +1,207 @@
+{
+  "schema_version": "speclitmus.dedup-component-partitions.v1",
+  "batch_id": "recall-components-02",
+  "partitions": [
+    {
+      "component_id": "recall-comp-5393954d44460f8a",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-c0041a5b2a844ba230b0",
+            "req-e5aeaabaf1b41f59ae0e"
+          ],
+          "canonical_requirement_id": "req-c0041a5b2a844ba230b0",
+          "reason": "Both impose the same bidirectional SignatureScheme mapping: rsa_pss_pss_sha256 encodes and decodes as 0x0809. The canonical cites the direct primary-body enum entry rather than its appendix repetition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-53aaf087537a965c",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-4bd843303fbd618ad5d6",
+            "req-e39bcac0aca47bbfc871"
+          ],
+          "canonical_requirement_id": "req-4bd843303fbd618ad5d6",
+          "reason": "Both impose the same bidirectional SignatureScheme mapping: ecdsa_sha1 encodes and decodes as 0x0203. The canonical cites the direct primary-body enum entry rather than its appendix repetition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-56789d076b0c2a57",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-1c03a1d212a9653ac12d"
+          ],
+          "canonical_requirement_id": "req-1c03a1d212a9653ac12d",
+          "reason": "This requirement is encode-only: it requires a CipherSuite selector to be emitted as exactly two octets. The other component member also applies while parsing, so their directions are not equivalent."
+        },
+        {
+          "member_requirement_ids": [
+            "req-cbb9ad88001cf798f7fd"
+          ],
+          "canonical_requirement_id": "req-cbb9ad88001cf798f7fd",
+          "reason": "This requirement applies when encoding or parsing a CipherSuite selector and requires the fixed two-byte representation. It is broader in direction than the encode-only appendix requirement and therefore remains distinct."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-5a7e52abacb5c672",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-622025484755b0b2c913"
+          ],
+          "canonical_requirement_id": "req-622025484755b0b2c913",
+          "reason": "This requirement only bounds the encoded ClientHello.cipher_suites content length to 2 through 2^16-2 octets. The other member also applies to parsing and explicitly includes two-byte element alignment, so it is not the same atomic check."
+        },
+        {
+          "member_requirement_ids": [
+            "req-bdbdf919abe29dceb639"
+          ],
+          "canonical_requirement_id": "req-bdbdf919abe29dceb639",
+          "reason": "This requirement applies when encoding or parsing ClientHello.cipher_suites and checks both the declared vector bounds and rejection of odd-sized content. Its direction and alignment scope are broader than the encode-only bounds requirement."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-5a86a201f89d3d5c",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-cebd086eb6b05f53df52",
+            "req-d6427e74726244756ae8"
+          ],
+          "canonical_requirement_id": "req-d6427e74726244756ae8",
+          "reason": "Both impose the same bidirectional NamedGroup mapping: ffdhe2048 encodes and decodes as 0x0100. The canonical cites the direct primary-body enum entry rather than its appendix repetition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-5ad1245c6d765ab2",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-ae1f296b84cc39c34eb8",
+            "req-e7c538a4cf6868e57781"
+          ],
+          "canonical_requirement_id": "req-ae1f296b84cc39c34eb8",
+          "reason": "Both impose the same bidirectional SignatureScheme mapping: rsa_pss_pss_sha512 encodes and decodes as 0x080b. The canonical cites the direct primary-body enum entry rather than its appendix repetition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-5eff37575a2dc3a0",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-c5149f73da8ff0c24ce8",
+            "req-fbef9ae229b2ea77f763"
+          ],
+          "canonical_requirement_id": "req-fbef9ae229b2ea77f763",
+          "reason": "Both require a client that authenticates with a non-empty Certificate after certificate-based client authentication was requested to send CertificateVerify. The canonical is the direct normative primary-body requirement and states the non-empty Certificate applicability precisely."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-6532f6b272ec43ab",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-c2bfae0baf89b2a441f0",
+            "req-c69abc40a80815f631f0"
+          ],
+          "canonical_requirement_id": "req-c69abc40a80815f631f0",
+          "reason": "Both impose the same bidirectional KeyUpdateRequest mapping: update_requested encodes and parses as numeric value 1. The canonical cites the direct primary-body enum entry rather than its appendix repetition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-6bb0a7dce0ab45fa",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-adb758cff1b51b2f8233",
+            "req-bf65fd82beb84deb4412"
+          ],
+          "canonical_requirement_id": "req-adb758cff1b51b2f8233",
+          "reason": "Both require EarlyDataIndication in EncryptedExtensions to encode an Empty extension_data body, which excludes all payload bytes. The canonical cites the direct primary-body selected structure rather than its appendix repetition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-6d6b60c2a7e0f3f6",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-3cdc4ff13af4bd7fe7ab",
+            "req-f0b792f09687f44d7343"
+          ],
+          "canonical_requirement_id": "req-f0b792f09687f44d7343",
+          "reason": "Both impose the same bidirectional NamedGroup mapping: ffdhe3072 encodes and decodes as 0x0101. The canonical cites the direct primary-body enum entry rather than its appendix repetition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-7251c41e7caf7581",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-3fc597e4ac5ea0759ade",
+            "req-c15e90794d7e33a6848d"
+          ],
+          "canonical_requirement_id": "req-c15e90794d7e33a6848d",
+          "reason": "Both require the server's outbound HelloRetryRequest to contain supported_versions and forbid omission. The canonical is the direct primary-body requirement specific to the server's HelloRetryRequest extensions."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-7275f8eccdeb4802",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-88ea209bda995474271c"
+          ],
+          "canonical_requirement_id": "req-88ea209bda995474271c",
+          "reason": "This appendix-derived requirement is encode-only: the emitted TLSPlaintext.fragment must contain exactly TLSPlaintext.length octets. The other two members also require parser-side consistency, so their directions are broader."
+        },
+        {
+          "member_requirement_ids": [
+            "req-d2f6def7b181be44a674",
+            "req-d3a04276527158e5f756"
+          ],
+          "canonical_requirement_id": "req-d3a04276527158e5f756",
+          "reason": "Both impose the same bidirectional TLSPlaintext consistency check: on encoding or parsing, length must equal the byte count of the immediately following fragment. The canonical primary-body evidence states that field relationship most directly."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-766cb24686d50623",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-22391ff889157c0adb79",
+            "req-ca949c8e12ecbc51ff67"
+          ],
+          "canonical_requirement_id": "req-22391ff889157c0adb79",
+          "reason": "Both impose the same bidirectional SignatureScheme mapping: ecdsa_secp384r1_sha384 encodes and decodes as 0x0503. The canonical cites the direct primary-body enum entry rather than its appendix repetition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-7895a5fa5f7acde9",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-73a2bc1ae182176c4328",
+            "req-adbf3f1bc65605ef2793"
+          ],
+          "canonical_requirement_id": "req-adbf3f1bc65605ef2793",
+          "reason": "Both impose the same bidirectional SignatureScheme mapping: rsa_pkcs1_sha512 encodes and decodes as 0x0601. The canonical cites the direct primary-body enum entry rather than its appendix repetition."
+        }
+      ]
+    }
+  ]
+}

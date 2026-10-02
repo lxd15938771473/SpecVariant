@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0071",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The mailbox encoding standard\nand mail exchange binding are part of the DNS official protocol, and are\nthe recommended method for mail routing in the Internet.",
+      "line_start": 2665,
+      "line_end": 2667,
+      "condition": "When selecting a method for Internet mail routing.",
+      "required_behavior": "Prefer the mailbox encoding standard together with mail exchange binding for mail routing; this is a recommendation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The selected mail-routing method can be inspected for use of the recommended mailbox encoding and mail exchange binding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The mailbox encoding standard assumes a mailbox name of the form\n\"<local-part>@<mail-domain>\".",
+      "line_start": 2680,
+      "line_end": 2681,
+      "condition": "When applying the mailbox encoding standard.",
+      "required_behavior": "Interpret the mailbox name as a local part and a mail domain in the form <local-part>@<mail-domain>.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The mailbox encoder input decomposition can be inspected and tested with a local part followed by @ and a mail domain.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "While the syntax allowed in each of these\nsections varies substantially between the various mail internets, the\npreferred syntax for the ARPA Internet is given in [RFC-822].",
+      "line_start": 2681,
+      "line_end": 2683,
+      "condition": "For mailbox local-part and mail-domain syntax in the ARPA Internet.",
+      "required_behavior": "Prefer the syntax given in RFC-822.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A syntax preference is stated, but the actual RFC-822 syntax constraints are not supplied in this chunk, so a concrete syntax check cannot be derived from this evidence alone.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "The DNS encodes the <local-part> as a single label, and encodes the\n<mail-domain> as a domain name.",
+      "line_start": 2685,
+      "line_end": 2686,
+      "condition": "When encoding a mailbox name in DNS.",
+      "required_behavior": "Encode the entire local part as a single DNS label.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoder output can be checked to ensure that the local part occupies exactly one label, including when its text contains dots.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The DNS encodes the <local-part> as a single label, and encodes the\n<mail-domain> as a domain name.",
+      "line_start": 2685,
+      "line_end": 2686,
+      "condition": "When encoding a mailbox name in DNS.",
+      "required_behavior": "Encode the mail domain as a DNS domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoder output for the mail-domain component can be inspected for a domain-name representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The single label from the <local-part>\nis prefaced to the domain name from <mail-domain> to form the domain\nname corresponding to the mailbox.",
+      "line_start": 2686,
+      "line_end": 2688,
+      "condition": "When constructing the DNS domain name corresponding to a mailbox.",
+      "required_behavior": "Prepend the single label encoding the local part to the domain name encoding the mail domain.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The resulting label sequence can be checked for the local-part label followed by the mail-domain labels.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the\n<local-part> contains dots or other special characters, its\nrepresentation in a master file will require the use of backslash\nquoting to ensure that the domain name is properly encoded.",
+      "line_start": 2689,
+      "line_end": 2692,
+      "condition": "When a mailbox local part contains dots or other special characters and its mailbox domain name is represented in a master file.",
+      "required_behavior": "Use backslash quoting for the dots or other special characters in the local part so that the mailbox domain name is encoded correctly.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Master-file serialization and parsing can be checked to ensure that special characters are quoted and the local part remains one label.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0023",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The following discussion assumes that\n   the name server is authoritative for the zone that would have held\n   the non-existent RRsets matching SNAME.  The algorithm below is\n   written for clarity, not for efficiency.\n\n   To find the NSEC that proves that no RRsets matching name N exist in\n   the zone Z that would have held them, construct a sequence, S,\n   consisting of the owner names of every RRset in Z, sorted into\n\n\n\nArends, et al.              Standards Track                    [Page 13]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   canonical order ([RFC4034]), with no duplicate names.",
+      "line_start": 731,
+      "line_end": 748,
+      "condition": "In the described conceptual algorithm, when an authoritative name server finds an NSEC RR proving that no RRsets with owner name N exist in its zone Z.",
+      "required_behavior": "The conceptual lookup sequence S contains the owner names of every RRset in zone Z.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The owner names considered by NSEC lookup can be compared with the complete set of RRset owner names in the authoritative zone; the conceptual algorithm does not prescribe a physical sequence representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following discussion assumes that\n   the name server is authoritative for the zone that would have held\n   the non-existent RRsets matching SNAME.  The algorithm below is\n   written for clarity, not for efficiency.\n\n   To find the NSEC that proves that no RRsets matching name N exist in\n   the zone Z that would have held them, construct a sequence, S,\n   consisting of the owner names of every RRset in Z, sorted into\n\n\n\nArends, et al.              Standards Track                    [Page 13]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   canonical order ([RFC4034]), with no duplicate names.",
+      "line_start": 731,
+      "line_end": 748,
+      "condition": "In the described conceptual algorithm, when an authoritative name server finds an NSEC RR proving that no RRsets with owner name N exist in its zone Z.",
+      "required_behavior": "Order the conceptual sequence S of zone RRset owner names in canonical order as referenced by RFC4034.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The ordering used for predecessor lookup can be checked against canonical owner-name order without requiring the implementation to materialize the conceptual sequence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following discussion assumes that\n   the name server is authoritative for the zone that would have held\n   the non-existent RRsets matching SNAME.  The algorithm below is\n   written for clarity, not for efficiency.\n\n   To find the NSEC that proves that no RRsets matching name N exist in\n   the zone Z that would have held them, construct a sequence, S,\n   consisting of the owner names of every RRset in Z, sorted into\n\n\n\nArends, et al.              Standards Track                    [Page 13]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   canonical order ([RFC4034]), with no duplicate names.",
+      "line_start": 731,
+      "line_end": 748,
+      "condition": "In the described conceptual algorithm, when an authoritative name server finds an NSEC RR proving that no RRsets with owner name N exist in its zone Z.",
+      "required_behavior": "The conceptual sequence S contains no duplicate owner names.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Multiple RRsets sharing one owner name can be used to check that predecessor lookup treats that name as one entry in the conceptual sequence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following discussion assumes that\n   the name server is authoritative for the zone that would have held\n   the non-existent RRsets matching SNAME.  The algorithm below is\n   written for clarity, not for efficiency.\n\n   To find the NSEC that proves that no RRsets matching name N exist in\n   the zone Z that would have held them, construct a sequence, S,\n   consisting of the owner names of every RRset in Z, sorted into\n\n\n\nArends, et al.              Standards Track                    [Page 13]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   canonical order ([RFC4034]), with no duplicate names.  Find the name\n   M that would have immediately preceded N in S if any RRsets with\n   owner name N had existed.",
+      "line_start": 731,
+      "line_end": 750,
+      "condition": "In the described conceptual algorithm, when an authoritative name server finds an NSEC RR proving that no RRsets with owner name N exist in its zone Z.",
+      "required_behavior": "Find M as the owner name that would immediately precede N in the canonical, duplicate-free sequence S if RRsets with owner name N existed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "For an absent target name and known ordered zone names, the selected predecessor M is a concrete value that can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following discussion assumes that\n   the name server is authoritative for the zone that would have held\n   the non-existent RRsets matching SNAME.  The algorithm below is\n   written for clarity, not for efficiency.\n\n   To find the NSEC that proves that no RRsets matching name N exist in\n   the zone Z that would have held them, construct a sequence, S,\n   consisting of the owner names of every RRset in Z, sorted into\n\n\n\nArends, et al.              Standards Track                    [Page 13]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   canonical order ([RFC4034]), with no duplicate names.  Find the name\n   M that would have immediately preceded N in S if any RRsets with\n   owner name N had existed.  M is the owner name of the NSEC RR that\n   proves that no RRsets exist with owner name N.",
+      "line_start": 731,
+      "line_end": 751,
+      "condition": "In the described conceptual algorithm, when an authoritative name server finds an NSEC RR proving that no RRsets with owner name N exist in its zone Z.",
+      "required_behavior": "Select the NSEC RR owned by M, the owner name that would immediately precede N in S, as the proof that no RRsets exist with owner name N.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The returned denial-of-existence record owner can be compared with the predecessor computed for the absent target name.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The algorithm for finding the NSEC RR that proves that a given name\n   is not covered by any applicable wildcard is similar but requires an\n   extra step.  More precisely, the algorithm for finding the NSEC\n   proving that no RRsets exist with the applicable wildcard name is\n   precisely the same as the algorithm for finding the NSEC RR that\n   proves that RRsets with any other owner name do not exist.",
+      "line_start": 753,
+      "line_end": 758,
+      "condition": "An authoritative name server is finding the NSEC RR proving that no RRsets exist with the applicable wildcard name.",
+      "required_behavior": "Find that NSEC RR using the same conceptual lookup algorithm used to prove that RRsets with any other owner name do not exist.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "NSEC selection for an absent applicable wildcard name can be compared with ordinary absent-owner-name selection for the same target name.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The algorithm for finding the NSEC RR that proves that a given name\n   is not covered by any applicable wildcard is similar but requires an\n   extra step.  More precisely, the algorithm for finding the NSEC\n   proving that no RRsets exist with the applicable wildcard name is\n   precisely the same as the algorithm for finding the NSEC RR that\n   proves that RRsets with any other owner name do not exist.  The part\n   that's missing is a method of determining the name of the non-\n   existent applicable wildcard.  In practice, this is easy, because the\n   authoritative name server has already checked for the presence of\n   precisely this wildcard name as part of step (1)(c) of the normal\n   lookup algorithm described in Section 4.3.2 of [RFC1034].",
+      "line_start": 753,
+      "line_end": 763,
+      "condition": "An authoritative name server is determining the nonexistent applicable wildcard name for an NSEC proof that a given name is not covered by an applicable wildcard.",
+      "required_behavior": "Use as the applicable wildcard name precisely the wildcard name whose presence the authoritative name server already checked during step (1)(c) of the normal lookup algorithm referenced in RFC1034 Section 4.3.2.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The wildcard name used as the denial-proof lookup target can be compared with the wildcard candidate already checked during normal name lookup.",
+      "eligibility": "eligible"
+    }
+  ]
+}

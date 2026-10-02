@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0017",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A vector (single-dimensioned array) is a stream of homogeneous data\n   elements.",
+      "line_start": 1097,
+      "line_end": 1098,
+      "condition": "a field is encoded as a vector",
+      "required_behavior": "encode every vector member as the same element type",
+      "forbidden_behavior": "mix element types within one vector",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Vector element decoding can be checked against the single declared element type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In either case, the length\n   declares the number of bytes, not the number of elements, in the\n   vector.",
+      "line_start": 1099,
+      "line_end": 1101,
+      "condition": "a vector definition or encoding declares a length",
+      "required_behavior": "interpret the length as a byte count",
+      "forbidden_behavior": "interpret the length as an element count",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Vectors whose element width exceeds one byte distinguish byte-count and element-count implementations.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Here, T' occupies n bytes in the data stream",
+      "line_start": 1106,
+      "line_end": 1106,
+      "condition": "a fixed-length vector is declared as T T'[n]",
+      "required_behavior": "encode and consume exactly n bytes for T'",
+      "forbidden_behavior": "encode or consume a different number of bytes",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Fixed-vector serialization and parser consumption have an exact byte count.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "where n is a multiple\n   of the size of T.",
+      "line_start": 1106,
+      "line_end": 1107,
+      "condition": "a fixed-length vector of element type T is declared with byte length n",
+      "required_behavior": "require n to be an exact multiple of the encoded size of T",
+      "forbidden_behavior": "define or accept a fixed vector ending with a partial element",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The declared byte count and element width permit a direct divisibility check.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The length of the vector is not included in the\n   encoded stream.",
+      "line_start": 1107,
+      "line_end": 1108,
+      "condition": "a vector has a fixed length declared as T T'[n]",
+      "required_behavior": "encode only the vector contents without a length field",
+      "forbidden_behavior": "prepend or otherwise include the fixed vector's length in the encoded stream",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The fixed-vector wire encoding can be checked for the absence of a length prefix.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Variable-length vectors are defined by specifying a subrange of legal\n   lengths, inclusively, using the notation <floor..ceiling>.",
+      "line_start": 1128,
+      "line_end": 1129,
+      "condition": "a variable-length vector is declared as T T'<floor..ceiling>",
+      "required_behavior": "require its actual byte length to be between floor and ceiling inclusive",
+      "forbidden_behavior": "accept an actual length below floor or above ceiling",
+      "error_behavior": "treat a length outside the inclusive range as illegal",
+      "check_type": "structural_constraint",
+      "why_checkable": "Boundary tests can exercise floor minus one, floor, ceiling, and ceiling plus one.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When\n   these are encoded, the actual length precedes the vector's contents\n   in the byte stream.",
+      "line_start": 1129,
+      "line_end": 1131,
+      "condition": "a variable-length vector is encoded",
+      "required_behavior": "encode its actual byte length in a length field",
+      "forbidden_behavior": "encode a length field that does not describe the vector's actual content length",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The declared length value can be compared with the number of following content bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When\n   these are encoded, the actual length precedes the vector's contents\n   in the byte stream.",
+      "line_start": 1129,
+      "line_end": 1131,
+      "condition": "a variable-length vector is encoded",
+      "required_behavior": "place the actual-length field immediately before the vector contents",
+      "forbidden_behavior": "place the length after or within the vector contents",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The byte offset of the length field relative to the vector contents is deterministic.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The length will be in the form of a number\n   consuming as many bytes as required to hold the vector's specified\n   maximum (ceiling) length.",
+      "line_start": 1131,
+      "line_end": 1133,
+      "condition": "a variable-length vector has specified ceiling length",
+      "required_behavior": "encode its length field using the number of bytes required to represent the ceiling",
+      "forbidden_behavior": "choose the length-field width from the actual length or use a width too small for the ceiling",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The ceiling deterministically fixes the length-prefix width for every instance.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A variable-length vector with an actual\n   length field of zero is referred to as an empty vector.",
+      "line_start": 1133,
+      "line_end": 1134,
+      "condition": "a variable-length vector's actual-length field is zero",
+      "required_behavior": "decode the vector as empty with zero content bytes",
+      "forbidden_behavior": "consume element bytes as part of that zero-length vector",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A zero prefix has a deterministic decoded element count and parser offset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Variable-length vectors are defined by specifying a subrange of legal\n   lengths, inclusively, using the notation <floor..ceiling>.",
+      "line_start": 1128,
+      "line_end": 1129,
+      "condition": "a variable-length vector has an actual length of zero",
+      "required_behavior": "permit the empty vector only when the declared floor is zero",
+      "forbidden_behavior": "accept an empty vector when the declared floor is greater than zero",
+      "error_behavior": "treat zero as an illegal length when it lies below floor",
+      "check_type": "derived_constraint",
+      "why_checkable": "Applying the inclusive legal-length range to zero directly determines whether an empty vector is valid.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The length of an\n   encoded vector must be an exact multiple of the length of a single\n   element (e.g., a 17-byte vector of uint16 would be illegal).",
+      "line_start": 1144,
+      "line_end": 1146,
+      "condition": "a vector's element type occupies more than zero bytes",
+      "required_behavior": "require the encoded vector byte length to be an exact multiple of one element's encoded length",
+      "forbidden_behavior": "accept a vector containing a trailing partial element",
+      "error_behavior": "treat a non-multiple vector length as illegal",
+      "check_type": "structural_constraint",
+      "why_checkable": "The parser can compute length modulo element width and reject nonzero remainders.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0155",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A MAX_STREAM_DATA frame can be sent for streams in the \"Recv\" state;\n   see Section 3.2.  Receiving a MAX_STREAM_DATA frame for a locally\n   initiated stream that has not yet been created MUST be treated as a\n   connection error of type STREAM_STATE_ERROR.  An endpoint that\n   receives a MAX_STREAM_DATA frame for a receive-only stream MUST\n   terminate the connection with error STREAM_STATE_ERROR.",
+      "line_start": 6314,
+      "line_end": 6319,
+      "condition": "A MAX_STREAM_DATA frame is sent for a stream in the \"Recv\" state.",
+      "required_behavior": "Permit the frame to be sent in this stream state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-aware test can verify that sending MAX_STREAM_DATA is supported when the stream is in the \"Recv\" state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   see Section 3.2.  Receiving a MAX_STREAM_DATA frame for a locally\n   initiated stream that has not yet been created MUST be treated as a\n   connection error of type STREAM_STATE_ERROR.  An endpoint that",
+      "line_start": 6315,
+      "line_end": 6317,
+      "condition": "A MAX_STREAM_DATA frame is received for a locally initiated stream that has not yet been created.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not accept or process the frame as valid.",
+      "error_behavior": "Treat the condition as a connection error of type STREAM_STATE_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can deliver the frame for a nonexistent locally initiated stream and verify the resulting connection error type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   connection error of type STREAM_STATE_ERROR.  An endpoint that\n   receives a MAX_STREAM_DATA frame for a receive-only stream MUST\n   terminate the connection with error STREAM_STATE_ERROR.",
+      "line_start": 6317,
+      "line_end": 6319,
+      "condition": "An endpoint receives a MAX_STREAM_DATA frame for a receive-only stream.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not keep the connection active or accept the frame as valid.",
+      "error_behavior": "Terminate the connection with STREAM_STATE_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can send the frame for a receive-only stream and verify connection termination and the specified error.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   MAX_STREAM_DATA Frame {\n     Type (i) = 0x11,\n     Stream ID (i),\n     Maximum Stream Data (i),\n   }",
+      "line_start": 6323,
+      "line_end": 6327,
+      "condition": "A MAX_STREAM_DATA frame is encoded or parsed.",
+      "required_behavior": "Use the ordered structure Type, Stream ID, Maximum Stream Data.",
+      "forbidden_behavior": "Do not omit, add, or reorder the fields in the defined frame structure.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Encoded frames can be inspected and parsers can be tested against the exact ordered field structure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   MAX_STREAM_DATA Frame {\n     Type (i) = 0x11,\n     Stream ID (i),\n     Maximum Stream Data (i),\n   }",
+      "line_start": 6323,
+      "line_end": 6327,
+      "condition": "The Type field of a MAX_STREAM_DATA frame is encoded or parsed.",
+      "required_behavior": "Encode and recognize the Type field as the variable-length integer value 0x11.",
+      "forbidden_behavior": "Do not identify a frame with a different Type value as MAX_STREAM_DATA.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A codec test can inspect the Type value and its integer encoding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Stream ID:  The stream ID of the affected stream, encoded as a\n      variable-length integer.",
+      "line_start": 6333,
+      "line_end": 6334,
+      "condition": "The Stream ID field of a MAX_STREAM_DATA frame is encoded or decoded.",
+      "required_behavior": "Encode the affected stream's stream ID as a variable-length integer.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A codec test can verify both the field value and variable-length integer representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Maximum Stream Data:  A variable-length integer indicating the\n      maximum amount of data that can be sent on the identified stream,\n      in units of bytes.",
+      "line_start": 6336,
+      "line_end": 6338,
+      "condition": "The Maximum Stream Data field is encoded, decoded, or applied.",
+      "required_behavior": "Represent it as a variable-length integer giving, in bytes, the maximum amount of data that can be sent on the identified stream.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A codec and flow-control test can verify the integer encoding, byte units, and association with the identified stream.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When counting data toward this limit, an endpoint accounts for the\n   largest received offset of data that is sent or received on the\n   stream.  Loss or reordering can mean that the largest received offset",
+      "line_start": 6340,
+      "line_end": 6342,
+      "condition": "An endpoint counts stream data against the advertised maximum stream data limit.",
+      "required_behavior": "Account using the largest received offset of data sent or received on the stream.",
+      "forbidden_behavior": "Do not base the count solely on the total number of payload bytes received.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Tests using gaps, loss, or reordered STREAM data can verify that flow-control accounting follows the largest offset rather than accumulated payload size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The data sent on a stream MUST NOT exceed the largest maximum stream\n   data value advertised by the receiver.  An endpoint MUST terminate a",
+      "line_start": 6347,
+      "line_end": 6348,
+      "condition": "An endpoint sends data on a stream after one or more maximum stream data values have been advertised by the receiver.",
+      "required_behavior": "Limit sent stream data to the largest maximum stream data value advertised by the receiver.",
+      "forbidden_behavior": "Do not send stream data beyond that largest advertised value.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A sender test can advertise successive limits and verify that no transmitted stream offset exceeds the largest advertised value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   data value advertised by the receiver.  An endpoint MUST terminate a\n   connection with an error of type FLOW_CONTROL_ERROR if it receives\n   more data than the largest maximum stream data that it has sent for\n   the affected stream.  This includes violations of remembered limits",
+      "line_start": 6348,
+      "line_end": 6351,
+      "condition": "An endpoint receives more data on a stream than the largest maximum stream data value it has sent for that stream.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not continue the connection after detecting the flow-control violation.",
+      "error_behavior": "Terminate the connection with an error of type FLOW_CONTROL_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can exceed the receiver-advertised per-stream limit and verify termination with FLOW_CONTROL_ERROR.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   more data than the largest maximum stream data that it has sent for\n   the affected stream.  This includes violations of remembered limits\n   in Early Data; see Section 7.4.1.",
+      "line_start": 6350,
+      "line_end": 6352,
+      "condition": "Early Data violates a remembered maximum stream data limit.",
+      "required_behavior": "Apply the remembered limit when checking Early Data.",
+      "forbidden_behavior": "Do not exempt Early Data from remembered per-stream flow-control limits.",
+      "error_behavior": "Treat an excess as the flow-control violation described for receiving more data than the largest maximum stream data sent for the affected stream.",
+      "check_type": "derived_constraint",
+      "why_checkable": "A resumed-session test can send Early Data beyond a remembered per-stream limit and verify that the implementation detects the violation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

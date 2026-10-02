@@ -1,0 +1,4 @@
+interface:
+  display_name: "SpecLitmus Variant Auditor"
+  short_description: "Agent-driven SpecLitmus IR audit with three verdicts."
+  default_prompt: "Use $spec-litmus-variant-auditor to audit SpecLitmus IR variants against the target implementation. Read the standard and code, make a per-variant static/runtime plan, and classify each variant only as no_issue, suspected_issue, or issue_found."

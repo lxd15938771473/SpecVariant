@@ -1,0 +1,2 @@
+# Existing OpenSSL TLS adapter dependency, pinned to the local copy-check environment.
+cryptography==46.0.7

@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0049",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "QUIC requires that the cryptographic handshake provide authenticated\n   protocol negotiation.",
+      "line_start": 1891,
+      "line_end": 1892,
+      "condition": "When negotiating the application protocol for a QUIC connection",
+      "required_behavior": "Bind the protocol negotiation to the authenticated cryptographic handshake.",
+      "forbidden_behavior": "Accept an unauthenticated application-protocol selection as the negotiated result.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Negotiation tampering can be injected and the accepted protocol compared with the value authenticated by the handshake transcript.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Unless another\n   mechanism is used for agreeing on an application protocol, endpoints\n   MUST use ALPN for this purpose.",
+      "line_start": 1893,
+      "line_end": 1895,
+      "condition": "When no alternative mechanism is used to agree on an application protocol",
+      "required_behavior": "Use TLS ALPN to negotiate and select the application protocol.",
+      "forbidden_behavior": "Complete application-protocol agreement without ALPN or another agreement mechanism.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The TLS handshake messages and endpoint configuration can be inspected for ALPN when no alternate mechanism is configured.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When using ALPN, endpoints MUST immediately close a connection (see\n   Section 10.2 of [QUIC-TRANSPORT]) with a no_application_protocol TLS\n   alert (QUIC error code 0x0178; see Section 4.8) if an application\n   protocol is not negotiated.",
+      "line_start": 1897,
+      "line_end": 1900,
+      "condition": "When ALPN is used and no application protocol is negotiated",
+      "required_behavior": "Immediately close the QUIC connection.",
+      "forbidden_behavior": "Keep the connection open or defer closure after negotiation ends without an application protocol.",
+      "error_behavior": "Close the connection immediately.",
+      "check_type": "explicit_normative",
+      "why_checkable": "A peer can offer no mutually supported ALPN value and the endpoint's immediate transition to connection closure can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "with a no_application_protocol TLS\n   alert (QUIC error code 0x0178; see Section 4.8) if an application\n   protocol is not negotiated.",
+      "line_start": 1898,
+      "line_end": 1900,
+      "condition": "When closing because ALPN did not negotiate an application protocol",
+      "required_behavior": "",
+      "forbidden_behavior": "Use a different error identity for the ALPN no-protocol failure.",
+      "error_behavior": "Send or report no_application_protocol, mapped to QUIC error code 0x0178.",
+      "check_type": "error_handling",
+      "why_checkable": "The closing alert and QUIC CONNECTION_CLOSE error field can be decoded and compared with no_application_protocol and 0x0178.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QUIC clients MUST use error 0x0178 to terminate a\n   connection when ALPN negotiation fails.",
+      "line_start": 1901,
+      "line_end": 1902,
+      "condition": "When ALPN negotiation fails at a QUIC client",
+      "required_behavior": "Terminate the connection.",
+      "forbidden_behavior": "Continue the failed-ALPN connection or terminate it under another error code.",
+      "error_behavior": "Use QUIC error code 0x0178.",
+      "check_type": "error_handling",
+      "why_checkable": "An ALPN failure can be induced at the client and the resulting connection termination code inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Servers MUST select an application protocol compatible\n   with the QUIC version that the client has selected.",
+      "line_start": 1905,
+      "line_end": 1906,
+      "condition": "When a server selects an application protocol for a client-selected QUIC version",
+      "required_behavior": "Select an application protocol that is compatible with that QUIC version.",
+      "forbidden_behavior": "Select an application protocol that is incompatible with the client-selected QUIC version.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test matrix of declared application-protocol and QUIC-version compatibility can compare the server's selection with the client-selected version.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The server MUST\n   treat the inability to select a compatible application protocol as a\n   connection error of type 0x0178 (no_application_protocol).",
+      "line_start": 1906,
+      "line_end": 1908,
+      "condition": "When a server cannot select an application protocol compatible with the client-selected QUIC version",
+      "required_behavior": "Treat the condition as a connection error.",
+      "forbidden_behavior": "Proceed with the connection using an incompatible or absent application protocol.",
+      "error_behavior": "Terminate with error type 0x0178 (no_application_protocol).",
+      "check_type": "error_handling",
+      "why_checkable": "A client can offer only incompatible protocol/version combinations and the server's closing error code can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "a client MUST treat the selection of an incompatible\n   application protocol by a server as a connection error of type\n   0x0178.",
+      "line_start": 1909,
+      "line_end": 1911,
+      "condition": "When a server selects an application protocol incompatible with the negotiated QUIC version",
+      "required_behavior": "The client treats the selection as a connection error.",
+      "forbidden_behavior": "Accept or continue using the incompatible application protocol.",
+      "error_behavior": "Terminate with error type 0x0178.",
+      "check_type": "error_handling",
+      "why_checkable": "A server can select a deliberately incompatible application protocol and the client's connection error response can be inspected.",
+      "eligibility": "eligible"
+    }
+  ]
+}

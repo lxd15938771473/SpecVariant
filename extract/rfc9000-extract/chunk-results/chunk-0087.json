@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0087",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Errors that result in the connection being unusable, such as an\n   obvious violation of protocol semantics or corruption of state that\n   affects an entire connection, MUST be signaled using a\n   CONNECTION_CLOSE frame (Section 19.19).",
+      "line_start": 3627,
+      "line_end": 3630,
+      "condition": "An error makes the connection unusable, including an obvious protocol-semantics violation or connection-wide state corruption.",
+      "required_behavior": "Signal the error using a CONNECTION_CLOSE frame.",
+      "forbidden_behavior": "Do not leave such a connection error unsignaled or signal it only through a different frame type.",
+      "error_behavior": "Use a CONNECTION_CLOSE frame to signal the connection error.",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can induce a connection-fatal error and inspect whether the endpoint emits a CONNECTION_CLOSE frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Application-specific protocol errors are signaled using the\n   CONNECTION_CLOSE frame with a frame type of 0x1d.  Errors that are\n   specific to the transport, including all those described in this\n   document, are carried in the CONNECTION_CLOSE frame with a frame type\n   of 0x1c.",
+      "line_start": 3632,
+      "line_end": 3636,
+      "condition": "The endpoint signals an application-specific protocol error.",
+      "required_behavior": "Carry the error in a CONNECTION_CLOSE frame whose frame type is 0x1d.",
+      "forbidden_behavior": "Do not encode an application-specific protocol error using CONNECTION_CLOSE frame type 0x1c.",
+      "error_behavior": "Signal the application-specific error with CONNECTION_CLOSE frame type 0x1d.",
+      "check_type": "structural_constraint",
+      "why_checkable": "The emitted CONNECTION_CLOSE frame type can be decoded and compared with the error category.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Application-specific protocol errors are signaled using the\n   CONNECTION_CLOSE frame with a frame type of 0x1d.  Errors that are\n   specific to the transport, including all those described in this\n   document, are carried in the CONNECTION_CLOSE frame with a frame type\n   of 0x1c.",
+      "line_start": 3632,
+      "line_end": 3636,
+      "condition": "The endpoint signals a transport-specific error, including an error described in this document.",
+      "required_behavior": "Carry the error in a CONNECTION_CLOSE frame whose frame type is 0x1c.",
+      "forbidden_behavior": "Do not encode a transport-specific error using CONNECTION_CLOSE frame type 0x1d.",
+      "error_behavior": "Signal the transport error with CONNECTION_CLOSE frame type 0x1c.",
+      "check_type": "structural_constraint",
+      "why_checkable": "The emitted CONNECTION_CLOSE frame type can be decoded and compared with the error category.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A CONNECTION_CLOSE frame could be sent in a packet that is lost.  An\n   endpoint SHOULD be prepared to retransmit a packet containing a\n   CONNECTION_CLOSE frame if it receives more packets on a terminated\n   connection.  Limiting the number of retransmissions and the time over\n   which this final packet is sent limits the effort expended on\n   terminated connections.",
+      "line_start": 3638,
+      "line_end": 3643,
+      "condition": "An endpoint receives additional packets on a terminated connection after sending a packet containing a CONNECTION_CLOSE frame.",
+      "required_behavior": "Be prepared to retransmit a packet containing a CONNECTION_CLOSE frame, subject to limits on retransmission count and duration.",
+      "forbidden_behavior": "",
+      "error_behavior": "Retransmit a packet containing CONNECTION_CLOSE when further packets arrive on the terminated connection.",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can drop the original close packet, deliver another packet on the terminated connection, and observe whether a close packet can be retransmitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The only mechanism available to an endpoint that continues to receive\n   data for a terminated connection is to attempt the stateless reset\n   process (Section 10.3).",
+      "line_start": 3647,
+      "line_end": 3649,
+      "condition": "An endpoint continues to receive data for a terminated connection and does not respond by retransmitting packets containing CONNECTION_CLOSE.",
+      "required_behavior": "Attempt the stateless reset process if it uses an available response mechanism.",
+      "forbidden_behavior": "Do not use another response mechanism as an alternative to CONNECTION_CLOSE retransmission for continued data on the terminated connection.",
+      "error_behavior": "The available fallback is the stateless reset process.",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can continue sending data to a terminated connection and inspect whether any fallback response is a stateless reset rather than another mechanism.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   As the AEAD for Initial packets does not provide strong\n   authentication, an endpoint MAY discard an invalid Initial packet.\n   Discarding an Initial packet is permitted even where this\n   specification otherwise mandates a connection error.",
+      "line_start": 3651,
+      "line_end": 3654,
+      "condition": "An endpoint receives an invalid Initial packet, including where the invalidity would otherwise mandate a connection error.",
+      "required_behavior": "The endpoint is permitted to discard the invalid Initial packet instead of producing the otherwise mandated connection error.",
+      "forbidden_behavior": "",
+      "error_behavior": "Discarding the invalid Initial packet may replace generation of a connection error.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can supply an invalid Initial packet and accept silent discard as compliant even when the underlying violation normally causes a connection error.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   specification otherwise mandates a connection error.  An endpoint can\n   only discard a packet if it does not process the frames in the packet\n   or reverts the effects of any processing.  Discarding invalid Initial",
+      "line_start": 3654,
+      "line_end": 3656,
+      "condition": "An endpoint discards a packet.",
+      "required_behavior": "Either do not process any frames in the packet or revert all effects of any processing before completing the discard.",
+      "forbidden_behavior": "Do not discard the packet while retaining effects produced by processing its frames.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "State before and after discarding a crafted packet can be compared to verify that frame processing caused no lasting effects.",
+      "eligibility": "eligible"
+    }
+  ]
+}

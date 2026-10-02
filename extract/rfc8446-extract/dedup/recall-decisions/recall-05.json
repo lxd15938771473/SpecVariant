@@ -1,0 +1,396 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "recall-05",
+  "decisions": [
+    {
+      "pair_id": "pair-245cfe7a8cee55cf",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different extensions and different allowed message sets: early_data in CH/EE/NST versus post_handshake_auth only in CH."
+    },
+    {
+      "pair_id": "pair-b8d62440e42ad16c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply to different extensions and message sets: supported_groups in CH/EE versus signature_algorithms_cert in CH/CR."
+    },
+    {
+      "pair_id": "pair-b173cec8c20f7da3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One prohibits sending an SSL 2.0-compatible CLIENT-HELLO; the other prohibits negotiating TLS 1.3 or later after receiving that legacy hello."
+    },
+    {
+      "pair_id": "pair-b94499e33279a560",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed 56-byte length check is narrower than checking that the public value uses the raw X448 function input/output representation."
+    },
+    {
+      "pair_id": "pair-d716a7f748170a2b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are different NewSessionTicket fields with different bounds and positions: ticket_nonce permits 0..255 bytes, while ticket requires 1..65535 bytes."
+    },
+    {
+      "pair_id": "pair-e6b245e9d3963a0e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations use different source secrets, labels, transcripts, and output traffic secrets."
+    },
+    {
+      "pair_id": "pair-ffc13cb4843e431b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The generic ClientHello field encoding and the compatibility-specific TLS 1.3 negotiation rule do not have equivalent scope."
+    },
+    {
+      "pair_id": "pair-759649226b33eeb7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different extensions and allowed messages: server_certificate_type in CH/EE versus post_handshake_auth only in CH."
+    },
+    {
+      "pair_id": "pair-93e60c0583a1fa10",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Outputting negotiated cryptographic parameters is different from verifying endpoint agreement and downgrade consistency for those parameters."
+    },
+    {
+      "pair_id": "pair-dbaf319a04af129d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different extensions and message sets: server_certificate_type in CH/EE versus supported_versions in CH/SH/HRR."
+    },
+    {
+      "pair_id": "pair-fdfada9e37af912d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One checks presence of supported_versions in ClientHello; the other checks that the extension's version list includes 0x0304."
+    },
+    {
+      "pair_id": "pair-875e02ab90673ac9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply to different extensions and message sets: max_fragment_length in CH/EE versus cookie in CH/HRR."
+    },
+    {
+      "pair_id": "pair-55a5695bf3c52fd1",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "decode_error and decrypt_error are separate alert descriptions with different numeric values, 50 and 51."
+    },
+    {
+      "pair_id": "pair-06e058387ea01fca",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different extensions and message sets: use_srtp in CH/EE versus supported_versions in CH/SH/HRR."
+    },
+    {
+      "pair_id": "pair-05a00f74b1f48291",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "ContentType.invalid and ContentType.alert are different enum members with different numeric values."
+    },
+    {
+      "pair_id": "pair-df06a5080dfdd715",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "signature_algorithms_cert advertises certificate-signature validation capability, while signature_algorithms advertises acceptable handshake signature schemes."
+    },
+    {
+      "pair_id": "pair-7895a5fa5f7acde9",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-adbf3f1bc65605ef2793",
+      "reason": "Both require the identical rsa_pkcs1_sha512 to 0x0601 SignatureScheme mapping; the canonical entry cites the primary-body definition rather than the appendix repetition."
+    },
+    {
+      "pair_id": "pair-a37a0b3422c72eff",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply to different extensions and allowed message sets: signature_algorithms in CH/CR versus signed_certificate_timestamp in CH/CR/CT."
+    },
+    {
+      "pair_id": "pair-e2b8687d2a159e62",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply to different extensions and message sets: status_request in CH/CR/CT versus server_certificate_type in CH/EE."
+    },
+    {
+      "pair_id": "pair-13540e4dd304e1f8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "HandshakeType.certificate and certificate_status_RESERVED are separate enum members with different numeric values."
+    },
+    {
+      "pair_id": "pair-162f9accdfcea8e9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are different OIDFilter fields with different length bounds and empty-value rules."
+    },
+    {
+      "pair_id": "pair-d8d13850704604e3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The vector bounds belong to different messages and differ at the minimum: ServerHello.extensions requires at least 6 bytes, while EncryptedExtensions.extensions may be empty."
+    },
+    {
+      "pair_id": "pair-0964ba4266b2d179",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requires CertificateVerify when the client has and uses a certificate; the other requires an empty Certificate when no suitable certificate exists."
+    },
+    {
+      "pair_id": "pair-0fbdcd2291f5443c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different extensions and allowed messages: ALPN in CH/EE versus padding only in CH."
+    },
+    {
+      "pair_id": "pair-00c341e525d8b586",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Rejecting the point at infinity and range-checking the y coordinate are separate public-value validation steps."
+    },
+    {
+      "pair_id": "pair-daed15f07390078f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The first requires a Certificate message whenever certificate-based client authentication is requested; the second covers the narrower certificate-present branch and additionally requires CertificateVerify ordering."
+    },
+    {
+      "pair_id": "pair-2290d2d01cb8fd93",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Rejecting the point at infinity and range-checking the x coordinate are separate public-value validation steps."
+    },
+    {
+      "pair_id": "pair-1d09a1ce30710a6b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Encoding the length field as uint16 and enforcing that fragment contains exactly that many octets are separate field checks."
+    },
+    {
+      "pair_id": "pair-3562cc3713fedea3",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-b49cfb275b487f6d51ed",
+      "reason": "Both require the identical rsa_pkcs1_sha384 to 0x0501 SignatureScheme mapping; the canonical entry cites the primary-body definition rather than the appendix repetition."
+    },
+    {
+      "pair_id": "pair-f0c0e91afe76200c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different extensions and message sets: client_certificate_type in CH/EE versus supported_versions in CH/SH/HRR."
+    },
+    {
+      "pair_id": "pair-ea2de75ed26e98c9",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-a648ce5e984eebd3234e",
+      "reason": "Both require the identical rsa_pss_rsae_sha256 to 0x0804 SignatureScheme mapping; the canonical entry cites the primary-body definition rather than the appendix repetition."
+    },
+    {
+      "pair_id": "pair-d49289690d4bf4ad",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different extensions and allowed messages: key_share in CH/SH/HRR versus signature_algorithms_cert in CH/CR."
+    },
+    {
+      "pair_id": "pair-38781effe2f89bb6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply to different extensions and allowed messages: signed_certificate_timestamp in CH/CR/CT versus padding only in CH."
+    },
+    {
+      "pair_id": "pair-78783563b72f7066",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "ContentType.alert and ContentType.handshake are different enum members with different numeric values."
+    },
+    {
+      "pair_id": "pair-4f6ed44114eeffa5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are extension vectors in different structures with different lower bounds: ServerHello requires 6 bytes, while CertificateEntry permits an empty vector."
+    },
+    {
+      "pair_id": "pair-4c123c154903510a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The rules ignore unrecognized extensions in different handshake messages and endpoint contexts: NewSessionTicket reception by a client versus ClientHello processing."
+    },
+    {
+      "pair_id": "pair-1fc54de3c9db0514",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different extensions and allowed messages: pre_shared_key in CH/SH versus oid_filters only in CR."
+    },
+    {
+      "pair_id": "pair-e18423997261b723",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Initial ClientHello binder computation and post-HelloRetryRequest ClientHello2 binder computation use different conditions and transcript inputs."
+    },
+    {
+      "pair_id": "pair-fedf46bc5736b8cf",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requires the exact 0x0303 value for a TLS 1.3 ServerHello; the other only prohibits 0x0300 or lower across ServerHello sending."
+    },
+    {
+      "pair_id": "pair-1b07c70ad0ee3443",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One governs server omission of its Certificate when not certificate-authenticating; the other governs client transmission after a server authentication request."
+    },
+    {
+      "pair_id": "pair-179d32591428fa11",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Although both abort with illegal_parameter, they detect different violations: an already-offered HRR group versus a ServerHello group inconsistent with the preceding HRR."
+    },
+    {
+      "pair_id": "pair-71465b8f1d3d547d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "HandshakeType.server_hello and server_key_exchange_RESERVED are separate enum members with different numeric values."
+    },
+    {
+      "pair_id": "pair-a288f4bb569f3e0e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The all-records-except-initial-ClientHello rule is broader than the specific second-ClientHello record rule, so their conditions are not equivalent."
+    },
+    {
+      "pair_id": "pair-b4597ad2a925d324",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Following every HKDF-Extract with HKDF-Expand is broader than the conditional prohibition on directly feeding one Extract output into another Extract."
+    },
+    {
+      "pair_id": "pair-848ebb8a67acd6ac",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks encode the same coordinate for different curves and lengths: P-384 X at 48 octets versus P-521 X at 66 octets."
+    },
+    {
+      "pair_id": "pair-1af24e85467782f2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks concern different curve-coordinate fields and lengths: P-256 Y at 32 octets versus P-384 X at 48 octets."
+    },
+    {
+      "pair_id": "pair-5fe9b5d27e14848a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Server extension responses and server extension requests are different operations placed in different handshake messages."
+    },
+    {
+      "pair_id": "pair-fd370ec385d56377",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks concern different curve-coordinate fields and lengths: P-256 X at 32 octets versus P-384 Y at 48 octets."
+    },
+    {
+      "pair_id": "pair-5c0a8883f49a9bfb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "certificate_revoked and certificate_required are separate alert descriptions with different numeric values."
+    },
+    {
+      "pair_id": "pair-414a77fd98b68dad",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Sending the signature_algorithms extension and using it for signature selection or validation are separate implementation checks."
+    },
+    {
+      "pair_id": "pair-3ef43aa55cdc60b7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different extensions and allowed messages: post_handshake_auth only in CH versus signature_algorithms_cert in CH/CR."
+    },
+    {
+      "pair_id": "pair-5ffa09eca2019a4a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "bad_certificate and bad_certificate_status_response are separate alert descriptions with different numeric values."
+    },
+    {
+      "pair_id": "pair-4969bdea37ba5eea",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different extensions and allowed messages: key_share in CH/SH/HRR versus oid_filters only in CR."
+    },
+    {
+      "pair_id": "pair-b2c8dafe738e6f08",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks encode the same coordinate for different curves and lengths: P-384 Y at 48 octets versus P-521 Y at 66 octets."
+    },
+    {
+      "pair_id": "pair-13f84e5ef8768288",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different extensions and allowed messages: signature_algorithms in CH/CR versus psk_key_exchange_modes only in CH."
+    },
+    {
+      "pair_id": "pair-decd6562bbe715f9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "An unnamed-alert abort recommends the Section 6.2 alert, while a named-alert abort requires alert X if any alert is sent; the conditions and normative outcomes differ."
+    },
+    {
+      "pair_id": "pair-f8022b8d95138c0e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Sending a response to crossed KeyUpdate requests and advancing both traffic directions through two key generations are separate required effects."
+    },
+    {
+      "pair_id": "pair-1ddaff9069e3b6df",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-1068f5c40c1d85369715",
+      "reason": "Both require the identical ContentType.application_data to 23 mapping; the canonical entry cites the primary-body record-layer definition rather than the appendix repetition."
+    },
+    {
+      "pair_id": "pair-95ec87b168e70640",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "certificate_expired and certificate_required are separate alert descriptions with different numeric values."
+    },
+    {
+      "pair_id": "pair-cac23b8a49a3995c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The extension-presence checks apply to different messages and senders: TLS 1.3 ClientHello versus TLS 1.3 ServerHello."
+    },
+    {
+      "pair_id": "pair-f9cdefe60387881e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One constrains outbound record versions with MUST NOT; the other addresses inbound acceptance with SHOULD NOT."
+    },
+    {
+      "pair_id": "pair-b168c57741b23374",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a cipher suite and supporting a digital-signature scheme are separate capabilities."
+    },
+    {
+      "pair_id": "pair-e159288490103024",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "HandshakeType.client_hello and client_key_exchange_RESERVED are separate enum members with different numeric values."
+    },
+    {
+      "pair_id": "pair-2d4d31e6f7fb464d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One generates the TLS 1.2 downgrade sentinel ending in 01; the other checks a different sentinel ending in 00 when receiving TLS 1.1 or below."
+    },
+    {
+      "pair_id": "pair-1441e103a6709551",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One checks non-context extensions incorrectly placed in ServerHello; the other checks context-establishing extensions incorrectly placed in EncryptedExtensions. These are converse boundary violations, not the same atomic check."
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0163",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A PATH_RESPONSE frame (type=0x1b) is sent in response to a\n   PATH_CHALLENGE frame.",
+      "line_start": 6626,
+      "line_end": 6627,
+      "condition": "When sending a frame in response to a PATH_CHALLENGE frame.",
+      "required_behavior": "Send a PATH_RESPONSE frame with frame type 0x1b.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation trace can verify that the response frame is a PATH_RESPONSE and that its encoded type is 0x1b.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "     Type (i) = 0x1b,",
+      "line_start": 6634,
+      "line_end": 6634,
+      "condition": "When encoding or decoding a PATH_RESPONSE frame.",
+      "required_behavior": "The Type variable-length integer has the fixed value 0x1b.",
+      "forbidden_behavior": "Do not encode or recognize a PATH_RESPONSE frame with another type value.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The frame type field and its decoded numeric value are directly inspectable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "     Data (64),",
+      "line_start": 6635,
+      "line_end": 6635,
+      "condition": "When encoding or decoding a PATH_RESPONSE frame.",
+      "required_behavior": "The Data field is exactly 64 bits long.",
+      "forbidden_behavior": "Do not encode or accept a PATH_RESPONSE Data field with a length other than 64 bits.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded Data field length can be measured and asserted to equal 64 bits.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If the content of a PATH_RESPONSE frame does not match the content of\n   a PATH_CHALLENGE frame previously sent by the endpoint, the endpoint\n   MAY generate a connection error of type PROTOCOL_VIOLATION.",
+      "line_start": 6640,
+      "line_end": 6642,
+      "condition": "The content of a received PATH_RESPONSE frame does not match the content of any PATH_CHALLENGE frame previously sent by the endpoint.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The endpoint is permitted to generate a connection error of type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A focused test can deliver a nonmatching PATH_RESPONSE and verify that any generated connection error uses PROTOCOL_VIOLATION; generating no error is also permitted.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0087",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "To facilitate this, it is a useful optimization to order\n   the path attributes according to type code.  This optimization is\n   entirely optional.",
+                             "line_start":  5333,
+                             "line_end":  5335,
+                             "condition":  "When choosing the optional path-attribute ordering optimization to facilitate identifying semantically identical attribute sets across UPDATE messages",
+                             "required_behavior":  "MAY order path attributes according to type code; this optimization is entirely optional.",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "The optional serialization ordering can be checked by comparing the type codes of emitted path attributes; absence of this optimization is permitted.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

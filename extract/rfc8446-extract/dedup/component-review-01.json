@@ -1,0 +1,110 @@
+{
+  "schema_version": "speclitmus.dedup-component-review.v1",
+  "reviews": [
+    {
+      "component_id": "dup-07f8ab254ec27c31",
+      "verdict": "valid_merge",
+      "reason": "Both members enforce the same server-side CertificateVerify selection constraint: an unoffered algorithm is permitted exactly when no valid chain can be produced without unsupported algorithms. The conditions are logical contrapositives with the same direction and no distinct error outcome."
+    },
+    {
+      "component_id": "dup-0b68db0ff3fec49e",
+      "verdict": "valid_merge",
+      "reason": "Both members require HelloRetryRequest encoding and parsing to use the ServerHello wire structure; their conditions, direction, and prohibited distinct body layout are equivalent."
+    },
+    {
+      "component_id": "dup-0b75213eb03403b8",
+      "verdict": "invalid_merge",
+      "reason": "One member requires both encoding and decoding psk_ke as value 0, while the other is conditioned only on encoding. The first therefore contains a parser-direction check absent from the second."
+    },
+    {
+      "component_id": "dup-0b915a895685b532",
+      "verdict": "valid_merge",
+      "reason": "Both members impose the same 0-through-32-octet bound on ClientHello.legacy_session_id for the serializer/parser, with the same prohibition on values longer than 32 octets."
+    },
+    {
+      "component_id": "dup-0fdfbfdf408f2afd",
+      "verdict": "valid_merge",
+      "reason": "Under the same condition that ClientHello contains supported_versions, both members require version negotiation to use that extension rather than legacy_version."
+    },
+    {
+      "component_id": "dup-159cca7ac0ca8859",
+      "verdict": "invalid_merge",
+      "reason": "One member requires both encoding and parsing the ClientHello variant as OfferedPsks, while the other requires only encoding extension_data as OfferedPsks. Their implementation-check directions are not equivalent."
+    },
+    {
+      "component_id": "dup-23b38eb25952db47",
+      "verdict": "valid_merge",
+      "reason": "Both members require the NewSessionTicket EarlyDataIndication body to be encoded as uint32 max_early_data_size under the same message-type condition."
+    },
+    {
+      "component_id": "dup-3b4a19bc0dabc63b",
+      "verdict": "invalid_merge",
+      "reason": "One member applies to connection-termination paths and the other to handshake-abort paths. Although both require alert X when an alert is sent, those are different protocol conditions and therefore different error-path checks."
+    },
+    {
+      "component_id": "dup-3f86e12a974d8d9a",
+      "verdict": "valid_merge",
+      "reason": "Both members require a client Certificate sent in response to CertificateRequest to copy the request's certificate_request_context exactly, in the same response direction and with the same mismatch prohibition."
+    },
+    {
+      "component_id": "dup-41b0edcce6cc856d",
+      "verdict": "valid_merge",
+      "reason": "Both members require PskIdentity.obfuscated_ticket_age to be encoded as uint32; the condition and serialization direction are equivalent."
+    },
+    {
+      "component_id": "dup-44496a14b557c367",
+      "verdict": "invalid_merge",
+      "reason": "One member applies whenever sending a ServerHello, while the other applies only when the server negotiates TLS 1.3. The broader and narrower conditions are not equivalent even though both check for supported_versions."
+    },
+    {
+      "component_id": "dup-48818b29f1b0ca09",
+      "verdict": "valid_merge",
+      "reason": "Both members express the same server-side implication: a post-handshake CertificateRequest may be sent only if the client offered post_handshake_auth. The positive and negative conditions are logical contrapositives."
+    },
+    {
+      "component_id": "dup-499c7f8b6ec9283d",
+      "verdict": "valid_merge",
+      "reason": "Both members require the server to send Certificate when its authentication uses certificates, with the same server-to-client direction and omission prohibition."
+    },
+    {
+      "component_id": "dup-4f9146a8b16acd02",
+      "verdict": "invalid_merge",
+      "reason": "Both members check TLSCiphertext.opaque_type value 23, but one additionally requires it to be the first field and prohibits a different field order. That field-position check is absent from the other member."
+    },
+    {
+      "component_id": "dup-56077d63fb8933f3",
+      "verdict": "invalid_merge",
+      "reason": "One member checks only encoding AlertLevel.fatal as numeric value 2, while the other explicitly requires both encoding and decoding that mapping. Their directions are not equivalent."
+    },
+    {
+      "component_id": "dup-564beef78b5203f6",
+      "verdict": "invalid_merge",
+      "reason": "All members include the TLSCiphertext legacy_record_version value check, but one additionally requires the field position after opaque_type and another covers parser behavior. The component therefore combines more than one atomic check."
+    },
+    {
+      "component_id": "dup-58e1d3e212fd71b8",
+      "verdict": "valid_merge",
+      "reason": "All members require the server receiving or parsing a ClientHello to ignore an unrecognized extension rather than reject the message solely for that extension; the inbound condition and outcome are equivalent."
+    },
+    {
+      "component_id": "dup-5a59e4d64d7942df",
+      "verdict": "invalid_merge",
+      "reason": "One member requires both encoding and parsing the ServerHello variant as uint16 selected_identity, while the other requires only encoding it. The parser-direction check is not shared."
+    },
+    {
+      "component_id": "dup-5e70d9c1287eb409",
+      "verdict": "invalid_merge",
+      "reason": "The members do not use equivalent scopes: one is limited to the post-ServerHello flight, one broadly covers server requests for client authentication, and one requires the server itself to be authenticating with a certificate. These are not the same conditional ordering check."
+    },
+    {
+      "component_id": "dup-710723427bf6fcd6",
+      "verdict": "invalid_merge",
+      "reason": "One member applies to unspecified-alert connection termination and the other to unspecified-alert handshake abort. The required alert-selection rule matches, but the protocol error-path conditions do not."
+    },
+    {
+      "component_id": "dup-779499e2e4e6fa7b",
+      "verdict": "valid_merge",
+      "reason": "Both members require TLS 1.3 elliptic-curve key shares to use the curve's single point format and prohibit point-format negotiation under equivalent conditions."
+    }
+  ]
+}

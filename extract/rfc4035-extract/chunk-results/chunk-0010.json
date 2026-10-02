@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0010",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A DS RRset SHOULD be present at a delegation point when the\n   child zone is signed.",
+      "line_start": 366,
+      "line_end": 367,
+      "condition": "At a delegation point when the child zone is signed.",
+      "required_behavior": "A DS RRset SHOULD be present at the delegation point.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The signed status of a delegated child zone and the presence of a DS RRset at its delegation point can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The DS RRset MAY contain multiple records,\n   each referencing a public key in the child zone used to verify the\n   RRSIGs in that zone.",
+      "line_start": 367,
+      "line_end": 369,
+      "condition": "A DS RRset is included in a zone.",
+      "required_behavior": "The DS RRset MAY contain multiple records.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A zone can contain a DS RRset with multiple records, so support for the permitted multiplicity is observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The DS RRset MAY contain multiple records,\n   each referencing a public key in the child zone used to verify the\n   RRSIGs in that zone.",
+      "line_start": 367,
+      "line_end": 369,
+      "condition": "For each DS RR in a DS RRset, including a singleton RRset.",
+      "required_behavior": "Each DS record references a public key in the child zone used to verify RRSIGs in that zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Each DS record can be matched to the child-zone public key it references and that key's signature-verification role.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "All DS RRsets in a zone MUST be signed, and DS\n   RRsets MUST NOT appear at a zone's apex.",
+      "line_start": 369,
+      "line_end": 370,
+      "condition": "A zone contains DS RRsets.",
+      "required_behavior": "All DS RRsets in the zone MUST be signed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The presence of signatures can be checked for each DS RRset in a zone.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "All DS RRsets in a zone MUST be signed, and DS\n   RRsets MUST NOT appear at a zone's apex.",
+      "line_start": 369,
+      "line_end": 370,
+      "condition": "DS RRset placement within a zone.",
+      "required_behavior": "",
+      "forbidden_behavior": "DS RRsets MUST NOT appear at the zone's apex.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The owner names of DS RRsets can be compared with the zone apex.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A DS RR SHOULD point to a DNSKEY RR that is present in the child's\n   apex DNSKEY RRset, and the child's apex DNSKEY RRset SHOULD be signed\n   by the corresponding private key.",
+      "line_start": 372,
+      "line_end": 374,
+      "condition": "A DS RR references a child-zone DNSKEY RR.",
+      "required_behavior": "The DS RR SHOULD point to a DNSKEY RR present in the child's apex DNSKEY RRset.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The DNSKEY referenced by a DS RR can be checked for membership in the child's apex DNSKEY RRset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A DS RR SHOULD point to a DNSKEY RR that is present in the child's\n   apex DNSKEY RRset, and the child's apex DNSKEY RRset SHOULD be signed\n   by the corresponding private key.",
+      "line_start": 372,
+      "line_end": 374,
+      "condition": "A DS RR points to a DNSKEY RR in the child's apex DNSKEY RRset.",
+      "required_behavior": "The child's apex DNSKEY RRset SHOULD be signed by the private key corresponding to the DNSKEY RR referenced by the DS RR.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The signature over the child's apex DNSKEY RRset can be verified with the public key referenced by the DS RR.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The TTL of a DS RRset SHOULD match the TTL of the delegating NS RRset\n   (that is, the NS RRset from the same zone containing the DS RRset).",
+      "line_start": 379,
+      "line_end": 380,
+      "condition": "A DS RRset and the delegating NS RRset are in the same zone.",
+      "required_behavior": "The DS RRset TTL SHOULD match the TTL of that delegating NS RRset.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The TTL values of the DS RRset and its same-zone delegating NS RRset can be compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Construction of a DS RR requires knowledge of the corresponding\n   DNSKEY RR in the child zone,",
+      "line_start": 382,
+      "line_end": 383,
+      "condition": "Constructing a DS RR.",
+      "required_behavior": "The corresponding DNSKEY RR in the child zone must be known in order to construct the DS RR.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The DS-construction input or available key data can be checked for the corresponding child-zone DNSKEY RR.",
+      "eligibility": "eligible"
+    }
+  ]
+}

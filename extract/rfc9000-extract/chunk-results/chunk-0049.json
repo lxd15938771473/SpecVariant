@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0049",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A token sent in a NEW_TOKEN frame or a Retry packet MUST be constructed in a way that allows the server to identify how it was provided to a client.",
+      "line_start": 2263,
+      "line_end": 2265,
+      "condition": "When constructing a token to be sent in a NEW_TOKEN frame or a Retry packet.",
+      "required_behavior": "Construct the token so that the server can identify whether and how it was provided to the client.",
+      "forbidden_behavior": "Do not construct the token in a form that prevents the server from identifying how it was provided to the client.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation test can generate tokens through both delivery mechanisms and verify that the server can distinguish their provenance and apply mechanism-specific handling.",
+      "eligibility": "eligible"
+    }
+  ]
+}

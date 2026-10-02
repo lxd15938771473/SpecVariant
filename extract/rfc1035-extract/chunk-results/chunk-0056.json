@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0056",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A name server must employ multiple concurrent activities, whether they\nare implemented as separate tasks in the host's OS or multiplexing\ninside a single name server program.",
+      "line_start": 2066,
+      "line_end": 2068,
+      "condition": "When operating a name server.",
+      "required_behavior": "Employ multiple concurrent activities.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Inspect scheduling or exercise overlapping activities to determine whether the name server supports concurrency.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "It is simply not acceptable for a\nname server to block the service of UDP requests while it waits for TCP\ndata for refreshing or query activities.",
+      "line_start": 2068,
+      "line_end": 2070,
+      "condition": "While a name server waits for TCP data for refreshing activities.",
+      "required_behavior": "",
+      "forbidden_behavior": "Block the service of UDP requests because of that wait.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Hold refresh-related TCP data pending and verify that UDP requests can still be serviced.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "It is simply not acceptable for a\nname server to block the service of UDP requests while it waits for TCP\ndata for refreshing or query activities.",
+      "line_start": 2068,
+      "line_end": 2070,
+      "condition": "While a name server waits for TCP data for query activities.",
+      "required_behavior": "",
+      "forbidden_behavior": "Block the service of UDP requests because of that wait.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Hold query-related TCP data pending and verify that UDP requests can still be serviced.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Similarly, a name server\nshould not attempt to provide recursive service without processing such\nrequests in parallel, though it may choose to serialize requests from a\nsingle client, or to regard identical requests from the same client as\nduplicates.",
+      "line_start": 2070,
+      "line_end": 2074,
+      "condition": "When a name server provides recursive service; requests from a single client may be serialized, and identical requests from that client may be treated as duplicates.",
+      "required_behavior": "The name server should process recursive requests in parallel, subject to the stated single-client exceptions.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Issue recursive requests from multiple clients and inspect whether processing can overlap, preserving the advisory strength and explicit exceptions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Similarly, a name server\nshould not attempt to provide recursive service without processing such\nrequests in parallel, though it may choose to serialize requests from a\nsingle client, or to regard identical requests from the same client as\nduplicates.",
+      "line_start": 2070,
+      "line_end": 2074,
+      "condition": "When providing recursive service for requests from a single client.",
+      "required_behavior": "The name server may choose to serialize requests from that client.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Single-client scheduling can be inspected or exercised to confirm that serialization is an explicitly permitted implementation choice.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Similarly, a name server\nshould not attempt to provide recursive service without processing such\nrequests in parallel, though it may choose to serialize requests from a\nsingle client, or to regard identical requests from the same client as\nduplicates.",
+      "line_start": 2070,
+      "line_end": 2074,
+      "condition": "When providing recursive service and receiving identical requests from the same client.",
+      "required_behavior": "The name server may regard those identical requests as duplicates.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Repeat an identical request from one client and inspect duplicate classification; the behavior is permitted rather than mandatory.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A name server should not substantially delay requests while\nit reloads a zone from master files or while it incorporates a newly\nrefreshed zone into its database.",
+      "line_start": 2074,
+      "line_end": 2076,
+      "condition": "While a name server reloads a zone from master files.",
+      "required_behavior": "",
+      "forbidden_behavior": "The name server should not substantially delay requests during the reload.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Reload-related request latency can be observed, but this chunk supplies no threshold for a substantial delay, so the constraint cannot support a determinate implementation verdict.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "A name server should not substantially delay requests while\nit reloads a zone from master files or while it incorporates a newly\nrefreshed zone into its database.",
+      "line_start": 2074,
+      "line_end": 2076,
+      "condition": "While a name server incorporates a newly refreshed zone into its database.",
+      "required_behavior": "",
+      "forbidden_behavior": "The name server should not substantially delay requests during incorporation.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Request latency during zone incorporation can be observed, but this chunk supplies no threshold for a substantial delay, so the constraint cannot support a determinate implementation verdict.",
+      "eligibility": "exclude"
+    }
+  ]
+}

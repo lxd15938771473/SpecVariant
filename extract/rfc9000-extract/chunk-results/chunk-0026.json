@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0026",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Each connection starts with a handshake phase",
+      "line_start": 1247,
+      "line_end": 1247,
+      "condition": "When a QUIC connection starts",
+      "required_behavior": "The connection starts in a handshake phase.",
+      "forbidden_behavior": "The connection must not start outside the handshake phase.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation test can observe the initial connection phase and verify that it is the handshake phase.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "during which the two endpoints establish a shared secret using the cryptographic handshake protocol [QUIC-TLS]",
+      "line_start": 1247,
+      "line_end": 1249,
+      "condition": "During the handshake phase",
+      "required_behavior": "The two endpoints establish a shared secret using the QUIC-TLS cryptographic handshake protocol.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Handshake traces and derived key state can verify that both endpoints establish shared secret material through the specified handshake protocol.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "and negotiate the application protocol.",
+      "line_start": 1249,
+      "line_end": 1249,
+      "condition": "During the handshake phase",
+      "required_behavior": "The endpoints negotiate the application protocol.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The negotiated application protocol can be inspected after or during a handshake.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The handshake (Section 7) confirms that both endpoints are willing to communicate (Section 8.1)",
+      "line_start": 1249,
+      "line_end": 1251,
+      "condition": "When the handshake confirms the connection",
+      "required_behavior": "The handshake confirms that both endpoints are willing to communicate.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation can be tested to ensure handshake confirmation is reached only after mutual willingness to communicate has been established.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "and establishes parameters for the connection (Section 7.4).",
+      "line_start": 1251,
+      "line_end": 1252,
+      "condition": "During the handshake",
+      "required_behavior": "The handshake establishes parameters for the connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Connection state after the handshake can be inspected for established connection parameters.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An application protocol can use the connection during the handshake phase with some limitations.",
+      "line_start": 1254,
+      "line_end": 1255,
+      "condition": "During the handshake phase",
+      "required_behavior": "Application-protocol use of the connection is permitted subject to unspecified limitations.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The passage does not identify the limitations, so complete conformant behavior cannot be determined from this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "0-RTT allows application data to be sent by a client before receiving a response from the server.",
+      "line_start": 1255,
+      "line_end": 1256,
+      "condition": "When a client uses 0-RTT before receiving a server response",
+      "required_behavior": "The client is permitted to send application data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime trace can verify that client application data is accepted for transmission before any server response is received.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "However, 0-RTT provides no protection against replay attacks",
+      "line_start": 1257,
+      "line_end": 1257,
+      "condition": "When application data is sent using 0-RTT",
+      "required_behavior": "",
+      "forbidden_behavior": "The implementation must not treat 0-RTT as providing replay protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Security-state handling and replay tests can verify that 0-RTT data is not classified or relied upon as replay-protected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A server can also send application data to a client before it receives the final cryptographic handshake messages that allow it to confirm the identity and liveness of the client.",
+      "line_start": 1258,
+      "line_end": 1261,
+      "condition": "Before the server receives the final cryptographic handshake messages needed to confirm client identity and liveness",
+      "required_behavior": "The server is permitted to send application data to the client.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A handshake trace can verify that server application data may be emitted before receipt of the specified final client handshake messages.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The use of connection IDs (Section 5.1) allows connections to migrate to a new network path, both as a direct choice of an endpoint and when forced by a change in a middlebox.",
+      "line_start": 1264,
+      "line_end": 1267,
+      "condition": "When connection IDs are used and an endpoint chooses a new path or a middlebox change forces a path change",
+      "required_behavior": "The connection can migrate to the new network path.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Path-change tests can verify that a connection identified by connection IDs continues on a new path for both endpoint-selected and externally forced changes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For connections that are no longer needed or desired, there are several ways for a client and server to terminate a connection, as described in Section 10.",
+      "line_start": 1270,
+      "line_end": 1272,
+      "condition": "When a connection is no longer needed or desired",
+      "required_behavior": "A client or server can terminate the connection using one of several unspecified mechanisms.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The mechanisms and their required behavior are only referenced and are not present in this chunk, so the constraint cannot be fully validated from the supplied evidence.",
+      "eligibility": "exclude"
+    }
+  ]
+}

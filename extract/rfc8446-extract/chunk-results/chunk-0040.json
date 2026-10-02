@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0040",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Diffie-Hellman [DH76] parameters for both clients and servers are\n   encoded in the opaque key_exchange field of a KeyShareEntry in a\n   KeyShare structure.",
+      "line_start": 2774,
+      "line_end": 2776,
+      "condition": "a client or server encodes finite-field Diffie-Hellman parameters",
+      "required_behavior": "place the parameters in KeyShareEntry.key_exchange within the KeyShare structure",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The handshake structure and containing field are directly observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The opaque value contains the Diffie-Hellman\n   public value (Y = g^X mod p) for the specified group",
+      "line_start": 2776,
+      "line_end": 2778,
+      "condition": "encoding finite-field Diffie-Hellman key_exchange",
+      "required_behavior": "encode the public value Y computed as g^X mod p for the specified group",
+      "forbidden_behavior": "encode a public value under different group parameters",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The encoded public value can be decoded and checked against the selected group's parameters.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "encoded as a big-endian integer",
+      "line_start": 2778,
+      "line_end": 2778,
+      "condition": "encoding a finite-field Diffie-Hellman public value",
+      "required_behavior": "encode Y as a big-endian integer",
+      "forbidden_behavior": "use little-endian or another integer byte order",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known public values have deterministic byte order.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "and padded to\n   the left with zeros to the size of p in bytes.",
+      "line_start": 2778,
+      "line_end": 2779,
+      "condition": "the big-endian encoding of Y is shorter than the byte length of p",
+      "required_behavior": "left-pad Y with zero bytes to the byte length of p",
+      "forbidden_behavior": "omit required padding or pad on the right",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The selected group fixes p and therefore the exact encoded length and padding side.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For a given Diffie-Hellman group, the padding results in all\n   public keys having the same length.",
+      "line_start": 2781,
+      "line_end": 2782,
+      "condition": "encoding public keys for a given finite-field Diffie-Hellman group",
+      "required_behavior": "produce public-key encodings of one fixed length equal to the byte length of p",
+      "forbidden_behavior": "emit variable-length encodings for that group",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The group modulus fixes the expected byte length for every encoded public key.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Peers MUST validate each other's public key Y by ensuring that 1 < Y\n   < p-1.",
+      "line_start": 2784,
+      "line_end": 2785,
+      "condition": "a peer validates a received finite-field Diffie-Hellman public key Y",
+      "required_behavior": "ensure Y is greater than 1",
+      "forbidden_behavior": "accept Y less than or equal to 1",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Boundary public values can directly exercise the lower-bound check.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Peers MUST validate each other's public key Y by ensuring that 1 < Y\n   < p-1.",
+      "line_start": 2784,
+      "line_end": 2785,
+      "condition": "a peer validates a received finite-field Diffie-Hellman public key Y",
+      "required_behavior": "ensure Y is less than p minus 1",
+      "forbidden_behavior": "accept Y greater than or equal to p minus 1",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Boundary public values can directly exercise the upper-bound check.",
+      "eligibility": "eligible"
+    }
+  ]
+}

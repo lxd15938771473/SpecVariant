@@ -1,0 +1,55 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0045",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "When bytes in flight is smaller than the congestion window and\n   sending is not pacing limited, the congestion window is\n   underutilized.  This can happen due to insufficient application data\n   or flow control limits.  When this occurs, the congestion window\n   SHOULD NOT be increased in either slow start or congestion avoidance.",
+                             "line_start":  1235,
+                             "line_end":  1239,
+                             "condition":  "Bytes in flight is smaller than the congestion window and sending is not pacing limited, while the sender is in slow start.",
+                             "required_behavior":  "The sender must leave the congestion window unincreased while it is underutilized in slow start.",
+                             "forbidden_behavior":  "The sender must not increase the congestion window in slow start while the congestion window is underutilized.",
+                             "error_behavior":  "No protocol error response is specified; the congestion-window update is suppressed.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can put the sender in slow start with bytes in flight below the congestion window, ensure sending is not pacing limited, process an event that would normally grow the window, and verify that the congestion window does not increase.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When bytes in flight is smaller than the congestion window and\n   sending is not pacing limited, the congestion window is\n   underutilized.  This can happen due to insufficient application data\n   or flow control limits.  When this occurs, the congestion window\n   SHOULD NOT be increased in either slow start or congestion avoidance.",
+                             "line_start":  1235,
+                             "line_end":  1239,
+                             "condition":  "Bytes in flight is smaller than the congestion window and sending is not pacing limited, while the sender is in congestion avoidance.",
+                             "required_behavior":  "The sender must leave the congestion window unincreased while it is underutilized in congestion avoidance.",
+                             "forbidden_behavior":  "The sender must not increase the congestion window in congestion avoidance while the congestion window is underutilized.",
+                             "error_behavior":  "No protocol error response is specified; the congestion-window update is suppressed.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can put the sender in congestion avoidance with bytes in flight below the congestion window, ensure sending is not pacing limited, process an event that would normally grow the window, and verify that the congestion window does not increase.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A sender that paces packets (see Section 7.7) might delay sending\n   packets and not fully utilize the congestion window due to this\n   delay.  A sender SHOULD NOT consider itself application limited if it\n   would have fully utilized the congestion window without pacing delay.",
+                             "line_start":  1241,
+                             "line_end":  1244,
+                             "condition":  "The sender paces packets, pacing delay prevents full utilization of the congestion window, and without that pacing delay the sender would have fully utilized the congestion window.",
+                             "required_behavior":  "The sender must treat the apparent underutilization caused solely by pacing delay as not application limited.",
+                             "forbidden_behavior":  "The sender must not classify itself as application limited solely because pacing delay prevented full utilization of the congestion window when the window otherwise would have been fully utilized.",
+                             "error_behavior":  "No protocol error response is specified; the sender avoids the application-limited classification.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A paced-send test can show that queued data would fill the congestion window absent pacing delay and verify that the sender does not enter its application-limited state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A sender MAY implement alternative mechanisms to update its\n   congestion window after periods of underutilization, such as those\n   proposed for TCP in [RFC7661].",
+                             "line_start":  1246,
+                             "line_end":  1248,
+                             "condition":  "A period of congestion-window underutilization has ended or is being accounted for.",
+                             "required_behavior":  "The sender is permitted to use an alternative mechanism to update its congestion window after the period of underutilization.",
+                             "forbidden_behavior":  "No specific alternative mechanism is required, and absence of such a mechanism is not a violation.",
+                             "error_behavior":  "No protocol error response is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "An implementation can be inspected or exercised to determine whether it uses an alternative post-underutilization congestion-window update; the statement explicitly permits that optional behavior.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

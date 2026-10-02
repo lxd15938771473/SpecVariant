@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0122",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Endpoints that rely on the Destination Connection ID field for\n   routing incoming QUIC packets are likely to require that the\n   connection ID be included in PMTU probes to route any resulting ICMP\n   messages (Section 14.2.1) back to the correct endpoint.  However,",
+      "line_start": 4799,
+      "line_end": 4802,
+      "condition": "An endpoint relies on the Destination Connection ID field to route incoming QUIC packets and needs resulting ICMP messages routed back to the correct endpoint.",
+      "required_behavior": "Include the connection ID in PMTU probes.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Probe packet construction can be inspected for inclusion of a connection ID, but the text only says this is likely to be required and therefore does not establish a definite constraint.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   only long header packets (Section 17.2) contain the Source Connection\n   ID field, and long header packets are not decrypted or acknowledged\n   by the peer once the handshake is complete.",
+      "line_start": 4803,
+      "line_end": 4805,
+      "condition": "A QUIC packet contains a Source Connection ID field.",
+      "required_behavior": "Use a long header packet.",
+      "forbidden_behavior": "A short header packet must not contain a Source Connection ID field.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A packet parser or encoder can determine whether the Source Connection ID field occurs only in long header packets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   only long header packets (Section 17.2) contain the Source Connection\n   ID field, and long header packets are not decrypted or acknowledged\n   by the peer once the handshake is complete.",
+      "line_start": 4803,
+      "line_end": 4805,
+      "condition": "The handshake is complete and the peer receives a long header packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "The peer must not decrypt or acknowledge the long header packet.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can complete the handshake, deliver a long header packet, and observe whether the peer decrypts or acknowledges it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   packet with a long header, such as a Handshake or 0-RTT packet\n   (Section 17.2), with a short header packet in a single UDP datagram.",
+      "line_start": 4808,
+      "line_end": 4809,
+      "condition": "A PMTU probe is constructed using the coalescing method described in this passage.",
+      "required_behavior": "Coalesce a long header packet and a short header packet in one UDP datagram.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The resulting UDP datagram can be parsed to verify that it contains both packet forms, but this is presented only as one optional construction method.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   If the resulting PMTU probe reaches the endpoint, the packet with the\n   long header will be ignored, but the short header packet will be\n   acknowledged.  If the PMTU probe causes an ICMP message to be sent,",
+      "line_start": 4810,
+      "line_end": 4812,
+      "condition": "The coalesced PMTU probe reaches the endpoint.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not process the long header packet.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can deliver the probe and observe that the long header packet is ignored.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   long header will be ignored, but the short header packet will be\n   acknowledged.  If the PMTU probe causes an ICMP message to be sent,",
+      "line_start": 4811,
+      "line_end": 4812,
+      "condition": "The coalesced PMTU probe reaches the endpoint.",
+      "required_behavior": "Acknowledge the short header packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can deliver the probe and verify that an acknowledgment covers the short header packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "      |  contains a Source Connection ID field.  This packet does not\n      |  need to be a valid packet, and it can be sent even if there is\n      |  no current use for packets of that type.",
+      "line_start": 4819,
+      "line_end": 4821,
+      "condition": "A long header packet is used in a PMTU probe solely so an ICMP quotation contains a Source Connection ID field.",
+      "required_behavior": "Permit the packet to be sent even when it is invalid or there is no current use for packets of that type.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Packet-sending logic can be tested to ensure it does not require the auxiliary long header packet to be valid or currently usable.",
+      "eligibility": "eligible"
+    }
+  ]
+}

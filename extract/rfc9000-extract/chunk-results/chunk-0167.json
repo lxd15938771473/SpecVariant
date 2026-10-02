@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0167",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   QUIC transport error codes and application error codes are 62-bit\n   unsigned integers.",
+      "line_start": 6750,
+      "line_end": 6751,
+      "condition": "When representing a QUIC transport error code or application error code.",
+      "required_behavior": "Represent the error code as a 62-bit unsigned integer.",
+      "forbidden_behavior": "Do not represent the error code using a negative value or a value outside the 62-bit unsigned integer range.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation's error-code type, encoder, or decoder can be checked to ensure values are unsigned and restricted to the 62-bit range.",
+      "eligibility": "eligible"
+    }
+  ]
+}

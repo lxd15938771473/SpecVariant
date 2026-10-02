@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0113",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A UDP datagram can include one or more QUIC packets.  The datagram\n   size refers to the total UDP payload size of a single UDP datagram\n   carrying QUIC packets.  The datagram size includes one or more QUIC\n   packet headers and protected payloads, but not the UDP or IP headers.",
+      "line_start": 4591,
+      "line_end": 4594,
+      "condition": "When calculating the datagram size of a UDP datagram carrying QUIC packets.",
+      "required_behavior": "Calculate the datagram size as the total UDP payload size, including all QUIC packet headers and protected payloads in that single UDP datagram.",
+      "forbidden_behavior": "Do not include UDP or IP headers in the datagram size.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation's size calculation can be checked against the encoded UDP payload and its protocol headers.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The maximum datagram size is defined as the largest size of UDP\n   payload that can be sent across a network path using a single UDP\n   datagram.  QUIC MUST NOT be used if the network path cannot support a\n   maximum datagram size of at least 1200 bytes.",
+      "line_start": 4596,
+      "line_end": 4599,
+      "condition": "The network path cannot support a maximum UDP payload size of at least 1200 bytes in one UDP datagram.",
+      "required_behavior": "",
+      "forbidden_behavior": "QUIC must not be used on that network path.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Path capability can be established and the implementation can be observed to reject or avoid QUIC when the maximum supported datagram size is below 1200 bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   UDP datagrams MUST NOT be fragmented at the IP layer.  In IPv4\n   [IPv4], the Don't Fragment (DF) bit MUST be set if possible, to\n   prevent fragmentation on the path.",
+      "line_start": 4628,
+      "line_end": 4630,
+      "condition": "When sending UDP datagrams carrying QUIC packets.",
+      "required_behavior": "",
+      "forbidden_behavior": "The UDP datagrams must not be fragmented at the IP layer.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet capture or sender instrumentation can determine whether emitted UDP datagrams are IP-fragmented.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   UDP datagrams MUST NOT be fragmented at the IP layer.  In IPv4\n   [IPv4], the Don't Fragment (DF) bit MUST be set if possible, to\n   prevent fragmentation on the path.",
+      "line_start": 4628,
+      "line_end": 4630,
+      "condition": "When sending a QUIC UDP datagram over IPv4 and setting the Don't Fragment bit is possible.",
+      "required_behavior": "Set the IPv4 Don't Fragment (DF) bit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The DF flag on emitted IPv4 packets can be inspected when the platform provides the ability to set it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   QUIC sometimes requires datagrams to be no smaller than a certain\n   size; see Section 8.1 as an example.  However, the size of a datagram\n   is not authenticated.  That is, if an endpoint receives a datagram of\n   a certain size, it cannot know that the sender sent the datagram at\n   the same size.  Therefore, an endpoint MUST NOT close a connection\n   when it receives a datagram that does not meet size constraints; the\n   endpoint MAY discard such datagrams.",
+      "line_start": 4632,
+      "line_end": 4638,
+      "condition": "An endpoint receives a datagram that does not meet an applicable size constraint.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not close the connection because of the datagram's size-constraint violation.",
+      "error_behavior": "Connection closure must not be used to handle the size-constraint violation.",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can deliver an undersized or otherwise size-nonconforming datagram and verify that the connection remains open.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   QUIC sometimes requires datagrams to be no smaller than a certain\n   size; see Section 8.1 as an example.  However, the size of a datagram\n   is not authenticated.  That is, if an endpoint receives a datagram of\n   a certain size, it cannot know that the sender sent the datagram at\n   the same size.  Therefore, an endpoint MUST NOT close a connection\n   when it receives a datagram that does not meet size constraints; the\n   endpoint MAY discard such datagrams.",
+      "line_start": 4632,
+      "line_end": 4638,
+      "condition": "An endpoint receives a datagram that does not meet an applicable size constraint.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The endpoint may discard the nonconforming datagram.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can deliver a size-nonconforming datagram and observe whether it is discarded without treating discard as a violation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

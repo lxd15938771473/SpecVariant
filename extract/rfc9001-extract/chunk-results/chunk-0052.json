@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0052",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "QUIC also provides no means to carry a\n   change_cipher_spec record.",
+      "line_start": 1977,
+      "line_end": 1978,
+      "condition": "When transporting TLS handshake-related data over QUIC",
+      "required_behavior": "",
+      "forbidden_behavior": "Provide or use a QUIC transport encoding for a TLS change_cipher_spec record.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The QUIC TLS-message transport path and emitted frames can be inspected for any change_cipher_spec record encoding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A client MUST NOT request the use of the\n   TLS 1.3 compatibility mode.",
+      "line_start": 1978,
+      "line_end": 1979,
+      "condition": "When a QUIC client constructs its TLS 1.3 handshake",
+      "required_behavior": "",
+      "forbidden_behavior": "Request or enable TLS 1.3 middlebox compatibility mode.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The ClientHello fields and client TLS configuration can be inspected for the compatibility-mode request pattern.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A server SHOULD treat the receipt of a\n   TLS ClientHello with a non-empty legacy_session_id field as a\n   connection error of type PROTOCOL_VIOLATION.",
+      "line_start": 1979,
+      "line_end": 1981,
+      "condition": "When a QUIC server receives a TLS ClientHello whose legacy_session_id field is non-empty",
+      "required_behavior": "Treat the ClientHello as a connection error.",
+      "forbidden_behavior": "Continue the connection as though the non-empty legacy_session_id were valid without a justified exception to the SHOULD.",
+      "error_behavior": "Terminate the connection with error type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A ClientHello with a non-empty legacy_session_id can be injected and the server's connection-close error code observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

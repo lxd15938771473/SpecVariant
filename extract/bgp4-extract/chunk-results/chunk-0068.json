@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0068",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A BGP speaker may transmit routes with overlapping Network Layer\n   Reachability Information (NLRI) to another BGP speaker.",
+      "line_start": 4611,
+      "line_end": 4612,
+      "condition": "A BGP speaker transmits routes to another BGP speaker.",
+      "required_behavior": "The speaker may transmit routes with overlapping NLRI.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Route export can be checked for permitted overlapping prefixes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Because BGP encodes NLRI using IP prefixes, overlap\n   will always exhibit subset relationships.",
+      "line_start": 4614,
+      "line_end": 4615,
+      "condition": "Encoding BGP Network Layer Reachability Information.",
+      "required_behavior": "Encode NLRI using IP prefixes.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The NLRI representation can be inspected for IP prefix encoding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The set of destinations described by the overlap represents a portion\n   of the less specific route that is feasible, but is not currently in\n   use.",
+      "line_start": 4631,
+      "line_end": 4633,
+      "condition": "A more specific route and a feasible less specific route overlap.",
+      "required_behavior": "Use the more specific route for the overlapping destinations; the overlapping portion of the less specific route remains feasible but is not currently in use.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Lookup of an overlapping destination can reveal which route takes precedence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a more specific route is later withdrawn, the set of\n   destinations described by the overlap will still be reachable using\n   the less specific route.",
+      "line_start": 4633,
+      "line_end": 4635,
+      "condition": "A more specific route is withdrawn while a feasible less specific route covers its destinations.",
+      "required_behavior": "Keep the overlapping destinations reachable using the less specific route.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Withdrawal followed by route lookup can check fallback to the covering route.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a BGP speaker receives overlapping routes, the Decision Process\n   MUST consider both routes based on the configured acceptance policy.",
+      "line_start": 4637,
+      "line_end": 4638,
+      "condition": "A BGP speaker receives overlapping routes.",
+      "required_behavior": "The Decision Process MUST consider both routes based on the configured acceptance policy.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Route selection can be inspected for independent policy evaluation of both overlapping routes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If both a less and a more specific route are accepted, then the\n   Decision Process MUST install, in Loc-RIB, either both the less and\n\n\n\nRekhter, et al.             Standards Track                    [Page 83]\n\nRFC 4271                         BGP-4                      January 2006\n\n\n   the more specific routes or aggregate the two routes and install, in\n   Loc-RIB, the aggregated route, provided that both routes have the\n   same value of the NEXT_HOP attribute.",
+      "line_start": 4639,
+      "line_end": 4651,
+      "condition": "Both a less specific route and a more specific route are accepted.",
+      "required_behavior": "The Decision Process MUST install both routes in Loc-RIB, or aggregate the two and install the aggregated route in Loc-RIB provided that both routes have the same NEXT_HOP.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Accepted overlapping routes can be compared with the resulting Loc-RIB entries and NEXT_HOP values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If both a less and a more specific route are accepted, then the\n   Decision Process MUST install, in Loc-RIB, either both the less and\n\n\n\nRekhter, et al.             Standards Track                    [Page 83]\n\nRFC 4271                         BGP-4                      January 2006\n\n\n   the more specific routes or aggregate the two routes and install, in\n   Loc-RIB, the aggregated route, provided that both routes have the\n   same value of the NEXT_HOP attribute.",
+      "line_start": 4639,
+      "line_end": 4651,
+      "condition": "The Decision Process aggregates accepted overlapping less and more specific routes instead of installing both in Loc-RIB.",
+      "required_behavior": "Both routes must have the same NEXT_HOP attribute value for this aggregation alternative.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Aggregation eligibility can be checked with equal and unequal NEXT_HOP values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a BGP speaker chooses to aggregate, then it SHOULD either include\n   all ASes used to form the aggregate in an AS_SET, or add the\n   ATOMIC_AGGREGATE attribute to the route.",
+      "line_start": 4653,
+      "line_end": 4655,
+      "condition": "A BGP speaker chooses to aggregate routes.",
+      "required_behavior": "The speaker SHOULD either include all ASes used to form the aggregate in an AS_SET or add ATOMIC_AGGREGATE to the route.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The resulting aggregate can be checked for complete AS_SET membership or ATOMIC_AGGREGATE.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Routes SHOULD\n   NOT be de-aggregated.",
+      "line_start": 4659,
+      "line_end": 4660,
+      "condition": "Processing routes.",
+      "required_behavior": "",
+      "forbidden_behavior": "Routes SHOULD NOT be de-aggregated.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Route transformations can be inspected for de-aggregation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In particular, a route that carries the\n   ATOMIC_AGGREGATE attribute MUST NOT be de-aggregated.  That is, the\n   NLRI of this route cannot be more specific.",
+      "line_start": 4660,
+      "line_end": 4662,
+      "condition": "A route carries the ATOMIC_AGGREGATE attribute.",
+      "required_behavior": "",
+      "forbidden_behavior": "The route MUST NOT be de-aggregated: its NLRI cannot be made more specific.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Route export and transformation can be checked for more specific NLRI derived from a route bearing ATOMIC_AGGREGATE.",
+      "eligibility": "eligible"
+    }
+  ]
+}

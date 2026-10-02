@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0040",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Once any address validation exchanges are complete, the cryptographic handshake is used to agree on cryptographic keys.",
+      "line_start": 1775,
+      "line_end": 1776,
+      "condition": "When address validation exchanges are performed before the cryptographic handshake.",
+      "required_behavior": "Complete the address validation exchanges before using the cryptographic handshake to agree on cryptographic keys.",
+      "forbidden_behavior": "Using the cryptographic handshake to agree on cryptographic keys before the address validation exchanges are complete.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An execution trace can verify the ordering between completion of address validation exchanges and use of the cryptographic handshake for key agreement.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The cryptographic handshake is carried in Initial (Section 17.2.2) and Handshake (Section 17.2.4) packets.",
+      "line_start": 1776,
+      "line_end": 1778,
+      "condition": "When carrying cryptographic-handshake data in QUIC packets.",
+      "required_behavior": "Carry the cryptographic handshake in Initial and Handshake packets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet traces can be inspected to determine whether cryptographic-handshake data is carried in the specified packet types.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Multiple QUIC packets -- even of different packet types -- can be coalesced into a single UDP datagram; see Section 12.2.",
+      "line_start": 1787,
+      "line_end": 1788,
+      "condition": "When multiple QUIC packets are sent in one UDP datagram.",
+      "required_behavior": "Support coalescing multiple QUIC packets, including packets of different types, into a single UDP datagram.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A sender or receiver can be tested with a UDP datagram containing multiple QUIC packets of the same or different packet types.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As a result, this handshake could consist of as few as four UDP datagrams, or any number more (subject to limits inherent to the protocol, such as congestion control and anti-amplification).",
+      "line_start": 1788,
+      "line_end": 1791,
+      "condition": "When transmitting the illustrated handshake.",
+      "required_behavior": "Observe applicable protocol limits, including congestion-control and anti-amplification limits, when selecting the number of UDP datagrams.",
+      "forbidden_behavior": "Using a datagram count or transmission pattern that violates an inherent protocol limit.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The existence of protocol limits is stated, but their concrete values and governing conditions are not supplied in this chunk, so an implementation check cannot be constructed from this evidence alone.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "Note that as described in Section 12.3, the server acknowledges 0-RTT data in 1-RTT packets, and the client sends 1-RTT packets in the same packet number space.",
+      "line_start": 1813,
+      "line_end": 1815,
+      "condition": "When a server acknowledges client 0-RTT data.",
+      "required_behavior": "Send the acknowledgment for 0-RTT data in a 1-RTT packet.",
+      "forbidden_behavior": "Acknowledging 0-RTT data in a packet that is not a 1-RTT packet.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A packet trace can identify the packet type containing acknowledgments for packet numbers used by 0-RTT data.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Note that as described in Section 12.3, the server acknowledges 0-RTT data in 1-RTT packets, and the client sends 1-RTT packets in the same packet number space.",
+      "line_start": 1813,
+      "line_end": 1815,
+      "condition": "When a client sends 1-RTT packets after sending 0-RTT packets.",
+      "required_behavior": "Send the 1-RTT packets in the same packet number space used for the 0-RTT packets.",
+      "forbidden_behavior": "Using separate packet number spaces for the client's 0-RTT and 1-RTT packets.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet-number-space assignment for client 0-RTT and 1-RTT packets can be compared in an implementation trace.",
+      "eligibility": "eligible"
+    }
+  ]
+}

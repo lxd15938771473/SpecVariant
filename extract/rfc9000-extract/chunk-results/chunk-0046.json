@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0046",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Implementations need to maintain a buffer of CRYPTO data received out of order.",
+      "line_start": 2154,
+      "line_end": 2155,
+      "condition": "When CRYPTO data is received out of order.",
+      "required_behavior": "Maintain a buffer for the out-of-order CRYPTO data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "An implementation can be inspected or tested to determine whether out-of-order CRYPTO data is retained in a buffer for later processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Implementations MUST support buffering at least 4096 bytes of data received in out-of-order CRYPTO frames.",
+      "line_start": 2159,
+      "line_end": 2160,
+      "condition": "When data is received in out-of-order CRYPTO frames.",
+      "required_behavior": "Support buffering at least 4096 bytes of that data.",
+      "forbidden_behavior": "Do not impose a supported out-of-order CRYPTO buffering capacity below 4096 bytes.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can deliver up to 4096 bytes in out-of-order CRYPTO frames and verify that the implementation can buffer them.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints MAY choose to allow more data to be buffered during the handshake.",
+      "line_start": 2160,
+      "line_end": 2162,
+      "condition": "During the handshake.",
+      "required_behavior": "The endpoint is permitted to buffer more than the mandatory minimum amount of out-of-order CRYPTO data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The configured or observed handshake buffering limit can be checked to confirm that capacities above 4096 bytes are accepted as conforming behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint's buffer size does not need to remain constant during the life of the connection.",
+      "line_start": 2163,
+      "line_end": 2164,
+      "condition": "During the life of a connection.",
+      "required_behavior": "The endpoint is permitted to vary its CRYPTO buffer size over time.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Runtime observation or code inspection can determine whether the CRYPTO buffer limit is allowed to change across connection states.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If an endpoint's buffer is exceeded during the handshake, it can expand its buffer temporarily to complete the handshake.",
+      "line_start": 2167,
+      "line_end": 2169,
+      "condition": "The endpoint's CRYPTO buffer is exceeded during the handshake.",
+      "required_behavior": "The endpoint is permitted to expand the buffer temporarily to complete the handshake.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A handshake test that exceeds the current buffer limit can verify whether temporary expansion is supported and confined to handshake completion.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If an endpoint does not expand its buffer, it MUST close the connection with a CRYPTO_BUFFER_EXCEEDED error code.",
+      "line_start": 2169,
+      "line_end": 2170,
+      "condition": "The endpoint's CRYPTO buffer is exceeded during the handshake and the endpoint does not expand it.",
+      "required_behavior": "Close the connection.",
+      "forbidden_behavior": "Do not keep the connection open after declining to expand the exceeded handshake CRYPTO buffer.",
+      "error_behavior": "Use the CRYPTO_BUFFER_EXCEEDED error code when closing the connection.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can overflow the handshake CRYPTO buffer while preventing expansion and verify both connection closure and the emitted error code.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Once the handshake completes, if an endpoint is unable to buffer all data in a CRYPTO frame, it MAY discard that CRYPTO frame and all CRYPTO frames received in the future, or it MAY close the connection with a CRYPTO_BUFFER_EXCEEDED error code.",
+      "line_start": 2172,
+      "line_end": 2175,
+      "condition": "The handshake has completed and the endpoint cannot buffer all data in a CRYPTO frame.",
+      "required_behavior": "Choose a permitted response: discard that CRYPTO frame and all CRYPTO frames received in the future, or close the connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "If the endpoint chooses connection closure, use the CRYPTO_BUFFER_EXCEEDED error code.",
+      "check_type": "error_handling",
+      "why_checkable": "A post-handshake buffer-exhaustion test can verify that the endpoint follows one of the two specified response branches and uses the required error code for the closure branch.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Once the handshake completes, if an endpoint is unable to buffer all data in a CRYPTO frame, it MAY discard that CRYPTO frame and all CRYPTO frames received in the future",
+      "line_start": 2172,
+      "line_end": 2174,
+      "condition": "After handshake completion, the endpoint cannot buffer all data in a CRYPTO frame and chooses the discard response.",
+      "required_behavior": "Discard the unbufferable CRYPTO frame and every CRYPTO frame received afterward.",
+      "forbidden_behavior": "Do not resume accepting later CRYPTO frames after selecting the discard response.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can trigger the discard branch and then send later CRYPTO frames to verify that all such future frames are also discarded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Packets containing discarded CRYPTO frames MUST be acknowledged because the packet has been received and processed by the transport even though the CRYPTO frame was discarded.",
+      "line_start": 2175,
+      "line_end": 2178,
+      "condition": "A received packet contains a CRYPTO frame that the endpoint discards.",
+      "required_behavior": "Acknowledge the packet containing the discarded CRYPTO frame.",
+      "forbidden_behavior": "Do not withhold acknowledgment merely because the contained CRYPTO frame was discarded.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can send a packet whose CRYPTO frame is discarded and verify that the packet is nevertheless acknowledged.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0072",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The essence of the method is that the <mail-domain> is used as a domain\nname to locate type MX RRs which list hosts willing to accept mail for\n<mail-domain>, together with preference values which rank the hosts\naccording to an order specified by the administrators for <mail-domain>.",
+      "line_start": 2709,
+      "line_end": 2712,
+      "condition": "When performing mail exchange binding for a mailbox.",
+      "required_behavior": "Use the mailbox specification's <mail-domain> as the domain name for locating type MX resource records.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The domain name and record type supplied to the mail-routing DNS lookup can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Mail exchange binding uses the <mail-domain> part of a mailbox\nspecification to determine where mail should be sent.  The <local-part>\nis not even consulted.",
+      "line_start": 2698,
+      "line_end": 2700,
+      "condition": "When determining where mail should be sent using mail exchange binding.",
+      "required_behavior": "",
+      "forbidden_behavior": "Consult the mailbox specification's <local-part> to determine the mail exchange destination.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The destination selection inputs can be inspected, and different local parts with the same mail domain can be checked for identical mail exchange binding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The essence of the method is that the <mail-domain> is used as a domain\nname to locate type MX RRs which list hosts willing to accept mail for\n<mail-domain>, together with preference values which rank the hosts\naccording to an order specified by the administrators for <mail-domain>.",
+      "line_start": 2709,
+      "line_end": 2712,
+      "condition": "When interpreting MX resource records located for a <mail-domain>.",
+      "required_behavior": "Interpret the listed hosts as mail exchanges willing to accept mail for that <mail-domain>.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The mapping from the queried mail domain to the exchange hosts represented by its MX records can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The essence of the method is that the <mail-domain> is used as a domain\nname to locate type MX RRs which list hosts willing to accept mail for\n<mail-domain>, together with preference values which rank the hosts\naccording to an order specified by the administrators for <mail-domain>.",
+      "line_start": 2709,
+      "line_end": 2712,
+      "condition": "When interpreting the preference values associated with hosts in MX resource records for a <mail-domain>.",
+      "required_behavior": "Use the preference values as the ranking of those hosts according to the order specified by the administrators for that <mail-domain>.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The use of MX preference values in ranking exchange hosts can be inspected; this passage does not specify the numeric direction of preference.",
+      "eligibility": "eligible"
+    }
+  ]
+}

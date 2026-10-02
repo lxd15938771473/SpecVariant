@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0025",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Only streams with a stream ID less than \"(max_streams * 4 + first_stream_id_of_type)\" can be opened; see Table 1.",
+      "line_start": 1204,
+      "line_end": 1205,
+      "condition": "When an endpoint opens a stream under the applicable incoming-stream limit.",
+      "required_behavior": "The stream ID must be less than (max_streams * 4 + first_stream_id_of_type).",
+      "forbidden_behavior": "Opening a stream whose stream ID is equal to or greater than (max_streams * 4 + first_stream_id_of_type).",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can set max_streams and the first stream ID for the type, then verify acceptance below the computed bound and rejection at or above it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Initial limits are set in the transport parameters; see Section 18.2.",
+      "line_start": 1205,
+      "line_end": 1206,
+      "condition": "When establishing the initial stream limits.",
+      "required_behavior": "Set the initial stream limits using transport parameters.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Handshake transport parameters and the resulting initial stream limits can be inspected and compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Subsequent limits are advertised using MAX_STREAMS frames; see Section 19.11.",
+      "line_start": 1207,
+      "line_end": 1208,
+      "condition": "When advertising a stream limit after the initial limits have been set.",
+      "required_behavior": "Advertise the subsequent limit using a MAX_STREAMS frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can inspect whether post-initial stream-limit advertisements use MAX_STREAMS frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Separate limits apply to unidirectional and bidirectional streams.",
+      "line_start": 1208,
+      "line_end": 1209,
+      "condition": "When tracking or enforcing stream concurrency limits.",
+      "required_behavior": "Maintain and apply distinct limits for unidirectional streams and bidirectional streams.",
+      "forbidden_behavior": "Using one shared concurrency limit for both unidirectional and bidirectional streams.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can independently configure and consume each stream type's limit and verify that one does not consume or alter the other.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If either is received, the connection MUST be closed immediately with a connection error of type TRANSPORT_PARAMETER_ERROR if the offending value was received in a transport parameter",
+      "line_start": 1213,
+      "line_end": 1217,
+      "condition": "When a max_streams transport parameter is received with a value greater than 2^60.",
+      "required_behavior": "",
+      "forbidden_behavior": "Keeping the connection open or delaying closure after receiving the offending transport parameter.",
+      "error_behavior": "Immediately close the connection with a TRANSPORT_PARAMETER_ERROR connection error.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can inject a max_streams transport parameter above 2^60 and observe the timing and error type of connection closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If either is received, the connection MUST be closed immediately with a connection error of type TRANSPORT_PARAMETER_ERROR if the offending value was received in a transport parameter or of type FRAME_ENCODING_ERROR if it was received in a frame",
+      "line_start": 1213,
+      "line_end": 1218,
+      "condition": "When a MAX_STREAMS frame is received with a value greater than 2^60.",
+      "required_behavior": "",
+      "forbidden_behavior": "Keeping the connection open or delaying closure after receiving the offending frame.",
+      "error_behavior": "Immediately close the connection with a FRAME_ENCODING_ERROR connection error.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can inject a MAX_STREAMS frame carrying a value above 2^60 and observe the timing and error type of connection closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints MUST NOT exceed the limit set by their peer.",
+      "line_start": 1220,
+      "line_end": 1220,
+      "condition": "When an endpoint opens streams subject to a limit set by its peer.",
+      "required_behavior": "",
+      "forbidden_behavior": "Opening streams beyond the peer's applicable stream limit.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A peer can advertise a known limit and count whether the endpoint opens more streams than permitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint that receives a frame with a stream ID exceeding the limit it has sent MUST treat this as a connection error of type STREAM_LIMIT_ERROR",
+      "line_start": 1220,
+      "line_end": 1223,
+      "condition": "When an endpoint receives a frame containing a stream ID that exceeds the stream limit the endpoint advertised.",
+      "required_behavior": "",
+      "forbidden_behavior": "Accepting or processing the limit-exceeding stream ID without treating it as the specified connection error.",
+      "error_behavior": "Treat the violation as a connection error of type STREAM_LIMIT_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can advertise a limit, deliver a frame with a stream ID beyond that limit, and inspect the resulting connection error.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Once a receiver advertises a stream limit using the MAX_STREAMS frame, advertising a smaller limit has no effect.",
+      "line_start": 1225,
+      "line_end": 1226,
+      "condition": "When a receiver has advertised a stream limit using MAX_STREAMS and later advertises a smaller limit.",
+      "required_behavior": "Keep the previously effective, larger stream limit unchanged.",
+      "forbidden_behavior": "Reducing the effective stream limit to the subsequently advertised smaller value.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can process decreasing MAX_STREAMS values and verify that the effective limit never decreases.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "MAX_STREAMS frames that do not increase the stream limit MUST be ignored.",
+      "line_start": 1226,
+      "line_end": 1227,
+      "condition": "When a MAX_STREAMS frame carries a value less than or equal to the current stream limit.",
+      "required_behavior": "Ignore the MAX_STREAMS frame and leave the effective stream limit unchanged.",
+      "forbidden_behavior": "Changing stream-limit state or credit in response to a non-increasing MAX_STREAMS frame.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can deliver equal and smaller MAX_STREAMS values and verify that neither changes the current limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint that is unable to open a new stream due to the peer's limits SHOULD send a STREAMS_BLOCKED frame (Section 19.14).",
+      "line_start": 1235,
+      "line_end": 1236,
+      "condition": "When an endpoint cannot open a new stream because of the peer's stream limits.",
+      "required_behavior": "Send a STREAMS_BLOCKED frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can exhaust the peer-provided stream credit, attempt another stream opening, and observe whether STREAMS_BLOCKED is sent.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST NOT wait to receive this signal before advertising additional credit",
+      "line_start": 1237,
+      "line_end": 1238,
+      "condition": "When an endpoint can advertise additional stream credit and has not received a STREAMS_BLOCKED signal.",
+      "required_behavior": "Advertise additional credit according to its own policy without making receipt of STREAMS_BLOCKED a prerequisite.",
+      "forbidden_behavior": "Waiting for a STREAMS_BLOCKED frame before advertising additional stream credit.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can withhold STREAMS_BLOCKED and verify that additional credit advertisement is not gated on receiving that frame.",
+      "eligibility": "eligible"
+    }
+  ]
+}

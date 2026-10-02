@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0032",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   If a server receives a packet that indicates an unsupported version\n   and if the packet is large enough to initiate a new connection for\n   any supported version, the server SHOULD send a Version Negotiation\n   packet as described in Section 6.1.  A server MAY limit the number of\n   packets to which it responds with a Version Negotiation packet.",
+      "line_start": 1508,
+      "line_end": 1512,
+      "condition": "A server receives a packet indicating an unsupported version, and the packet is large enough to initiate a new connection for any supported version.",
+      "required_behavior": "The server should send a Version Negotiation packet as described in Section 6.1.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can deliver a sufficiently large packet carrying an unsupported version and observe whether the server emits the specified packet type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   packet as described in Section 6.1.  A server MAY limit the number of\n   packets to which it responds with a Version Negotiation packet.",
+      "line_start": 1511,
+      "line_end": 1512,
+      "condition": "The server receives packets to which it could respond with Version Negotiation packets.",
+      "required_behavior": "The server may impose a limit on the number of packets that receive Version Negotiation responses.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation can be inspected or tested for a response-count limiting policy.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Servers MUST drop smaller packets that specify unsupported versions.",
+      "line_start": 1513,
+      "line_end": 1513,
+      "condition": "A server receives a smaller packet that specifies an unsupported version.",
+      "required_behavior": "The server must drop the packet.",
+      "forbidden_behavior": "The server must not process or respond to the packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can send an undersized packet specifying an unsupported version and verify that it is dropped without a response or further processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   properly interpret the result.  Servers SHOULD respond with a Version\n   Negotiation packet, provided that the datagram is sufficiently long.",
+      "line_start": 1520,
+      "line_end": 1521,
+      "condition": "A server receives a sufficiently long datagram using a version that the server does not support.",
+      "required_behavior": "The server should respond with a Version Negotiation packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can send a sufficiently long datagram for an unsupported version and observe the response packet type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Packets with a supported version, or no Version field, are matched to\n   a connection using the connection ID or -- for packets with zero-\n   length connection IDs -- the local address and port.  These packets\n   are processed using the selected connection; otherwise, the server\n   continues as described below.",
+      "line_start": 1523,
+      "line_end": 1527,
+      "condition": "A packet has a supported version or has no Version field, and its connection ID is nonzero-length.",
+      "required_behavior": "The server matches the packet to a connection using the connection ID and processes it using the selected connection when a match is found.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Connection-selection instrumentation or tests can verify that nonzero-length connection IDs are used as the matching key and that matched packets use the selected connection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Packets with a supported version, or no Version field, are matched to\n   a connection using the connection ID or -- for packets with zero-\n   length connection IDs -- the local address and port.  These packets\n   are processed using the selected connection; otherwise, the server\n   continues as described below.",
+      "line_start": 1523,
+      "line_end": 1527,
+      "condition": "A packet has a supported version or has no Version field, and it has a zero-length connection ID.",
+      "required_behavior": "The server matches the packet to a connection using the local address and port and processes it using the selected connection when a match is found.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can send zero-length-connection-ID packets over controlled local address and port tuples and verify connection selection and processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Packets with a supported version, or no Version field, are matched to\n   a connection using the connection ID or -- for packets with zero-\n   length connection IDs -- the local address and port.  These packets\n   are processed using the selected connection; otherwise, the server\n   continues as described below.",
+      "line_start": 1523,
+      "line_end": 1527,
+      "condition": "A packet with a supported version or no Version field cannot be matched to a connection by the applicable matching key.",
+      "required_behavior": "The server continues with the subsequent server packet handling rules in this section.",
+      "forbidden_behavior": "The server must not process the packet using a nonexistent selected connection.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can submit an unmatched packet and verify that handling follows the new-connection or fallback paths below rather than established-connection processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If the packet is an Initial packet fully conforming with the\n   specification, the server proceeds with the handshake (Section 7).\n   This commits the server to the version that the client selected.",
+      "line_start": 1529,
+      "line_end": 1531,
+      "condition": "The server receives an Initial packet that fully conforms with the specification.",
+      "required_behavior": "The server proceeds with the handshake and commits to the version selected by the client.",
+      "forbidden_behavior": "After proceeding with the handshake, the server must not use a different protocol version for that connection.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can send a conforming Initial packet and verify both handshake progression and the connection's selected-version state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If a server refuses to accept a new connection, it SHOULD send an\n   Initial packet containing a CONNECTION_CLOSE frame with error code\n   CONNECTION_REFUSED.",
+      "line_start": 1533,
+      "line_end": 1535,
+      "condition": "A server refuses to accept a new connection.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The server should send an Initial packet containing a CONNECTION_CLOSE frame whose error code is CONNECTION_REFUSED.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can induce refusal of a new connection and validate the response packet type, frame type, and error code.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If the packet is a 0-RTT packet, the server MAY buffer a limited\n   number of these packets in anticipation of a late-arriving Initial\n   packet.",
+      "line_start": 1537,
+      "line_end": 1539,
+      "condition": "The server receives a 0-RTT packet before a late-arriving Initial packet.",
+      "required_behavior": "The server may buffer only a limited number of such 0-RTT packets while anticipating the Initial packet.",
+      "forbidden_behavior": "If the server buffers these packets, it must not buffer an unlimited number of them.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A stress test or configuration inspection can determine whether pre-Initial 0-RTT buffering is bounded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   packet.  Clients are not able to send Handshake packets prior to\n   receiving a server response, so servers SHOULD ignore any such\n   packets.",
+      "line_start": 1539,
+      "line_end": 1541,
+      "condition": "A server receives a Handshake packet before the client could have received a server response.",
+      "required_behavior": "The server should ignore the Handshake packet.",
+      "forbidden_behavior": "The server should not process the packet as a valid Handshake packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can send a Handshake packet before any server response and verify that it causes no handshake processing or state transition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Servers MUST drop incoming packets under all other circumstances.",
+      "line_start": 1543,
+      "line_end": 1543,
+      "condition": "An incoming packet falls under none of the preceding handling circumstances.",
+      "required_behavior": "The server must drop the packet.",
+      "forbidden_behavior": "The server must not process or respond to the packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can construct packets outside every preceding accepted or specially handled case and verify that each is discarded.",
+      "eligibility": "eligible"
+    }
+  ]
+}

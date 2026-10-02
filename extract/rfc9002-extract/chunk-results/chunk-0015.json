@@ -1,0 +1,67 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0015",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "At a high level, an endpoint measures the time from when a packet was\n   sent to when it is acknowledged as an RTT sample.",
+                             "line_start":  314,
+                             "line_end":  315,
+                             "condition":  "When an endpoint obtains an RTT sample from an acknowledged packet",
+                             "required_behavior":  "Measure the RTT sample as the elapsed time from sending that packet until receiving its acknowledgement.",
+                             "forbidden_behavior":  "Do not define that packet\u0027s RTT sample using different start or end events than packet transmission and acknowledgement.",
+                             "error_behavior":  "No error behavior is specified in this excerpt.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can record the packet-send and acknowledgement-receipt timestamps and compare their difference with the implementation\u0027s RTT sample.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The endpoint uses\n   RTT samples and peer-reported host delays (see Section 13.2 of\n   [QUIC-TRANSPORT]) to generate a statistical description of the\n   network path\u0027s RTT.",
+                             "line_start":  315,
+                             "line_end":  318,
+                             "condition":  "When an endpoint generates its statistical description of a network path\u0027s RTT",
+                             "required_behavior":  "Use both measured RTT samples and peer-reported host delays as inputs.",
+                             "forbidden_behavior":  "Do not construct the RTT description while disregarding either the RTT samples or the peer-reported host delays.",
+                             "error_behavior":  "No error behavior is specified in this excerpt.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "Implementation data flow or controlled samples with varying peer-reported delays can show whether both specified input classes feed the RTT estimation logic.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "An endpoint computes the following three values\n   for each path: the minimum value over a period of time (min_rtt)",
+                             "line_start":  318,
+                             "line_end":  319,
+                             "condition":  "For each network path for which the endpoint computes RTT statistics",
+                             "required_behavior":  "Compute a per-path min_rtt value representing the minimum RTT over a period of time.",
+                             "forbidden_behavior":  "Do not omit min_rtt or share a single min_rtt across distinct paths as though it were path-independent.",
+                             "error_behavior":  "No error behavior is specified in this excerpt.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "Tests can supply known RTT samples on separate paths and inspect whether each path has a minimum-valued min_rtt statistic.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "an\n   exponentially weighted moving average (smoothed_rtt)",
+                             "line_start":  319,
+                             "line_end":  320,
+                             "condition":  "For each network path for which the endpoint computes RTT statistics",
+                             "required_behavior":  "Compute a per-path smoothed_rtt as an exponentially weighted moving average.",
+                             "forbidden_behavior":  "Do not omit smoothed_rtt, compute it as a non-exponentially-weighted statistic, or share it across distinct paths as path-independent state.",
+                             "error_behavior":  "No error behavior is specified in this excerpt.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "A sequence of controlled RTT samples can distinguish exponentially weighted averaging from other calculations, and separate path inputs can verify per-path state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "the mean\n   deviation (referred to as \"variation\" in the rest of this document)\n   in the observed RTT samples (rttvar).",
+                             "line_start":  320,
+                             "line_end":  322,
+                             "condition":  "For each network path for which the endpoint computes RTT statistics",
+                             "required_behavior":  "Compute a per-path rttvar value as the mean deviation in the observed RTT samples.",
+                             "forbidden_behavior":  "Do not omit rttvar, calculate it as an unrelated dispersion statistic, or share it across distinct paths as path-independent state.",
+                             "error_behavior":  "No error behavior is specified in this excerpt.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "Known RTT sample sequences and separate path state allow comparison of the reported rttvar with the mean-deviation statistic described here.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

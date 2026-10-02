@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0014",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Domain names in messages are expressed in terms of a sequence of labels.",
+      "line_start": 544,
+      "line_end": 544,
+      "condition": "When representing a domain name in a message.",
+      "required_behavior": "Express the domain name as a sequence of labels.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The message name representation can be inspected for its label sequence structure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Each label is represented as a one octet length field followed by that\nnumber of octets.",
+      "line_start": 545,
+      "line_end": 546,
+      "condition": "When encoding a label in a domain name in a message.",
+      "required_behavior": "Represent the label length in a one-octet field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The label length field width can be checked in the encoded message and serializer.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Each label is represented as a one octet length field followed by that\nnumber of octets.",
+      "line_start": 545,
+      "line_end": 546,
+      "condition": "When encoding a label in a domain name in a message.",
+      "required_behavior": "Place exactly the number of label octets specified by the length field immediately after that field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The declared length can be compared with the following label payload and its location.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Since every domain name ends with the null label of\nthe root, a domain name is terminated by a length byte of zero.",
+      "line_start": 546,
+      "line_end": 547,
+      "condition": "When representing a domain name as a sequence of labels in a message.",
+      "required_behavior": "Terminate the domain name with the root null label, represented by a zero length byte.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The final label length byte can be inspected for the zero value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The\nhigh order two bits of every length octet must be zero, and the\nremaining six bits of the length field limit the label to 63 octets or\nless.",
+      "line_start": 547,
+      "line_end": 550,
+      "condition": "For every label length octet.",
+      "required_behavior": "Set the two high-order bits of the length octet to zero.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A bit-mask check on a label length octet directly verifies the required zero bits.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The\nhigh order two bits of every length octet must be zero, and the\nremaining six bits of the length field limit the label to 63 octets or\nless.",
+      "line_start": 547,
+      "line_end": 550,
+      "condition": "For the length of a label.",
+      "required_behavior": "Limit label content to at most 63 octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The label payload length can be checked against the 63-octet upper bound.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To simplify implementations, the total length of a domain name (i.e.,\nlabel octets and label length octets) is restricted to 255 octets or\nless.",
+      "line_start": 552,
+      "line_end": 554,
+      "condition": "When measuring the total length of a domain name.",
+      "required_behavior": "Limit the combined number of label octets and label length octets to at most 255.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The sum of all label payload and label length octets can be checked at the 255-octet boundary.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Although labels can contain any 8 bit values in octets that make up a\nlabel,",
+      "line_start": 556,
+      "line_end": 557,
+      "condition": "For the permitted values of octets within a label.",
+      "required_behavior": "Permit any 8-bit value in a label content octet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Label-content representation and validation can be checked across all 256 octet values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Although labels can contain any 8 bit values in octets that make up a\nlabel, it is strongly recommended that labels follow the preferred\nsyntax described elsewhere in this memo, which is compatible with\nexisting host naming conventions.",
+      "line_start": 556,
+      "line_end": 559,
+      "condition": "When choosing label syntax.",
+      "required_behavior": "Strongly prefer the recommended label syntax described elsewhere in the memo; this is advisory rather than mandatory.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The syntax recommendation refers to rules absent from this chunk, so the exact implementation check cannot be established from this evidence alone.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "Name servers and resolvers must\ncompare labels in a case-insensitive manner (i.e., A=a), assuming ASCII\nwith zero parity.",
+      "line_start": 559,
+      "line_end": 561,
+      "condition": "When a name server or resolver compares labels, assuming ASCII with zero parity.",
+      "required_behavior": "Compare alphabetic label characters without distinguishing uppercase and lowercase.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Label comparison can be exercised with corresponding uppercase and lowercase ASCII letters.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Name servers and resolvers must\ncompare labels in a case-insensitive manner (i.e., A=a), assuming ASCII\nwith zero parity.  Non-alphabetic codes must match exactly.",
+      "line_start": 559,
+      "line_end": 561,
+      "condition": "When a name server or resolver compares non-alphabetic codes in labels, assuming ASCII with zero parity.",
+      "required_behavior": "Require exact equality of non-alphabetic codes for those codes to match.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Comparisons of equal and unequal non-alphabetic codes directly expose exact-match behavior.",
+      "eligibility": "eligible"
+    }
+  ]
+}

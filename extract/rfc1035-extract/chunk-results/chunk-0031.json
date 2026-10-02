@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0031",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "3.3.10. NULL RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                  <anything>                   /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nAnything at all may be in the RDATA field so long as it is 65535 octets\nor less.",
+      "line_start": 951,
+      "line_end": 959,
+      "condition": "When using the experimental NULL RR with RDATA of at most 65535 octets.",
+      "required_behavior": "The RDATA field may contain arbitrary data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "NULL RDATA encoding and decoding can be checked for support of arbitrary octet contents within the permitted length, without imposing a content format.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.10. NULL RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                  <anything>                   /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nAnything at all may be in the RDATA field so long as it is 65535 octets\nor less.",
+      "line_start": 951,
+      "line_end": 959,
+      "condition": "When encoding the RDATA field of the experimental NULL RR.",
+      "required_behavior": "Limit RDATA to at most 65535 octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded NULL RDATA length can be measured and compared with the explicit 65535-octet upper bound.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "NULL records cause no additional section processing.",
+      "line_start": 970,
+      "line_end": 970,
+      "condition": "When processing a NULL record.",
+      "required_behavior": "",
+      "forbidden_behavior": "Initiate additional section processing as a consequence of the NULL record.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Record-type dispatch and response construction can be inspected to determine whether NULL records trigger additional section processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "NULL RRs are not\nallowed in master files.",
+      "line_start": 970,
+      "line_end": 971,
+      "condition": "When representing records in a master file.",
+      "required_behavior": "",
+      "forbidden_behavior": "Include NULL RRs in a master file.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Master-file record handling can be checked to ensure NULL RRs are not treated as permitted master-file entries; no particular error response is specified.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0014",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "QUIC\n   treats loss of a packet containing handshake data the same as other\n   losses.",
+                             "line_start":  308,
+                             "line_end":  310,
+                             "condition":  "When a QUIC packet containing handshake data is lost.",
+                             "required_behavior":  "Treat the loss the same as the loss of other QUIC packets.",
+                             "forbidden_behavior":  "Do not apply distinct loss handling solely because the lost packet contains handshake data.",
+                             "error_behavior":  "No separate error behavior is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A loss-recovery test can compare the state transitions and congestion-control effects produced by loss of a handshake-data packet with those produced by an otherwise equivalent packet loss.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

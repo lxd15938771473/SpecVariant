@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0158",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A sender SHOULD send a STREAM_DATA_BLOCKED frame (type=0x15) when it\n   wishes to send data but is unable to do so due to stream-level flow\n   control.  This frame is analogous to DATA_BLOCKED (Section 19.12).",
+      "line_start": 6421,
+      "line_end": 6423,
+      "condition": "A sender wishes to send stream data but cannot because of stream-level flow control.",
+      "required_behavior": "The sender should send a STREAM_DATA_BLOCKED frame with type 0x15.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A runtime test can exhaust stream-level flow-control credit while data remains to be sent and observe whether the sender emits the specified frame type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint that receives a STREAM_DATA_BLOCKED frame for a send-only\n   stream MUST terminate the connection with error STREAM_STATE_ERROR.",
+      "line_start": 6425,
+      "line_end": 6426,
+      "condition": "An endpoint receives a STREAM_DATA_BLOCKED frame referring to a send-only stream.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not continue the connection after receiving this invalid frame.",
+      "error_behavior": "The endpoint must terminate the connection with STREAM_STATE_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can deliver the frame for a send-only stream and verify both connection termination and the reported error code.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   STREAM_DATA_BLOCKED Frame {\n     Type (i) = 0x15,\n     Stream ID (i),\n     Maximum Stream Data (i),\n   }",
+      "line_start": 6430,
+      "line_end": 6434,
+      "condition": "A STREAM_DATA_BLOCKED frame is encoded or parsed.",
+      "required_behavior": "The Type field must have the fixed value 0x15.",
+      "forbidden_behavior": "A frame with another type value must not be treated as a STREAM_DATA_BLOCKED frame.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded type value or parser dispatch value can be compared directly with 0x15.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   STREAM_DATA_BLOCKED Frame {\n     Type (i) = 0x15,\n     Stream ID (i),\n     Maximum Stream Data (i),\n   }",
+      "line_start": 6430,
+      "line_end": 6434,
+      "condition": "A STREAM_DATA_BLOCKED frame is encoded or parsed.",
+      "required_behavior": "The frame must contain Type, Stream ID, and Maximum Stream Data fields in that order.",
+      "forbidden_behavior": "The fields must not be omitted, reordered, or supplemented within this frame format.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serialized frame can be decoded and its field presence and ordering compared with the defined frame grammar.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Stream ID:  A variable-length integer indicating the stream that is\n      blocked due to flow control.",
+      "line_start": 6440,
+      "line_end": 6441,
+      "condition": "A STREAM_DATA_BLOCKED frame carries its Stream ID field.",
+      "required_behavior": "The Stream ID must be encoded as a variable-length integer and identify the stream blocked by flow control.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A parser or encoder test can validate the integer encoding and compare the decoded identifier with the stream whose flow control is blocking transmission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Maximum Stream Data:  A variable-length integer indicating the offset\n      of the stream at which the blocking occurred.",
+      "line_start": 6443,
+      "line_end": 6444,
+      "condition": "A STREAM_DATA_BLOCKED frame carries its Maximum Stream Data field.",
+      "required_behavior": "Maximum Stream Data must be encoded as a variable-length integer and indicate the stream offset at which blocking occurred.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A parser or encoder test can validate the integer encoding and compare its decoded value with the stream offset where flow-control blocking occurred.",
+      "eligibility": "eligible"
+    }
+  ]
+}

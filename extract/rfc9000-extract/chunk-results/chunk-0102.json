@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0102",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   When a packet containing an ACK frame is sent, the Largest\n   Acknowledged field in that frame can be saved.  When a packet\n   containing an ACK frame is acknowledged, the receiver can stop\n   acknowledging packets less than or equal to the Largest Acknowledged\n   field in the sent ACK frame.",
+      "line_start": 4244,
+      "line_end": 4248,
+      "condition": "When using the described ACK-frame tracking algorithm and a sent packet containing an ACK frame is acknowledged.",
+      "required_behavior": "The receiver may stop acknowledging packets whose packet numbers are less than or equal to the Largest Acknowledged value in that sent ACK frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can acknowledge a packet carrying an ACK frame and verify that the receiver removes acknowledgment ranges only through the saved Largest Acknowledged threshold.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A receiver that sends only non-ack-eliciting packets, such as ACK\n   frames, might not receive an acknowledgment for a long period of\n   time.  This could cause the receiver to maintain state for a large\n   number of ACK frames for a long period of time, and ACK frames it\n   sends could be unnecessarily large.  In such a case, a receiver could\n   send a PING or other small ack-eliciting frame occasionally, such as\n   once per round trip, to elicit an ACK from the peer.",
+      "line_start": 4250,
+      "line_end": 4256,
+      "condition": "When a receiver sends only non-ack-eliciting packets and consequently might not receive an acknowledgment for a long period.",
+      "required_behavior": "The receiver may occasionally send a PING or another small ack-eliciting frame to elicit an acknowledgment from its peer.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The suggested action is observable, but both its adoption and timing are optional and the term \"occasionally\" does not establish a definite conformance condition.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   In cases without ACK frame loss, this algorithm allows for a minimum\n   of 1 RTT of reordering.",
+      "line_start": 4258,
+      "line_end": 4259,
+      "condition": "When using this algorithm and ACK frames are not lost.",
+      "required_behavior": "The algorithm must accommodate at least 1 RTT of packet reordering.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can introduce packet reordering of up to 1 RTT without ACK-frame loss and verify that the tracked acknowledgment ranges remain available.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   In cases with ACK frame loss and reordering,\n   this approach does not guarantee that every acknowledgment is seen by\n   the sender before it is no longer included in the ACK frame.  Packets\n   could be received out of order, and all subsequent ACK frames\n   containing them could be lost.  In this case, the loss recovery\n   algorithm could cause spurious retransmissions, but the sender will\n   continue making forward progress.",
+      "line_start": 4259,
+      "line_end": 4265,
+      "condition": "When ACK frames are lost and packets or acknowledgments are reordered, including when every subsequent ACK frame covering an out-of-order packet is lost.",
+      "required_behavior": "The sender must continue making forward progress even if the loss recovery algorithm causes spurious retransmissions.",
+      "forbidden_behavior": "The sender must not cease forward progress solely because acknowledgments were removed from later ACK frames before being seen.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A loss-and-reordering test can discard all subsequent ACK frames covering selected packets, observe any spurious retransmissions, and verify that the sender nevertheless continues advancing.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0044",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A non-validating security-aware stub resolver SHOULD NOT set the CD\n   bit when sending queries unless it is requested by the application\n   layer, as by definition, a non-validating stub resolver depends on\n   the security-aware recursive name server to perform validation on its\n   behalf.",
+      "line_start": 1333,
+      "line_end": 1337,
+      "condition": "A non-validating security-aware stub resolver is sending a query, and the application layer has not requested that the CD bit be set.",
+      "required_behavior": "",
+      "forbidden_behavior": "The non-validating security-aware stub resolver SHOULD NOT set the CD bit in the query.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Query construction can be inspected or exercised for a non-validating security-aware stub resolver without an application-layer request, and the emitted CD bit can be observed against this recommendation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A validating security-aware stub resolver SHOULD set the CD bit,\n   because otherwise the security-aware recursive name server will\n   answer the query using the name server's local policy, which may\n   prevent the stub resolver from receiving data that would be\n   acceptable to the stub resolver's local policy.",
+      "line_start": 1339,
+      "line_end": 1343,
+      "condition": "A validating security-aware stub resolver is sending a query.",
+      "required_behavior": "The validating security-aware stub resolver SHOULD set the CD bit in the query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Queries emitted by a validating security-aware stub resolver can be inspected for the CD bit to assess this recommendation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

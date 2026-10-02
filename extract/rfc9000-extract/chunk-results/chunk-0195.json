@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0195",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   While there are legitimate uses for all messages, implementations\n   SHOULD track cost of processing relative to progress and treat\n   excessive quantities of any non-productive packets as indicative of\n   an attack.  Endpoints MAY respond to this condition with a connection\n   error or by dropping packets.",
+      "line_start": 7612,
+      "line_end": 7616,
+      "condition": "When processing messages or packets for a connection.",
+      "required_behavior": "Implementations should track processing cost relative to connection progress.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Instrumentation or tests can verify that the implementation maintains or evaluates processing-cost information against connection progress.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   While there are legitimate uses for all messages, implementations\n   SHOULD track cost of processing relative to progress and treat\n   excessive quantities of any non-productive packets as indicative of\n   an attack.  Endpoints MAY respond to this condition with a connection\n   error or by dropping packets.",
+      "line_start": 7612,
+      "line_end": 7616,
+      "condition": "When an implementation observes excessive quantities of non-productive packets.",
+      "required_behavior": "The implementation should treat the observed packets as indicative of an attack.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A focused test can generate excessive non-productive packets and verify that the implementation classifies or handles the condition as an attack indication.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   While there are legitimate uses for all messages, implementations\n   SHOULD track cost of processing relative to progress and treat\n   excessive quantities of any non-productive packets as indicative of\n   an attack.  Endpoints MAY respond to this condition with a connection\n   error or by dropping packets.",
+      "line_start": 7612,
+      "line_end": 7616,
+      "condition": "When excessive quantities of non-productive packets are treated as indicative of an attack.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "An endpoint may respond by producing a connection error or by dropping packets.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can trigger the stated attack condition and observe whether the endpoint chooses either permitted response.",
+      "eligibility": "eligible"
+    }
+  ]
+}

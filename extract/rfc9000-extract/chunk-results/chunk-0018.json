@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0018",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If an application is no longer interested in the data it is receiving on a stream, it can abort reading the stream and specify an application error code.",
+      "line_start": 968,
+      "line_end": 970,
+      "condition": "The application is no longer interested in data being received on a stream.",
+      "required_behavior": "The implementation permits the application to abort reading the stream and specify an application error code.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An API or runtime test can verify that receiving can be aborted with an application error code under the stated condition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the stream is in the \"Recv\" or \"Size Known\" state, the transport SHOULD signal this by sending a STOP_SENDING frame to prompt closure of the stream in the opposite direction.",
+      "line_start": 972,
+      "line_end": 974,
+      "condition": "The application aborts reading a stream that is in the \"Recv\" or \"Size Known\" state.",
+      "required_behavior": "The transport should send a STOP_SENDING frame to prompt closure of the opposite stream direction.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can place the stream in either named state, abort reading, and observe whether STOP_SENDING is transmitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This typically indicates that the receiving application is no longer reading data it receives from the stream, but it is not a guarantee that incoming data will be ignored.",
+      "line_start": 974,
+      "line_end": 977,
+      "condition": "A STOP_SENDING frame has been sent.",
+      "required_behavior": "",
+      "forbidden_behavior": "The implementation must not treat sending STOP_SENDING as a guarantee that all subsequently incoming stream data will be ignored.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Implementation logic can be inspected or tested to ensure it does not rely on STOP_SENDING as a guarantee that incoming data is ignored.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "STREAM frames received after sending a STOP_SENDING frame are still counted toward connection and stream flow control, even though these frames can be discarded upon receipt.",
+      "line_start": 979,
+      "line_end": 981,
+      "condition": "A STREAM frame is received after a STOP_SENDING frame has been sent for the stream.",
+      "required_behavior": "The received STREAM frame's data is counted toward both connection-level and stream-level flow control; the frame may then be discarded upon receipt.",
+      "forbidden_behavior": "The implementation must not omit the frame from connection or stream flow-control accounting merely because STOP_SENDING was sent or the frame is discarded.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can send STREAM frames after STOP_SENDING and inspect both flow-control counters and optional payload disposal.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint that receives a STOP_SENDING frame MUST send a RESET_STREAM frame if the stream is in the \"Ready\" or \"Send\" state.",
+      "line_start": 984,
+      "line_end": 986,
+      "condition": "An endpoint receives STOP_SENDING for a stream in the \"Ready\" or \"Send\" state.",
+      "required_behavior": "The endpoint sends a RESET_STREAM frame for that stream.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A protocol test can inject STOP_SENDING in each named state and require an emitted RESET_STREAM frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the stream is in the \"Data Sent\" state, the endpoint MAY defer sending the RESET_STREAM frame until the packets containing outstanding data are acknowledged or declared lost.",
+      "line_start": 986,
+      "line_end": 988,
+      "condition": "An endpoint receives STOP_SENDING while the stream is in the \"Data Sent\" state and packets contain outstanding stream data.",
+      "required_behavior": "The endpoint may defer RESET_STREAM while the packets containing outstanding data remain neither acknowledged nor declared lost.",
+      "forbidden_behavior": "If the endpoint chooses to defer RESET_STREAM under this rule, it must not continue that deferral beyond acknowledgment or loss declaration of the packets containing outstanding data.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet acknowledgment and loss events can be controlled while observing the timing of RESET_STREAM transmission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If any outstanding data is declared lost, the endpoint SHOULD send a RESET_STREAM frame instead of retransmitting the data.",
+      "line_start": 988,
+      "line_end": 990,
+      "condition": "After STOP_SENDING is received, outstanding stream data is declared lost.",
+      "required_behavior": "The endpoint should send RESET_STREAM.",
+      "forbidden_behavior": "The endpoint should not retransmit the lost stream data instead of sending RESET_STREAM.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A loss-recovery test can declare outstanding data lost and distinguish RESET_STREAM transmission from data retransmission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint SHOULD copy the error code from the STOP_SENDING frame to the RESET_STREAM frame it sends, but it can use any application error code.",
+      "line_start": 992,
+      "line_end": 994,
+      "condition": "An endpoint sends RESET_STREAM in response to STOP_SENDING.",
+      "required_behavior": "The endpoint should copy the STOP_SENDING application error code into RESET_STREAM, though use of another application error code is permitted.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can compare the error codes in an injected STOP_SENDING frame and the resulting RESET_STREAM frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint that sends a STOP_SENDING frame MAY ignore the error code in any RESET_STREAM frames subsequently received for that stream.",
+      "line_start": 994,
+      "line_end": 996,
+      "condition": "An endpoint has sent STOP_SENDING and subsequently receives RESET_STREAM for the same stream.",
+      "required_behavior": "The endpoint may ignore the application error code carried by the subsequently received RESET_STREAM frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can supply varying RESET_STREAM error codes after STOP_SENDING and verify that processing does not depend on those codes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "STOP_SENDING SHOULD only be sent for a stream that has not been reset by the peer.",
+      "line_start": 998,
+      "line_end": 999,
+      "condition": "An endpoint is deciding whether to send STOP_SENDING for a stream.",
+      "required_behavior": "The endpoint should send STOP_SENDING only if the peer has not reset the stream.",
+      "forbidden_behavior": "The endpoint should not send STOP_SENDING for a stream already reset by the peer.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A state-based test can mark a stream as peer-reset and observe whether STOP_SENDING is emitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint is expected to send another STOP_SENDING frame if a packet containing a previous STOP_SENDING is lost.",
+      "line_start": 1002,
+      "line_end": 1003,
+      "condition": "A packet containing a previously sent STOP_SENDING frame is declared lost.",
+      "required_behavior": "The endpoint sends another STOP_SENDING frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A loss-recovery test can declare the carrying packet lost and observe retransmission of STOP_SENDING in a new packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "However, once either all stream data or a RESET_STREAM frame has been received for the stream -- that is, the stream is in any state other than \"Recv\" or \"Size Known\" -- sending a STOP_SENDING frame is unnecessary.",
+      "line_start": 1003,
+      "line_end": 1006,
+      "condition": "All stream data or a RESET_STREAM frame has been received, so the stream is in a state other than \"Recv\" or \"Size Known\".",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Although the condition is observable, the statement only calls transmission unnecessary and does not clearly require or forbid it.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "An endpoint that wishes to terminate both directions of a bidirectional stream can terminate one direction by sending a RESET_STREAM frame, and it can encourage prompt termination in the opposite direction by sending a STOP_SENDING frame.",
+      "line_start": 1008,
+      "line_end": 1011,
+      "condition": "An endpoint wishes to terminate both directions of a bidirectional stream.",
+      "required_behavior": "The implementation permits RESET_STREAM to terminate the sending direction and STOP_SENDING to request prompt termination of the opposite direction.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A bidirectional-stream test can verify that the endpoint supports using the two frame types for their respective directions.",
+      "eligibility": "eligible"
+    }
+  ]
+}

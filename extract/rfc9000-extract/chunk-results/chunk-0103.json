@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0103",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   An endpoint measures the delays intentionally introduced between the\n   time the packet with the largest packet number is received and the\n   time an acknowledgment is sent.  The endpoint encodes this\n   acknowledgment delay in the ACK Delay field of an ACK frame; see\n   Section 19.3.  This allows the receiver of the ACK frame to adjust\n   for any intentional delays, which is important for getting a better\n   estimate of the path RTT when acknowledgments are delayed.",
+      "line_start": 4269,
+      "line_end": 4275,
+      "condition": "When generating an acknowledgment for a received packet.",
+      "required_behavior": "Measure the intentionally introduced delay from receipt of the packet with the largest packet number until the acknowledgment is sent.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Packet receipt and acknowledgment transmission timestamps can be observed and compared with the endpoint's computed acknowledgment delay.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint measures the delays intentionally introduced between the\n   time the packet with the largest packet number is received and the\n   time an acknowledgment is sent.  The endpoint encodes this\n   acknowledgment delay in the ACK Delay field of an ACK frame; see\n   Section 19.3.  This allows the receiver of the ACK frame to adjust\n   for any intentional delays, which is important for getting a better\n   estimate of the path RTT when acknowledgments are delayed.",
+      "line_start": 4269,
+      "line_end": 4275,
+      "condition": "When sending an ACK frame.",
+      "required_behavior": "Encode the measured acknowledgment delay in the ACK Delay field of the ACK frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A generated ACK frame can be decoded and its ACK Delay field compared with the endpoint's measured acknowledgment delay.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   before being processed.  An endpoint MUST NOT include delays that it\n   does not control when populating the ACK Delay field in an ACK frame.",
+      "line_start": 4278,
+      "line_end": 4279,
+      "condition": "When populating the ACK Delay field in an ACK frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "Include delays that the endpoint does not control.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can introduce a known host-side delay outside endpoint control and verify that this delay is excluded from the encoded ACK Delay value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   However, endpoints SHOULD include buffering delays caused by\n   unavailability of decryption keys, since these delays can be large\n   and are likely to be non-repeating.",
+      "line_start": 4280,
+      "line_end": 4282,
+      "condition": "When buffering is caused by unavailability of decryption keys and the endpoint populates acknowledgment delay.",
+      "required_behavior": "Include the buffering delay caused by unavailable decryption keys in the reported acknowledgment delay.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can delay decryption-key availability for a measured interval and verify that the resulting ACK Delay accounts for that buffering interval.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When the measured acknowledgment delay is larger than its\n   max_ack_delay, an endpoint SHOULD report the measured delay.  This",
+      "line_start": 4284,
+      "line_end": 4285,
+      "condition": "When the measured acknowledgment delay is larger than the endpoint's max_ack_delay.",
+      "required_behavior": "Report the measured acknowledgment delay rather than limiting the report to max_ack_delay.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can create a measured acknowledgment delay exceeding max_ack_delay and compare the reported ACK Delay with the measured value.",
+      "eligibility": "eligible"
+    }
+  ]
+}

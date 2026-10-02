@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0044",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If the server chooses to accept the \"early_data\" extension, then it\n   MUST comply with the same error-handling requirements specified for\n   all records when processing early data records.",
+      "line_start": 3034,
+      "line_end": 3036,
+      "condition": "when a server accepts early_data and processes early-data records",
+      "required_behavior": "apply the error-handling requirements specified for all records",
+      "forbidden_behavior": "apply weaker record error handling because a record is early data",
+      "error_behavior": "use the standard record error-handling paths",
+      "check_type": "error_handling",
+      "why_checkable": "The early-record path can be compared with the ordinary record failure paths.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Specifically, if the\n   server fails to decrypt a 0-RTT record following an accepted\n   \"early_data\" extension, it MUST terminate the connection with a\n   \"bad_record_mac\" alert as per Section 5.2.",
+      "line_start": 3036,
+      "line_end": 3039,
+      "condition": "when a server fails to decrypt a 0-RTT record after accepting early_data",
+      "required_behavior": "terminate the connection",
+      "forbidden_behavior": "discard the undecryptable record and continue the connection",
+      "error_behavior": "terminate the connection with a bad_record_mac alert",
+      "check_type": "error_handling",
+      "why_checkable": "A decryption failure after acceptance has a specific alert and terminal outcome.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A TLS implementation SHOULD NOT automatically resend early data;",
+      "line_start": 3052,
+      "line_end": 3052,
+      "condition": "when early data has been rejected",
+      "required_behavior": "leave the retransmission decision to the application",
+      "forbidden_behavior": "automatically resend the early data",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The rejected-early-data path can be checked for automatic application-data replay.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A TLS implementation MUST NOT automatically resend\n   early data unless the negotiated connection selects the same ALPN\n   protocol.",
+      "line_start": 3054,
+      "line_end": 3056,
+      "condition": "when early data has been rejected and the negotiated connection selects a different ALPN protocol",
+      "required_behavior": "",
+      "forbidden_behavior": "automatically resend the early data",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The retransmission branch can compare the original and negotiated ALPN values before sending.",
+      "eligibility": "eligible"
+    }
+  ]
+}

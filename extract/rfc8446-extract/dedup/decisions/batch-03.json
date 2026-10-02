@@ -1,0 +1,402 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "batch-03",
+  "decisions": [
+    {
+      "pair_id": "pair-d1d2bc96a32f2fcc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks remove different obsolete capabilities: RC4 support versus SSL support."
+    },
+    {
+      "pair_id": "pair-bb8a578b77d449d2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, ContentType and CertificateType, requiring separate implementation checks."
+    },
+    {
+      "pair_id": "pair-6d7708dce407660c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements cover different middlebox roles and connection legs: TLS server toward the client versus TLS client toward the server."
+    },
+    {
+      "pair_id": "pair-48beb460cacd766a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The alert is the same, but the applicability conditions are different certificate-validity failures: expired versus not currently valid."
+    },
+    {
+      "pair_id": "pair-81b8b369e2195f8c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One check forbids Certificate under PSK authentication, while the other requires Certificate under certificate authentication."
+    },
+    {
+      "pair_id": "pair-d3220f84d90b2252",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-7ac0a1e70066af3ec80d",
+      "reason": "Under the same apparent-replay condition, both require rejection of 0-RTT and require the handshake not to be aborted; the canonical states the direct rejection obligation clearly."
+    },
+    {
+      "pair_id": "pair-c2129815a936f3c3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply to different groups and function representations, X448 versus X25519."
+    },
+    {
+      "pair_id": "pair-8beec2e6a384f95c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, AlertDescription and HandshakeType."
+    },
+    {
+      "pair_id": "pair-fafe3f8a66f62e1f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are separate adjacency checks: CertificateVerify immediately after Certificate and CertificateVerify immediately before Finished."
+    },
+    {
+      "pair_id": "pair-03bddeb18f1243b3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same error outcome is triggered by different conditions: an unoffered selected version versus a selected version prior to TLS 1.3."
+    },
+    {
+      "pair_id": "pair-7bb86e8996baa71e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-dc999b2792019042",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, ContentType and AlertDescription."
+    },
+    {
+      "pair_id": "pair-4bd1a5d87c1bed0e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The record-boundary constraints apply to different handshake messages, ServerHello and Finished."
+    },
+    {
+      "pair_id": "pair-62c32a1fd39348a4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, AlertLevel and AlertDescription."
+    },
+    {
+      "pair_id": "pair-41880afd9d7356bb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The length bounds constrain different fields in different messages: ClientHello.legacy_session_id and ServerHello.legacy_session_id_echo."
+    },
+    {
+      "pair_id": "pair-11195166b4f5c474",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks encode separate random fields in ClientHello and ServerHello."
+    },
+    {
+      "pair_id": "pair-0c4c50529fd58693",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The ordering constraints apply to different protocol flows, the subsequent PSK handshake and the 0-RTT handshake."
+    },
+    {
+      "pair_id": "pair-e2c064ee2f521120",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-3c48338d0b1e5fea",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-0b68db0ff3fec49e",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-8bc6dc7c358709773d73",
+      "reason": "Both require HelloRetryRequest to use the ServerHello wire structure for encoding and parsing; the canonical is the clearer direct format statement."
+    },
+    {
+      "pair_id": "pair-e6662c9fb8443660",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks require different client-authentication messages, Certificate and CertificateVerify."
+    },
+    {
+      "pair_id": "pair-9f6d5417ba2c59a1",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements apply to different recipient roles and messages: a server parsing ClientHello and a client parsing CertificateRequest."
+    },
+    {
+      "pair_id": "pair-a44675a42c4dcc2f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-16d087e2a8f7f71e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-e55e34a1507207fe",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, AlertLevel and HandshakeType."
+    },
+    {
+      "pair_id": "pair-45a710e8636add33",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-ae6d3654e8de2782",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, AlertDescription and CertificateType."
+    },
+    {
+      "pair_id": "pair-b1da0ea3c86046d7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain legacy_version in different messages, and the ServerHello rule has a TLS 1.3 negotiation condition."
+    },
+    {
+      "pair_id": "pair-619b8a8bf701da9c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, ContentType and AlertLevel."
+    },
+    {
+      "pair_id": "pair-ffe5c3653726b230",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requirement forbids selecting an unallocated pair, while the other forbids offering one; the protocol direction differs."
+    },
+    {
+      "pair_id": "pair-bf8550fc33ff155d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, HandshakeType and KeyUpdateRequest."
+    },
+    {
+      "pair_id": "pair-4a1fcf0a1f3a91ed",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks forbid different signature primitives, DSA and SHA-224."
+    },
+    {
+      "pair_id": "pair-65c6eed03a9840ef",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-190078138e452a5f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements mandate different algorithms in different uses: RSA-PSS for CertificateVerify and RSA PKCS#1 for certificates."
+    },
+    {
+      "pair_id": "pair-63eed6a65b941920",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are separate required ClientHello extensions in the 0-RTT flow: pre_shared_key and early_data."
+    },
+    {
+      "pair_id": "pair-e641ae5534486d09",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks forbid different signature hash algorithms, MD5 and SHA-224."
+    },
+    {
+      "pair_id": "pair-e089ab5a851c432f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement allowlist applies independently to two different extensions, key_share and supported_versions."
+    },
+    {
+      "pair_id": "pair-ba1e02624c74833b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements apply to different outbound messages, ClientHello and ServerHello."
+    },
+    {
+      "pair_id": "pair-8d3c96b560de3aa4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The state transitions have different received messages and destinations: CertificateRequest to WAIT_CERT versus Certificate to WAIT_CV."
+    },
+    {
+      "pair_id": "pair-6543a09688c0c328",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-f4030f7d700aa181",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-ba2141af23247695",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-2ae4d66d8a5b1bb2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks use different traffic secrets for different authentication directions: server and client."
+    },
+    {
+      "pair_id": "pair-853726ee96c9d569",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-3deeada680c54769",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different HKDF-Extract arguments: the new secret as Input Keying Material and the current state as Salt."
+    },
+    {
+      "pair_id": "pair-b61d54e4f3f824bf",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, ContentType and KeyUpdateRequest."
+    },
+    {
+      "pair_id": "pair-424b58e2fb581716",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-a874656562715b9b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The handshake contexts apply to different authentication directions and terminate at different protocol messages."
+    },
+    {
+      "pair_id": "pair-64cdb83121cd7acb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-3a0b18c914eaee3b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are separate TLSPlaintext fields with different types and positions: legacy_record_version and length."
+    },
+    {
+      "pair_id": "pair-f868e13ee50cdc45",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, AlertLevel and CertificateType."
+    },
+    {
+      "pair_id": "pair-59a77985775f1933",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-cf2d3de2dd13dcd9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, AlertDescription and KeyUpdateRequest."
+    },
+    {
+      "pair_id": "pair-609fd78b8543de3c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-9b0e7a7ae234b829",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same certificate-authentication flight contains two different required messages, CertificateVerify and Certificate."
+    },
+    {
+      "pair_id": "pair-5e39648947506c40",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rule applies independently to client_certificate_type and server_certificate_type."
+    },
+    {
+      "pair_id": "pair-6f40cd2f1ab2fc84",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply to different endpoint roles and authentication conditions: server certificate authentication versus client authentication with a non-empty Certificate."
+    },
+    {
+      "pair_id": "pair-9ba3b11886c72ff3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-ff8e20b217390ad8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The transition branches have different authentication conditions and destinations: certificate authentication to WAIT_CERT_CR and PSK authentication to WAIT_FINISHED."
+    },
+    {
+      "pair_id": "pair-7ac3bab1687dc53b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-46378353fec05cf7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-dbc94907db8f7e38",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-b7490df34a33770e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check covers encoding only, while the right check also requires decoding the numeric mapping; their strengths are not equivalent."
+    },
+    {
+      "pair_id": "pair-65bf09a8d1da1347",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical length bound applies to certificate_request_context fields in different message structures, CertificateRequest and Certificate."
+    },
+    {
+      "pair_id": "pair-b5e1634c134f0f87",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same enum bound applies to different protocol types, CertificateType and KeyUpdateRequest."
+    },
+    {
+      "pair_id": "pair-3821416c47ae76cc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Different Handshake.msg_type values select different message-body structures, CertificateRequest and Certificate."
+    }
+  ]
+}

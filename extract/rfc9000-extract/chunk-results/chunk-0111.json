@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0111",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   degraded connection performance.  An endpoint that receives an ACK\n   frame with ECN counts therefore validates the counts before using\n   them.  It performs this validation by comparing newly received counts\n   against those from the last successfully processed ACK frame.  Any\n   increase in the ECN counts is validated based on the ECN markings\n   that were applied to packets that are newly acknowledged in the ACK\n   frame.",
+      "line_start": 4532,
+      "line_end": 4538,
+      "condition": "An endpoint receives an ACK frame containing ECN counts.",
+      "required_behavior": "Validate the ECN counts before using them, compare newly received counts against the counts from the last successfully processed ACK frame, and validate any increase using the ECN markings applied to packets newly acknowledged by this ACK frame.",
+      "forbidden_behavior": "Use the received ECN counts before validating them.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "An implementation can be instrumented to verify validation precedes use, uses the specified prior successful ACK baseline, and relates count increases to newly acknowledged packets' transmitted ECN markings.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If an ACK frame newly acknowledges a packet that the endpoint sent\n   with either the ECT(0) or ECT(1) codepoint set, ECN validation fails\n   if the corresponding ECN counts are not present in the ACK frame.",
+      "line_start": 4540,
+      "line_end": 4542,
+      "condition": "An ACK frame newly acknowledges a packet sent with the ECT(0) codepoint set, and the corresponding ECN counts are absent from the frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Fail ECN validation.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can acknowledge an ECT(0)-marked packet with an ACK frame lacking the corresponding ECN counts and observe the validation result.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If an ACK frame newly acknowledges a packet that the endpoint sent\n   with either the ECT(0) or ECT(1) codepoint set, ECN validation fails\n   if the corresponding ECN counts are not present in the ACK frame.",
+      "line_start": 4540,
+      "line_end": 4542,
+      "condition": "An ACK frame newly acknowledges a packet sent with the ECT(1) codepoint set, and the corresponding ECN counts are absent from the frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Fail ECN validation.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can acknowledge an ECT(1)-marked packet with an ACK frame lacking the corresponding ECN counts and observe the validation result.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ECN validation also fails if the sum of the increase in ECT(0) and\n   ECN-CE counts is less than the number of newly acknowledged packets\n   that were originally sent with an ECT(0) marking.  Similarly, ECN",
+      "line_start": 4546,
+      "line_end": 4548,
+      "condition": "The sum of the increases in ECT(0) and ECN-CE counts is less than the number of newly acknowledged packets originally sent with an ECT(0) marking.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Fail ECN validation.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can control transmitted markings, newly acknowledged packets, and reported counter increases, then verify failure when the stated inequality holds.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   that were originally sent with an ECT(0) marking.  Similarly, ECN\n   validation fails if the sum of the increases to ECT(1) and ECN-CE\n   counts is less than the number of newly acknowledged packets sent\n   with an ECT(1) marking.  These checks can detect remarking of ECN-CE",
+      "line_start": 4548,
+      "line_end": 4551,
+      "condition": "The sum of the increases in ECT(1) and ECN-CE counts is less than the number of newly acknowledged packets sent with an ECT(1) marking.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Fail ECN validation.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can control transmitted markings, newly acknowledged packets, and reported counter increases, then verify failure when the stated inequality holds.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ECT(1), and ECN-CE counts to be greater than the number of packets\n   that are newly acknowledged by an ACK frame.  This is why ECN counts\n   are permitted to be larger than the total number of packets that are\n   acknowledged.",
+      "line_start": 4556,
+      "line_end": 4559,
+      "condition": "Reported ECN counts are larger than the total number of packets acknowledged, including when total counter increases exceed the packets newly acknowledged by the current ACK frame.",
+      "required_behavior": "Permit the ECN counts to exceed the total number of acknowledged packets.",
+      "forbidden_behavior": "Reject or fail validation solely because ECN counts are larger than the total number of acknowledged packets.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An ACK-processing test can supply counters above the acknowledged-packet total and verify that this magnitude alone is accepted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   failure.  An endpoint MUST NOT fail ECN validation as a result of\n   processing an ACK frame that does not increase the largest\n   acknowledged packet number.",
+      "line_start": 4562,
+      "line_end": 4564,
+      "condition": "The endpoint processes an ACK frame that does not increase the largest acknowledged packet number.",
+      "required_behavior": "Process the ACK frame without failing ECN validation as a result of that frame's failure to increase the largest acknowledged packet number.",
+      "forbidden_behavior": "Fail ECN validation as a result of processing that ACK frame.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A reordered or duplicate ACK can be injected without increasing the largest acknowledged packet number, and the ECN validation state can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ECN validation can fail if the received total count for either ECT(0)\n   or ECT(1) exceeds the total number of packets sent with each\n   corresponding ECT codepoint.",
+      "line_start": 4566,
+      "line_end": 4568,
+      "condition": "The received total ECT(0) or ECT(1) count exceeds the total number of packets sent with the corresponding codepoint.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "ECN validation can fail, but the passage does not unambiguously require failure in every such case.",
+      "check_type": "error_handling",
+      "why_checkable": "The triggering counter relationship is measurable, but the permissive phrase \"can fail\" does not define a mandatory validation outcome.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   corresponding ECT codepoint.  In particular, validation will fail\n   when an endpoint receives a non-zero ECN count corresponding to an\n   ECT codepoint that it never applied.  This check detects when packets",
+      "line_start": 4568,
+      "line_end": 4570,
+      "condition": "An endpoint receives a non-zero ECN count corresponding to an ECT codepoint that the endpoint never applied.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Fail ECN validation.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can ensure no packet is sent with a selected ECT codepoint, report a non-zero count for it, and verify validation failure.",
+      "eligibility": "eligible"
+    }
+  ]
+}

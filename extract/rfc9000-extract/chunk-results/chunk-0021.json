@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0021",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "To avoid blocking a sender, a receiver MAY send a MAX_STREAM_DATA or MAX_DATA frame multiple times within a round trip or send it early enough to allow time for loss of the frame and subsequent recovery.",
+      "line_start": 1100,
+      "line_end": 1102,
+      "condition": "When a receiver seeks to avoid blocking a sender.",
+      "required_behavior": "The implementation permits the receiver to send MAX_STREAM_DATA or MAX_DATA multiple times within one round trip, or sufficiently early to allow for loss and recovery.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can observe whether the receiver supports either permitted transmission strategy without rejecting or suppressing repeated or early flow-control frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Therefore, a receiver MUST NOT wait for a STREAM_DATA_BLOCKED or DATA_BLOCKED frame before sending a MAX_STREAM_DATA or MAX_DATA frame;",
+      "line_start": 1121,
+      "line_end": 1124,
+      "condition": "When a receiver is to advertise additional stream-level credit using MAX_STREAM_DATA.",
+      "required_behavior": "The receiver sends MAX_STREAM_DATA according to its credit-advertisement policy without requiring prior receipt of STREAM_DATA_BLOCKED.",
+      "forbidden_behavior": "The receiver must not condition sending MAX_STREAM_DATA on first receiving STREAM_DATA_BLOCKED.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can exhaust stream-level credit while withholding STREAM_DATA_BLOCKED and verify that the receiver's MAX_STREAM_DATA transmission is not gated on that frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Therefore, a receiver MUST NOT wait for a STREAM_DATA_BLOCKED or DATA_BLOCKED frame before sending a MAX_STREAM_DATA or MAX_DATA frame;",
+      "line_start": 1121,
+      "line_end": 1124,
+      "condition": "When a receiver is to advertise additional connection-level credit using MAX_DATA.",
+      "required_behavior": "The receiver sends MAX_DATA according to its credit-advertisement policy without requiring prior receipt of DATA_BLOCKED.",
+      "forbidden_behavior": "The receiver must not condition sending MAX_DATA on first receiving DATA_BLOCKED.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can exhaust connection-level credit while withholding DATA_BLOCKED and verify that the receiver's MAX_DATA transmission is not gated on that frame.",
+      "eligibility": "eligible"
+    }
+  ]
+}

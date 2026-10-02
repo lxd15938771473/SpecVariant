@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0076",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "With this option, an endpoint could send a PING frame (Section 19.2) periodically, which will cause the peer to restart its idle timeout period.",
+      "line_start": 3148,
+      "line_end": 3150,
+      "condition": "An endpoint using the idle-timeout deferral option periodically sends a PING frame.",
+      "required_behavior": "The peer restarts its idle timeout period.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can send a PING frame and observe whether the peer's idle-timeout deadline is restarted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Sending a packet containing a PING frame restarts the idle timeout for this endpoint also if this is the first ack-eliciting packet sent since receiving a packet.",
+      "line_start": 3150,
+      "line_end": 3152,
+      "condition": "The endpoint sends a packet containing a PING frame, and it is the first ack-eliciting packet sent since the endpoint received a packet.",
+      "required_behavior": "The sending endpoint restarts its own idle timeout.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet history and the endpoint's idle-timeout deadline can be instrumented to verify that the qualifying transmission restarts the timer.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Sending a PING frame causes the peer to respond with an acknowledgment, which also restarts the idle timeout for the endpoint.",
+      "line_start": 3152,
+      "line_end": 3154,
+      "condition": "A peer receives a PING frame.",
+      "required_behavior": "The peer responds with an acknowledgment.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can deliver a PING frame and inspect the peer's subsequent packets for an acknowledgment.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Sending a PING frame causes the peer to respond with an acknowledgment, which also restarts the idle timeout for the endpoint.",
+      "line_start": 3152,
+      "line_end": 3154,
+      "condition": "The endpoint receives the acknowledgment generated in response to its PING frame.",
+      "required_behavior": "The endpoint restarts its idle timeout.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can deliver the acknowledgment and compare the endpoint's idle-timeout deadline before and after receipt.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Application protocols that use QUIC SHOULD provide guidance on when deferring an idle timeout is appropriate.",
+      "line_start": 3156,
+      "line_end": 3157,
+      "condition": "An application protocol uses QUIC.",
+      "required_behavior": "The application protocol should provide guidance specifying when deferring an idle timeout is appropriate.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The application protocol specification can be inspected for guidance governing use of idle-timeout deferral.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A connection will time out if no packets are sent or received for a period longer than the time negotiated using the max_idle_timeout transport parameter; see Section 10.",
+      "line_start": 3160,
+      "line_end": 3162,
+      "condition": "No packets are sent or received on a connection for longer than the duration negotiated through the max_idle_timeout transport parameter.",
+      "required_behavior": "The connection times out.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A controlled test can negotiate max_idle_timeout, suppress all packet transmission and reception beyond that duration, and observe whether the connection times out.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0027",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   HTTP/2 servers MUST NOT send post-handshake TLS 1.3\n   CertificateRequest messages.  HTTP/2 clients MUST treat a TLS post-\n   handshake CertificateRequest message as a connection error\n   (Section 5.4.1) of type PROTOCOL_ERROR.",
+      "line_start": 3292,
+      "line_end": 3295,
+      "condition": "An HTTP/2 connection is using TLS 1.3 after the handshake.",
+      "required_behavior": "",
+      "forbidden_behavior": "The server must not send a post-handshake CertificateRequest message.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A trace of TLS messages sent by an HTTP/2 server can be checked for a CertificateRequest after handshake completion.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   HTTP/2 servers MUST NOT send post-handshake TLS 1.3\n   CertificateRequest messages.  HTTP/2 clients MUST treat a TLS post-\n   handshake CertificateRequest message as a connection error\n   (Section 5.4.1) of type PROTOCOL_ERROR.",
+      "line_start": 3292,
+      "line_end": 3295,
+      "condition": "An HTTP/2 client receives a post-handshake TLS CertificateRequest message.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The client must treat the message as a connection error of type PROTOCOL_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A client can be sent a post-handshake CertificateRequest and its resulting connection-level error and error code can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The prohibition on post-handshake authentication applies even if the\n   client offered the \"post_handshake_auth\" TLS extension.  Post-\n   handshake authentication support might be advertised independently of\n   ALPN [TLS-ALPN].  Clients might offer the capability for use in other\n   protocols, but inclusion of the extension cannot imply support within\n   HTTP/2.",
+      "line_start": 3297,
+      "line_end": 3302,
+      "condition": "The client offered the TLS \"post_handshake_auth\" extension on an HTTP/2 connection.",
+      "required_behavior": "The prohibition on post-handshake authentication must continue to apply.",
+      "forbidden_behavior": "The implementation must not interpret inclusion of the extension as support for post-handshake authentication within HTTP/2.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Negotiation state can be inspected to verify that offering the extension does not enable post-handshake authentication for HTTP/2.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   TLS early data MAY be used to send requests, provided that the\n   guidance in [RFC8470] is observed.  Clients send requests in early\n   data assuming initial values for all server settings.",
+      "line_start": 3310,
+      "line_end": 3312,
+      "condition": "A client sends HTTP/2 requests using TLS early data.",
+      "required_behavior": "The client must observe the guidance in RFC8470 and construct the early-data requests assuming initial values for all server settings.",
+      "forbidden_behavior": "The client must not base early-data requests on non-initial server setting values.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Early-data request construction and the setting values assumed before current server settings are received can be inspected in an implementation or test trace.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   HPACK permits encoding of field names and values that might be\n   treated as delimiters in other HTTP versions.  An intermediary that\n   translates an HTTP/2 request or response MUST validate fields\n   according to the rules in Section 8.2 before translating a message to\n   another HTTP version.  Translating a field that includes invalid\n   delimiters could be used to cause recipients to incorrectly interpret\n   a message, which could be exploited by an attacker.",
+      "line_start": 3354,
+      "line_end": 3360,
+      "condition": "An intermediary translates an HTTP/2 request or response into another HTTP version.",
+      "required_behavior": "The intermediary must validate the fields according to Section 8.2 before performing the translation.",
+      "forbidden_behavior": "The intermediary must not translate the message before the required field validation.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Instrumentation or focused tests can verify that Section 8.2 field validation precedes cross-version translation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Section 8.2 does not include specific rules for validation of pseudo-\n   header fields.  If the values of these fields are used, additional\n   validation is necessary.  This is particularly important where\n   \":scheme\", \":authority\", and \":path\" are combined to form a single\n   URI string [RFC3986].  Similar problems might occur when that URI or\n   just \":path\" is combined with \":method\" to construct a request line\n   (as in Section 3 of [HTTP/1.1]).  Simple concatenation is not secure\n   unless the input values are fully validated.",
+      "line_start": 3362,
+      "line_end": 3369,
+      "condition": "An intermediary uses pseudo-header field values, including when combining them into a URI or request line.",
+      "required_behavior": "The intermediary must additionally and fully validate the input pseudo-header field values before concatenating them.",
+      "forbidden_behavior": "The intermediary must not rely on simple concatenation of pseudo-header values that have not been fully validated.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests can supply malicious delimiter-bearing pseudo-header values and verify that URI or request-line construction occurs only after additional full validation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An intermediary that receives any fields that require removal before\n   forwarding (see Section 7.6.1 of [HTTP]) MUST remove or replace those\n   header fields when forwarding messages.  Additionally, intermediaries\n   should take care when forwarding messages containing Content-Length\n   fields to ensure that the message is well-formed (Section 8.1.1).\n   This ensures that if the message is translated into HTTP/1.1 at any\n   point, the framing will be correct.",
+      "line_start": 3378,
+      "line_end": 3384,
+      "condition": "An intermediary forwards a message containing fields that Section 7.6.1 of HTTP requires to be removed before forwarding.",
+      "required_behavior": "The intermediary must remove or replace those header fields when forwarding the message.",
+      "forbidden_behavior": "The intermediary must not forward such fields unchanged.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A forwarding test can insert a field designated for removal and inspect whether the outgoing message removes or replaces it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An intermediary that receives any fields that require removal before\n   forwarding (see Section 7.6.1 of [HTTP]) MUST remove or replace those\n   header fields when forwarding messages.  Additionally, intermediaries\n   should take care when forwarding messages containing Content-Length\n   fields to ensure that the message is well-formed (Section 8.1.1).\n   This ensures that if the message is translated into HTTP/1.1 at any\n   point, the framing will be correct.",
+      "line_start": 3378,
+      "line_end": 3384,
+      "condition": "An intermediary forwards a message containing Content-Length fields.",
+      "required_behavior": "The intermediary should ensure that the message is well-formed according to Section 8.1.1 so that translation into HTTP/1.1 produces correct framing.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Messages with Content-Length fields can be forwarded or translated and checked for the well-formedness and framing properties referenced by the text.",
+      "eligibility": "eligible"
+    }
+  ]
+}

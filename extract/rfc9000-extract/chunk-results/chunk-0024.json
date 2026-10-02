@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0024",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The final size is the amount of flow control credit that is consumed by a stream.",
+      "line_start": 1167,
+      "line_end": 1168,
+      "condition": "When determining connection-level flow control credit consumed by a stream.",
+      "required_behavior": "Treat the stream's final size as the amount of flow control credit consumed by that stream.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The implementation's flow-control accounting can be checked against the stream's final-size value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Assuming that every contiguous byte on the stream was sent once, the final size is the number of bytes sent.",
+      "line_start": 1168,
+      "line_end": 1169,
+      "condition": "Every contiguous byte on the stream was sent exactly once.",
+      "required_behavior": "Set the final size equal to the number of bytes sent.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can send a contiguous, non-retransmitted byte sequence and compare its byte count with the computed final size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "More generally, this is one higher than the offset of the byte with the largest offset sent on the stream, or zero if no bytes were sent.",
+      "line_start": 1169,
+      "line_end": 1171,
+      "condition": "When determining a stream's final size in the general case.",
+      "required_behavior": "Use one plus the largest byte offset sent, or zero when no bytes were sent.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Observed transmitted offsets and the no-data case determine an exact expected final-size value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A sender always communicates the final size of a stream to the receiver reliably, no matter how the stream is terminated.",
+      "line_start": 1173,
+      "line_end": 1174,
+      "condition": "A stream is terminated by any mechanism.",
+      "required_behavior": "Reliably communicate the stream's final size to the receiver.",
+      "forbidden_behavior": "Terminating a stream without reliable communication of its final size.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can exercise each termination path and verify that the peer reliably receives a final-size indication.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The final size is the sum of the Offset and Length fields of a STREAM frame with a FIN flag, noting that these fields might be implicit.",
+      "line_start": 1174,
+      "line_end": 1176,
+      "condition": "A STREAM frame carrying the FIN flag communicates the final size.",
+      "required_behavior": "Interpret the final size as Offset plus Length, including when either field is implicit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The frame's explicit or inferred Offset and Length yield an exact expected final size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Alternatively, the Final Size field of a RESET_STREAM frame carries this value.",
+      "line_start": 1177,
+      "line_end": 1178,
+      "condition": "A RESET_STREAM frame terminates the stream.",
+      "required_behavior": "Use the RESET_STREAM frame's Final Size field to carry the stream final size.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded Final Size field can be compared directly with the stream's expected final size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint will know the final size for a stream when the receiving part of the stream enters the \"Size Known\" or \"Reset Recvd\" state (Section 3).",
+      "line_start": 1181,
+      "line_end": 1183,
+      "condition": "The receiving part of a stream enters the \"Size Known\" or \"Reset Recvd\" state.",
+      "required_behavior": "Treat the stream's final size as known.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-transition test can verify that final-size knowledge is established upon entry into either named state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The receiver MUST use the final size of the stream to account for all bytes sent on the stream in its connection-level flow controller.",
+      "line_start": 1183,
+      "line_end": 1185,
+      "condition": "The receiver accounts for bytes sent on a stream in connection-level flow control.",
+      "required_behavior": "Use the stream's final size to account for all bytes sent on that stream.",
+      "forbidden_behavior": "Using a value other than the final size for the stream's total contribution to connection-level flow-control accounting.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Connection-level flow-control counters can be inspected after stream completion and compared with the final size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST NOT send data on a stream at or beyond the final size.",
+      "line_start": 1187,
+      "line_end": 1188,
+      "condition": "A stream has a final size.",
+      "required_behavior": "",
+      "forbidden_behavior": "Sending any data whose offset is equal to or greater than the stream's final size.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Generated STREAM data offsets can be checked against the known final-size boundary.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Once a final size for a stream is known, it cannot change.",
+      "line_start": 1190,
+      "line_end": 1190,
+      "condition": "A stream's final size has become known.",
+      "required_behavior": "Keep that final size immutable for the remainder of the stream's retained state.",
+      "forbidden_behavior": "Changing the known final size.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The stored final size can be compared before and after subsequent STREAM or RESET_STREAM frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a RESET_STREAM or STREAM frame is received indicating a change in the final size for the stream, an endpoint SHOULD respond with an error of type FINAL_SIZE_ERROR; see Section 11 for details on error handling.",
+      "line_start": 1190,
+      "line_end": 1194,
+      "condition": "A received RESET_STREAM or STREAM frame indicates a final size different from the already known final size.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Respond with an error of type FINAL_SIZE_ERROR, subject to the SHOULD-level exception.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can establish a final size, inject either frame type with an inconsistent size, and observe the error response.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A receiver SHOULD treat receipt of data at or beyond the final size as an error of type FINAL_SIZE_ERROR, even after a stream is closed.",
+      "line_start": 1194,
+      "line_end": 1196,
+      "condition": "The receiver receives data at an offset equal to or greater than the final size, including after stream closure.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Treat the receipt as an error of type FINAL_SIZE_ERROR, subject to the SHOULD-level exception.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can deliver boundary-violating data before or after closure and observe whether FINAL_SIZE_ERROR is produced.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Generating these errors is not mandatory, because requiring that an endpoint generate these errors also means that the endpoint needs to maintain the final size state for closed streams, which could mean a significant state commitment.",
+      "line_start": 1196,
+      "line_end": 1199,
+      "condition": "The endpoint does not retain final-size state needed to detect these violations, particularly for closed streams.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Generation of the described FINAL_SIZE_ERROR errors is not mandatory.",
+      "check_type": "error_handling",
+      "why_checkable": "The passage explicitly permits implementations not to generate these errors, so absence of the error cannot by itself be classified as noncompliance.",
+      "eligibility": "eligible"
+    }
+  ]
+}

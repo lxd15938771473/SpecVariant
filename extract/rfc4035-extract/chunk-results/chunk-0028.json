@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0028",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "As explained in [RFC4033], a security-aware recursive name server is\n   an entity that acts in both the security-aware name server and\n   security-aware resolver roles.  This section uses the terms \"name\n   server side\" and \"resolver side\" to refer to the code within a\n   security-aware recursive name server that implements the\n   security-aware name server role and the code that implements the\n   security-aware resolver role, respectively.\n\n   The resolver side follows the usual rules for caching and negative\n   caching that would apply to any security-aware resolver.",
+      "line_start": 935,
+      "line_end": 944,
+      "condition": "The resolver side of a security-aware recursive name server performs caching.",
+      "required_behavior": "Follow the usual caching rules applicable to any security-aware resolver.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "This clause applies the security-aware resolver rules to the recursive server resolver side, but this chunk does not specify the caching rules needed for a concrete implementation check; excluded for incomplete local evidence.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "As explained in [RFC4033], a security-aware recursive name server is\n   an entity that acts in both the security-aware name server and\n   security-aware resolver roles.  This section uses the terms \"name\n   server side\" and \"resolver side\" to refer to the code within a\n   security-aware recursive name server that implements the\n   security-aware name server role and the code that implements the\n   security-aware resolver role, respectively.\n\n   The resolver side follows the usual rules for caching and negative\n   caching that would apply to any security-aware resolver.",
+      "line_start": 935,
+      "line_end": 944,
+      "condition": "The resolver side of a security-aware recursive name server performs negative caching.",
+      "required_behavior": "Follow the usual negative caching rules applicable to any security-aware resolver.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "This clause applies the security-aware resolver rules to the recursive server resolver side, but this chunk does not specify the negative caching rules needed for a concrete implementation check; excluded for incomplete local evidence.",
+      "eligibility": "exclude"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0004",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Except for a few differences, QUIC version 2 endpoints MUST implement\n   the QUIC version 1 specification as described in [QUIC], [QUIC-TLS],\n   and [QUIC-RECOVERY].",
+      "line_start": 132,
+      "line_end": 134,
+      "condition": "except for the differences specified for QUIC version 2",
+      "required_behavior": "implement the QUIC version 1 specification described in [QUIC], [QUIC-TLS], and [QUIC-RECOVERY]",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The QUIC version 2 implementation can be inspected and tested for conformance to the referenced QUIC version 1 specifications outside the enumerated differences.",
+      "eligibility": "eligible"
+    }
+  ]
+}

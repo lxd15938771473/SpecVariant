@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0021",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If TLS experiences an error, it generates an appropriate alert as\n   defined in Section 6 of [TLS13].",
+      "line_start": 880,
+      "line_end": 881,
+      "condition": "When the TLS component experiences an error",
+      "required_behavior": "Generate the TLS alert appropriate to that error under TLS 1.3.",
+      "forbidden_behavior": "",
+      "error_behavior": "Emit the appropriate alert defined by Section 6 of TLS 1.3.",
+      "check_type": "error_handling",
+      "why_checkable": "Fault-injection tests can trigger defined TLS errors and compare the generated alert with the TLS 1.3 error-to-alert mapping.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A TLS alert is converted into a QUIC connection error.",
+      "line_start": 883,
+      "line_end": 883,
+      "condition": "When QUIC receives an alert from its TLS component",
+      "required_behavior": "Convert the TLS alert into a QUIC connection error.",
+      "forbidden_behavior": "Handle the TLS alert without producing the corresponding QUIC connection error.",
+      "error_behavior": "Fail the QUIC connection rather than treating the TLS alert as a non-connection error.",
+      "check_type": "error_handling",
+      "why_checkable": "A TLS-alert injection test can observe whether the QUIC endpoint transitions to a connection-error path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The\n   AlertDescription value is added to 0x0100 to produce a QUIC error\n   code from the range reserved for CRYPTO_ERROR",
+      "line_start": 883,
+      "line_end": 885,
+      "condition": "When converting a specific TLS alert into a QUIC error code",
+      "required_behavior": "Compute the QUIC error code as 0x0100 plus the TLS AlertDescription value.",
+      "forbidden_behavior": "",
+      "error_behavior": "Use the resulting code in the CRYPTO_ERROR-reserved range.",
+      "check_type": "structural_constraint",
+      "why_checkable": "For every AlertDescription input, the emitted numeric code can be compared directly with 0x0100 + AlertDescription.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The resulting value is sent in a QUIC\n   CONNECTION_CLOSE frame of type 0x1c.",
+      "line_start": 886,
+      "line_end": 887,
+      "condition": "When sending the QUIC connection error produced from a TLS alert",
+      "required_behavior": "Send the resulting error value in a QUIC CONNECTION_CLOSE frame of type 0x1c.",
+      "forbidden_behavior": "Encode the resulting alert error in a different CONNECTION_CLOSE frame type.",
+      "error_behavior": "Carry the mapped CRYPTO_ERROR code in the type-0x1c CONNECTION_CLOSE frame.",
+      "check_type": "structural_constraint",
+      "why_checkable": "The emitted closing packet can be decoded to verify both the 0x1c frame type and its error-code field.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "a QUIC endpoint\n   MUST treat any alert from TLS as if it were at the \"fatal\" level.",
+      "line_start": 893,
+      "line_end": 894,
+      "condition": "When a QUIC endpoint receives any TLS alert, regardless of the alert's stated level",
+      "required_behavior": "Treat the alert as a fatal-level alert.",
+      "forbidden_behavior": "Process a TLS alert as a warning-level, nonfatal alert.",
+      "error_behavior": "Apply fatal-alert connection termination semantics.",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can inject alerts labeled fatal and warning and verify that both follow the same fatal connection-error path.",
+      "eligibility": "eligible"
+    }
+  ]
+}

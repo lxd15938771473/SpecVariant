@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0020",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "From the\n   perspective of QUIC, HelloRetryRequest is not differentiated from\n   other cryptographic handshake messages that are carried in Initial\n   packets.",
+      "line_start": 871,
+      "line_end": 874,
+      "condition": "When QUIC carries a TLS HelloRetryRequest message.",
+      "required_behavior": "Carry the HelloRetryRequest as cryptographic handshake data in Initial packets.",
+      "forbidden_behavior": "Do not carry HelloRetryRequest using a packet type reserved for a later encryption level.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A packet trace can locate the HelloRetryRequest bytes and verify that their CRYPTO data is carried in Initial packets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "From the\n   perspective of QUIC, HelloRetryRequest is not differentiated from\n   other cryptographic handshake messages that are carried in Initial\n   packets.",
+      "line_start": 871,
+      "line_end": 874,
+      "condition": "When QUIC processes or transmits a HelloRetryRequest in Initial packets.",
+      "required_behavior": "Apply the same QUIC-layer handling used for other cryptographic handshake messages in Initial packets.",
+      "forbidden_behavior": "Do not assign HelloRetryRequest distinct QUIC-layer framing or packet semantics merely because of its TLS message type.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Instrumentation and packet traces can compare HelloRetryRequest framing, encryption level, and packet handling with other Initial-level handshake messages.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Although it is in principle possible to use this feature\n   for address verification, QUIC implementations SHOULD instead use the\n   Retry feature; see Section 8.1 of [QUIC-TRANSPORT].",
+      "line_start": 874,
+      "line_end": 876,
+      "condition": "When a QUIC implementation performs client address verification.",
+      "required_behavior": "Use the QUIC Retry feature for address verification.",
+      "forbidden_behavior": "Avoid using TLS HelloRetryRequest as the address-verification mechanism.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An address-verification test can observe whether the endpoint sends a QUIC Retry packet or a TLS HelloRetryRequest for that purpose.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0040",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "New types and classes need mnemonics for master files;",
+      "line_start": 1329,
+      "line_end": 1329,
+      "condition": "When defining a new RR type.",
+      "required_behavior": "Provide a master-file mnemonic for the new type.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The master-file type parser and serializer can be checked for a mnemonic representing the new type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "New types and classes need mnemonics for master files;",
+      "line_start": 1329,
+      "line_end": 1329,
+      "condition": "When defining a new RR class.",
+      "required_behavior": "Provide a master-file mnemonic for the new class.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The master-file class parser and serializer can be checked for a mnemonic representing the new class.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "New types and classes need mnemonics for master files; the format of the\nmaster files requires that the mnemonics for type and class be disjoint.",
+      "line_start": 1329,
+      "line_end": 1330,
+      "condition": "For type and class mnemonics used in master files.",
+      "required_behavior": "Keep the set of type mnemonics disjoint from the set of class mnemonics.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The type and class mnemonic tables can be compared for an empty intersection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "TYPE and CLASS values must be a proper subset of QTYPEs and QCLASSes\nrespectively.",
+      "line_start": 1332,
+      "line_end": 1333,
+      "condition": "For the TYPE and QTYPE value sets.",
+      "required_behavior": "The TYPE value set must be a proper subset of the QTYPE value set.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Compare the value sets to verify that every TYPE is a QTYPE and at least one QTYPE is not a TYPE.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "TYPE and CLASS values must be a proper subset of QTYPEs and QCLASSes\nrespectively.",
+      "line_start": 1332,
+      "line_end": 1333,
+      "condition": "For the CLASS and QCLASS value sets.",
+      "required_behavior": "The CLASS value set must be a proper subset of the QCLASS value set.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Compare the value sets to verify that every CLASS is a QCLASS and at least one QCLASS is not a CLASS.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The present system uses multiple RRs to represent multiple values of a\ntype rather than storing multiple values in the RDATA section of a\nsingle RR.",
+      "line_start": 1335,
+      "line_end": 1337,
+      "condition": "When representing multiple values of a type.",
+      "required_behavior": "Represent the values using multiple resource records.",
+      "forbidden_behavior": "Store the multiple values together in the RDATA section of a single resource record.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The record representation and emitted records can be inspected for separate records for the distinct values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Thus, in order to find the\naddress of the host for a mail exchange, you map the mail domain name to\na host name, then the host name to addresses, rather than a direct\nmapping to host address.  This approach is preferred because it avoids\nthe opportunity for inconsistency.",
+      "line_start": 1342,
+      "line_end": 1346,
+      "condition": "When finding the address of the host for a mail exchange.",
+      "required_behavior": "Prefer mapping the mail domain name to a host name and then mapping the host name to addresses.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The mail-exchange lookup path can be inspected to determine whether it uses the preferred intermediate host-name mapping.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In defining a new type of data, multiple RR types should not be used to\ncreate an ordering between entries or express different formats for\nequivalent bindings, instead this information should be carried in the\nbody of the RR and a single type used.",
+      "line_start": 1348,
+      "line_end": 1351,
+      "condition": "When defining a new type of data with an ordering between entries.",
+      "required_behavior": "Ordering information should be carried in the body of the RR, using a single RR type.",
+      "forbidden_behavior": "Multiple RR types should not be used to encode the ordering between entries.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Inspect the new RR format to determine whether ordering is encoded in RDATA rather than by choosing different RR types.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In defining a new type of data, multiple RR types should not be used to\ncreate an ordering between entries or express different formats for\nequivalent bindings, instead this information should be carried in the\nbody of the RR and a single type used.",
+      "line_start": 1348,
+      "line_end": 1351,
+      "condition": "When defining a new type of data with different formats for equivalent bindings.",
+      "required_behavior": "Information distinguishing the formats should be carried in the body of the RR, using a single RR type.",
+      "forbidden_behavior": "Multiple RR types should not be used to express different formats for equivalent bindings.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Inspect the new RR format to determine whether equivalent-binding format distinctions are encoded in the RR body rather than in different type codes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "service used a single type (MX) with a \"preference\" value in the RDATA\nsection which can order different RRs.",
+      "line_start": 1369,
+      "line_end": 1370,
+      "condition": "For MX resource records.",
+      "required_behavior": "Carry a preference value in the RDATA section that can order different MX resource records.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The MX RDATA representation can be inspected for the preference value and its use in ordering MX records.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "However, if any MX RRs are found\nin the cache, then all should be there.",
+      "line_start": 1370,
+      "line_end": 1371,
+      "condition": "If any MX RRs are found in the cache.",
+      "required_behavior": "All MX RRs in the corresponding set should be present in the cache.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "After caching an MX binding with multiple records, inspect whether the cache retains the complete corresponding set.",
+      "eligibility": "eligible"
+    }
+  ]
+}

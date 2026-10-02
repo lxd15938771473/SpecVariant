@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0026",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "3.3.5. MF RDATA format (Obsolete)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MADNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+",
+      "line_start": 823,
+      "line_end": 828,
+      "condition": "When encoding or decoding an obsolete MF resource record.",
+      "required_behavior": "The RDATA consists of a single MADNAME field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The MF RDATA serializer and parser can be checked for the single-field layout.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "MADNAME         A <domain-name> which specifies a host which has a mail\n                agent for the domain which will accept mail for\n                forwarding to the domain.",
+      "line_start": 832,
+      "line_end": 834,
+      "condition": "For the MADNAME field of an obsolete MF resource record.",
+      "required_behavior": "Represent MADNAME as a domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field representation and domain-name parser or serializer can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "MADNAME         A <domain-name> which specifies a host which has a mail\n                agent for the domain which will accept mail for\n                forwarding to the domain.",
+      "line_start": 832,
+      "line_end": 834,
+      "condition": "When interpreting MADNAME in an obsolete MF resource record.",
+      "required_behavior": "Interpret MADNAME as the name of a host whose mail agent accepts mail for forwarding to the domain.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The MF record model and mail-routing interpretation can be checked against the stated host role.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "MF records cause additional section processing which looks up an A type\nrecord corresponding to MADNAME.",
+      "line_start": 836,
+      "line_end": 837,
+      "condition": "When processing an MF resource record.",
+      "required_behavior": "Perform additional-section processing that looks up an A record corresponding to MADNAME.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An MF response can be checked for an additional-section address lookup using MADNAME.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "MF is obsolete.  See the definition of MX and [RFC-974] for details ofw\nthe new scheme.  The recommended policy for dealing with MD RRs found in\na master file is to reject them, or to convert them to MX RRs with a\npreference of 10.",
+      "line_start": 839,
+      "line_end": 842,
+      "condition": "When MD resource records are found in a master file; the source names MD in the MF section, leaving intended record-type applicability unclear.",
+      "required_behavior": "The recommended policy is to reject these records or convert them to MX resource records.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The loader policy is checkable, but the record-type mismatch prevents unambiguous applicability; the policy is advisory.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "MF is obsolete.  See the definition of MX and [RFC-974] for details ofw\nthe new scheme.  The recommended policy for dealing with MD RRs found in\na master file is to reject them, or to convert them to MX RRs with a\npreference of 10.",
+      "line_start": 839,
+      "line_end": 842,
+      "condition": "When following the recommended policy by converting a master-file MD resource record to MX; the source names MD in the MF section, leaving intended record-type applicability unclear.",
+      "required_behavior": "The recommended conversion assigns the MX record a preference of 10.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The converted MX preference is checkable, but the record-type mismatch prevents unambiguous applicability; this belongs to an advisory policy.",
+      "eligibility": "exclude"
+    }
+  ]
+}

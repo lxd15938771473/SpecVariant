@@ -1,0 +1,19 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0040",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "When a sender establishes loss of all packets sent over a long enough\n   duration, the network is considered to be experiencing persistent\n   congestion.",
+                             "line_start":  1056,
+                             "line_end":  1058,
+                             "condition":  "A sender establishes that every packet sent during a sufficiently long duration was lost.",
+                             "required_behavior":  "The sender classifies the network as experiencing persistent congestion.",
+                             "forbidden_behavior":  "The sender must not leave the network classified as not experiencing persistent congestion once this condition is established.",
+                             "error_behavior":  "",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A test can supply a packet-send and loss history spanning the implementation\u0027s persistent-congestion duration threshold and observe whether persistent congestion is declared.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

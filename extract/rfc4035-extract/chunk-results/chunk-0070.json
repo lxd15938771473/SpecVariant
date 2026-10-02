@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0070",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "This example shows the logical authentication process that starts\n   from the a configured root DNSKEY (or DS RR) and moves down the tree\n   to authenticate the desired \"example\" DNSKEY RR.  Note that the\n   logical order is presented for clarity.  An implementation may choose\n   to construct the authentication as referrals are received or to\n   construct the authentication chain only after all RRsets have been\n   obtained, or in any other combination it sees fit.  The example here\n   demonstrates only the logical process and does not dictate any\n   implementation rules.",
+      "line_start": 2775,
+      "line_end": 2783,
+      "condition": "When an implementation constructs the authentication chain.",
+      "required_behavior": "An implementation may choose to construct authentication as referrals are received, only after all RRsets have been obtained, or in any other combination it sees fit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation's authentication-chain scheduling can be inspected to identify its permitted strategy; the example does not impose a particular construction order or require support for every strategy.",
+      "eligibility": "eligible"
+    }
+  ]
+}

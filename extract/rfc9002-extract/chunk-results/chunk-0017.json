@@ -1,0 +1,103 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0017",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "min_rtt MUST be set to the latest_rtt on the first RTT sample.",
+                             "line_start":  369,
+                             "line_end":  369,
+                             "condition":  "When the sender obtains the first RTT sample for the path.",
+                             "required_behavior":  "Set min_rtt equal to latest_rtt.",
+                             "forbidden_behavior":  "Do not initialize min_rtt to a value other than latest_rtt or leave it unset.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can deliver the first RTT sample and inspect whether min_rtt exactly equals latest_rtt afterward.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "min_rtt MUST be set to the lesser of min_rtt and latest_rtt\n   (Section 5.1) on all other samples.",
+                             "line_start":  370,
+                             "line_end":  371,
+                             "condition":  "On any RTT sample after the first when latest_rtt is less than the current min_rtt.",
+                             "required_behavior":  "Set min_rtt equal to latest_rtt for that sample.",
+                             "forbidden_behavior":  "Do not retain the larger prior min_rtt or set min_rtt to any other value.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can inject a later RTT sample below the stored minimum and verify that min_rtt decreases to that exact sample value.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "min_rtt MUST be set to the lesser of min_rtt and latest_rtt\n   (Section 5.1) on all other samples.",
+                             "line_start":  370,
+                             "line_end":  371,
+                             "condition":  "On any RTT sample after the first when latest_rtt is greater than or equal to the current min_rtt.",
+                             "required_behavior":  "Retain the current min_rtt.",
+                             "forbidden_behavior":  "Do not increase min_rtt to the larger latest_rtt or change it to another value.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can inject an equal or larger later RTT sample and verify that the stored min_rtt remains unchanged.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "An endpoint uses only locally observed times in computing the min_rtt\n   and does not adjust for acknowledgment delays reported by the peer.",
+                             "line_start":  373,
+                             "line_end":  374,
+                             "condition":  "When computing min_rtt from an RTT observation.",
+                             "required_behavior":  "Use only times observed locally by the endpoint.",
+                             "forbidden_behavior":  "Do not incorporate peer-originated timing values into the min_rtt computation.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "A test can hold local send and receive times constant while varying peer-provided timing data and verify that the min_rtt result is unchanged.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "An endpoint uses only locally observed times in computing the min_rtt\n   and does not adjust for acknowledgment delays reported by the peer.",
+                             "line_start":  373,
+                             "line_end":  374,
+                             "condition":  "When a peer reports an acknowledgment delay for an RTT sample used in min_rtt computation.",
+                             "required_behavior":  "Compute min_rtt without subtracting or otherwise applying the reported acknowledgment delay.",
+                             "forbidden_behavior":  "Do not adjust min_rtt for the peer-reported acknowledgment delay.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "A test can vary the reported acknowledgment delay for identical locally observed timing and verify that min_rtt does not vary with it.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Endpoints SHOULD set the min_rtt to the newest RTT sample after\n   persistent congestion is established.",
+                             "line_start":  386,
+                             "line_end":  387,
+                             "condition":  "After persistent congestion has been established.",
+                             "required_behavior":  "Set min_rtt to the newest RTT sample.",
+                             "forbidden_behavior":  "Do not ordinarily retain the pre-congestion min_rtt instead of resetting it to the newest sample.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can establish persistent congestion with a newest RTT sample distinct from the stored minimum and inspect the resulting min_rtt.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Endpoints MAY reestablish the min_rtt at other times in the\n   connection, such as when traffic volume is low and an acknowledgment\n   is received with a low acknowledgment delay.",
+                             "line_start":  392,
+                             "line_end":  394,
+                             "condition":  "At other times in the connection, including the illustrative case of low traffic volume and receipt of an acknowledgment with a low acknowledgment delay.",
+                             "required_behavior":  "An endpoint is permitted, but not required, to reestablish min_rtt.",
+                             "forbidden_behavior":  "No implementation behavior is forbidden by this permission.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The statement permits an optional action and provides only an example trigger, so it does not create a mandatory implementation outcome that can be tested for conformance.",
+                             "eligibility":  "exclude"
+                         },
+                         {
+                             "quote":  "Implementations SHOULD\n   NOT refresh the min_rtt value too often since the actual minimum RTT\n   of the path is not frequently observable.",
+                             "line_start":  394,
+                             "line_end":  396,
+                             "condition":  "When deciding whether to refresh min_rtt during the connection.",
+                             "required_behavior":  "Avoid refreshing min_rtt too often.",
+                             "forbidden_behavior":  "Do not refresh min_rtt too often.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The text defines neither a refresh-frequency threshold nor a measurement window, so \u0027too often\u0027 cannot be evaluated objectively from this chunk.",
+                             "eligibility":  "exclude"
+                         }
+                     ]
+}

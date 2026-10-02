@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0077",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   An endpoint sends a CONNECTION_CLOSE frame (Section 19.19) to\n   terminate the connection immediately.  A CONNECTION_CLOSE frame",
+      "line_start": 3170,
+      "line_end": 3171,
+      "condition": "When an endpoint terminates a connection immediately",
+      "required_behavior": "Send a CONNECTION_CLOSE frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can initiate an immediate termination and inspect whether the endpoint sends a CONNECTION_CLOSE frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   causes all streams to immediately become closed; open streams can be\n   assumed to be implicitly reset.",
+      "line_start": 3172,
+      "line_end": 3173,
+      "condition": "When a CONNECTION_CLOSE frame causes connection termination",
+      "required_behavior": "Immediately transition every stream to closed and treat each open stream as implicitly reset.",
+      "forbidden_behavior": "Do not leave any stream open after the CONNECTION_CLOSE frame takes effect.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Stream states can be inspected immediately after processing connection closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   After sending a CONNECTION_CLOSE frame, an endpoint immediately\n   enters the closing state; see Section 10.2.1.  After receiving a",
+      "line_start": 3175,
+      "line_end": 3176,
+      "condition": "After sending a CONNECTION_CLOSE frame",
+      "required_behavior": "Immediately enter the closing state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-transition test can verify the endpoint state immediately after frame transmission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   enters the closing state; see Section 10.2.1.  After receiving a\n   CONNECTION_CLOSE frame, endpoints enter the draining state; see\n   Section 10.2.2.",
+      "line_start": 3176,
+      "line_end": 3178,
+      "condition": "After receiving a CONNECTION_CLOSE frame",
+      "required_behavior": "Enter the draining state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-transition test can deliver the frame and inspect the resulting endpoint state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Violations of the protocol lead to an immediate close.",
+      "line_start": 3180,
+      "line_end": 3180,
+      "condition": "When a protocol violation occurs",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Immediately close the connection.",
+      "check_type": "error_handling",
+      "why_checkable": "Malformed or prohibited protocol behavior can be injected and the resulting connection closure timing observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   application requests that QUIC close the connection.  When QUIC\n   consequently closes the connection, a CONNECTION_CLOSE frame with an\n   application-supplied error code will be used to signal closure to the\n   peer.",
+      "line_start": 3187,
+      "line_end": 3190,
+      "condition": "When QUIC closes the connection in response to an application request after the application has arranged closure",
+      "required_behavior": "Send a CONNECTION_CLOSE frame containing the application-supplied error code to signal closure to the peer.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can request application-driven closure with a known error code and inspect the emitted frame type and code.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   connections close cleanly and that delayed or reordered packets are\n   properly discarded.  These states SHOULD persist for at least three\n   times the current PTO interval as defined in [QUIC-RECOVERY].",
+      "line_start": 3193,
+      "line_end": 3195,
+      "condition": "While an endpoint is in the closing or draining state",
+      "required_behavior": "Keep the state active for at least three times the current PTO interval.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The duration of each state can be measured against the endpoint's current PTO interval.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Endpoints that have some alternative means to ensure that late-\n   arriving packets do not induce a response, such as those that are\n   able to close the UDP socket, MAY end these states earlier to allow\n   for faster resource recovery.",
+      "line_start": 3200,
+      "line_end": 3203,
+      "condition": "When an endpoint has an alternative means ensuring that late-arriving packets cannot induce a response",
+      "required_behavior": "The endpoint may end the closing or draining state before three times the current PTO interval.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can configure the alternative suppression mechanism and observe whether early state termination occurs only under that condition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   for faster resource recovery.  Servers that retain an open socket for\n   accepting new connections SHOULD NOT end the closing or draining\n   state early.",
+      "line_start": 3203,
+      "line_end": 3205,
+      "condition": "When a server retains an open socket to accept new connections",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not end the closing or draining state early.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A server with a retained listening socket can be observed to determine whether either state terminates before its normal minimum duration.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Once its closing or draining state ends, an endpoint SHOULD discard\n   all connection state.  The endpoint MAY send a Stateless Reset in",
+      "line_start": 3207,
+      "line_end": 3208,
+      "condition": "Once the endpoint's closing or draining state ends",
+      "required_behavior": "Discard all state for the connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Implementation state or externally visible handling can be inspected after the closing or draining state terminates.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   all connection state.  The endpoint MAY send a Stateless Reset in\n   response to any further incoming packets belonging to this\n   connection.",
+      "line_start": 3208,
+      "line_end": 3210,
+      "condition": "When a packet belonging to the connection arrives after the closing or draining state has ended",
+      "required_behavior": "The endpoint may send a Stateless Reset in response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A packet can be delivered after state termination and the endpoint's response inspected for a Stateless Reset.",
+      "eligibility": "eligible"
+    }
+  ]
+}

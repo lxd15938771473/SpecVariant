@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implementation Validator"
+  short_description: "Build and run focused implementation reproducers"
+  default_prompt: "Use $speclitmus-implementation-validator to inspect code and run a focused minimal reproducer."

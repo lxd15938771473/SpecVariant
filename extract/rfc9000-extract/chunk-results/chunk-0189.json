@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0189",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A server that only sends probing packets (Section 9.1) to an address\n   prior to address validation provides an attacker with only limited\n   control over the encrypted portion of datagrams.  However,\n   particularly for NAT rebinding, this can adversely affect\n   performance.  If the server sends frames carrying application data,\n   an attacker might be able to control most of the content of\n   datagrams.",
+      "line_start": 7448,
+      "line_end": 7454,
+      "condition": "A server sends packets to an address before validating that address.",
+      "required_behavior": "Send only probing packets to the unvalidated address to limit attacker control over the encrypted portion of datagrams.",
+      "forbidden_behavior": "Do not send frames carrying application data to the unvalidated address when applying this mitigation.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet traces and address-validation state can determine whether packets sent before validation contain only probing frames or also carry application data.",
+      "eligibility": "eligible"
+    }
+  ]
+}

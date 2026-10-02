@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0059",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "In using TLS, the central key schedule of TLS is used.",
+      "line_start": 2138,
+      "line_end": 2138,
+      "condition": "When deriving TLS-related secrets for a QUIC connection.",
+      "required_behavior": "Use the central TLS key schedule.",
+      "forbidden_behavior": "Replacing it with an unrelated handshake key schedule.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Secret-derivation call paths can be inspected for use of the TLS key schedule.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As a result\n   of the TLS handshake messages being integrated into the calculation\n   of secrets, the inclusion of the QUIC transport parameters extension\n   ensures that the handshake and 1-RTT keys are not the same as those\n   that might be produced by a server running TLS over TCP.",
+      "line_start": 2138,
+      "line_end": 2142,
+      "condition": "When the TLS key schedule calculates secrets for QUIC.",
+      "required_behavior": "Integrate the TLS handshake messages, including the QUIC transport-parameters extension, into the secret calculation.",
+      "forbidden_behavior": "Deriving QUIC handshake secrets from a transcript that omits those handshake messages or the extension.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Transcript inputs to secret derivation can be compared with the complete QUIC TLS handshake transcript.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As a result\n   of the TLS handshake messages being integrated into the calculation\n   of secrets, the inclusion of the QUIC transport parameters extension\n   ensures that the handshake and 1-RTT keys are not the same as those\n   that might be produced by a server running TLS over TCP.",
+      "line_start": 2138,
+      "line_end": 2142,
+      "condition": "When comparing handshake keys derived for QUIC with keys derivable for TLS over TCP.",
+      "required_behavior": "Ensure the QUIC handshake keys are distinct through inclusion of the QUIC transport-parameters extension in the transcript.",
+      "forbidden_behavior": "Producing cross-protocol-identical handshake keys from otherwise corresponding sessions.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Controlled QUIC and TLS-over-TCP derivations can compare the resulting handshake key bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As a result\n   of the TLS handshake messages being integrated into the calculation\n   of secrets, the inclusion of the QUIC transport parameters extension\n   ensures that the handshake and 1-RTT keys are not the same as those\n   that might be produced by a server running TLS over TCP.",
+      "line_start": 2138,
+      "line_end": 2142,
+      "condition": "When comparing 1-RTT keys derived for QUIC with keys derivable for TLS over TCP.",
+      "required_behavior": "Ensure the QUIC 1-RTT keys are distinct through inclusion of the QUIC transport-parameters extension in the transcript.",
+      "forbidden_behavior": "Producing cross-protocol-identical 1-RTT keys from otherwise corresponding sessions.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Controlled QUIC and TLS-over-TCP derivations can compare the resulting 1-RTT key bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The QUIC packet protection keys and IVs are derived using a different\n   label than the equivalent keys in TLS.",
+      "line_start": 2146,
+      "line_end": 2147,
+      "condition": "When deriving a QUIC packet-protection key.",
+      "required_behavior": "Use a derivation label different from the label for the equivalent TLS key.",
+      "forbidden_behavior": "Reusing the equivalent TLS key-derivation label.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "HKDF label inputs for QUIC and TLS key derivation can be compared directly.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The QUIC packet protection keys and IVs are derived using a different\n   label than the equivalent keys in TLS.",
+      "line_start": 2146,
+      "line_end": 2147,
+      "condition": "When deriving a QUIC packet-protection IV.",
+      "required_behavior": "Use a derivation label different from the label for the equivalent TLS IV.",
+      "forbidden_behavior": "Reusing the equivalent TLS IV-derivation label.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "HKDF label inputs for QUIC and TLS IV derivation can be compared directly.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To preserve this separation, a new version of QUIC SHOULD define new\n   labels for key derivation for packet protection key and IV, plus the\n   header protection keys.",
+      "line_start": 2149,
+      "line_end": 2151,
+      "condition": "When defining packet-protection key derivation for a new QUIC version.",
+      "required_behavior": "Define a new version-specific packet-protection key label.",
+      "forbidden_behavior": "Reusing the prior QUIC version's packet-protection key label.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The new version's derivation-label constants can be compared with earlier versions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To preserve this separation, a new version of QUIC SHOULD define new\n   labels for key derivation for packet protection key and IV, plus the\n   header protection keys.",
+      "line_start": 2149,
+      "line_end": 2151,
+      "condition": "When defining packet-protection IV derivation for a new QUIC version.",
+      "required_behavior": "Define a new version-specific packet-protection IV label.",
+      "forbidden_behavior": "Reusing the prior QUIC version's packet-protection IV label.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The new version's IV derivation-label constants can be compared with earlier versions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To preserve this separation, a new version of QUIC SHOULD define new\n   labels for key derivation for packet protection key and IV, plus the\n   header protection keys.",
+      "line_start": 2149,
+      "line_end": 2151,
+      "condition": "When defining header-protection key derivation for a new QUIC version.",
+      "required_behavior": "Define a new version-specific header-protection key label.",
+      "forbidden_behavior": "Reusing the prior QUIC version's header-protection key label.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The new version's header-protection derivation-label constants can be compared with earlier versions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This version of QUIC uses the string \"quic\".",
+      "line_start": 2151,
+      "line_end": 2151,
+      "condition": "When constructing the version-specific key-derivation labels for this QUIC version.",
+      "required_behavior": "Use the string \"quic\".",
+      "forbidden_behavior": "Substituting another version-label string.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The literal string used in derivation labels can be inspected directly.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The initial secrets use a key that is specific to the negotiated QUIC\n   version.",
+      "line_start": 2155,
+      "line_end": 2156,
+      "condition": "When deriving Initial secrets after selecting a QUIC version.",
+      "required_behavior": "Use the key specific to the negotiated QUIC version.",
+      "forbidden_behavior": "Using an Initial-secret key belonging to another QUIC version.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The negotiated version and selected Initial-secret derivation key can be correlated.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "New QUIC versions SHOULD define a new salt value used in\n   calculating initial secrets.",
+      "line_start": 2156,
+      "line_end": 2157,
+      "condition": "When defining Initial-secret derivation for a new QUIC version.",
+      "required_behavior": "Define a new salt value for calculating Initial secrets.",
+      "forbidden_behavior": "Reusing the prior version's Initial-secret salt.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The new version's salt constant can be compared byte-for-byte with prior versions.",
+      "eligibility": "eligible"
+    }
+  ]
+}

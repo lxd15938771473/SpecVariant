@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0048",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "BGP MUST maintain a separate FSM for each configured peer.  Each BGP",
+      "line_start": 2819,
+      "line_end": 2819,
+      "condition": "for every configured BGP peer",
+      "required_behavior": "MUST maintain a separate FSM for that peer",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Per-peer FSM allocation and separation can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "BGP MUST maintain a separate FSM for each configured peer.  Each BGP\n   peer paired in a potential connection will attempt to connect to the\n   other, unless configured to remain in the idle state, or configured\n   to remain passive.  For the purpose of this discussion, the active or",
+      "line_start": 2819,
+      "line_end": 2822,
+      "condition": "a BGP peer is paired in a potential connection and is not configured to remain idle or passive",
+      "required_behavior": "attempt to connect to the other peer",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Connection initiation can be observed for active, idle, and passive configurations.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP implementation MUST connect to and listen on TCP port 179 for\n   incoming connections in addition to trying to connect to peers.  For",
+      "line_start": 2829,
+      "line_end": 2830,
+      "condition": "a BGP implementation attempts to connect to peers",
+      "required_behavior": "MUST connect to TCP port 179",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The destination port of outgoing connection attempts is observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP implementation MUST connect to and listen on TCP port 179 for\n   incoming connections in addition to trying to connect to peers.  For",
+      "line_start": 2829,
+      "line_end": 2830,
+      "condition": "a BGP implementation operates and tries to connect to peers",
+      "required_behavior": "MUST also listen on TCP port 179 for incoming connections",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The TCP listener port and its presence during outbound initiation can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "incoming connections in addition to trying to connect to peers.  For\n   each incoming connection, a state machine MUST be instantiated.",
+      "line_start": 2830,
+      "line_end": 2831,
+      "condition": "for each incoming TCP connection",
+      "required_behavior": "MUST instantiate a state machine",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Incoming connection handling can be checked for FSM creation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "There exists a period in which the identity of the peer on the other\n   end of an incoming connection is known, but the BGP identifier is not\n   known.  During this time, both an incoming and outgoing connection\n   may exist for the same configured peering.  This is referred to as a\n   connection collision (see Section 6.8).",
+      "line_start": 2832,
+      "line_end": 2836,
+      "condition": "the peer identity on an incoming connection is known but its BGP identifier is not yet known",
+      "required_behavior": "an incoming and an outgoing connection may coexist for the same configured peering",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Connection state can be examined during the interval before the BGP identifier is learned.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP implementation will have, at most, one FSM for each configured\n   peering, plus one FSM for each incoming TCP connection for which the\n   peer has not yet been identified.  Each FSM corresponds to exactly\n   one TCP connection.",
+      "line_start": 2838,
+      "line_end": 2841,
+      "condition": "counting FSMs for configured peerings and incoming connections whose peer has not yet been identified",
+      "required_behavior": "maintain at most one FSM per configured peering plus one FSM per incoming TCP connection with an unidentified peer",
+      "forbidden_behavior": "exceed that FSM count bound",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "FSM counts can be compared with configured peerings and unidentified incoming connections.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "peer has not yet been identified.  Each FSM corresponds to exactly\n   one TCP connection.",
+      "line_start": 2840,
+      "line_end": 2841,
+      "condition": "for each FSM",
+      "required_behavior": "correspond to exactly one TCP connection",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The mapping from an FSM to its TCP connection can be inspected for cardinality.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "There may be more than one connection between a pair of peers if the\n   connections are configured to use a different pair of IP addresses.\n   This is referred to as multiple \"configured peerings\" to the same\n   peer.",
+      "line_start": 2843,
+      "line_end": 2846,
+      "condition": "connections between the same pair of BGP peers are configured to use different pairs of IP addresses",
+      "required_behavior": "permit more than one connection as multiple configured peerings to the same peer",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Distinct configured IP-address pairs can be checked for independent connections to the same peer.",
+      "eligibility": "eligible"
+    }
+  ]
+}

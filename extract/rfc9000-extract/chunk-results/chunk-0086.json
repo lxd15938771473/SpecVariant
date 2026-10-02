@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0086",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   An endpoint that detects an error SHOULD signal the existence of that\n   error to its peer.  Both transport-level and application-level errors\n   can affect an entire connection; see Section 11.1.  Only application-\n   level errors can be isolated to a single stream; see Section 11.2.",
+      "line_start": 3605,
+      "line_end": 3608,
+      "condition": "An endpoint detects an error.",
+      "required_behavior": "The endpoint should signal the existence of the error to its peer.",
+      "forbidden_behavior": "",
+      "error_behavior": "Signal the detected error to the peer.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can induce a detectable error and observe whether the endpoint sends an error signal to its peer.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   error to its peer.  Both transport-level and application-level errors\n   can affect an entire connection; see Section 11.1.  Only application-\n   level errors can be isolated to a single stream; see Section 11.2.",
+      "line_start": 3606,
+      "line_end": 3608,
+      "condition": "An endpoint handles a transport-level error.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not isolate the transport-level error to a single stream.",
+      "error_behavior": "Handle the error at connection scope rather than as a stream-isolated error.",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can trigger a transport-level error and verify that handling is not confined to only one stream.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   error to its peer.  Both transport-level and application-level errors\n   can affect an entire connection; see Section 11.1.  Only application-\n   level errors can be isolated to a single stream; see Section 11.2.",
+      "line_start": 3606,
+      "line_end": 3608,
+      "condition": "An endpoint isolates an error to a single stream.",
+      "required_behavior": "The isolated error must be an application-level error.",
+      "forbidden_behavior": "A non-application-level error must not be isolated to a single stream.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The error category and the scope of the endpoint's error handling can be observed and compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The most appropriate error code (Section 20) SHOULD be included in\n   the frame that signals the error.  Where this specification\n   identifies error conditions, it also identifies the error code that\n   is used; though these are worded as requirements, different\n   implementation strategies might lead to different errors being\n   reported.",
+      "line_start": 3610,
+      "line_end": 3615,
+      "condition": "An endpoint sends a frame that signals an error.",
+      "required_behavior": "The frame should include the most appropriate error code for the detected error.",
+      "forbidden_behavior": "",
+      "error_behavior": "Include an appropriate error code in the error-signaling frame.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can trigger an error, inspect the signaling frame, and validate the included error code against the detected condition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   reported.  In particular, an endpoint MAY use any applicable error\n   code when it detects an error condition; a generic error code (such\n   as PROTOCOL_VIOLATION or INTERNAL_ERROR) can always be used in place\n   of specific error codes.",
+      "line_start": 3615,
+      "line_end": 3618,
+      "condition": "An endpoint detects an error condition and selects an error code.",
+      "required_behavior": "The endpoint may use any error code applicable to the detected condition, including a generic error code such as PROTOCOL_VIOLATION or INTERNAL_ERROR in place of a specific error code.",
+      "forbidden_behavior": "",
+      "error_behavior": "Report the condition using an applicable specific or generic error code.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can induce an error and determine whether the emitted code is applicable or is an expressly permitted generic substitute.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A stateless reset (Section 10.3) is not suitable for any error that\n   can be signaled with a CONNECTION_CLOSE or RESET_STREAM frame.  A\n   stateless reset MUST NOT be used by an endpoint that has the state\n   necessary to send a frame on the connection.",
+      "line_start": 3620,
+      "line_end": 3623,
+      "condition": "An error can be signaled with a CONNECTION_CLOSE or RESET_STREAM frame.",
+      "required_behavior": "The endpoint must use an appropriate frame-based error signal rather than a stateless reset.",
+      "forbidden_behavior": "The endpoint must not use a stateless reset for the error.",
+      "error_behavior": "Signal the error with CONNECTION_CLOSE or RESET_STREAM as applicable.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can induce an error signalable by either named frame and observe whether the endpoint incorrectly emits a stateless reset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   can be signaled with a CONNECTION_CLOSE or RESET_STREAM frame.  A\n   stateless reset MUST NOT be used by an endpoint that has the state\n   necessary to send a frame on the connection.",
+      "line_start": 3621,
+      "line_end": 3623,
+      "condition": "An endpoint has the state necessary to send a frame on the connection.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not use a stateless reset.",
+      "error_behavior": "Use a connection frame, rather than a stateless reset, when signaling is needed.",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can establish that connection state remains available and verify that the endpoint does not emit a stateless reset.",
+      "eligibility": "eligible"
+    }
+  ]
+}

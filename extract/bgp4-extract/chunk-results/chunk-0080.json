@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0080",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "BGP-4 is capable of operating in an environment where a set of\n   reachable destinations may be expressed via a single IP prefix.",
+      "line_start": 5157,
+      "line_end": 5158,
+      "condition": "When representing reachable destinations",
+      "required_behavior": "Support representing a set of reachable destinations by a single IP prefix.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Prefix representation can be checked for support of an address range represented by one prefix.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The\n   concept of network classes, or subnetting, is foreign to BGP-4.",
+      "line_start": 5158,
+      "line_end": 5159,
+      "condition": "When interpreting BGP-4 destination prefixes",
+      "required_behavior": "Interpret destination prefixes independently of network classes or subnetting conventions.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Prefix interpretation can be inspected for dependence on classful network or subnet boundaries.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Another new attribute,\n   AGGREGATOR, can be added to aggregate routes to advertise which AS\n   and which BGP speaker within that AS caused the aggregation.",
+      "line_start": 5172,
+      "line_end": 5174,
+      "condition": "When advertising an aggregate route",
+      "required_behavior": "Permit optional inclusion of AGGREGATOR to identify the AS and BGP speaker within that AS that caused aggregation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Aggregate route construction can be checked for this permitted attribute and its stated identification semantics; inclusion remains optional.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To ensure that Hold Timers are symmetric, the Hold Timer is now\n   negotiated on a per-connection basis.",
+      "line_start": 5176,
+      "line_end": 5177,
+      "condition": "When establishing a BGP connection",
+      "required_behavior": "Negotiate the Hold Timer on a per-connection basis.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Connection-specific Hold Timer negotiation is a concrete current behavior described by the comparison paragraph.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Hold Timers of zero are now\n   supported.",
+      "line_start": 5177,
+      "line_end": 5178,
+      "condition": "When handling a Hold Timer value of zero",
+      "required_behavior": "Support a zero Hold Timer value.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The accepted Hold Timer value range can be checked for zero support.",
+      "eligibility": "eligible"
+    }
+  ]
+}

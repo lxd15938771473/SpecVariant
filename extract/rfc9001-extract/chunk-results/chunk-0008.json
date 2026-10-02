@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0008",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "In this document, the TLS handshake is considered complete when the\n   TLS stack has reported that the handshake is complete.",
+      "line_start": 403,
+      "line_end": 404,
+      "condition": "When determining whether the TLS handshake is complete at an endpoint.",
+      "required_behavior": "Treat the handshake as complete when the endpoint's TLS stack reports completion.",
+      "forbidden_behavior": "Do not treat the handshake as complete before the endpoint's TLS stack reports completion.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can correlate the endpoint's externally used handshake-complete state with the TLS stack's completion report.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This happens\n   when the TLS stack has both sent a Finished message and verified the\n   peer's Finished message.",
+      "line_start": 404,
+      "line_end": 406,
+      "condition": "Before the TLS stack reports that the handshake is complete.",
+      "required_behavior": "Send the endpoint's Finished message.",
+      "forbidden_behavior": "Do not report handshake completion without having sent the endpoint's Finished message.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Handshake message traces and the TLS completion event can be ordered to verify that Finished was sent first.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This happens\n   when the TLS stack has both sent a Finished message and verified the\n   peer's Finished message.",
+      "line_start": 404,
+      "line_end": 406,
+      "condition": "Before the TLS stack reports that the handshake is complete.",
+      "required_behavior": "Verify the peer's Finished message.",
+      "forbidden_behavior": "Do not report handshake completion without having verified the peer's Finished message.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Instrumentation can order successful peer-Finished verification relative to the TLS completion event.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Verifying the peer's Finished message\n   provides the endpoints with an assurance that previous handshake\n   messages have not been modified.",
+      "line_start": 406,
+      "line_end": 408,
+      "condition": "When verifying the peer's Finished message.",
+      "required_behavior": "Verify the integrity of the previous handshake messages represented by the Finished message.",
+      "forbidden_behavior": "Do not successfully verify the peer's Finished message if a previous handshake message covered by it was modified.",
+      "error_behavior": "Treat a Finished verification affected by a modified prior handshake message as unsuccessful.",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can modify a prior handshake message and verify that peer-Finished verification no longer succeeds.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Note that the handshake does not\n   complete at both endpoints simultaneously.  Consequently, any\n   requirement that is based on the completion of the handshake depends\n   on the perspective of the endpoint in question.",
+      "line_start": 408,
+      "line_end": 411,
+      "condition": "When evaluating a requirement whose applicability depends on handshake completion.",
+      "required_behavior": "Evaluate completion from the perspective and local completion state of the endpoint in question.",
+      "forbidden_behavior": "Do not infer one endpoint's handshake-complete state solely from completion at the other endpoint.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can create the interval where only one endpoint has completed and verify that completion-gated behavior is enabled independently per endpoint.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0058",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An active attacker who can set the CD bit in a DNS query message or\n   the AD bit in a DNS response message can use these bits to defeat the\n   protection that DNSSEC attempts to provide to security-oblivious\n   recursive-mode resolvers.  For this reason, use of these control bits\n   by a security-aware recursive-mode resolver requires a secure\n   channel.",
+      "line_start": 1888,
+      "line_end": 1893,
+      "condition": "A security-aware recursive-mode resolver uses the CD bit in a DNS query message.",
+      "required_behavior": "Use a secure channel for this use of the CD control bit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The channel security configuration and the resolver path that uses the CD bit can be inspected to verify that this use requires a secure channel.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An active attacker who can set the CD bit in a DNS query message or\n   the AD bit in a DNS response message can use these bits to defeat the\n   protection that DNSSEC attempts to provide to security-oblivious\n   recursive-mode resolvers.  For this reason, use of these control bits\n   by a security-aware recursive-mode resolver requires a secure\n   channel.",
+      "line_start": 1888,
+      "line_end": 1893,
+      "condition": "A security-aware recursive-mode resolver uses the AD bit in a DNS response message.",
+      "required_behavior": "Use a secure channel for this use of the AD control bit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The channel security configuration and the resolver path that uses the AD bit can be inspected to verify that this use requires a secure channel.",
+      "eligibility": "eligible"
+    }
+  ]
+}

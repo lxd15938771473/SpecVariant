@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0021",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The following RR definitions are expected to occur, at least\npotentially, in all classes.  In particular, NS, SOA, CNAME, and PTR\nwill be used in all classes, and have the same format in all classes.",
+      "line_start": 717,
+      "line_end": 719,
+      "condition": "Interpreting the applicability of NS, SOA, CNAME, and PTR resource records to DNS classes.",
+      "required_behavior": "Treat NS, SOA, CNAME, and PTR as resource-record types applicable to all classes.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "RR type applicability can be checked for each class supported by the implementation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following RR definitions are expected to occur, at least\npotentially, in all classes.  In particular, NS, SOA, CNAME, and PTR\nwill be used in all classes, and have the same format in all classes.",
+      "line_start": 717,
+      "line_end": 719,
+      "condition": "Encoding or decoding NS, SOA, CNAME, or PTR resource records in different DNS classes.",
+      "required_behavior": "Use the same format for each of these RR types in all classes.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoding and decoding format for a given RR type can be compared across supported classes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following RR definitions are expected to occur, at least\npotentially, in all classes.  In particular, NS, SOA, CNAME, and PTR\nwill be used in all classes, and have the same format in all classes.\nBecause their RDATA format is known, all domain names in the RDATA\nsection of these RRs may be compressed.",
+      "line_start": 717,
+      "line_end": 721,
+      "condition": "Encoding domain names in the RDATA of the standard resource records whose RDATA format is known.",
+      "required_behavior": "Domain names in these RDATA fields may be compressed; compression is permitted rather than mandatory.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation can be checked for optional use of compression in these known domain-name fields.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "<domain-name> is a domain name represented as a series of labels, and\nterminated by a label with zero length.",
+      "line_start": 723,
+      "line_end": 724,
+      "condition": "Representing a <domain-name> in a resource-record definition.",
+      "required_behavior": "Represent the domain name as a series of labels.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The domain-name representation can be inspected for its label sequence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "<domain-name> is a domain name represented as a series of labels, and\nterminated by a label with zero length.",
+      "line_start": 723,
+      "line_end": 724,
+      "condition": "Representing a <domain-name> in a resource-record definition.",
+      "required_behavior": "Terminate the domain-name label sequence with a zero-length label.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The terminal label and its zero length can be checked in the domain-name representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "<character-string> is a single\nlength octet followed by that number of characters.",
+      "line_start": 724,
+      "line_end": 725,
+      "condition": "Encoding a <character-string>.",
+      "required_behavior": "Begin the character-string with exactly one length octet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded length prefix can be checked for a width of one octet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "<character-string> is a single\nlength octet followed by that number of characters.",
+      "line_start": 724,
+      "line_end": 725,
+      "condition": "Encoding or decoding a <character-string>.",
+      "required_behavior": "Place exactly the number of characters specified by the length octet immediately after that octet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The declared length can be compared with the number of characters comprising the string payload.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "<character-string>\nis treated as binary information, and can be up to 256 characters in\nlength (including the length octet).",
+      "line_start": 725,
+      "line_end": 727,
+      "condition": "Processing a <character-string>.",
+      "required_behavior": "Treat the character-string as binary information.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Binary payload preservation and interpretation can be inspected and tested with arbitrary octet values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "<character-string>\nis treated as binary information, and can be up to 256 characters in\nlength (including the length octet).",
+      "line_start": 725,
+      "line_end": 727,
+      "condition": "Encoding or decoding a <character-string>.",
+      "required_behavior": "Limit the complete character-string representation to 256 octets, including the length octet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The total encoded string size, including its length prefix, can be measured at the boundary.",
+      "eligibility": "eligible"
+    }
+  ]
+}

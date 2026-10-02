@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0041",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A validating security-aware resolver MUST treat the signature of a\n   valid signed DNAME RR as also covering unsigned CNAME RRs that could\n   have been synthesized from the DNAME RR, as described in [RFC2672],\n   at least to the extent of not rejecting a response message solely\n   because it contains such CNAME RRs.",
+      "line_start": 1291,
+      "line_end": 1295,
+      "condition": "A validating security-aware resolver processes unsigned CNAME RRs that could have been synthesized from a valid signed DNAME RR as described in RFC2672.",
+      "required_behavior": "The validating security-aware resolver MUST treat the signature of the valid signed DNAME RR as also covering those unsigned CNAME RRs, at least to the extent of not rejecting a response solely because it contains them.",
+      "forbidden_behavior": "Reject a response message solely because it contains those unsigned synthesized CNAME RRs.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The resolver response-validation decision can be checked with unsigned CNAME RRs whose synthesis is supported by a valid signed DNAME RR.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A validating security-aware resolver MUST treat the signature of a\n   valid signed DNAME RR as also covering unsigned CNAME RRs that could\n   have been synthesized from the DNAME RR, as described in [RFC2672],\n   at least to the extent of not rejecting a response message solely\n   because it contains such CNAME RRs.  The resolver MAY retain such\n   CNAME RRs in its cache or in the answers it hands back, but is not\n   required to do so.",
+      "line_start": 1291,
+      "line_end": 1297,
+      "condition": "A validating security-aware resolver processes unsigned CNAME RRs that could have been synthesized from a valid signed DNAME RR as described in RFC2672.",
+      "required_behavior": "The resolver MAY retain those unsigned synthesized CNAME RRs in its cache; retaining them is not required.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The resolver cache can be inspected to verify that retaining these CNAME RRs is an allowed implementation choice, without requiring retention.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A validating security-aware resolver MUST treat the signature of a\n   valid signed DNAME RR as also covering unsigned CNAME RRs that could\n   have been synthesized from the DNAME RR, as described in [RFC2672],\n   at least to the extent of not rejecting a response message solely\n   because it contains such CNAME RRs.  The resolver MAY retain such\n   CNAME RRs in its cache or in the answers it hands back, but is not\n   required to do so.",
+      "line_start": 1291,
+      "line_end": 1297,
+      "condition": "A validating security-aware resolver processes unsigned CNAME RRs that could have been synthesized from a valid signed DNAME RR as described in RFC2672.",
+      "required_behavior": "The resolver MAY retain those unsigned synthesized CNAME RRs in the answers it hands back; retaining them is not required.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Returned answers can be inspected to verify that retaining these CNAME RRs is an allowed implementation choice, without requiring retention.",
+      "eligibility": "eligible"
+    }
+  ]
+}

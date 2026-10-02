@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0011",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "As\n   this mechanism does not currently distinguish between QUIC versions,\n   HTTP servers SHOULD support multiple versions to reduce the\n   probability of incompatibility and the cost associated with QUIC\n   version negotiation or TCP fallback.",
+      "line_start": 195,
+      "line_end": 199,
+      "condition": "when an HTTP server advertises QUIC support through Alt-Svc, which does not distinguish between QUIC versions",
+      "required_behavior": "support multiple QUIC versions",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The server's advertised and accepted QUIC versions can be inspected to determine whether it supports more than one version.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For example, an origin\n   advertising support for \"h3\" in Alt-Svc should support QUIC version\n   1, as it was the original QUIC version used by HTTP/3; therefore,\n   some clients will only support that version.",
+      "line_start": 199,
+      "line_end": 202,
+      "condition": "when an origin advertises support for \"h3\" in Alt-Svc",
+      "required_behavior": "support QUIC version 1",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A connection attempt using QUIC version 1 can verify that an origin advertising \"h3\" supports that version.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Any QUIC endpoint that supports QUIC version 2 MUST send, process,\n   and validate the version_information transport parameter specified in\n   [QUIC-VN] to prevent version downgrade attacks.",
+      "line_start": 204,
+      "line_end": 206,
+      "condition": "when a QUIC endpoint supports QUIC version 2",
+      "required_behavior": "send the version_information transport parameter specified in [QUIC-VN]",
+      "forbidden_behavior": "omit the version_information transport parameter",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The endpoint's emitted transport parameters can be inspected for the required version_information parameter.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Any QUIC endpoint that supports QUIC version 2 MUST send, process,\n   and validate the version_information transport parameter specified in\n   [QUIC-VN] to prevent version downgrade attacks.",
+      "line_start": 204,
+      "line_end": 206,
+      "condition": "when a QUIC endpoint supporting QUIC version 2 receives the version_information transport parameter specified in [QUIC-VN]",
+      "required_behavior": "process the version_information transport parameter",
+      "forbidden_behavior": "ignore the version_information transport parameter",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The receive path can be exercised with the parameter and checked for processing that affects version negotiation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Any QUIC endpoint that supports QUIC version 2 MUST send, process,\n   and validate the version_information transport parameter specified in\n   [QUIC-VN] to prevent version downgrade attacks.",
+      "line_start": 204,
+      "line_end": 206,
+      "condition": "when a QUIC endpoint supporting QUIC version 2 receives the version_information transport parameter specified in [QUIC-VN]",
+      "required_behavior": "validate the version_information transport parameter according to [QUIC-VN]",
+      "forbidden_behavior": "accept the version_information transport parameter without validation",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Invalid version_information values can be supplied to verify that the endpoint performs the specified validation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints that support both\n   versions SHOULD support compatible version negotiation to avoid a\n   round trip.",
+      "line_start": 211,
+      "line_end": 213,
+      "condition": "when an endpoint supports both QUIC version 1 and QUIC version 2",
+      "required_behavior": "support compatible version negotiation between the two versions",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A negotiation attempt between QUIC versions 1 and 2 can verify support for the compatible negotiation path.",
+      "eligibility": "eligible"
+    }
+  ]
+}

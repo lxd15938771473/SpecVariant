@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0015",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A client MUST authenticate the identity of the server.",
+      "line_start": 710,
+      "line_end": 710,
+      "condition": "When a client establishes a QUIC connection with a server",
+      "required_behavior": "The client authenticates the server's identity.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A handshake test can present valid and invalid server identities and observe whether the client performs authentication before accepting the peer.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A server MUST NOT use post-handshake client authentication (as\n   defined in Section 4.6.2 of [TLS13])",
+      "line_start": 731,
+      "line_end": 732,
+      "condition": "After the TLS handshake has completed",
+      "required_behavior": "",
+      "forbidden_behavior": "Use TLS post-handshake client authentication.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Server TLS state transitions and post-handshake traffic can be inspected to verify that the post-handshake authentication procedure is never initiated or used.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "More specifically, servers MUST NOT send post-\n   handshake TLS CertificateRequest messages",
+      "line_start": 735,
+      "line_end": 736,
+      "condition": "After the TLS handshake has completed",
+      "required_behavior": "",
+      "forbidden_behavior": "Send a TLS CertificateRequest message.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Captured post-handshake TLS messages can be decoded to assert that no CertificateRequest is sent by the server.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "clients MUST treat\n   receipt of such messages as a connection error of type\n   PROTOCOL_VIOLATION.",
+      "line_start": 736,
+      "line_end": 738,
+      "condition": "When a client receives a post-handshake TLS CertificateRequest message",
+      "required_behavior": "Treat receipt as a connection error.",
+      "forbidden_behavior": "Continue the connection as though the post-handshake CertificateRequest were valid.",
+      "error_behavior": "Close or fail the connection with error type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A peer can inject a post-handshake CertificateRequest and verify that the client terminates the connection with PROTOCOL_VIOLATION.",
+      "eligibility": "eligible"
+    }
+  ]
+}

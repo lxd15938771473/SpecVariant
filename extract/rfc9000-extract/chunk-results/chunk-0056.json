@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0056",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "On receiving a PATH_CHALLENGE frame, an endpoint MUST respond by echoing the data contained in the PATH_CHALLENGE frame in a PATH_RESPONSE frame.",
+      "line_start": 2562,
+      "line_end": 2564,
+      "condition": "An endpoint receives a PATH_CHALLENGE frame.",
+      "required_behavior": "Send a PATH_RESPONSE frame containing an exact echo of the data from the received PATH_CHALLENGE frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can inject a PATH_CHALLENGE frame and verify that the endpoint sends a PATH_RESPONSE whose data matches the challenge data exactly.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST NOT delay transmission of a packet containing a PATH_RESPONSE frame unless constrained by congestion control.",
+      "line_start": 2564,
+      "line_end": 2566,
+      "condition": "An endpoint has a packet containing a PATH_RESPONSE frame ready for transmission and congestion control does not constrain transmission.",
+      "required_behavior": "Transmit the packet without delay.",
+      "forbidden_behavior": "Delay transmission of the packet for a reason other than congestion control.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Instrumentation can determine whether a ready PATH_RESPONSE packet is delayed and whether congestion control was constraining transmission at that time.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A PATH_RESPONSE frame MUST be sent on the network path where the PATH_CHALLENGE frame was received.",
+      "line_start": 2568,
+      "line_end": 2569,
+      "condition": "An endpoint sends a PATH_RESPONSE for a received PATH_CHALLENGE.",
+      "required_behavior": "Send the PATH_RESPONSE on the same network path on which the corresponding PATH_CHALLENGE was received.",
+      "forbidden_behavior": "Send the PATH_RESPONSE on a different network path.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A multipath test can identify the ingress path of a PATH_CHALLENGE and compare it with the egress path of the corresponding PATH_RESPONSE.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This requirement MUST NOT be enforced by the endpoint that initiates path validation, as that would enable an attack on migration; see Section 9.3.3.",
+      "line_start": 2571,
+      "line_end": 2573,
+      "condition": "An endpoint initiated path validation and evaluates the received PATH_RESPONSE.",
+      "required_behavior": "",
+      "forbidden_behavior": "Require the PATH_RESPONSE to have arrived on the same network path on which the PATH_CHALLENGE was sent as a condition of accepting the validation response.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can initiate validation, return the matching PATH_RESPONSE through a different observable path, and verify that the initiator does not enforce same-path receipt.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST expand datagrams that contain a PATH_RESPONSE frame to at least the smallest allowed maximum datagram size of 1200 bytes.",
+      "line_start": 2575,
+      "line_end": 2576,
+      "condition": "An endpoint sends a datagram containing a PATH_RESPONSE frame, and expansion to 1200 bytes would not cause the datagram to exceed the anti-amplification limit.",
+      "required_behavior": "Expand the datagram to a size of at least 1200 bytes.",
+      "forbidden_behavior": "Send the datagram at a size below 1200 bytes.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The general 1200-byte expansion rule and its adjacent anti-amplification exception can be combined and checked by observing the datagram size and current amplification allowance.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "However, an endpoint MUST NOT expand the datagram containing the PATH_RESPONSE if the resulting data exceeds the anti-amplification limit.",
+      "line_start": 2578,
+      "line_end": 2580,
+      "condition": "Expanding a datagram containing a PATH_RESPONSE would cause the resulting data to exceed the anti-amplification limit.",
+      "required_behavior": "Send without performing the otherwise required expansion.",
+      "forbidden_behavior": "Expand the datagram beyond the anti-amplification limit.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can establish a known anti-amplification allowance and verify that padding or other expansion is not applied when it would exceed that allowance.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST NOT send more than one PATH_RESPONSE frame in response to one PATH_CHALLENGE frame; see Section 13.3.",
+      "line_start": 2583,
+      "line_end": 2584,
+      "condition": "An endpoint is responding to a single PATH_CHALLENGE frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "Send more than one PATH_RESPONSE frame attributable to that PATH_CHALLENGE frame.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can deliver one PATH_CHALLENGE and count the PATH_RESPONSE frames generated in response, requiring the count not to exceed one.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0027",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "3.3.6. MG RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MGMNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+",
+      "line_start": 856,
+      "line_end": 861,
+      "condition": "When implementing the experimental MG resource record.",
+      "required_behavior": "Represent MG RDATA as a single MGMNAME field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The MG RDATA parser and serializer can be checked for the single-field layout shown in the format diagram.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.6. MG RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MGMNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMGMNAME         A <domain-name> which specifies a mailbox which is a\n                member of the mail group specified by the domain name.",
+      "line_start": 856,
+      "line_end": 866,
+      "condition": "When implementing the experimental MG resource record.",
+      "required_behavior": "Represent the MGMNAME field as a domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The MGMNAME field representation and its domain-name parsing and serialization are inspectable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.6. MG RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MGMNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMGMNAME         A <domain-name> which specifies a mailbox which is a\n                member of the mail group specified by the domain name.",
+      "line_start": 856,
+      "line_end": 866,
+      "condition": "When implementing the experimental MG resource record.",
+      "required_behavior": "Interpret MGMNAME as the mailbox of a member of the mail group identified by the MG record domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An MG record can be checked for the mapping from its record domain name to the member mailbox designated by MGMNAME.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.6. MG RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MGMNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMGMNAME         A <domain-name> which specifies a mailbox which is a\n                member of the mail group specified by the domain name.\n\nMG records cause no additional section processing.",
+      "line_start": 856,
+      "line_end": 868,
+      "condition": "When implementing the experimental MG resource record.",
+      "required_behavior": "",
+      "forbidden_behavior": "Perform additional-section processing as a consequence of an MG record.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Processing an MG record can be exercised and inspected to verify that it does not trigger additional-section processing.",
+      "eligibility": "eligible"
+    }
+  ]
+}

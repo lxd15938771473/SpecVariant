@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0010",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An endpoint uses the Stream ID and Offset fields in STREAM frames to place data in order.",
+      "line_start": 566,
+      "line_end": 567,
+      "condition": "When an endpoint processes data encapsulated in STREAM frames.",
+      "required_behavior": "Use both the Stream ID and Offset fields to place stream data in order.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Frame-processing tests can vary Stream IDs and offsets and verify that data is assigned to the correct stream position.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints MUST be able to deliver stream data to an application as an ordered byte stream.",
+      "line_start": 569,
+      "line_end": 570,
+      "condition": "When delivering received stream data to an application.",
+      "required_behavior": "Be capable of delivering the stream data as an ordered byte stream.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A runtime test can deliver frames in varied orders and verify that the application-facing byte stream is ordered by stream offset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Delivering an ordered byte stream requires that an endpoint buffer any data that is received out of order, up to the advertised flow control limit.",
+      "line_start": 570,
+      "line_end": 572,
+      "condition": "When stream data is received out of order and remains within the advertised flow control limit.",
+      "required_behavior": "Buffer the out-of-order data as needed to provide ordered-byte-stream delivery.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Runtime tests can send in-limit stream data out of order and verify that it is retained until preceding data arrives.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "However, implementations MAY choose to offer the ability to deliver data out of order to a receiving application.",
+      "line_start": 574,
+      "line_end": 576,
+      "condition": "When an implementation elects to expose out-of-order stream delivery to a receiving application.",
+      "required_behavior": "The implementation is permitted to offer out-of-order delivery as an optional application-facing ability.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation's receive API and runtime behavior can be inspected to determine whether this optional delivery mode is offered consistently with the stated permission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Data that has already been received can be discarded.",
+      "line_start": 579,
+      "line_end": 580,
+      "condition": "When an endpoint receives stream data that it has already received at the same stream offset.",
+      "required_behavior": "The endpoint is permitted to discard the duplicate data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A duplicate-delivery test can verify that an implementation may discard already-received bytes without adding them again to application data.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The data at a given offset MUST NOT change if it is sent multiple times;",
+      "line_start": 580,
+      "line_end": 581,
+      "condition": "When data at a given stream offset is sent more than once.",
+      "required_behavior": "Every transmission at that offset must contain the same data.",
+      "forbidden_behavior": "Sending different data at the same offset in multiple transmissions.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Captured STREAM frames or sender tests can compare retransmitted bytes associated with identical stream offsets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "an endpoint MAY treat receipt of different data at the same offset within a stream as a connection error of type PROTOCOL_VIOLATION.",
+      "line_start": 581,
+      "line_end": 583,
+      "condition": "When an endpoint receives different data for the same offset within one stream.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The endpoint is permitted to treat the inconsistency as a connection error of type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A peer can send conflicting bytes at an identical stream offset and the resulting connection-error type can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Streams are an ordered byte-stream abstraction with no other structure visible to QUIC.",
+      "line_start": 585,
+      "line_end": 586,
+      "condition": "When QUIC processes or exposes stream contents.",
+      "required_behavior": "Treat stream contents as an ordered sequence of bytes without additional message or frame-derived structure.",
+      "forbidden_behavior": "Exposing additional stream structure as part of the QUIC stream abstraction.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "API and runtime tests can determine whether stream data is exposed solely by byte order rather than as application-visible STREAM-frame units.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "STREAM frame boundaries are not expected to be preserved when data is transmitted, retransmitted after packet loss, or delivered to the application at a receiver.",
+      "line_start": 586,
+      "line_end": 588,
+      "condition": "When stream data is transmitted, retransmitted after packet loss, or delivered to the receiving application.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Frame segmentation and application delivery could be observed, but the phrase \"not expected\" does not establish a definite required or forbidden implementation behavior.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "An endpoint MUST NOT send data on any stream without ensuring that it is within the flow control limits set by its peer.",
+      "line_start": 590,
+      "line_end": 592,
+      "condition": "Before an endpoint sends data on any stream.",
+      "required_behavior": "Ensure that the stream data to be sent is within the flow-control limits established by the peer.",
+      "forbidden_behavior": "Sending stream data without first ensuring that it is within the peer's flow-control limits.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Sender tests can set peer flow-control limits and inspect emitted STREAM frames to verify that all sent data remains within those limits.",
+      "eligibility": "eligible"
+    }
+  ]
+}

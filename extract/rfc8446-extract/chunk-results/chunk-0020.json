@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0020",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "struct {\n          T1 f1 = 8;  /* T.f1 must always be 8 */\n          T2 f2;\n      } T;",
+      "line_start": 1241,
+      "line_end": 1244,
+      "condition": "a field is assigned a fixed value with '=' in its presentation-language declaration",
+      "required_behavior": "serialize and accept that field only with the assigned fixed value",
+      "forbidden_behavior": "serialize or accept another value for the fixed field",
+      "error_behavior": "treat a received non-matching value as an invalid encoding",
+      "check_type": "structural_constraint",
+      "why_checkable": "Encoding and decoding tests can compare the field directly with its declared constant.",
+      "eligibility": "eligible"
+    }
+  ]
+}

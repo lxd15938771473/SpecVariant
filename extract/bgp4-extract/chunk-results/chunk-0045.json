@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0045",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Event 14: TcpConnection_Valid\n\n         Definition: Event indicating the local system reception of a\n                     TCP connection request with a valid source IP\n                     address, TCP port, destination IP address, and TCP\n                     Port.  The definition of invalid source and invalid\n                     destination IP address is determined by the\n                     implementation.\n\n                     BGP's destination port SHOULD be port 179, as\n                     defined by IANA.\n\n                     TCP connection request is denoted by the local\n                     system receiving a TCP SYN.\n\n         Status:     Optional",
+      "line_start": 2597,
+      "line_end": 2612,
+      "condition": "If optional Event 14 (TcpConnection_Valid) is implemented and the local system receives a TCP SYN connection request with valid source IP address, source TCP port, destination IP address, and destination TCP port.",
+      "required_behavior": "Represent that request as TcpConnection_Valid; source and destination IP address validity are determined by the implementation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The event classifier can be checked against the four address/port validity predicates and TCP SYN reception.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "BGP's destination port SHOULD be port 179, as\n                     defined by IANA.",
+      "line_start": 2606,
+      "line_end": 2607,
+      "condition": "Selecting the destination port for a BGP TCP connection.",
+      "required_behavior": "The destination port SHOULD be 179.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The configured or chosen TCP destination port can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Optional\n         Attribute\n         Status:     1) The TrackTcpState attribute SHOULD be set to\n                        TRUE if this event occurs.",
+      "line_start": 2614,
+      "line_end": 2617,
+      "condition": "TcpConnection_Valid occurs.",
+      "required_behavior": "The TrackTcpState attribute SHOULD be set to TRUE.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Attribute state can be observed when Event 14 occurs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Event 15: Tcp_CR_Invalid\n\n         Definition: Event indicating the local system reception of a\n                     TCP connection request with either an invalid\n                     source address or port number, or an invalid\n                     destination address or port number.",
+      "line_start": 2619,
+      "line_end": 2624,
+      "condition": "If optional Event 15 (Tcp_CR_Invalid) is implemented and a received TCP connection request has an invalid source address, source port, destination address, or destination port.",
+      "required_behavior": "Represent the invalid request as Tcp_CR_Invalid.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Each invalid address/port predicate can be exercised independently to inspect event classification.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "BGP destination port number SHOULD be 179, as\n                     defined by IANA.",
+      "line_start": 2633,
+      "line_end": 2634,
+      "condition": "Checking the BGP destination port for TCP connection requests.",
+      "required_behavior": "The BGP destination port number SHOULD be 179.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The destination-port validity rule can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A TCP connection request occurs when the local\n                     system receives a TCP SYN.",
+      "line_start": 2636,
+      "line_end": 2637,
+      "condition": "Recognizing an incoming TCP connection request for Tcp_CR_Invalid processing.",
+      "required_behavior": "Treat reception of a TCP SYN as a TCP connection request.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The incoming SYN-to-request mapping is observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Optional\n         Attribute\n         Status:     1) The TrackTcpState attribute should be set to\n                        TRUE if this event occurs.",
+      "line_start": 2641,
+      "line_end": 2644,
+      "condition": "Tcp_CR_Invalid occurs.",
+      "required_behavior": "The TrackTcpState attribute should be set to TRUE.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The attribute update associated with Event 15 can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Event 16: Tcp_CR_Acked\n\n         Definition: Event indicating the local system's request to\n                     establish a TCP connection to the remote peer.\n\n                     The local system's TCP connection sent a TCP SYN,\n                     received a TCP SYN/ACK message, and sent a TCP ACK.\n\n         Status:     Mandatory",
+      "line_start": 2646,
+      "line_end": 2654,
+      "condition": "The local system initiates TCP establishment to the remote peer, sends a SYN, receives SYN/ACK, and sends ACK.",
+      "required_behavior": "Support the mandatory Tcp_CR_Acked event to indicate this locally initiated TCP establishment.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The outbound three-way-handshake completion can be mapped to Event 16.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Event 17: TcpConnectionConfirmed\n\n         Definition: Event indicating that the local system has received\n                     a confirmation that the TCP connection has been\n                     established by the remote site.\n\n                     The remote peer's TCP engine sent a TCP SYN.  The\n                     local peer's TCP engine sent a SYN, ACK message and\n                     now has received a final ACK.\n\n         Status:     Mandatory",
+      "line_start": 2656,
+      "line_end": 2666,
+      "condition": "The remote peer initiates TCP establishment by sending SYN, the local peer sends SYN/ACK, and the local peer receives the final ACK.",
+      "required_behavior": "Support the mandatory TcpConnectionConfirmed event to indicate confirmation of TCP establishment initiated by the remote site.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The inbound three-way-handshake completion can be mapped to Event 17.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Event 18: TcpConnectionFails\n\n         Definition: Event indicating that the local system has received\n                     a TCP connection failure notice.\n\n                     The remote BGP peer's TCP machine could have sent a\n                     FIN.  The local peer would respond with a FIN-ACK.\n                     Another possibility is that the local peer\n                     indicated a timeout in the TCP connection and\n                     downed the connection.\n\n         Status:     Mandatory",
+      "line_start": 2668,
+      "line_end": 2679,
+      "condition": "The local system receives a TCP connection failure notice.",
+      "required_behavior": "Support the mandatory TcpConnectionFails event to indicate the TCP connection failure.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A connection-failure notification can be checked for Event 18 generation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The remote BGP peer's TCP machine could have sent a\n                     FIN.  The local peer would respond with a FIN-ACK.\n                     Another possibility is that the local peer\n                     indicated a timeout in the TCP connection and\n                     downed the connection.",
+      "line_start": 2673,
+      "line_end": 2677,
+      "condition": "The remote BGP peer TCP machine sends FIN as a TCP connection failure scenario.",
+      "required_behavior": "The local peer responds with FIN-ACK.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The local TCP response to the remote FIN can be observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

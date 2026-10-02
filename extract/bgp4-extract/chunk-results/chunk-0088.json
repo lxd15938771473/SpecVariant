@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0088",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Another useful optimization that can be done to simplify this\n   situation is to sort the AS numbers found in an AS_SET.  This\n   optimization is entirely optional.",
+      "line_start": 5339,
+      "line_end": 5341,
+      "condition": "When handling AS numbers in an AS_SET",
+      "required_behavior": "The implementation may optionally sort the AS numbers found in the AS_SET; sorting is not required.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "AS_SET processing can be inspected to identify the explicitly permitted optional sorting of its AS numbers.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0060",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "In spite of a server's best efforts, it may be unable to load zone data\nfrom a master file due to syntax errors, etc., or be unable to refresh a\nzone within the its expiration parameter.  In this case, the name server\n\n\n\nMockapetris                                                    [Page 39]\n\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n\nshould answer queries as if it were not supposed to possess the zone.",
+      "line_start": 2212,
+      "line_end": 2224,
+      "condition": "The name server is unable to load zone data from a master file, for example because of syntax errors.",
+      "required_behavior": "The name server should answer queries as if it were not supposed to possess that zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "error_handling",
+      "why_checkable": "A failed master-file load can be induced and subsequent query handling compared with handling when the server is not assigned the zone; this is a recommended fallback.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In spite of a server's best efforts, it may be unable to load zone data\nfrom a master file due to syntax errors, etc., or be unable to refresh a\nzone within the its expiration parameter.  In this case, the name server\n\n\n\nMockapetris                                                    [Page 39]\n\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n\nshould answer queries as if it were not supposed to possess the zone.",
+      "line_start": 2212,
+      "line_end": 2224,
+      "condition": "The name server is unable to refresh a zone within its expiration parameter.",
+      "required_behavior": "The name server should answer queries as if it were not supposed to possess that zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Refresh failure can be maintained until the zone expires, then query handling can be compared with handling when the server is not assigned the zone; this is a recommended fallback.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a master is sending a zone out via AXFR, and a new version is created\nduring the transfer, the master should continue to send the old version\nif possible.",
+      "line_start": 2226,
+      "line_end": 2228,
+      "condition": "A master is sending a zone through AXFR, a new version is created during the transfer, and continuing to send the old version is possible.",
+      "required_behavior": "The master should continue to send the old version of the zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An AXFR can be started before creating a new zone version, and the transmitted records can be checked against the old version when that version remains available.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a master is sending a zone out via AXFR, and a new version is created\nduring the transfer, the master should continue to send the old version\nif possible.  In any case, it should never send part of one version and\npart of another.",
+      "line_start": 2226,
+      "line_end": 2229,
+      "condition": "A master is sending a zone through AXFR and a new version is created during the transfer, regardless of whether continuing the old version is possible.",
+      "required_behavior": "",
+      "forbidden_behavior": "The master should never send part of one zone version and part of another in the same transfer.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Records transmitted before and after a concurrent zone update can be checked for mixed zone versions within one AXFR.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a master is sending a zone out via AXFR, and a new version is created\nduring the transfer, the master should continue to send the old version\nif possible.  In any case, it should never send part of one version and\npart of another.  If completion is not possible, the master should reset\nthe connection on which the zone transfer is taking place.",
+      "line_start": 2226,
+      "line_end": 2230,
+      "condition": "A master is sending a zone through AXFR, a new version is created during the transfer, and completion of the transfer is not possible.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The master should reset the connection on which the zone transfer is taking place.",
+      "check_type": "error_handling",
+      "why_checkable": "An inability to complete an AXFR during a zone update can be induced and the transfer connection observed for the recommended reset.",
+      "eligibility": "eligible"
+    }
+  ]
+}

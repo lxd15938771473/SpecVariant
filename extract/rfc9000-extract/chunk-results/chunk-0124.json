@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0124",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   QUIC packets and frames commonly use a variable-length encoding for\n   non-negative integer values.  This encoding ensures that smaller\n   integer values need fewer bytes to encode.",
+      "line_start": 4856,
+      "line_end": 4858,
+      "condition": "When a value is encoded using the QUIC variable-length integer encoding",
+      "required_behavior": "The encoded integer value is non-negative.",
+      "forbidden_behavior": "Negative integer values must not be represented using this encoding.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation can be tested with negative inputs and decoded outputs to verify that the encoding domain contains only non-negative integers.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The QUIC variable-length integer encoding reserves the two most\n   significant bits of the first byte to encode the base-2 logarithm of\n   the integer encoding length in bytes.  The integer value is encoded\n   on the remaining bits, in network byte order.",
+      "line_start": 4860,
+      "line_end": 4863,
+      "condition": "When encoding or decoding a QUIC variable-length integer",
+      "required_behavior": "The two most significant bits of the first byte encode the base-2 logarithm of the encoding length in bytes.",
+      "forbidden_behavior": "The two most significant bits must not be treated as integer-value bits.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A byte-level test can verify that the length prefix occupies exactly the first byte's two most significant bits and determines the encoded length.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The QUIC variable-length integer encoding reserves the two most\n   significant bits of the first byte to encode the base-2 logarithm of\n   the integer encoding length in bytes.  The integer value is encoded\n   on the remaining bits, in network byte order.",
+      "line_start": 4860,
+      "line_end": 4863,
+      "condition": "When encoding or decoding the value portion of a QUIC variable-length integer",
+      "required_behavior": "Encode the integer value in the bits remaining after the two-bit length prefix, using network byte order.",
+      "forbidden_behavior": "The value must not be encoded in non-network byte order or placed in the reserved length-prefix bits.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Exact encoded bytes can be compared with the expected big-endian placement of value bits after masking the two-bit prefix.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   This means that integers are encoded on 1, 2, 4, or 8 bytes and can\n   encode 6-, 14-, 30-, or 62-bit values, respectively.  Table 4\n   summarizes the encoding properties.",
+      "line_start": 4865,
+      "line_end": 4867,
+      "condition": "When selecting the length of a QUIC variable-length integer encoding",
+      "required_behavior": "Use an encoding length of exactly 1, 2, 4, or 8 bytes.",
+      "forbidden_behavior": "Do not use any other encoding length.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The total byte length of each encoded integer is directly observable and can be checked against the four permitted lengths.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "          | 00   | 1      | 6           | 0-63                  |",
+      "line_start": 4872,
+      "line_end": 4872,
+      "condition": "When the two most significant bits are 00",
+      "required_behavior": "Treat the encoding as 1 byte with 6 usable value bits and a representable range of 0 through 63 inclusive.",
+      "forbidden_behavior": "Do not decode additional bytes or represent a value outside 0 through 63 under this prefix.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Tests can supply prefix 00 encodings and verify their consumed length, usable value bits, and boundary values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "          | 01   | 2      | 14          | 0-16383               |",
+      "line_start": 4874,
+      "line_end": 4874,
+      "condition": "When the two most significant bits are 01",
+      "required_behavior": "Treat the encoding as 2 bytes with 14 usable value bits and a representable range of 0 through 16383 inclusive.",
+      "forbidden_behavior": "Do not consume a length other than 2 bytes or represent a value outside 0 through 16383 under this prefix.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Tests can supply prefix 01 encodings and verify their consumed length, usable value bits, and boundary values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "          | 10   | 4      | 30          | 0-1073741823          |",
+      "line_start": 4876,
+      "line_end": 4876,
+      "condition": "When the two most significant bits are 10",
+      "required_behavior": "Treat the encoding as 4 bytes with 30 usable value bits and a representable range of 0 through 1073741823 inclusive.",
+      "forbidden_behavior": "Do not consume a length other than 4 bytes or represent a value outside 0 through 1073741823 under this prefix.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Tests can supply prefix 10 encodings and verify their consumed length, usable value bits, and boundary values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "          | 11   | 8      | 62          | 0-4611686018427387903 |",
+      "line_start": 4878,
+      "line_end": 4878,
+      "condition": "When the two most significant bits are 11",
+      "required_behavior": "Treat the encoding as 8 bytes with 62 usable value bits and a representable range of 0 through 4611686018427387903 inclusive.",
+      "forbidden_behavior": "Do not consume a length other than 8 bytes or represent a value outside 0 through 4611686018427387903 under this prefix.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Tests can supply prefix 11 encodings and verify their consumed length, usable value bits, and boundary values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Values do not need to be encoded on the minimum number of bytes\n   necessary, with the sole exception of the Frame Type field; see\n   Section 12.4.",
+      "line_start": 4886,
+      "line_end": 4888,
+      "condition": "When encoding a variable-length integer other than a Frame Type field",
+      "required_behavior": "The implementation may use a permitted encoding length larger than the minimum necessary for the value.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A decoder can be given non-minimal encodings and checked for acceptance, and an encoder can be checked without imposing minimality on non-Frame-Type values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Values do not need to be encoded on the minimum number of bytes\n   necessary, with the sole exception of the Frame Type field; see\n   Section 12.4.",
+      "line_start": 4886,
+      "line_end": 4888,
+      "condition": "When encoding the Frame Type field",
+      "required_behavior": "Encode the value using the minimum permitted number of bytes necessary.",
+      "forbidden_behavior": "Do not use a non-minimal variable-length integer encoding for the Frame Type field.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded Frame Type length can be compared with the smallest of the permitted lengths capable of representing its value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Versions (Section 15), packet numbers sent in the header\n   (Section 17.1), and the length of connection IDs in long header\n   packets (Section 17.2) are described using integers but do not use\n   this encoding.",
+      "line_start": 4890,
+      "line_end": 4893,
+      "condition": "When encoding a Version value",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not use the QUIC variable-length integer encoding.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The bytes used for a Version field can be inspected to ensure this variable-length encoding is not applied.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Versions (Section 15), packet numbers sent in the header\n   (Section 17.1), and the length of connection IDs in long header\n   packets (Section 17.2) are described using integers but do not use\n   this encoding.",
+      "line_start": 4890,
+      "line_end": 4893,
+      "condition": "When encoding a packet number sent in a header",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not use the QUIC variable-length integer encoding.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The header packet-number bytes can be inspected to ensure this variable-length encoding is not applied.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Versions (Section 15), packet numbers sent in the header\n   (Section 17.1), and the length of connection IDs in long header\n   packets (Section 17.2) are described using integers but do not use\n   this encoding.",
+      "line_start": 4890,
+      "line_end": 4893,
+      "condition": "When encoding the length of a connection ID in a long-header packet",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not use the QUIC variable-length integer encoding.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The long-header connection-ID length field can be inspected to ensure this variable-length encoding is not applied.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0107",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "-  Do you verify signatures after making them, to protect against\n      RSA-CRT key leaks [FW15]?",
+      "line_start": 7601,
+      "line_end": 7602,
+      "condition": "an implementation creates a signature",
+      "required_behavior": "verify the signature after creating it",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Adjacent source statements combine into a concrete implementation check.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Clients SHOULD NOT reuse a ticket for multiple connections.  Reuse of\n   a ticket allows passive observers to correlate different connections.",
+      "line_start": 7619,
+      "line_end": 7620,
+      "condition": "a client opens another connection",
+      "required_behavior": "use a fresh ticket",
+      "forbidden_behavior": "reuse one ticket for multiple connections",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation branch can be inspected and tested for the required or forbidden behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Servers that issue tickets SHOULD offer at least as many tickets as\n   the number of connections that a client might use; for example, a web\n   browser using HTTP/1.1 [RFC7230] might open six connections to a\n   server.  Servers SHOULD issue new tickets with every connection.",
+      "line_start": 7621,
+      "line_end": 7624,
+      "condition": "a server issues tickets and the client's expected connection count is known",
+      "required_behavior": "offer at least as many tickets as the number of connections the client might use",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation branch can be inspected and tested for the required or forbidden behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "server.  Servers SHOULD issue new tickets with every connection.\n   This ensures that clients are always able to use a new ticket when\n   creating a new connection.",
+      "line_start": 7624,
+      "line_end": 7626,
+      "condition": "a server completes a connection",
+      "required_behavior": "issue new tickets for that connection",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation branch can be inspected and tested for the required or forbidden behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Either technique used alone is vulnerable to man-in-the-middle\n   attacks and therefore unsafe for general use.  However, it is also\n   possible to bind such connections to an external authentication\n   mechanism via out-of-band validation of the server's public key,\n   trust on first use, or a mechanism such as channel bindings (though\n   the channel bindings described in [RFC5929] are not defined for\n   TLS 1.3).  If no such mechanism is used, then the connection has no\n   protection against active man-in-the-middle attack; applications\n   MUST NOT use TLS in such a way absent explicit configuration or a\n   specific application profile.",
+      "line_start": 7641,
+      "line_end": 7650,
+      "condition": "TLS lacks verifiable server authentication and no external binding mechanism is used",
+      "required_behavior": "require explicit configuration or a specific application profile before permitting this mode",
+      "forbidden_behavior": "use the unauthenticated TLS mode without explicit configuration or a specific application profile",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation branch can be inspected and tested for the required or forbidden behavior.",
+      "eligibility": "eligible"
+    }
+  ]
+}

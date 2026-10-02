@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0066",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "In the pseudo-code above, cost(n) is a function that returns\n         the cost of the path (interior distance) to the address given\n         in the NEXT_HOP attribute of the route.",
+      "line_start": 4555,
+      "line_end": 4557,
+      "condition": "When evaluating cost(n) in the Phase 2 tie-breaking pseudo-code.",
+      "required_behavior": "Return the cost of the path (interior distance) to the address in the route's NEXT_HOP attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The cost function's destination input and returned interior distance can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "f) Remove from consideration all routes other than the route that\n         was advertised by the BGP speaker with the lowest BGP\n         Identifier value.",
+      "line_start": 4559,
+      "line_end": 4561,
+      "condition": "When Phase 2 tie breaking reaches step f with routes still under consideration.",
+      "required_behavior": "Remove from consideration all routes other than the route advertised by the BGP speaker with the lowest BGP Identifier value.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Candidate routes with differing advertising-speaker identifiers expose whether the lowest identifier survives step f.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "g) Prefer the route received from the lowest peer address.",
+      "line_start": 4563,
+      "line_end": 4563,
+      "condition": "When Phase 2 tie breaking reaches step g with routes still under consideration.",
+      "required_behavior": "Prefer the route received from the lowest peer address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Routes remaining tied before step g can be assigned different peer addresses to check the selected route.",
+      "eligibility": "eligible"
+    }
+  ]
+}

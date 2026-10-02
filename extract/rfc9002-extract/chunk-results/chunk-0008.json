@@ -1,0 +1,55 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0008",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "QUIC starts a loss epoch when a packet is lost.",
+                             "line_start":  236,
+                             "line_end":  236,
+                             "condition":  "A QUIC packet is declared lost.",
+                             "required_behavior":  "Start a loss epoch when the packet is lost.",
+                             "forbidden_behavior":  "Do not leave the connection outside a loss epoch after declaring the packet lost.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A loss-processing trace can verify that declaring a packet lost transitions the congestion controller into a loss epoch.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The loss epoch ends\n   when any packet sent after the start of the epoch is acknowledged.",
+                             "line_start":  236,
+                             "line_end":  237,
+                             "condition":  "While a loss epoch is active, any packet sent after that epoch began is acknowledged.",
+                             "required_behavior":  "End the active loss epoch upon that acknowledgment.",
+                             "forbidden_behavior":  "Do not keep that loss epoch active after acknowledging a packet sent after its start.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can record the epoch start, packet send times, and acknowledgment processing, then assert that the qualifying acknowledgment terminates the epoch.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "both should reduce their\n   congestion windows only once per epoch",
+                             "line_start":  240,
+                             "line_end":  241,
+                             "condition":  "QUIC processes losses belonging to one loss epoch.",
+                             "required_behavior":  "Reduce the congestion window once for that loss epoch.",
+                             "forbidden_behavior":  "Do not reduce the congestion window more than once within the same loss epoch.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can inject multiple losses before the epoch-ending acknowledgment and count congestion-window reductions for the epoch.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "QUIC will do it once for\n   every round trip that experiences loss",
+                             "line_start":  241,
+                             "line_end":  242,
+                             "condition":  "A QUIC round trip experiences packet loss.",
+                             "required_behavior":  "Perform one congestion-window reduction for that loss-experiencing round trip.",
+                             "forbidden_behavior":  "Do not omit the congestion-window reduction for a round trip that experiences loss or perform it more than once for that round trip.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A multi-round-trip loss trace can associate loss events and congestion-window changes with each round trip and verify exactly one reduction per affected round trip.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

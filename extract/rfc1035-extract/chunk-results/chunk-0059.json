@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0059",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "When processing queries with QCLASS=*, or some other QCLASS which\nmatches multiple classes, the response should never be authoritative\nunless the server can guarantee that the response covers all classes.",
+      "line_start": 2191,
+      "line_end": 2193,
+      "condition": "Processing a query whose QCLASS is * or otherwise matches multiple classes, without a guarantee that the response covers all classes.",
+      "required_behavior": "",
+      "forbidden_behavior": "The response should not be authoritative.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Queries spanning classes can exercise whether the server marks a response authoritative without guaranteed coverage of all classes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When composing a response, RRs which are to be inserted in the\nadditional section, but duplicate RRs in the answer or authority\nsections, may be omitted from the additional section.",
+      "line_start": 2195,
+      "line_end": 2197,
+      "condition": "Composing a response with an RR intended for the additional section that duplicates an RR in the answer or authority section.",
+      "required_behavior": "The duplicate RR may be omitted from the additional section.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Constructed responses can demonstrate the permitted omission of duplicate RRs; this permission does not require their omission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When a response is so long that truncation is required, the truncation\nshould start at the end of the response and work forward in the\ndatagram.",
+      "line_start": 2199,
+      "line_end": 2201,
+      "condition": "A response is so long that truncation is required.",
+      "required_behavior": "Truncation should start at the end of the response and proceed toward the beginning of the datagram.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An oversized response can exercise which trailing data is removed and the order of truncation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When a response is so long that truncation is required, the truncation\nshould start at the end of the response and work forward in the\ndatagram.  Thus if there is any data for the authority section, the\nanswer section is guaranteed to be unique.",
+      "line_start": 2199,
+      "line_end": 2202,
+      "condition": "Truncating an oversized response while retaining data for the authority section.",
+      "required_behavior": "The answer section is stated to be guaranteed to be unique.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Excluded because the meaning of an answer section being unique is not defined by this evidence, so no unambiguous implementation check can be specified.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "The MINIMUM value in the SOA should be used to set a floor on the TTL of\ndata distributed from a zone.",
+      "line_start": 2204,
+      "line_end": 2205,
+      "condition": "Distributing data from a zone.",
+      "required_behavior": "The SOA MINIMUM value should set a lower bound on the TTL of the distributed data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Compare response TTLs to the zone SOA MINIMUM when stored TTL values are below, equal to, and above that value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The MINIMUM value in the SOA should be used to set a floor on the TTL of\ndata distributed from a zone.  This floor function should be done when\nthe data is copied into a response.",
+      "line_start": 2204,
+      "line_end": 2206,
+      "condition": "Applying the SOA MINIMUM floor to the TTL of data distributed from a zone.",
+      "required_behavior": "The TTL floor function should be applied when the data is copied into a response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The response construction path can be inspected to determine when the current SOA MINIMUM is applied.",
+      "eligibility": "eligible"
+    }
+  ]
+}

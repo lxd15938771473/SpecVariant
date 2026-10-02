@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0192",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   QUIC deployments SHOULD provide mitigations for the Slowloris\n   attacks, such as increasing the maximum number of clients the server\n   will allow, limiting the number of connections a single IP address is\n   allowed to make, imposing restrictions on the minimum transfer speed\n   a connection is allowed to have, and restricting the length of time\n   an endpoint is allowed to stay connected.",
+      "line_start": 7541,
+      "line_end": 7546,
+      "condition": "When deploying QUIC endpoints that could be subjected to Slowloris attacks.",
+      "required_behavior": "Provide mitigations against Slowloris attacks; implementation-checkable examples include increasing the server's maximum supported client count, limiting connections per source IP address, enforcing a minimum connection transfer speed, or limiting connection duration.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A deployment can be tested under Slowloris-like connection behavior to determine whether at least one resource- or rate-limiting mitigation is configured and enforced.",
+      "eligibility": "eligible"
+    }
+  ]
+}

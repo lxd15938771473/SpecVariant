@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0070",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A client that migrates to a preferred address MUST validate the address it chooses before migrating; see Section 21.5.3.",
+      "line_start": 3003,
+      "line_end": 3004,
+      "condition": "A client chooses to migrate to a preferred address.",
+      "required_behavior": "Validate the chosen preferred address before migrating to it.",
+      "forbidden_behavior": "Migrate to the chosen preferred address before validating it.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can observe whether path validation completes before the client migrates to the preferred address.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If this packet contains a PATH_CHALLENGE frame, the server sends a packet containing a PATH_RESPONSE frame as per Section 8.2.",
+      "line_start": 3007,
+      "line_end": 3009,
+      "condition": "After accepting a connection, the server receives at its preferred IP address a packet containing a PATH_CHALLENGE frame.",
+      "required_behavior": "Send a packet containing a PATH_RESPONSE frame as specified for path validation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A focused test can deliver a PATH_CHALLENGE at the preferred address and verify that the server emits a PATH_RESPONSE.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The server MUST send non- probing packets from its original address until it receives a non- probing packet from the client at its preferred address and until the server has validated the new path.",
+      "line_start": 3009,
+      "line_end": 3012,
+      "condition": "The server has not yet received a non-probing packet from the client at its preferred address.",
+      "required_behavior": "Send non-probing packets from the server's original address.",
+      "forbidden_behavior": "Send non-probing packets from the preferred address merely because the new path has otherwise been validated.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet source addresses can be inspected while withholding a client non-probing packet at the preferred address.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The server MUST send non- probing packets from its original address until it receives a non- probing packet from the client at its preferred address and until the server has validated the new path.",
+      "line_start": 3009,
+      "line_end": 3012,
+      "condition": "The server has not yet validated the new path.",
+      "required_behavior": "Send non-probing packets from the server's original address.",
+      "forbidden_behavior": "Send non-probing packets from the preferred address merely because a client non-probing packet has been received there.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet source addresses can be inspected after sending a client non-probing packet at the preferred address but before path validation completes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The server MUST probe on the path toward the client from its preferred address.",
+      "line_start": 3014,
+      "line_end": 3015,
+      "condition": "The server is migrating communication to its preferred address.",
+      "required_behavior": "Probe the path toward the client using the server's preferred address as the source address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can inspect whether the server transmits a probing packet from its preferred address.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Once the server has completed its path validation and has received a non-probing packet with a new largest packet number on its preferred address, the server begins sending non-probing packets to the client exclusively from its preferred IP address.",
+      "line_start": 3018,
+      "line_end": 3021,
+      "condition": "The server has completed path validation and received at its preferred address a non-probing packet whose packet number establishes a new largest received packet number.",
+      "required_behavior": "Begin sending all non-probing packets to the client from the preferred IP address.",
+      "forbidden_behavior": "After both trigger conditions hold, send a non-probing packet for the connection from an address other than the preferred IP address.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can satisfy both transition conditions and then verify the source address of every subsequent non-probing server packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The server SHOULD drop newer packets for this connection that are received on the old IP address.",
+      "line_start": 3021,
+      "line_end": 3023,
+      "condition": "After switching exclusively to the preferred IP address, the server receives a newer packet for the connection on the old IP address.",
+      "required_behavior": "Drop the newer packet received on the old IP address unless the implementation has a justified exception to the SHOULD requirement.",
+      "forbidden_behavior": "",
+      "error_behavior": "Do not process the newer packet under the ordinary recommended behavior.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can send a newer connection packet to the old address after migration and observe whether it is processed or discarded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The server MAY continue to process delayed packets that are received on the old IP address.",
+      "line_start": 3023,
+      "line_end": 3024,
+      "condition": "After migration, the server receives a delayed packet on the old IP address.",
+      "required_behavior": "Permit, but do not require, continued processing of the delayed packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation's old-path handling can be tested to confirm that processing delayed packets remains an allowed behavior rather than conflicting with the rule for newer packets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The addresses that a server provides in the preferred_address transport parameter are only valid for the connection in which they are provided.",
+      "line_start": 3026,
+      "line_end": 3028,
+      "condition": "A server provides addresses in the preferred_address transport parameter of a connection.",
+      "required_behavior": "Scope the provided addresses to that connection only.",
+      "forbidden_behavior": "Treat the provided addresses as valid for a different connection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Connection state and address selection can be inspected to verify that preferred-address data is not shared across connections.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A client MUST NOT use these for other connections, including connections that are resumed from the current connection.",
+      "line_start": 3028,
+      "line_end": 3029,
+      "condition": "A client has received addresses in the preferred_address transport parameter and creates or uses another connection, including a connection resumed from the current connection.",
+      "required_behavior": "",
+      "forbidden_behavior": "Use those preferred_address addresses for the other or resumed connection.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can establish a separate or resumed connection and verify that the client does not reuse the prior connection's preferred addresses.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0065",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If the copied packet arrives before the genuine packet, this will appear as a NAT rebinding.",
+      "line_start": 2805,
+      "line_end": 2806,
+      "condition": "A copied genuine packet arrives before the original genuine packet.",
+      "required_behavior": "The endpoint treats the observed path change as an apparent NAT rebinding.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can deliver a forwarded copy before the original packet and inspect whether the endpoint processes the event as an apparent rebinding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Any genuine packet will be discarded as a duplicate.",
+      "line_start": 2806,
+      "line_end": 2807,
+      "condition": "A forwarded copy of a genuine packet has already been received before the original genuine packet.",
+      "required_behavior": "The subsequently received original genuine packet is discarded as a duplicate.",
+      "forbidden_behavior": "The subsequently received original genuine packet is processed as a new packet.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet delivery can be ordered so that a copy precedes the original, after which duplicate detection and packet processing are directly observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A non-probing packet received on the original path that increases the maximum received packet number will cause the endpoint to move back to that path.",
+      "line_start": 2817,
+      "line_end": 2819,
+      "condition": "The endpoint receives on the original path a non-probing packet whose packet number increases the maximum received packet number.",
+      "required_behavior": "The endpoint moves the connection back to the original path.",
+      "forbidden_behavior": "The endpoint remains migrated to the other path after accepting the qualifying packet.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can establish migration, inject a qualifying non-probing packet on the original path, and inspect the selected path afterward.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In response to an apparent migration, endpoints MUST validate the previously active path using a PATH_CHALLENGE frame.",
+      "line_start": 2823,
+      "line_end": 2825,
+      "condition": "An endpoint detects an apparent migration.",
+      "required_behavior": "The endpoint validates the previously active path by sending a PATH_CHALLENGE frame on that path.",
+      "forbidden_behavior": "The endpoint omits validation of the previously active path or performs it without a PATH_CHALLENGE frame.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A migration stimulus can be generated and outbound frames on the previously active path can be inspected for PATH_CHALLENGE.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the path is no longer viable, the validation attempt will time out and fail;",
+      "line_start": 2825,
+      "line_end": 2826,
+      "condition": "Validation is attempted on a previously active path that is no longer viable.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint reports successful path validation without receiving a valid response.",
+      "error_behavior": "The validation attempt times out and is marked failed.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can suppress all responses on the prior path and verify that validation eventually times out and transitions to failure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "if the path is viable but no longer desired, the validation will succeed but only results in probing packets being sent on the path.",
+      "line_start": 2826,
+      "line_end": 2828,
+      "condition": "The previously active path is viable but is no longer the desired path.",
+      "required_behavior": "Validation of that path succeeds, and traffic caused on it by this validation is limited to probing packets.",
+      "forbidden_behavior": "The endpoint resumes sending non-probing traffic on that path solely because its validation succeeded.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can complete validation on a viable nonpreferred path and classify all subsequently induced packets there as probing or non-probing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint that receives a PATH_CHALLENGE on an active path SHOULD send a non-probing packet in response.",
+      "line_start": 2830,
+      "line_end": 2831,
+      "condition": "An endpoint receives a PATH_CHALLENGE on an active path.",
+      "required_behavior": "The endpoint sends a non-probing packet in response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A PATH_CHALLENGE can be delivered on the active path and the endpoint's response can be inspected to determine whether it is non-probing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Any subsequent migration to another path restarts this entire process.",
+      "line_start": 2833,
+      "line_end": 2834,
+      "condition": "A subsequent migration to another path occurs after the described defensive path-validation process has begun or completed.",
+      "required_behavior": "The endpoint restarts the described defensive process for the new migration.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Repeated migrations can be induced and observable validation and response behavior can be compared, but the phrase \"entire process\" does not precisely identify every operation that must restart.",
+      "eligibility": "exclude"
+    }
+  ]
+}

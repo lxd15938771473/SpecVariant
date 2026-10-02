@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0025",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "0-RTT and 1-RTT packets share the same packet number space",
+      "line_start": 958,
+      "line_end": 958,
+      "condition": "When assigning or interpreting packet numbers for 0-RTT and 1-RTT packets",
+      "required_behavior": "Use one shared packet number space for both 0-RTT and 1-RTT packets.",
+      "forbidden_behavior": "Maintain independent packet number spaces for 0-RTT and 1-RTT packets.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet construction and acknowledgment state can be inspected to verify that both encryption levels draw from and update the same number space.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "clients do not send 0-RTT packets after sending a 1-RTT packet",
+      "line_start": 959,
+      "line_end": 959,
+      "condition": "After a client has sent its first 1-RTT packet",
+      "required_behavior": "",
+      "forbidden_behavior": "Send any subsequent 0-RTT packet.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A client packet trace can assert that no 0-RTT packet appears after the first transmitted 1-RTT packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "a client SHOULD discard 0-RTT keys as soon as it installs\n   1-RTT keys",
+      "line_start": 962,
+      "line_end": 963,
+      "condition": "As soon as a client installs 1-RTT keys",
+      "required_behavior": "Discard the client's 0-RTT keys.",
+      "forbidden_behavior": "Continue retaining or using 0-RTT keys after installing 1-RTT keys without a justified exception to the SHOULD.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A key-lifecycle test can observe whether installation of 1-RTT keys immediately removes the client's 0-RTT keys.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "After receiving\n   a 1-RTT packet, servers MUST discard 0-RTT keys within a short time",
+      "line_start": 969,
+      "line_end": 970,
+      "condition": "After a server receives a 1-RTT packet",
+      "required_behavior": "Discard the server's 0-RTT keys within a short time.",
+      "forbidden_behavior": "Retain 0-RTT keys indefinitely after receiving a 1-RTT packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A timed key-lifecycle test can verify that the server removes 0-RTT keys after the triggering 1-RTT packet rather than retaining them indefinitely.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the RECOMMENDED time period is three times the Probe Timeout (PTO,\n   see [QUIC-RECOVERY]).",
+      "line_start": 971,
+      "line_end": 972,
+      "condition": "When selecting the server retention period for 0-RTT keys after receipt of a 1-RTT packet",
+      "required_behavior": "Use three times the Probe Timeout as the recommended maximum retention period before discarding the 0-RTT keys.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The observed interval from receiving the 1-RTT packet to key discard can be compared with three computed PTO intervals.",
+      "eligibility": "eligible"
+    }
+  ]
+}

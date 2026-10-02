@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0005",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "This document defines QUIC version 1, which conforms to the protocol invariants in [QUIC-INVARIANTS].",
+      "line_start": 371,
+      "line_end": 372,
+      "condition": "When an implementation implements the QUIC version defined by this document.",
+      "required_behavior": "Conform to the protocol invariants specified in [QUIC-INVARIANTS].",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Conformance could be checked against the referenced protocol invariants, but those invariants are not present in this chunk, so the specific implementation checkpoints cannot be determined from the supplied evidence alone.",
+      "eligibility": "exclude"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0087",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Because the ClientHello indicates the time at which the client sent\n   it, it is possible to efficiently determine whether a ClientHello was\n   likely sent reasonably recently and only accept 0-RTT for such a\n   ClientHello, otherwise falling back to a 1-RTT handshake.",
+      "line_start": 5609,
+      "line_end": 5612,
+      "condition": "when implementing the freshness-check mechanism for 0-RTT",
+      "required_behavior": "accept 0-RTT only for a ClientHello determined to have been sent reasonably recently",
+      "forbidden_behavior": "accept 0-RTT for a ClientHello that fails the freshness determination",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Controlled ticket ages and server time can verify that only ClientHellos within the configured freshness range receive 0-RTT.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Because the ClientHello indicates the time at which the client sent\n   it, it is possible to efficiently determine whether a ClientHello was\n   likely sent reasonably recently and only accept 0-RTT for such a\n   ClientHello, otherwise falling back to a 1-RTT handshake.",
+      "line_start": 5609,
+      "line_end": 5612,
+      "condition": "when a ClientHello fails the 0-RTT freshness determination",
+      "required_behavior": "fall back to a 1-RTT handshake",
+      "forbidden_behavior": "",
+      "error_behavior": "reject 0-RTT while allowing the 1-RTT handshake path",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An out-of-window ClientHello can verify that the handshake continues without early-data acceptance.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In order to implement this mechanism, a server needs to store the\n   time that the server generated the session ticket, offset by an\n   estimate of the round-trip time between client and server.",
+      "line_start": 5619,
+      "line_end": 5621,
+      "condition": "when a server implements the described 0-RTT freshness mechanism",
+      "required_behavior": "retain the session-ticket creation time offset by an estimated client-server round-trip time",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Ticket state or ticket contents can be inspected for the adjusted creation-time value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "adjusted_creation_time = creation_time + estimated_RTT",
+      "line_start": 5623,
+      "line_end": 5623,
+      "condition": "when calculating adjusted_creation_time for a session ticket",
+      "required_behavior": "set adjusted_creation_time to creation_time plus estimated_RTT",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known creation-time and RTT inputs can verify the arithmetic result.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The server can determine the\n   client's view of the age of the ticket by subtracting the ticket's\n   \"ticket_age_add\" value from the \"obfuscated_ticket_age\" parameter in\n   the client's \"pre_shared_key\" extension.",
+      "line_start": 5625,
+      "line_end": 5629,
+      "condition": "when determining clients_ticket_age from a ClientHello pre_shared_key identity",
+      "required_behavior": "subtract ticket_age_add from obfuscated_ticket_age",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Controlled ticket_age_add and obfuscated_ticket_age inputs can verify the recovered client ticket age.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The server can determine\n   the expected_arrival_time of the ClientHello as:\n\n     expected_arrival_time = adjusted_creation_time + clients_ticket_age",
+      "line_start": 5629,
+      "line_end": 5632,
+      "condition": "when calculating expected_arrival_time for a ClientHello",
+      "required_behavior": "set expected_arrival_time to adjusted_creation_time plus clients_ticket_age",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known adjusted creation time and client ticket age can verify the expected arrival-time result.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When a new ClientHello is received, the expected_arrival_time is then\n   compared against the current server wall clock time",
+      "line_start": 5634,
+      "line_end": 5635,
+      "condition": "when a server receives a new ClientHello for freshness checking",
+      "required_behavior": "compare expected_arrival_time with the current server wall-clock time",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The freshness decision can be exercised under a controlled wall clock and expected arrival time.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When a new ClientHello is received, the expected_arrival_time is then\n   compared against the current server wall clock time and if they\n   differ by more than a certain amount, 0-RTT is rejected, though the\n   1-RTT handshake can be allowed to complete.",
+      "line_start": 5634,
+      "line_end": 5637,
+      "condition": "when expected_arrival_time and current server wall-clock time differ by more than the configured permissible amount",
+      "required_behavior": "reject 0-RTT",
+      "forbidden_behavior": "accept early data for the out-of-range ClientHello",
+      "error_behavior": "reject 0-RTT while permitting the implementation to continue with 1-RTT",
+      "check_type": "error_handling",
+      "why_checkable": "Clock differences just inside and outside the configured threshold can verify the decision boundary.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In addition, this\n   freshness checking is only done at the time the ClientHello is\n   received and not when subsequent early Application Data records are\n   received.",
+      "line_start": 5674,
+      "line_end": 5677,
+      "condition": "when performing the specified 0-RTT freshness check",
+      "required_behavior": "perform the check when the ClientHello is received",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Instrumentation can verify the protocol event at which the freshness calculation and decision occur.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In addition, this\n   freshness checking is only done at the time the ClientHello is\n   received and not when subsequent early Application Data records are\n   received.",
+      "line_start": 5674,
+      "line_end": 5677,
+      "condition": "when subsequent early Application Data records arrive after the ClientHello freshness decision",
+      "required_behavior": "retain the ClientHello-time freshness decision for those records",
+      "forbidden_behavior": "perform the specified freshness check again on each subsequent early Application Data record",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Instrumentation can verify that later early-data records do not trigger another ClientHello freshness calculation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0076",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "bad_certificate_status_response:  Sent by clients when an invalid or\n      unacceptable OCSP response is provided by the server via the\n      \"status_request\" extension (see [RFC6066]).",
+                             "line_start":  4999,
+                             "line_end":  5001,
+                             "condition":  "a client receives an invalid or unacceptable OCSP response in the server\u0027s status_request extension",
+                             "required_behavior":  "use bad_certificate_status_response to report the error",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "send a bad_certificate_status_response alert",
+                             "check_type":  "error_handling",
+                             "why_checkable":  "An invalid stapled OCSP response can verify client alert selection.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "unknown_psk_identity:  Sent by servers when PSK key establishment is\n      desired but no acceptable PSK identity is provided by the client.\n      Sending this alert is OPTIONAL; servers MAY instead choose to send\n      a \"decrypt_error\" alert to merely indicate an invalid PSK\n      identity.",
+                             "line_start":  5003,
+                             "line_end":  5007,
+                             "condition":  "PSK establishment is desired, no acceptable client PSK identity exists, and the server chooses to send an alert",
+                             "required_behavior":  "send either unknown_psk_identity or decrypt_error",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "send unknown_psk_identity or decrypt_error",
+                             "check_type":  "error_handling",
+                             "why_checkable":  "The invalid-PSK branch can be checked for one of the two explicitly permitted alert descriptions.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "certificate_required:  Sent by servers when a client certificate is\n      desired but none was provided by the client.",
+                             "line_start":  5009,
+                             "line_end":  5010,
+                             "condition":  "a server desires a client certificate but the client provides none",
+                             "required_behavior":  "use certificate_required to report the condition",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "send a certificate_required alert",
+                             "check_type":  "error_handling",
+                             "why_checkable":  "A client-auth handshake without a certificate can verify server alert selection.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "no_application_protocol:  Sent by servers when a client\n      \"application_layer_protocol_negotiation\" extension advertises only\n      protocols that the server does not support (see [RFC7301]).",
+                             "line_start":  5012,
+                             "line_end":  5014,
+                             "condition":  "the client\u0027s ALPN extension advertises only protocols unsupported by the server",
+                             "required_behavior":  "use no_application_protocol to report the error",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "send a no_application_protocol alert",
+                             "check_type":  "error_handling",
+                             "why_checkable":  "An ALPN offer with no intersection can verify server alert selection.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

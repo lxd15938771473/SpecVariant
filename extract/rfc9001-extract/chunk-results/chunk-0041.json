@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0041",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A peer is permitted to initiate a key update after receiving an\n   acknowledgment of a packet in the current key phase.",
+      "line_start": 1646,
+      "line_end": 1647,
+      "condition": "After a peer receives an acknowledgment covering one of its packets in the current key phase.",
+      "required_behavior": "Permit the peer to initiate a key update.",
+      "forbidden_behavior": "Do not initiate the next key update before receiving such an acknowledgment.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can control acknowledgment delivery and observe whether the peer changes phase only after a current-phase packet is acknowledged.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint\n   detects a key update when processing a packet with a key phase that\n   differs from the value used to protect the last packet it sent.",
+      "line_start": 1647,
+      "line_end": 1649,
+      "condition": "When processing a packet whose Key Phase value differs from the value used on the endpoint's last sent packet.",
+      "required_behavior": "Detect the packet as initiating or belonging to a key update.",
+      "forbidden_behavior": "Do not classify the packet as using the current key phase without attempting next-phase processing.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet-phase inputs and the endpoint's last-sent phase can be varied while observing whether next-phase processing is entered.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To\n   process this packet, the endpoint uses the next packet protection key\n   and IV.",
+      "line_start": 1649,
+      "line_end": 1651,
+      "condition": "When processing a packet detected with a changed Key Phase value.",
+      "required_behavior": "Use the next packet-protection key.",
+      "forbidden_behavior": "Do not use only the current or an unrelated packet-protection key.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A packet protected with a known next-generation key can reveal which key the endpoint attempts for authentication and decryption.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To\n   process this packet, the endpoint uses the next packet protection key\n   and IV.",
+      "line_start": 1649,
+      "line_end": 1651,
+      "condition": "When processing a packet detected with a changed Key Phase value.",
+      "required_behavior": "Use the next packet-protection IV.",
+      "forbidden_behavior": "Do not use only the current or an unrelated packet-protection IV.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Known next-generation key material can reveal whether nonce construction uses the next IV.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a packet is successfully processed using the next key and IV, then\n   the peer has initiated a key update.",
+      "line_start": 1654,
+      "line_end": 1655,
+      "condition": "If a changed-phase packet is successfully processed with the next packet-protection key and IV.",
+      "required_behavior": "Record that the peer has initiated a key update.",
+      "forbidden_behavior": "Do not continue treating the peer as remaining exclusively in the old key phase.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Successful next-key packet processing can be followed by inspection of the endpoint's peer-key-update state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The endpoint MUST update its\n   send keys to the corresponding key phase in response, as described in\n   Section 6.1.",
+      "line_start": 1655,
+      "line_end": 1657,
+      "condition": "After successfully processing a packet that establishes the peer's key update.",
+      "required_behavior": "Update the endpoint's send keys to the corresponding key phase.",
+      "forbidden_behavior": "Do not continue sending exclusively with old-phase keys.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The endpoint's next outbound packets and send-key state can be inspected after successful next-phase packet processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Sending keys MUST be updated before sending an\n   acknowledgment for the packet that was received with updated keys.",
+      "line_start": 1657,
+      "line_end": 1658,
+      "condition": "Before sending an acknowledgment covering the packet received with updated keys.",
+      "required_behavior": "Complete the send-key update.",
+      "forbidden_behavior": "Do not send the acknowledgment while send keys remain in the old phase.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Send-key transition events and the ACK-carrying packet can be ordered to verify that the key update occurs first.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "By acknowledging the packet that triggered the key update in a packet\n   protected with the updated keys, the endpoint signals that the key\n   update is complete.",
+      "line_start": 1659,
+      "line_end": 1661,
+      "condition": "When acknowledging the packet that triggered a key update.",
+      "required_behavior": "Protect the ACK-carrying packet with the updated send keys.",
+      "forbidden_behavior": "Do not protect that acknowledgment exclusively with old keys.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The key generation that decrypts the ACK-carrying packet can be compared with the acknowledged triggering packet's updated phase.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "By acknowledging the packet that triggered the key update in a packet\n   protected with the updated keys, the endpoint signals that the key\n   update is complete.",
+      "line_start": 1659,
+      "line_end": 1661,
+      "condition": "When the endpoint sends an updated-key packet acknowledging the packet that triggered the update.",
+      "required_behavior": "Transition the key-update state to complete and signal completion to the peer.",
+      "forbidden_behavior": "Do not signal key-update completion before an updated-key acknowledgment of the triggering packet is sent.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "State instrumentation can correlate completion with transmission of the qualifying ACK under updated keys.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint can defer sending the packet or acknowledgment according\n   to its normal packet sending behavior; it is not necessary to\n   immediately generate a packet in response to a key update.",
+      "line_start": 1663,
+      "line_end": 1665,
+      "condition": "After processing a packet that triggers a key update.",
+      "required_behavior": "Permit the endpoint to defer its response packet or acknowledgment according to normal packet-sending behavior.",
+      "forbidden_behavior": "Do not require an immediate response packet solely because a key update was detected.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can observe a standards-compliant delayed response without treating the absence of an immediate packet as failure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The next\n   packet sent by the endpoint will use the updated keys.",
+      "line_start": 1665,
+      "line_end": 1666,
+      "condition": "When an endpoint next sends a packet after successfully detecting and responding to a peer key update.",
+      "required_behavior": "Protect that next packet with the updated keys.",
+      "forbidden_behavior": "Do not send the next packet using old-phase keys.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The first outbound packet after update detection can be tested for which key generation decrypts it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If an endpoint detects a second update before it has\n   sent any packets with updated keys containing an acknowledgment for\n   the packet that initiated the key update, it indicates that its peer\n   has updated keys twice without awaiting confirmation.  An endpoint\n   MAY treat such consecutive key updates as a connection error of type\n   KEY_UPDATE_ERROR.",
+      "line_start": 1668,
+      "line_end": 1673,
+      "condition": "If an endpoint detects a second peer key update before it has sent an updated-key packet acknowledging the packet that initiated the preceding update.",
+      "required_behavior": "Permit the endpoint to classify the consecutive unconfirmed update as KEY_UPDATE_ERROR.",
+      "forbidden_behavior": "Do not reject an implementation solely because it closes the connection with KEY_UPDATE_ERROR in this condition.",
+      "error_behavior": "The endpoint may close the connection with KEY_UPDATE_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A peer can send two phase changes without waiting for the required confirmation and the resulting connection error can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint that receives an acknowledgment that is carried in a\n   packet protected with old keys where any acknowledged packet was\n   protected with newer keys MAY treat that as a connection error of\n   type KEY_UPDATE_ERROR.",
+      "line_start": 1675,
+      "line_end": 1678,
+      "condition": "When an endpoint receives an ACK in an old-key packet and that ACK covers at least one packet protected with newer keys.",
+      "required_behavior": "Permit the endpoint to classify the inconsistent acknowledgment as KEY_UPDATE_ERROR.",
+      "forbidden_behavior": "Do not reject an implementation solely because it closes the connection with KEY_UPDATE_ERROR in this condition.",
+      "error_behavior": "The endpoint may close the connection with KEY_UPDATE_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A crafted old-phase packet can acknowledge a known newer-phase packet and the endpoint's optional KEY_UPDATE_ERROR response can be observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

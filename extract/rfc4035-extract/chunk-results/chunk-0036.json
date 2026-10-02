@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0036",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A security-aware resolver MUST be able to determine whether it should\n   expect a particular RRset to be signed.",
+      "line_start": 1120,
+      "line_end": 1121,
+      "condition": "A security-aware resolver evaluates a particular RRset.",
+      "required_behavior": "The resolver MUST be able to determine whether it should expect the RRset to be signed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The resolver can be checked for a decision about whether signatures are expected for a given RRset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Secure: An RRset for which the resolver is able to build a chain of\n      signed DNSKEY and DS RRs from a trusted security anchor to the\n      RRset.",
+      "line_start": 1125,
+      "line_end": 1127,
+      "condition": "A security-aware resolver is able to build a chain of signed DNSKEY and DS RRs from a trusted security anchor to the RRset.",
+      "required_behavior": "Distinguish this RRset as the Secure case.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A constructed trust chain can be supplied and the selected security-status case inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Secure: An RRset for which the resolver is able to build a chain of\n      signed DNSKEY and DS RRs from a trusted security anchor to the\n      RRset.  In this case, the RRset should be signed and is subject to\n      signature validation, as described above.",
+      "line_start": 1125,
+      "line_end": 1128,
+      "condition": "The RRset is in the Secure case: the resolver can build a chain of signed DNSKEY and DS RRs from a trusted security anchor to it.",
+      "required_behavior": "The resolver should expect the RRset to be signed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The signature expectation associated with the Secure case can be inspected without strengthening the source's should into MUST.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Secure: An RRset for which the resolver is able to build a chain of\n      signed DNSKEY and DS RRs from a trusted security anchor to the\n      RRset.  In this case, the RRset should be signed and is subject to\n      signature validation, as described above.",
+      "line_start": 1125,
+      "line_end": 1128,
+      "condition": "The RRset is in the Secure case: the resolver can build a chain of signed DNSKEY and DS RRs from a trusted security anchor to it.",
+      "required_behavior": "Subject the RRset to signature validation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The validation path for an RRset with a chain to a trusted security anchor can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Insecure: An RRset for which the resolver knows that it has no chain\n      of signed DNSKEY and DS RRs from any trusted starting point to the\n      RRset.  This can occur when the target RRset lies in an unsigned\n      zone or in a descendent of an unsigned zone.  In this case, the\n      RRset may or may not be signed, but the resolver will not be able\n      to verify the signature.",
+      "line_start": 1130,
+      "line_end": 1135,
+      "condition": "A security-aware resolver knows that it has no chain of signed DNSKEY and DS RRs from any trusted starting point to the RRset.",
+      "required_behavior": "Distinguish this RRset as the Insecure case, whether or not the RRset is signed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The status can be checked with both signed and unsigned RRsets for which the absence of a trusted chain is known.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Bogus: An RRset for which the resolver believes that it ought to be\n      able to establish a chain of trust but for which it is unable to\n      do so, either due to signatures that for some reason fail to\n      validate or due to missing data that the relevant DNSSEC RRs\n      indicate should be present.",
+      "line_start": 1147,
+      "line_end": 1151,
+      "condition": "A security-aware resolver believes it ought to be able to establish a chain of trust for the RRset but cannot do so because signatures fail to validate.",
+      "required_behavior": "Distinguish this RRset as the Bogus case.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A signature-validation failure on an expected trust chain can be checked for the Bogus security-status result.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Bogus: An RRset for which the resolver believes that it ought to be\n      able to establish a chain of trust but for which it is unable to\n      do so, either due to signatures that for some reason fail to\n      validate or due to missing data that the relevant DNSSEC RRs\n      indicate should be present.",
+      "line_start": 1147,
+      "line_end": 1151,
+      "condition": "A security-aware resolver believes it ought to be able to establish a chain of trust for the RRset but cannot do so because data indicated as required by the relevant DNSSEC RRs is missing.",
+      "required_behavior": "Distinguish this RRset as the Bogus case.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Missing data whose presence is indicated by DNSSEC RRs can be checked for the Bogus security-status result.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Indeterminate: An RRset for which the resolver is not able to\n      determine whether the RRset should be signed, as the resolver is\n      not able to obtain the necessary DNSSEC RRs.",
+      "line_start": 1155,
+      "line_end": 1157,
+      "condition": "A security-aware resolver cannot determine whether the RRset should be signed because it cannot obtain the necessary DNSSEC RRs.",
+      "required_behavior": "Distinguish this RRset as the Indeterminate case.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Unavailable necessary DNSSEC RRs and the resulting inability to decide signature expectation can be checked for the Indeterminate status.",
+      "eligibility": "eligible"
+    }
+  ]
+}

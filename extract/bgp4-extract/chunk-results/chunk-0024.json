@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0024",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The MULTI_EXIT_DISC is an optional non-transitive attribute that is\n   intended to be used on external (inter-AS) links to discriminate\n   among multiple exit or entry points to the same neighboring AS.  The\n   value of the MULTI_EXIT_DISC attribute is a four-octet unsigned\n   number, called a metric.  All other factors being equal, the exit\n   point with the lower metric SHOULD be preferred.  If received over\n   EBGP, the MULTI_EXIT_DISC attribute MAY be propagated over IBGP to\n   other BGP speakers within the same AS (see also 9.1.2.2).  The\n   MULTI_EXIT_DISC attribute received from a neighboring AS MUST NOT be\n   propagated to other neighboring ASes.",
+      "line_start": 1547,
+      "line_end": 1556,
+      "condition": "When encoding or decoding MULTI_EXIT_DISC.",
+      "required_behavior": "Treat MULTI_EXIT_DISC as an optional attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The attribute classification and presence handling can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The MULTI_EXIT_DISC is an optional non-transitive attribute that is\n   intended to be used on external (inter-AS) links to discriminate\n   among multiple exit or entry points to the same neighboring AS.  The\n   value of the MULTI_EXIT_DISC attribute is a four-octet unsigned\n   number, called a metric.  All other factors being equal, the exit\n   point with the lower metric SHOULD be preferred.  If received over\n   EBGP, the MULTI_EXIT_DISC attribute MAY be propagated over IBGP to\n   other BGP speakers within the same AS (see also 9.1.2.2).  The\n   MULTI_EXIT_DISC attribute received from a neighboring AS MUST NOT be\n   propagated to other neighboring ASes.",
+      "line_start": 1547,
+      "line_end": 1556,
+      "condition": "When encoding or decoding MULTI_EXIT_DISC.",
+      "required_behavior": "Treat MULTI_EXIT_DISC as a non-transitive attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The attribute transitivity classification can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The MULTI_EXIT_DISC is an optional non-transitive attribute that is\n   intended to be used on external (inter-AS) links to discriminate\n   among multiple exit or entry points to the same neighboring AS.  The\n   value of the MULTI_EXIT_DISC attribute is a four-octet unsigned\n   number, called a metric.  All other factors being equal, the exit\n   point with the lower metric SHOULD be preferred.  If received over\n   EBGP, the MULTI_EXIT_DISC attribute MAY be propagated over IBGP to\n   other BGP speakers within the same AS (see also 9.1.2.2).  The\n   MULTI_EXIT_DISC attribute received from a neighboring AS MUST NOT be\n   propagated to other neighboring ASes.",
+      "line_start": 1547,
+      "line_end": 1556,
+      "condition": "When encoding or decoding the MULTI_EXIT_DISC value.",
+      "required_behavior": "Encode the metric in four octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The metric field length can be checked against the wire representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The MULTI_EXIT_DISC is an optional non-transitive attribute that is\n   intended to be used on external (inter-AS) links to discriminate\n   among multiple exit or entry points to the same neighboring AS.  The\n   value of the MULTI_EXIT_DISC attribute is a four-octet unsigned\n   number, called a metric.  All other factors being equal, the exit\n   point with the lower metric SHOULD be preferred.  If received over\n   EBGP, the MULTI_EXIT_DISC attribute MAY be propagated over IBGP to\n   other BGP speakers within the same AS (see also 9.1.2.2).  The\n   MULTI_EXIT_DISC attribute received from a neighboring AS MUST NOT be\n   propagated to other neighboring ASes.",
+      "line_start": 1547,
+      "line_end": 1556,
+      "condition": "When interpreting the MULTI_EXIT_DISC metric.",
+      "required_behavior": "Interpret the metric as an unsigned number.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The metric type and handling of values with the high bit set can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The MULTI_EXIT_DISC is an optional non-transitive attribute that is\n   intended to be used on external (inter-AS) links to discriminate\n   among multiple exit or entry points to the same neighboring AS.  The\n   value of the MULTI_EXIT_DISC attribute is a four-octet unsigned\n   number, called a metric.  All other factors being equal, the exit\n   point with the lower metric SHOULD be preferred.  If received over\n   EBGP, the MULTI_EXIT_DISC attribute MAY be propagated over IBGP to\n   other BGP speakers within the same AS (see also 9.1.2.2).  The\n   MULTI_EXIT_DISC attribute received from a neighboring AS MUST NOT be\n   propagated to other neighboring ASes.",
+      "line_start": 1547,
+      "line_end": 1556,
+      "condition": "When choosing among exit points and all other factors are equal.",
+      "required_behavior": "SHOULD prefer the exit point with the lower MULTI_EXIT_DISC metric.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Route selection can be checked with routes differing only in metric.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The MULTI_EXIT_DISC is an optional non-transitive attribute that is\n   intended to be used on external (inter-AS) links to discriminate\n   among multiple exit or entry points to the same neighboring AS.  The\n   value of the MULTI_EXIT_DISC attribute is a four-octet unsigned\n   number, called a metric.  All other factors being equal, the exit\n   point with the lower metric SHOULD be preferred.  If received over\n   EBGP, the MULTI_EXIT_DISC attribute MAY be propagated over IBGP to\n   other BGP speakers within the same AS (see also 9.1.2.2).  The\n   MULTI_EXIT_DISC attribute received from a neighboring AS MUST NOT be\n   propagated to other neighboring ASes.",
+      "line_start": 1547,
+      "line_end": 1556,
+      "condition": "When MULTI_EXIT_DISC is received over EBGP.",
+      "required_behavior": "MAY propagate the attribute over IBGP to other BGP speakers within the same AS; see also Section 9.1.2.2.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Permitted internal propagation can be checked in export handling without making it mandatory.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The MULTI_EXIT_DISC is an optional non-transitive attribute that is\n   intended to be used on external (inter-AS) links to discriminate\n   among multiple exit or entry points to the same neighboring AS.  The\n   value of the MULTI_EXIT_DISC attribute is a four-octet unsigned\n   number, called a metric.  All other factors being equal, the exit\n   point with the lower metric SHOULD be preferred.  If received over\n   EBGP, the MULTI_EXIT_DISC attribute MAY be propagated over IBGP to\n   other BGP speakers within the same AS (see also 9.1.2.2).  The\n   MULTI_EXIT_DISC attribute received from a neighboring AS MUST NOT be\n   propagated to other neighboring ASes.",
+      "line_start": 1547,
+      "line_end": 1556,
+      "condition": "When MULTI_EXIT_DISC is received from a neighboring AS.",
+      "required_behavior": "",
+      "forbidden_behavior": "MUST NOT propagate that attribute to other neighboring ASes.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "External export handling can be checked for leakage of a received metric.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker MUST implement a mechanism (based on local\n   configuration) that allows the MULTI_EXIT_DISC attribute to be\n   removed from a route.  If a BGP speaker is configured to remove the",
+      "line_start": 1558,
+      "line_end": 1560,
+      "condition": "For a BGP speaker implementation.",
+      "required_behavior": "MUST provide a mechanism based on local configuration that permits removing MULTI_EXIT_DISC from a route.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Configuration support and the corresponding attribute removal action can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker MUST implement a mechanism (based on local\n   configuration) that allows the MULTI_EXIT_DISC attribute to be\n   removed from a route.  If a BGP speaker is configured to remove the\n\nRekhter, et al.             Standards Track                    [Page 28]\n\nRFC 4271                         BGP-4                      January 2006\n\n   MULTI_EXIT_DISC attribute from a route, then this removal MUST be\n   done prior to determining the degree of preference of the route and\n   prior to performing route selection (Decision Process phases 1 and\n   2).",
+      "line_start": 1558,
+      "line_end": 1572,
+      "condition": "When configured to remove MULTI_EXIT_DISC from a route.",
+      "required_behavior": "MUST remove the attribute before determining the degree of preference of the route (Decision Process phase 1).",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The order of configured attribute removal and preference computation can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker MUST implement a mechanism (based on local\n   configuration) that allows the MULTI_EXIT_DISC attribute to be\n   removed from a route.  If a BGP speaker is configured to remove the\n\nRekhter, et al.             Standards Track                    [Page 28]\n\nRFC 4271                         BGP-4                      January 2006\n\n   MULTI_EXIT_DISC attribute from a route, then this removal MUST be\n   done prior to determining the degree of preference of the route and\n   prior to performing route selection (Decision Process phases 1 and\n   2).",
+      "line_start": 1558,
+      "line_end": 1572,
+      "condition": "When configured to remove MULTI_EXIT_DISC from a route.",
+      "required_behavior": "MUST remove the attribute before performing route selection (Decision Process phase 2).",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The order of configured attribute removal and route selection can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An implementation MAY also (based on local configuration) alter the\n   value of the MULTI_EXIT_DISC attribute received over EBGP.  If a BGP\n   speaker is configured to alter the value of the MULTI_EXIT_DISC\n   attribute received over EBGP, then altering the value MUST be done\n   prior to determining the degree of preference of the route and prior\n   to performing route selection (Decision Process phases 1 and 2).  See\n   Section 9.1.2.2 for necessary restrictions on this.",
+      "line_start": 1574,
+      "line_end": 1580,
+      "condition": "When processing MULTI_EXIT_DISC received over EBGP.",
+      "required_behavior": "MAY alter its value based on local configuration, subject to the restrictions referenced in Section 9.1.2.2.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The optional configured metric alteration capability can be inspected without requiring its implementation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An implementation MAY also (based on local configuration) alter the\n   value of the MULTI_EXIT_DISC attribute received over EBGP.  If a BGP\n   speaker is configured to alter the value of the MULTI_EXIT_DISC\n   attribute received over EBGP, then altering the value MUST be done\n   prior to determining the degree of preference of the route and prior\n   to performing route selection (Decision Process phases 1 and 2).  See\n   Section 9.1.2.2 for necessary restrictions on this.",
+      "line_start": 1574,
+      "line_end": 1580,
+      "condition": "When configured to alter MULTI_EXIT_DISC received over EBGP.",
+      "required_behavior": "MUST alter the value before determining the degree of preference of the route (Decision Process phase 1).",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The ordering of configured alteration and preference computation can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An implementation MAY also (based on local configuration) alter the\n   value of the MULTI_EXIT_DISC attribute received over EBGP.  If a BGP\n   speaker is configured to alter the value of the MULTI_EXIT_DISC\n   attribute received over EBGP, then altering the value MUST be done\n   prior to determining the degree of preference of the route and prior\n   to performing route selection (Decision Process phases 1 and 2).  See\n   Section 9.1.2.2 for necessary restrictions on this.",
+      "line_start": 1574,
+      "line_end": 1580,
+      "condition": "When configured to alter MULTI_EXIT_DISC received over EBGP.",
+      "required_behavior": "MUST alter the value before performing route selection (Decision Process phase 2).",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The ordering of configured alteration and route selection can be checked.",
+      "eligibility": "eligible"
+    }
+  ]
+}

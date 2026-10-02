@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0010",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Whenever a diagram shows a\n\n\n\nMockapetris                                                     [Page 8]\n\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n\ngroup of octets, the order of transmission of those octets is the normal\norder in which they are read in English.",
+      "line_start": 447,
+      "line_end": 458,
+      "condition": "When transmitting a group of octets shown in a diagram in this specification.",
+      "required_behavior": "Transmit octets in diagram reading order: from left to right within each row, and from the top row to the bottom row.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The emitted byte sequence can be compared with the diagram positions of the encoded octets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Whenever an octet represents a numeric quantity, the left most bit in\nthe diagram is the high order or most significant bit.  That is, the bit\nlabeled 0 is the most significant bit.",
+      "line_start": 471,
+      "line_end": 473,
+      "condition": "When an octet represents a numeric quantity.",
+      "required_behavior": "Interpret the leftmost diagram bit, labeled 0, as the most significant bit of the octet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Numeric octet encoding and decoding can be checked for the weight assigned to bit 0.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Similarly, whenever a multi-octet field represents a numeric quantity\nthe left most bit of the whole field is the most significant bit.",
+      "line_start": 481,
+      "line_end": 482,
+      "condition": "When a multi-octet field represents a numeric quantity.",
+      "required_behavior": "Interpret the leftmost bit of the whole field as its most significant bit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field encoder and decoder can be checked for the numeric weight of the leftmost field bit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Similarly, whenever a multi-octet field represents a numeric quantity\nthe left most bit of the whole field is the most significant bit.  When\na multi-octet quantity is transmitted the most significant octet is\ntransmitted first.",
+      "line_start": 481,
+      "line_end": 484,
+      "condition": "When transmitting a multi-octet numeric quantity.",
+      "required_behavior": "Transmit the most significant octet first.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The wire order of a multi-octet numeric value can be checked against its octet significance.",
+      "eligibility": "eligible"
+    }
+  ]
+}

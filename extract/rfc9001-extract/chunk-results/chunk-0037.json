@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0037",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Endpoints in either role MUST NOT decrypt 1-RTT packets from\n   their peer prior to completing the handshake.",
+      "line_start": 1439,
+      "line_end": 1440,
+      "condition": "Before an endpoint in either role completes its TLS handshake.",
+      "required_behavior": "Defer decryption of peer 1-RTT packets until handshake completion.",
+      "forbidden_behavior": "Do not decrypt any 1-RTT packet received from the peer.",
+      "error_behavior": "Retain or otherwise defer an early packet only as allowed; do not expose decrypted contents before handshake completion.",
+      "check_type": "explicit_normative",
+      "why_checkable": "An early peer 1-RTT packet can be delivered while decryption-call instrumentation verifies that no decryption occurs before the completion event.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Therefore, the server's use of 1-RTT keys before the handshake is\n   complete is limited to sending data.",
+      "line_start": 1457,
+      "line_end": 1458,
+      "condition": "When a server possesses 1-RTT keys before its TLS handshake is complete.",
+      "required_behavior": "Use the 1-RTT keys only to protect outgoing data.",
+      "forbidden_behavior": "Do not use pre-completion 1-RTT keys for receiving or decrypting peer data.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Key-use instrumentation can classify every pre-completion 1-RTT operation as send-side or receive-side.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A server MUST NOT process\n   incoming 1-RTT protected packets before the TLS handshake is\n   complete.",
+      "line_start": 1458,
+      "line_end": 1460,
+      "condition": "Before the TLS handshake is complete at a server.",
+      "required_behavior": "Defer processing of incoming 1-RTT protected packets.",
+      "forbidden_behavior": "Do not process frames or otherwise act on contents of an incoming 1-RTT protected packet.",
+      "error_behavior": "Store the packet for later processing only if the implementation chooses the permitted buffering behavior.",
+      "check_type": "explicit_normative",
+      "why_checkable": "An early incoming 1-RTT packet can be injected and server frame-processing callbacks observed before and after handshake completion.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Because sending acknowledgments indicates that all frames\n   in a packet have been processed, a server cannot send acknowledgments\n   for 1-RTT packets until the TLS handshake is complete.",
+      "line_start": 1460,
+      "line_end": 1462,
+      "condition": "Before the TLS handshake is complete at a server that has received a 1-RTT packet.",
+      "required_behavior": "Defer acknowledgment of that 1-RTT packet.",
+      "forbidden_behavior": "Do not send an acknowledgment covering the 1-RTT packet.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "ACK frames sent before server handshake completion can be decoded to determine whether they cover packet numbers of received 1-RTT packets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Received\n   packets protected with 1-RTT keys MAY be stored and later decrypted\n   and used once the handshake is complete.",
+      "line_start": 1462,
+      "line_end": 1464,
+      "condition": "When a 1-RTT protected packet arrives before handshake completion.",
+      "required_behavior": "Permit the endpoint to store the packet and defer decryption and use until the handshake is complete.",
+      "forbidden_behavior": "Do not reject an implementation solely because it buffers the intact packet for post-completion processing.",
+      "error_behavior": "If retained, keep the packet unprocessed until handshake completion.",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can deliver an early 1-RTT packet, observe buffering without decryption, complete the handshake, and then observe decryption and use.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A server could receive packets protected with 0-RTT keys prior to\n   receiving a TLS ClientHello.  The server MAY retain these packets for\n   later decryption in anticipation of receiving a ClientHello.",
+      "line_start": 1479,
+      "line_end": 1481,
+      "condition": "When a server receives a 0-RTT protected packet before receiving the TLS ClientHello needed to derive or select the corresponding keys.",
+      "required_behavior": "Permit the server to retain the packet for later decryption after the ClientHello arrives.",
+      "forbidden_behavior": "Do not reject an implementation solely because it buffers the early 0-RTT packet instead of immediately discarding it.",
+      "error_behavior": "Do not attempt to decrypt the retained packet until the information needed from ClientHello is available.",
+      "check_type": "explicit_normative",
+      "why_checkable": "A 0-RTT packet can be reordered ahead of ClientHello and the server observed for retention followed by later decryption.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Even if it has 1-RTT secrets, a client MUST NOT\n   process incoming 1-RTT protected packets before the TLS handshake is\n   complete.",
+      "line_start": 1484,
+      "line_end": 1486,
+      "condition": "Before the TLS handshake is complete at a client, even if the client already has 1-RTT secrets.",
+      "required_behavior": "Defer processing of incoming 1-RTT protected packets.",
+      "forbidden_behavior": "Do not process frames or otherwise act on contents of an incoming 1-RTT protected packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A client can be given 1-RTT secrets and an incoming 1-RTT packet before completion while frame-processing callbacks are monitored.",
+      "eligibility": "eligible"
+    }
+  ]
+}

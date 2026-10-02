@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0026",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "ATOMIC_AGGREGATE is a well-known discretionary attribute.",
+      "line_start": 1602,
+      "line_end": 1602,
+      "condition": "When classifying the ATOMIC_AGGREGATE path attribute",
+      "required_behavior": "Treat ATOMIC_AGGREGATE as a well-known discretionary attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Attribute recognition and category handling are concrete implementation properties.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When a BGP speaker aggregates several routes for the purpose of\n   advertisement to a particular peer, the AS_PATH of the aggregated\n   route normally includes an AS_SET formed from the set of ASes from\n   which the aggregate was formed.  In many cases, the network\n   administrator can determine if the aggregate can safely be advertised\n   without the AS_SET, and without forming route loops.",
+      "line_start": 1604,
+      "line_end": 1609,
+      "condition": "When aggregating several routes for advertisement to a particular peer",
+      "required_behavior": "Normally include in the aggregate AS_PATH an AS_SET formed from the ASes of the constituent routes; the network administrator can determine whether omission is safe without forming route loops.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The aggregate AS_PATH construction and configured omission behavior can be checked against constituent AS paths.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If an aggregate excludes at least some of the AS numbers present in\n   the AS_PATH of the routes that are aggregated as a result of dropping\n   the AS_SET, the aggregated route, when advertised to the peer, SHOULD\n   include the ATOMIC_AGGREGATE attribute.",
+      "line_start": 1611,
+      "line_end": 1614,
+      "condition": "When dropping AS_SET causes an aggregate to exclude at least some AS numbers present in the constituent routes AS_PATHs, and advertising that aggregate to a peer",
+      "required_behavior": "SHOULD include the ATOMIC_AGGREGATE attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Aggregation output can be checked for the attribute when AS numbers are omitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker that receives a route with the ATOMIC_AGGREGATE\n   attribute SHOULD NOT remove the attribute when propagating the route\n   to other speakers.",
+      "line_start": 1625,
+      "line_end": 1627,
+      "condition": "When propagating to other speakers a received route carrying ATOMIC_AGGREGATE",
+      "required_behavior": "",
+      "forbidden_behavior": "SHOULD NOT remove the ATOMIC_AGGREGATE attribute.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Propagation of a received attribute can be inspected and checked in advertised routes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker that receives a route with the ATOMIC_AGGREGATE\n   attribute MUST NOT make any NLRI of that route more specific (as\n   defined in 9.1.4) when advertising this route to other BGP speakers.",
+      "line_start": 1629,
+      "line_end": 1631,
+      "condition": "When advertising to other BGP speakers a received route carrying ATOMIC_AGGREGATE",
+      "required_behavior": "",
+      "forbidden_behavior": "MUST NOT make any NLRI of that route more specific, as defined in Section 9.1.4.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Received and advertised NLRI specificity can be compared.",
+      "eligibility": "eligible"
+    }
+  ]
+}

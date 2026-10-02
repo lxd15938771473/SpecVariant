@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0134",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   The server populates the Destination Connection ID with the\n   connection ID that the client included in the Source Connection ID of\n   the Initial packet.",
+      "line_start": 5381,
+      "line_end": 5383,
+      "condition": "When a server sends a Retry packet in response to a client's Initial packet.",
+      "required_behavior": "Set the Retry packet's Destination Connection ID to the connection ID from the Source Connection ID of the client's Initial packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The two connection ID field values can be compared directly in generated or captured packets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The server includes a connection ID of its choice in the Source\n   Connection ID field.  This value MUST NOT be equal to the Destination\n   Connection ID field of the packet sent by the client.  A client MUST",
+      "line_start": 5385,
+      "line_end": 5387,
+      "condition": "When a server constructs a Retry packet.",
+      "required_behavior": "Include a server-chosen connection ID in the Retry packet's Source Connection ID field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet decoding can verify that the Source Connection ID field is populated with the server-selected value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The server includes a connection ID of its choice in the Source\n   Connection ID field.  This value MUST NOT be equal to the Destination\n   Connection ID field of the packet sent by the client.  A client MUST",
+      "line_start": 5385,
+      "line_end": 5387,
+      "condition": "When a server constructs a Retry packet in response to a packet sent by a client.",
+      "required_behavior": "",
+      "forbidden_behavior": "Set the Retry packet's Source Connection ID equal to the Destination Connection ID of the packet sent by the client.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The Retry Source Connection ID and the triggering client packet's Destination Connection ID can be compared for inequality.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Connection ID field of the packet sent by the client.  A client MUST\n   discard a Retry packet that contains a Source Connection ID field\n   that is identical to the Destination Connection ID field of its\n   Initial packet.  The client MUST use the value from the Source",
+      "line_start": 5387,
+      "line_end": 5390,
+      "condition": "When a client receives a Retry packet whose Source Connection ID is identical to the Destination Connection ID of its Initial packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "Accept or process the Retry packet as valid.",
+      "error_behavior": "Discard the Retry packet.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can supply equal connection ID values and observe whether the client discards the Retry packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Initial packet.  The client MUST use the value from the Source\n   Connection ID field of the Retry packet in the Destination Connection\n   ID field of subsequent packets that it sends.",
+      "line_start": 5390,
+      "line_end": 5392,
+      "condition": "After a client accepts a Retry packet and sends subsequent packets.",
+      "required_behavior": "Use the Retry packet's Source Connection ID value as the Destination Connection ID of subsequent packets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet traces can compare the accepted Retry Source Connection ID with the Destination Connection ID in every subsequent client packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A server MAY send Retry packets in response to Initial and 0-RTT\n   packets.  A server can either discard or buffer 0-RTT packets that it\n   receives.  A server can send multiple Retry packets as it receives",
+      "line_start": 5394,
+      "line_end": 5396,
+      "condition": "When a server receives an Initial or 0-RTT packet.",
+      "required_behavior": "The server is permitted to send a Retry packet in response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A conformance test can verify that sending Retry in response to either listed packet type is permitted behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   packets.  A server can either discard or buffer 0-RTT packets that it\n   receives.  A server can send multiple Retry packets as it receives\n   Initial or 0-RTT packets.  A server MUST NOT send more than one Retry",
+      "line_start": 5395,
+      "line_end": 5397,
+      "condition": "When a server receives 0-RTT packets.",
+      "required_behavior": "Either discard or buffer the received 0-RTT packets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Server behavior can be observed to confirm each received 0-RTT packet is either discarded or retained in a buffer.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   receives.  A server can send multiple Retry packets as it receives\n   Initial or 0-RTT packets.  A server MUST NOT send more than one Retry\n   packet in response to a single UDP datagram.",
+      "line_start": 5396,
+      "line_end": 5398,
+      "condition": "When a server receives multiple Initial or 0-RTT packets across incoming traffic.",
+      "required_behavior": "The server is permitted to send multiple Retry packets as it receives those packets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A trace can correlate multiple received Initial or 0-RTT packets with multiple Retry packets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Initial or 0-RTT packets.  A server MUST NOT send more than one Retry\n   packet in response to a single UDP datagram.",
+      "line_start": 5397,
+      "line_end": 5398,
+      "condition": "For each single UDP datagram received by a server.",
+      "required_behavior": "",
+      "forbidden_behavior": "Send more than one Retry packet in response to that UDP datagram.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Responses can be grouped by triggering UDP datagram and counted to enforce a maximum of one Retry packet.",
+      "eligibility": "eligible"
+    }
+  ]
+}

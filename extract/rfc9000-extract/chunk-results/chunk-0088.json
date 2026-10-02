@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0088",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Resetting a stream without the involvement of the application\n   protocol could cause the application protocol to enter an\n   unrecoverable state.  RESET_STREAM MUST only be instigated by the\n   application protocol that uses QUIC.",
+      "line_start": 3667,
+      "line_end": 3670,
+      "condition": "When a RESET_STREAM is instigated.",
+      "required_behavior": "The RESET_STREAM must be instigated by the application protocol that uses QUIC.",
+      "forbidden_behavior": "A component other than the application protocol that uses QUIC must not instigate RESET_STREAM.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation can be inspected or instrumented to verify that every RESET_STREAM initiation originates from the application protocol.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The semantics of the application error code carried in RESET_STREAM\n   are defined by the application protocol.  Only the application\n   protocol is able to cause a stream to be terminated.  A local\n   instance of the application protocol uses a direct API call, and a\n   remote instance uses the STOP_SENDING frame, which triggers an\n   automatic RESET_STREAM.",
+      "line_start": 3672,
+      "line_end": 3677,
+      "condition": "When processing an application error code carried in RESET_STREAM.",
+      "required_behavior": "The semantics of the error code must be determined by the application protocol.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Error-code interpretation can be checked against the semantics defined by the selected application protocol.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The semantics of the application error code carried in RESET_STREAM\n   are defined by the application protocol.  Only the application\n   protocol is able to cause a stream to be terminated.  A local\n   instance of the application protocol uses a direct API call, and a\n   remote instance uses the STOP_SENDING frame, which triggers an\n   automatic RESET_STREAM.",
+      "line_start": 3672,
+      "line_end": 3677,
+      "condition": "When causing a stream to be terminated.",
+      "required_behavior": "Only the application protocol is permitted to cause the stream termination.",
+      "forbidden_behavior": "A component other than the application protocol must not cause a stream to be terminated.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Termination call paths and event sources can be inspected to verify that authority is restricted to the application protocol.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The semantics of the application error code carried in RESET_STREAM\n   are defined by the application protocol.  Only the application\n   protocol is able to cause a stream to be terminated.  A local\n   instance of the application protocol uses a direct API call, and a\n   remote instance uses the STOP_SENDING frame, which triggers an\n   automatic RESET_STREAM.",
+      "line_start": 3672,
+      "line_end": 3677,
+      "condition": "When a local application-protocol instance causes a stream to be terminated.",
+      "required_behavior": "The local application-protocol instance uses a direct API call.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A focused test can verify that locally initiated stream termination enters QUIC through the direct API path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The semantics of the application error code carried in RESET_STREAM\n   are defined by the application protocol.  Only the application\n   protocol is able to cause a stream to be terminated.  A local\n   instance of the application protocol uses a direct API call, and a\n   remote instance uses the STOP_SENDING frame, which triggers an\n   automatic RESET_STREAM.",
+      "line_start": 3672,
+      "line_end": 3677,
+      "condition": "When a STOP_SENDING frame is received from a remote application-protocol instance.",
+      "required_behavior": "Receipt of STOP_SENDING triggers an automatic RESET_STREAM.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can inject STOP_SENDING and verify that the endpoint automatically generates RESET_STREAM.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Application protocols SHOULD define rules for handling streams that\n   are prematurely canceled by either endpoint.",
+      "line_start": 3679,
+      "line_end": 3680,
+      "condition": "When streams can be prematurely canceled by either endpoint.",
+      "required_behavior": "The application protocol should define rules for handling those prematurely canceled streams.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The application protocol specification or implementation policy can be inspected for defined handling rules covering cancellation by either endpoint.",
+      "eligibility": "eligible"
+    }
+  ]
+}

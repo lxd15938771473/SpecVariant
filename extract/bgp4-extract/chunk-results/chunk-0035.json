@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0035",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "In the absence of any fatal errors (that are indicated in this\n   section), a BGP peer MAY choose, at any given time, to close its BGP\n   connection by sending the NOTIFICATION message with the Error Code\n   Cease.",
+      "line_start": 1913,
+      "line_end": 1916,
+      "condition": "No fatal error indicated in this error-handling section exists.",
+      "required_behavior": "A BGP peer MAY choose at any time to close its BGP connection by sending a NOTIFICATION message with Error Code Cease.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An optional administrative close can be checked for the transmitted NOTIFICATION code and connection closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "However, the Cease NOTIFICATION message MUST NOT be used when\n   a fatal error indicated by this section does exist.",
+      "line_start": 1916,
+      "line_end": 1917,
+      "condition": "A fatal error indicated in this error-handling section exists.",
+      "required_behavior": "",
+      "forbidden_behavior": "Use a Cease NOTIFICATION message for that fatal error.",
+      "error_behavior": "",
+      "check_type": "error_handling",
+      "why_checkable": "Fatal-error handling can be checked to ensure it does not select Error Code Cease.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker MAY support the ability to impose a locally-configured,\n   upper bound on the number of address prefixes the speaker is willing\n   to accept from a neighbor.",
+      "line_start": 1919,
+      "line_end": 1921,
+      "condition": "A BGP speaker accepts address prefixes from a neighbor.",
+      "required_behavior": "The speaker MAY support a locally configured upper bound on the number of address prefixes it is willing to accept from that neighbor.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Optional per-neighbor prefix-limit support and its configuration can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When the upper bound is reached, the\n   speaker, under control of local configuration, either (a) discards\n   new address prefixes from the neighbor (while maintaining the BGP\n   connection with the neighbor), or (b) terminates the BGP connection\n   with the neighbor.",
+      "line_start": 1921,
+      "line_end": 1925,
+      "condition": "The locally configured prefix upper bound is reached and local configuration selects the discard-new-prefixes action.",
+      "required_behavior": "Discard new address prefixes from the neighbor.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Prefix acceptance after the configured limit can be checked under the discard action.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When the upper bound is reached, the\n   speaker, under control of local configuration, either (a) discards\n   new address prefixes from the neighbor (while maintaining the BGP\n   connection with the neighbor), or (b) terminates the BGP connection\n   with the neighbor.",
+      "line_start": 1921,
+      "line_end": 1925,
+      "condition": "The locally configured prefix upper bound is reached and local configuration selects the discard-new-prefixes action.",
+      "required_behavior": "Maintain the BGP connection with the neighbor.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The established connection state can be checked when excess prefixes are discarded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When the upper bound is reached, the\n   speaker, under control of local configuration, either (a) discards\n   new address prefixes from the neighbor (while maintaining the BGP\n   connection with the neighbor), or (b) terminates the BGP connection\n   with the neighbor.",
+      "line_start": 1921,
+      "line_end": 1925,
+      "condition": "The locally configured prefix upper bound is reached and local configuration selects the terminate-connection action.",
+      "required_behavior": "Terminate the BGP connection with the neighbor.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The configured termination action can be checked at the prefix limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the BGP speaker decides to terminate its BGP\n   connection with a neighbor because the number of address prefixes\n   received from the neighbor exceeds the locally-configured, upper\n   bound, then the speaker MUST send the neighbor a NOTIFICATION message\n   with the Error Code Cease.",
+      "line_start": 1925,
+      "line_end": 1929,
+      "condition": "The speaker decides to terminate its BGP connection with a neighbor because received address prefixes exceed the locally configured upper bound.",
+      "required_behavior": "MUST send the neighbor a NOTIFICATION message with Error Code Cease.",
+      "forbidden_behavior": "",
+      "error_behavior": "Send a NOTIFICATION with Error Code Cease for this prefix-limit termination.",
+      "check_type": "error_handling",
+      "why_checkable": "The NOTIFICATION emitted on a prefix-limit termination can be decoded and checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the BGP speaker decides to terminate its BGP\n   connection with a neighbor because the number of address prefixes\n   received from the neighbor exceeds the locally-configured, upper\n   bound, then the speaker MUST send the neighbor a NOTIFICATION message\n   with the Error Code Cease.  The speaker MAY also log this locally.",
+      "line_start": 1925,
+      "line_end": 1929,
+      "condition": "The speaker terminates its BGP connection because the neighbor exceeds the locally configured prefix upper bound.",
+      "required_behavior": "The speaker MAY log the prefix-limit termination locally.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Optional local logging can be checked when a prefix-limit termination occurs.",
+      "eligibility": "eligible"
+    }
+  ]
+}

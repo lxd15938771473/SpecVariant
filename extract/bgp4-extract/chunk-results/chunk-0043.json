@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0043",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Definition: Local system automatically starts the BGP peer\n                     connection with peer oscillation damping enabled\n                     and PassiveTcpEstablishment enabled.  The exact\n                     method of damping persistent peer oscillations is\n                     determined by the implementation and is outside the\n                     scope of this document.",
+      "line_start": 2487,
+      "line_end": 2492,
+      "condition": "If the local system supports and generates optional Event 7, AutomaticStart_with_DampPeerOscillations_and_PassiveTcpEstablishment",
+      "required_behavior": "Automatically start the BGP peer connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The Event 7 trigger can be checked against automatic connection start behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Definition: Local system automatically starts the BGP peer\n                     connection with peer oscillation damping enabled\n                     and PassiveTcpEstablishment enabled.  The exact\n                     method of damping persistent peer oscillations is\n                     determined by the implementation and is outside the\n                     scope of this document.",
+      "line_start": 2487,
+      "line_end": 2492,
+      "condition": "If the local system supports and generates optional Event 7, AutomaticStart_with_DampPeerOscillations_and_PassiveTcpEstablishment",
+      "required_behavior": "Enable peer oscillation damping for the automatic connection start; the exact damping method is implementation-defined.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The Event 7 path can be checked for enabled damping state without prescribing its algorithm.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Definition: Local system automatically starts the BGP peer\n                     connection with peer oscillation damping enabled\n                     and PassiveTcpEstablishment enabled.  The exact\n                     method of damping persistent peer oscillations is\n                     determined by the implementation and is outside the\n                     scope of this document.",
+      "line_start": 2487,
+      "line_end": 2492,
+      "condition": "If the local system supports and generates optional Event 7, AutomaticStart_with_DampPeerOscillations_and_PassiveTcpEstablishment",
+      "required_behavior": "Enable PassiveTcpEstablishment for the automatic connection start.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The Event 7 path can be checked for passive TCP establishment state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Status:     1) The AllowAutomaticStart attribute SHOULD be set\n                        to TRUE.",
+      "line_start": 2498,
+      "line_end": 2499,
+      "condition": "If the local system supports and generates optional Event 7, AutomaticStart_with_DampPeerOscillations_and_PassiveTcpEstablishment",
+      "required_behavior": "The AllowAutomaticStart attribute SHOULD be set to TRUE.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The optional attribute value associated with Event 7 is observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "2) The DampPeerOscillations attribute SHOULD be set\n                        to TRUE.",
+      "line_start": 2500,
+      "line_end": 2501,
+      "condition": "If the local system supports and generates optional Event 7, AutomaticStart_with_DampPeerOscillations_and_PassiveTcpEstablishment",
+      "required_behavior": "The DampPeerOscillations attribute SHOULD be set to TRUE.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The optional damping attribute value associated with Event 7 is observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3) The PassiveTcpEstablishment attribute SHOULD be\n                        set to TRUE.",
+      "line_start": 2502,
+      "line_end": 2503,
+      "condition": "If the local system supports and generates optional Event 7, AutomaticStart_with_DampPeerOscillations_and_PassiveTcpEstablishment",
+      "required_behavior": "The PassiveTcpEstablishment attribute SHOULD be set to TRUE.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The optional passive TCP attribute value associated with Event 7 is observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Definition: Local system automatically stops the BGP\n                     connection.",
+      "line_start": 2507,
+      "line_end": 2508,
+      "condition": "If the local system supports and generates optional Event 8, AutomaticStop",
+      "required_behavior": "Automatically stop the BGP connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The AutomaticStop event can be checked against connection stop behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Optional\n         Attribute\n         Status:     1) The AllowAutomaticStop attribute SHOULD be TRUE.",
+      "line_start": 2523,
+      "line_end": 2525,
+      "condition": "If the local system supports and generates optional Event 8, AutomaticStop",
+      "required_behavior": "The AllowAutomaticStop attribute SHOULD be TRUE.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The optional automatic stop attribute value associated with Event 8 is observable.",
+      "eligibility": "eligible"
+    }
+  ]
+}

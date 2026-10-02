@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0140",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Transport parameters with an identifier of the form \"31 * N + 27\" for\n   integer values of N are reserved to exercise the requirement that\n   unknown transport parameters be ignored.  These transport parameters\n   have no semantics and can carry arbitrary values.",
+      "line_start": 5639,
+      "line_end": 5642,
+      "condition": "A transport parameter identifier equals 31 * N + 27 for an integer N.",
+      "required_behavior": "Treat the identifier as a reserved transport parameter identifier.",
+      "forbidden_behavior": "Treat the identifier as defining a non-reserved transport parameter solely by virtue of its numeric value.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The reserved identifier set is defined by an exact arithmetic form that can be checked against implementation classification logic.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Transport parameters with an identifier of the form \"31 * N + 27\" for\n   integer values of N are reserved to exercise the requirement that\n   unknown transport parameters be ignored.  These transport parameters\n   have no semantics and can carry arbitrary values.",
+      "line_start": 5639,
+      "line_end": 5642,
+      "condition": "An implementation receives an unknown transport parameter, including a reserved transport parameter with an identifier of the form 31 * N + 27.",
+      "required_behavior": "Ignore the unknown transport parameter.",
+      "forbidden_behavior": "Process the unknown transport parameter as having defined protocol semantics.",
+      "error_behavior": "Do not reject the transport parameters merely because the unknown transport parameter is present.",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can supply an unknown or reserved transport parameter and verify that processing continues without applying semantics or reporting an error solely for its presence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Transport parameters with an identifier of the form \"31 * N + 27\" for\n   integer values of N are reserved to exercise the requirement that\n   unknown transport parameters be ignored.  These transport parameters\n   have no semantics and can carry arbitrary values.",
+      "line_start": 5639,
+      "line_end": 5642,
+      "condition": "An implementation receives a reserved transport parameter whose identifier has the form 31 * N + 27.",
+      "required_behavior": "Allow the parameter to contain an arbitrary value and ignore it without interpreting that value.",
+      "forbidden_behavior": "Assign protocol semantics to the reserved transport parameter or its value.",
+      "error_behavior": "Do not reject the parameter based solely on the contents of its arbitrary value.",
+      "check_type": "derived_constraint",
+      "why_checkable": "Tests can vary the value carried by a reserved parameter and verify that the implementation neither interprets the value nor rejects it solely because of its contents.",
+      "eligibility": "eligible"
+    }
+  ]
+}

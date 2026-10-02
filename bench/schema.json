@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/specvariant/fixed-version-case.schema.json",
+  "title": "SpecVariant fixed-version candidate case",
+  "type": "object",
+  "required": [
+    "id",
+    "project_case_id",
+    "repository",
+    "baseline",
+    "upstream_record_url",
+    "title",
+    "accepted_fix",
+    "baseline_evidence",
+    "verification_level",
+    "runtime_verified",
+    "ground_truth_status",
+    "record_sha256"
+  ],
+  "properties": {
+    "id": {"type": "string", "pattern": "^SVB-[0-9]{4}$"},
+    "project_case_id": {"type": "string", "pattern": "^[A-Z0-9]+-[0-9]{3}$"},
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "baseline": {
+      "type": "object",
+      "required": ["tag", "sha", "date", "url"],
+      "properties": {
+        "tag": {"type": "string"},
+        "sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "date": {"type": "string"},
+        "url": {"type": "string", "format": "uri"}
+      },
+      "additionalProperties": false
+    },
+    "upstream_record_type": {"const": "pull_request"},
+    "upstream_record_number": {"type": "integer", "minimum": 1},
+    "upstream_record_url": {"type": "string", "format": "uri"},
+    "title": {"type": "string", "minLength": 1},
+    "accepted_fix": {
+      "type": "object",
+      "required": ["kind", "sha", "url", "date"],
+      "properties": {
+        "kind": {"enum": ["accepted_commit", "merged_pull_request"]},
+        "sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "url": {"type": "string", "format": "uri"},
+        "date": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "baseline_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["kind", "path", "sha256"],
+        "properties": {
+          "kind": {"enum": ["removed_line_present", "patch_preimage_present"]},
+          "path": {"type": "string", "minLength": 1},
+          "line": {"type": "integer", "minimum": 1},
+          "preimage_lines": {"type": "integer", "minimum": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "text": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "upstream_test_files": {"type": "array", "items": {"type": "string"}},
+    "explicit_rfc_references": {"type": "array", "items": {"type": "string"}},
+    "default_standard_scope": {"type": "string"},
+    "selection_score": {"type": "integer"},
+    "verification_level": {"enum": ["static_preimage_and_upstream_test", "static_preimage_only"]},
+    "runtime_verified": {"const": false},
+    "ground_truth_status": {"const": "candidate_pending_manual_and_runtime_validation"},
+    "record_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": false
+}

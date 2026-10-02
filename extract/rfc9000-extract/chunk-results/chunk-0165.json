@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0165",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   The server uses a HANDSHAKE_DONE frame (type=0x1e) to signal\n   confirmation of the handshake to the client.",
+      "line_start": 6702,
+      "line_end": 6703,
+      "condition": "When a server sends a HANDSHAKE_DONE frame to a client",
+      "required_behavior": "The frame signals confirmation of the handshake and has frame type 0x1e.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can inspect the encoded frame type and verify that client processing treats the frame as handshake confirmation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   HANDSHAKE_DONE frames are formatted as shown in Figure 44, which\n   shows that HANDSHAKE_DONE frames have no content.",
+      "line_start": 6705,
+      "line_end": 6706,
+      "condition": "When encoding or parsing a HANDSHAKE_DONE frame",
+      "required_behavior": "The frame contains no content.",
+      "forbidden_behavior": "Including content in a HANDSHAKE_DONE frame is forbidden.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The frame encoding can be inspected to verify that nothing follows its type as frame content.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   HANDSHAKE_DONE Frame {\n     Type (i) = 0x1e,\n   }",
+      "line_start": 6708,
+      "line_end": 6710,
+      "condition": "When encoding or recognizing a HANDSHAKE_DONE frame",
+      "required_behavior": "The Type field is encoded as integer value 0x1e.",
+      "forbidden_behavior": "Using any other frame type value for a HANDSHAKE_DONE frame is forbidden.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The frame type value is directly observable in the wire encoding or parser dispatch.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A HANDSHAKE_DONE frame can only be sent by the server.  Servers MUST",
+      "line_start": 6714,
+      "line_end": 6714,
+      "condition": "When sending a HANDSHAKE_DONE frame",
+      "required_behavior": "Only a server sends the frame.",
+      "forbidden_behavior": "A client must not send a HANDSHAKE_DONE frame.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation test can verify that the client never emits this frame and that the send path is restricted to the server role.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A HANDSHAKE_DONE frame can only be sent by the server.  Servers MUST\n   NOT send a HANDSHAKE_DONE frame before completing the handshake.  A",
+      "line_start": 6714,
+      "line_end": 6715,
+      "condition": "Before the server has completed the handshake",
+      "required_behavior": "",
+      "forbidden_behavior": "The server must not send a HANDSHAKE_DONE frame.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A state-aware test can observe whether the server emits this frame before entering the handshake-complete state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   server MUST treat receipt of a HANDSHAKE_DONE frame as a connection\n   error of type PROTOCOL_VIOLATION.",
+      "line_start": 6716,
+      "line_end": 6717,
+      "condition": "When a server receives a HANDSHAKE_DONE frame",
+      "required_behavior": "",
+      "forbidden_behavior": "The server must not accept or normally process the received frame.",
+      "error_behavior": "The server must treat receipt as a connection error of type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can deliver the frame to a server and verify that it raises a connection-level PROTOCOL_VIOLATION error.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0161",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   An endpoint sends a RETIRE_CONNECTION_ID frame (type=0x19) to\n   indicate that it will no longer use a connection ID that was issued\n   by its peer.  This includes the connection ID provided during the\n   handshake.",
+      "line_start": 6559,
+      "line_end": 6562,
+      "condition": "When an endpoint sends a RETIRE_CONNECTION_ID frame for a connection ID issued by its peer, including one provided during the handshake.",
+      "required_behavior": "The frame indicates that the endpoint will no longer use the identified connection ID.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can send the frame and verify that the sender ceases using the retired peer-issued connection ID.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Retiring a connection ID invalidates the stateless reset token\n   associated with that connection ID.",
+      "line_start": 6567,
+      "line_end": 6568,
+      "condition": "When a connection ID is retired.",
+      "required_behavior": "Invalidate the stateless reset token associated with that connection ID.",
+      "forbidden_behavior": "Do not continue treating the associated stateless reset token as valid.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Token validity can be inspected or exercised after retirement of the associated connection ID.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   RETIRE_CONNECTION_ID Frame {\n     Type (i) = 0x19,\n     Sequence Number (i),\n   }",
+      "line_start": 6572,
+      "line_end": 6575,
+      "condition": "When encoding or decoding a RETIRE_CONNECTION_ID frame.",
+      "required_behavior": "Represent the frame as an integer Type field fixed to 0x19 followed by an integer Sequence Number field.",
+      "forbidden_behavior": "Do not encode a RETIRE_CONNECTION_ID frame with a type other than 0x19 or with a different field order.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Serialized frames can be inspected to verify the fixed type value, required sequence-number field, and field ordering.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Sequence Number:  The sequence number of the connection ID being\n      retired; see Section 5.1.2.",
+      "line_start": 6581,
+      "line_end": 6582,
+      "condition": "When processing the Sequence Number field of a RETIRE_CONNECTION_ID frame.",
+      "required_behavior": "Interpret the field as the sequence number of the connection ID being retired.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The parsed sequence number can be compared with the connection ID selected for retirement.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Receipt of a RETIRE_CONNECTION_ID frame containing a sequence number\n   greater than any previously sent to the peer MUST be treated as a\n   connection error of type PROTOCOL_VIOLATION.",
+      "line_start": 6584,
+      "line_end": 6586,
+      "condition": "Upon receipt of a RETIRE_CONNECTION_ID frame whose sequence number is greater than every sequence number previously sent to that peer.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Treat receipt as a connection error of type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A peer can be sent a frame with an unsent sequence number above the prior maximum and the resulting connection error can be asserted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The sequence number specified in a RETIRE_CONNECTION_ID frame MUST\n   NOT refer to the Destination Connection ID field of the packet in\n   which the frame is contained.  The peer MAY treat this as a\n   connection error of type PROTOCOL_VIOLATION.",
+      "line_start": 6588,
+      "line_end": 6591,
+      "condition": "When sending a RETIRE_CONNECTION_ID frame in a packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "The frame's sequence number must not identify the connection ID used in the packet's Destination Connection ID field.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An emitted packet's Destination Connection ID can be mapped to its sequence number and compared with the frame's sequence number.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The sequence number specified in a RETIRE_CONNECTION_ID frame MUST\n   NOT refer to the Destination Connection ID field of the packet in\n   which the frame is contained.  The peer MAY treat this as a\n   connection error of type PROTOCOL_VIOLATION.",
+      "line_start": 6588,
+      "line_end": 6591,
+      "condition": "Upon receipt of a RETIRE_CONNECTION_ID frame whose sequence number refers to the Destination Connection ID field of its containing packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The peer is permitted to treat the violation as a connection error of type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A crafted packet can trigger the condition and verify that PROTOCOL_VIOLATION is an accepted response, though the response is optional.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint cannot send this frame if it was provided with a zero-\n   length connection ID by its peer.",
+      "line_start": 6593,
+      "line_end": 6594,
+      "condition": "When an endpoint was provided a zero-length connection ID by its peer.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not send a RETIRE_CONNECTION_ID frame.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "After configuring a peer with a zero-length connection ID, emitted frames can be inspected for absence of RETIRE_CONNECTION_ID.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   length connection ID by its peer.  An endpoint that provides a zero-\n   length connection ID MUST treat receipt of a RETIRE_CONNECTION_ID\n   frame as a connection error of type PROTOCOL_VIOLATION.",
+      "line_start": 6594,
+      "line_end": 6596,
+      "condition": "Upon receipt of a RETIRE_CONNECTION_ID frame by an endpoint that provided a zero-length connection ID.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Treat receipt as a connection error of type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A RETIRE_CONNECTION_ID frame can be delivered after the receiver supplies a zero-length connection ID, and the resulting error type can be asserted.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0017",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "QUIC does not use\n   TLS early data.",
+      "line_start": 796,
+      "line_end": 797,
+      "condition": "When carrying early data with QUIC.",
+      "required_behavior": "Use the QUIC 0-RTT mechanism rather than TLS early-data records.",
+      "forbidden_behavior": "Using TLS early data directly in QUIC.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The TLS integration and wire encoding can be inspected for use of TLS early-data records.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QUIC uses 0-RTT packets to carry early data.",
+      "line_start": 797,
+      "line_end": 797,
+      "condition": "When a QUIC endpoint carries early data.",
+      "required_behavior": "Carry the early data in QUIC 0-RTT packets.",
+      "forbidden_behavior": "Carrying QUIC early data in another packet type.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet traces can correlate early application data with the 0-RTT packet type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Accordingly, the max_early_data_size parameter is repurposed to hold\n   a sentinel value 0xffffffff to indicate that the server is willing to\n   accept QUIC 0-RTT data.",
+      "line_start": 798,
+      "line_end": 800,
+      "condition": "When a server indicates willingness to accept QUIC 0-RTT data in a NewSessionTicket.",
+      "required_behavior": "Include the early_data extension with max_early_data_size set to the sentinel value 0xffffffff.",
+      "forbidden_behavior": "Using max_early_data_size as a byte-count value for QUIC 0-RTT acceptance.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A decoded NewSessionTicket can be checked for the extension and exact 32-bit sentinel value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To indicate that the server does not accept\n   0-RTT data, the early_data extension is omitted from the\n   NewSessionTicket.",
+      "line_start": 800,
+      "line_end": 802,
+      "condition": "When a server indicates that it does not accept 0-RTT data.",
+      "required_behavior": "Omit the early_data extension from the NewSessionTicket.",
+      "forbidden_behavior": "Including the early_data extension while indicating that 0-RTT is not accepted.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serialized NewSessionTicket can be checked for absence of the extension.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The amount of data that the client can send in\n   QUIC 0-RTT is controlled by the initial_max_data transport parameter\n   supplied by the server.",
+      "line_start": 802,
+      "line_end": 804,
+      "condition": "When a client sends data in QUIC 0-RTT.",
+      "required_behavior": "Limit the amount sent according to the server-supplied initial_max_data transport parameter.",
+      "forbidden_behavior": "Sending QUIC 0-RTT data beyond the server-supplied initial_max_data limit.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A client test can compare cumulative 0-RTT data with the remembered initial_max_data value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Servers MUST NOT send the early_data extension with a\n   max_early_data_size field set to any value other than 0xffffffff.",
+      "line_start": 806,
+      "line_end": 807,
+      "condition": "When a server sends an early_data extension in a NewSessionTicket.",
+      "required_behavior": "Set max_early_data_size to 0xffffffff.",
+      "forbidden_behavior": "Sending the extension with max_early_data_size set to any other value.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The field value is directly observable in an encoded NewSessionTicket.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A\n   client MUST treat receipt of a NewSessionTicket that contains an\n   early_data extension with any other value as a connection error of\n   type PROTOCOL_VIOLATION.",
+      "line_start": 807,
+      "line_end": 810,
+      "condition": "When a client receives a NewSessionTicket whose early_data extension has max_early_data_size other than 0xffffffff.",
+      "required_behavior": "Reject the invalid early_data value.",
+      "forbidden_behavior": "Accepting or ignoring the invalid max_early_data_size value.",
+      "error_behavior": "Treat receipt as a connection error of type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A crafted NewSessionTicket can exercise the client and verify the exact connection error.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A client that wishes to send 0-RTT packets uses the early_data\n   extension in the ClientHello message of a subsequent handshake; see\n   Section 4.2.10 of [TLS13].",
+      "line_start": 812,
+      "line_end": 814,
+      "condition": "When a client wishes to send 0-RTT packets on a subsequent handshake.",
+      "required_behavior": "Include the early_data extension in that handshake's ClientHello.",
+      "forbidden_behavior": "Attempting to send 0-RTT packets without using the ClientHello early_data extension.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A resumed-handshake trace can correlate a 0-RTT attempt with the ClientHello extension.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "It then sends application data in 0-RTT\n   packets.",
+      "line_start": 814,
+      "line_end": 815,
+      "condition": "After a client signals a 0-RTT attempt with the ClientHello early_data extension.",
+      "required_behavior": "Send the early application data in 0-RTT packets.",
+      "forbidden_behavior": "Sending that early application data in a non-0-RTT packet type.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A handshake packet trace can check the packet type containing early application data.",
+      "eligibility": "eligible"
+    }
+  ]
+}

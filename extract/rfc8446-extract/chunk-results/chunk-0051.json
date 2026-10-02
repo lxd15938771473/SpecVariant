@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0051",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A server which is authenticating with a certificate MAY optionally\nrequest a certificate from the client.  This message, if sent, MUST\nfollow EncryptedExtensions.",
+      "line_start": 3330,
+      "line_end": 3332,
+      "condition": "a server sends CertificateRequest while authenticating with a certificate",
+      "required_behavior": "send CertificateRequest after EncryptedExtensions",
+      "forbidden_behavior": "send CertificateRequest before or in place of EncryptedExtensions",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The emitted handshake-message order can be inspected and tested.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "struct {\n    opaque certificate_request_context<0..2^8-1>;\n    Extension extensions<2..2^16-1>;\n} CertificateRequest;",
+      "line_start": 3336,
+      "line_end": 3339,
+      "condition": "encoding or parsing a CertificateRequest message",
+      "required_behavior": "encode certificate_request_context before extensions",
+      "forbidden_behavior": "reverse, omit, or add fields in the CertificateRequest structure",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The wire parser and serializer expose the declared field order.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "opaque certificate_request_context<0..2^8-1>;",
+      "line_start": 3337,
+      "line_end": 3337,
+      "condition": "encoding or parsing certificate_request_context",
+      "required_behavior": "accept and encode a vector length from 0 through 255 octets",
+      "forbidden_behavior": "encode or accept a certificate_request_context longer than 255 octets",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Boundary tests can exercise the vector's explicit length range.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Extension extensions<2..2^16-1>;",
+      "line_start": 3338,
+      "line_end": 3338,
+      "condition": "encoding or parsing the CertificateRequest extensions vector",
+      "required_behavior": "use an encoded vector length from 2 through 65535 octets",
+      "forbidden_behavior": "encode or accept an extensions vector outside 2 through 65535 octets",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The vector length has explicit lower and upper wire bounds.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "certificate_request_context:  An opaque string which identifies the\ncertificate request and which will be echoed in the client's\nCertificate message.",
+      "line_start": 3361,
+      "line_end": 3363,
+      "condition": "a client sends Certificate in response to CertificateRequest",
+      "required_behavior": "echo the CertificateRequest certificate_request_context in the client Certificate message",
+      "forbidden_behavior": "use a different certificate_request_context in the response",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A handshake trace can compare the request and response context bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The certificate_request_context MUST be\nunique within the scope of this connection (thus preventing replay\nof client CertificateVerify messages).",
+      "line_start": 3363,
+      "line_end": 3365,
+      "condition": "a server creates a CertificateRequest context",
+      "required_behavior": "use a certificate_request_context not previously used on the connection",
+      "forbidden_behavior": "reuse a certificate_request_context within the same connection",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Generated contexts can be tracked per connection and checked for reuse.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This field SHALL be zero\nlength unless used for the post-handshake authentication exchanges\ndescribed in Section 4.6.2.",
+      "line_start": 3365,
+      "line_end": 3367,
+      "condition": "CertificateRequest is not part of a post-handshake authentication exchange",
+      "required_behavior": "encode certificate_request_context with zero length",
+      "forbidden_behavior": "send a non-empty certificate_request_context",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The exchange phase and encoded vector length are directly observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When requesting post-handshake\nauthentication, the server SHOULD make the context unpredictable\nto the client (e.g., by randomly generating it) in order to\nprevent an attacker who has temporary access to the client's\nprivate key from pre-computing valid CertificateVerify messages.",
+      "line_start": 3367,
+      "line_end": 3371,
+      "condition": "a server requests post-handshake authentication",
+      "required_behavior": "generate a certificate_request_context that is unpredictable to the client",
+      "forbidden_behavior": "derive the context from a client-predictable sequence",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The context-generation path can be inspected for cryptographic randomness or equivalent unpredictability.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The \"signature_algorithms\" extension\nMUST be specified, and other extensions may optionally be included\nif defined for this message.",
+      "line_start": 3373,
+      "line_end": 3376,
+      "condition": "a server constructs CertificateRequest",
+      "required_behavior": "include the signature_algorithms extension",
+      "forbidden_behavior": "send CertificateRequest without signature_algorithms",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The extension list can be inspected for required presence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The \"signature_algorithms\" extension\nMUST be specified, and other extensions may optionally be included\nif defined for this message.",
+      "line_start": 3373,
+      "line_end": 3376,
+      "condition": "a server includes an extension other than signature_algorithms in CertificateRequest",
+      "required_behavior": "include only extensions defined for CertificateRequest",
+      "forbidden_behavior": "include an extension not defined for CertificateRequest",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The sender's extension allowlist can be compared with extensions defined for this message.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Clients MUST ignore unrecognized\nextensions.",
+      "line_start": 3376,
+      "line_end": 3377,
+      "condition": "a client parses an unrecognized CertificateRequest extension",
+      "required_behavior": "ignore the unrecognized extension",
+      "forbidden_behavior": "reject or alter handshake processing solely because the extension is unrecognized",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A CertificateRequest with an unknown extension can be injected into a client handshake.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Servers which are authenticating with a PSK MUST NOT send the\nCertificateRequest message in the main handshake, though they MAY\nsend it in post-handshake authentication (see Section 4.6.2) provided\nthat the client has sent the \"post_handshake_auth\" extension (see\nSection 4.2.6).",
+      "line_start": 3386,
+      "line_end": 3390,
+      "condition": "a server authenticates with a PSK during the main handshake",
+      "required_behavior": "",
+      "forbidden_behavior": "send CertificateRequest in the main handshake",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A PSK handshake trace can assert absence of the forbidden message.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Servers which are authenticating with a PSK MUST NOT send the\nCertificateRequest message in the main handshake, though they MAY\nsend it in post-handshake authentication (see Section 4.6.2) provided\nthat the client has sent the \"post_handshake_auth\" extension (see\nSection 4.2.6).",
+      "line_start": 3386,
+      "line_end": 3390,
+      "condition": "a PSK-authenticating server sends a post-handshake CertificateRequest",
+      "required_behavior": "send it only when the client previously sent the post_handshake_auth extension",
+      "forbidden_behavior": "request post-handshake authentication without the client's post_handshake_auth offer",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The post-handshake request can be correlated with the earlier ClientHello extension set.",
+      "eligibility": "eligible"
+    }
+  ]
+}

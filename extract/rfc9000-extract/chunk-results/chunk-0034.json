@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0034",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An application protocol can assume that an implementation of QUIC provides an interface that includes the operations described in this section. An implementation designed for use with a specific application protocol might provide only those operations that are used by that protocol.",
+      "line_start": 1578,
+      "line_end": 1582,
+      "condition": "For a general-purpose QUIC implementation, or for an implementation designed for a specific application protocol with respect to operations used by that protocol.",
+      "required_behavior": "Provide an interface containing the applicable connection operations described in this section.",
+      "forbidden_behavior": "For an implementation designed for a specific application protocol, omission is permitted only for operations not used by that protocol.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The implementation interface can be inspected to determine whether all applicable operations are exposed and whether any omitted operation is unused by the specific application protocol.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When implementing the client role, an application protocol can: * open a connection, which begins the exchange described in Section 7;",
+      "line_start": 1584,
+      "line_end": 1587,
+      "condition": "When the implementation supports the client role and this operation is applicable under the interface rule in lines 1578-1582.",
+      "required_behavior": "Provide an operation to open a connection; invoking it begins the connection exchange.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can invoke the client open operation and observe whether it initiates the connection exchange.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "* enable Early Data when available;",
+      "line_start": 1589,
+      "line_end": 1589,
+      "condition": "When implementing the client role, Early Data is available, and this operation is applicable under the interface rule in lines 1578-1582.",
+      "required_behavior": "Provide an operation that allows the application protocol to enable Early Data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The client-facing interface can be inspected and exercised to verify that Early Data can be enabled when available.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "* be informed when Early Data has been accepted or rejected by a server.",
+      "line_start": 1591,
+      "line_end": 1592,
+      "condition": "When implementing the client role, Early Data was attempted, and this operation is applicable under the interface rule in lines 1578-1582.",
+      "required_behavior": "Inform the application protocol whether the server accepted or rejected Early Data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can exercise both server acceptance and rejection and verify that the client application receives the corresponding outcome.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When implementing the server role, an application protocol can: * listen for incoming connections, which prepares for the exchange described in Section 7;",
+      "line_start": 1594,
+      "line_end": 1597,
+      "condition": "When the implementation supports the server role and this operation is applicable under the interface rule in lines 1578-1582.",
+      "required_behavior": "Provide an operation to listen for incoming connections; invoking it prepares the server for the connection exchange.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can invoke the listen operation and verify that the server becomes prepared to receive an incoming connection exchange.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "* if Early Data is supported, embed application-controlled data in the TLS resumption ticket sent to the client;",
+      "line_start": 1599,
+      "line_end": 1600,
+      "condition": "When implementing the server role, Early Data is supported, and this operation is applicable under the interface rule in lines 1578-1582.",
+      "required_behavior": "Allow the application protocol to embed application-controlled data in the TLS resumption ticket sent to the client.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A server API and emitted resumption ticket can be tested to verify that application-supplied data can be embedded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "* if Early Data is supported, retrieve application-controlled data from the client's resumption ticket and accept or reject Early Data based on that information.",
+      "line_start": 1602,
+      "line_end": 1604,
+      "condition": "When implementing the server role, Early Data is supported, and this operation is applicable under the interface rule in lines 1578-1582.",
+      "required_behavior": "Allow the application protocol to retrieve application-controlled data from the client's resumption ticket and use that information to choose whether to accept or reject Early Data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests can supply known ticket data, verify that it is exposed to the application, and confirm that the application's resulting accept-or-reject decision controls Early Data handling.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In either role, an application protocol can: * configure minimum values for the initial number of permitted streams of each type, as communicated in the transport parameters (Section 7.4);",
+      "line_start": 1606,
+      "line_end": 1610,
+      "condition": "When implementing either role and this operation is applicable under the interface rule in lines 1578-1582.",
+      "required_behavior": "Allow configuration of minimum values for the initial number of permitted streams of each stream type, and communicate those values in the transport parameters.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can configure per-type minimum stream counts and inspect the resulting transport parameters to verify that the configured values are communicated.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "* control resource allocation for receive buffers by setting flow control limits both for streams and for the connection;",
+      "line_start": 1612,
+      "line_end": 1613,
+      "condition": "When implementing either role and this operation is applicable under the interface rule in lines 1578-1582.",
+      "required_behavior": "Allow receive-buffer resource allocation to be controlled by setting flow-control limits at both the stream level and the connection level.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The interface can be inspected and exercised to verify independently configurable stream-level and connection-level flow-control limits.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "* identify whether the handshake has completed successfully or is still ongoing;",
+      "line_start": 1615,
+      "line_end": 1616,
+      "condition": "When implementing either role and this operation is applicable under the interface rule in lines 1578-1582.",
+      "required_behavior": "Expose whether the handshake completed successfully or remains ongoing.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can query or observe the exposed status before and after successful handshake completion and compare it with the actual handshake state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "* keep a connection from silently closing, by either generating PING frames (Section 19.2) or requesting that the transport send additional frames before the idle timeout expires (Section 10.1);",
+      "line_start": 1618,
+      "line_end": 1621,
+      "condition": "When implementing either role, the application requests prevention of silent closure, and this operation is applicable under the interface rule in lines 1578-1582.",
+      "required_behavior": "Provide a means to keep the connection from silently closing by generating PING frames or by requesting transmission of additional frames before the idle timeout expires.",
+      "forbidden_behavior": "Do not defer the selected keep-alive transmission until after the idle timeout expires.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A timed test can request keep-alive behavior and observe a PING or another requested frame before expiration of the idle timeout.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "* immediately close (Section 10.2) the connection.",
+      "line_start": 1623,
+      "line_end": 1623,
+      "condition": "When implementing either role and this operation is applicable under the interface rule in lines 1578-1582.",
+      "required_behavior": "Provide an operation that allows the application protocol to immediately close the connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can invoke the close operation and verify that the connection transitions immediately into closure processing.",
+      "eligibility": "eligible"
+    }
+  ]
+}

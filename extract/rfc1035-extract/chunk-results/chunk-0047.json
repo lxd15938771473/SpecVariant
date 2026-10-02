@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0047",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The DNS assumes that messages will be transmitted as datagrams or in a\nbyte stream carried by a virtual circuit.",
+      "line_start": 1773,
+      "line_end": 1774,
+      "condition": "When transmitting DNS messages",
+      "required_behavior": "Transmit messages as datagrams or as a byte stream carried by a virtual circuit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The transport interface can be checked for datagram delivery or byte-stream delivery over a virtual circuit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "While virtual circuits can be\nused for any DNS activity, datagrams are preferred for queries due to\ntheir lower overhead and better performance.",
+      "line_start": 1774,
+      "line_end": 1776,
+      "condition": "For any DNS activity",
+      "required_behavior": "A virtual circuit may be used to carry the activity; this is permission, not a requirement to select a virtual circuit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation transport-selection path can be inspected to determine whether its choice of a virtual circuit is permitted for the activity.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "While virtual circuits can be\nused for any DNS activity, datagrams are preferred for queries due to\ntheir lower overhead and better performance.",
+      "line_start": 1774,
+      "line_end": 1776,
+      "condition": "When choosing a transport for DNS queries",
+      "required_behavior": "Prefer datagrams for queries as an advisory transport choice; virtual circuits remain permitted.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The default query transport and transport-selection policy can be inspected to assess the datagram preference without treating alternatives as prohibited.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Zone refresh activities\nmust use virtual circuits because of the need for reliable transfer.",
+      "line_start": 1776,
+      "line_end": 1777,
+      "condition": "When performing zone refresh activities",
+      "required_behavior": "Use virtual circuits for zone refresh activities.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The transport selected by the zone-refresh path can be inspected or observed during a refresh.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Internet supports name server access using TCP [RFC-793] on server\nport 53 (decimal) as well as datagram access using UDP [RFC-768] on UDP\nport 53 (decimal).",
+      "line_start": 1779,
+      "line_end": 1781,
+      "condition": "For Internet name-server access using TCP",
+      "required_behavior": "Use server TCP port 53 (decimal).",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The server listening port or client destination port for DNS over TCP can be inspected or observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Internet supports name server access using TCP [RFC-793] on server\nport 53 (decimal) as well as datagram access using UDP [RFC-768] on UDP\nport 53 (decimal).",
+      "line_start": 1779,
+      "line_end": 1781,
+      "condition": "For Internet name-server datagram access using UDP",
+      "required_behavior": "Use server UDP port 53 (decimal).",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The server listening port or client destination port for DNS over UDP can be inspected or observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

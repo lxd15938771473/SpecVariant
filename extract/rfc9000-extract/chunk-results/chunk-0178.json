@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0178",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Connection migration (Section 9) provides endpoints with the ability\n   to transition between IP addresses and ports on multiple paths, using\n   one path at a time for transmission and receipt of non-probing\n   frames.  Path validation (Section 8.2) establishes that a peer is\n   both willing and able to receive packets sent on a particular path.",
+      "line_start": 7011,
+      "line_end": 7015,
+      "condition": "When an endpoint uses connection migration across multiple paths to transmit or receive non-probing frames.",
+      "required_behavior": "Use only one path at a time for transmission and receipt of non-probing frames.",
+      "forbidden_behavior": "Do not simultaneously use multiple paths for transmission or receipt of non-probing frames.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation test can migrate a connection across multiple paths and observe whether non-probing frames are transmitted or accepted on more than one path at the same time.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   frames.  Path validation (Section 8.2) establishes that a peer is\n   both willing and able to receive packets sent on a particular path.",
+      "line_start": 7014,
+      "line_end": 7015,
+      "condition": "When path validation succeeds for a particular path.",
+      "required_behavior": "The validation must establish that the peer is both willing and able to receive packets on that path.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A path-validation test can verify that success is not recorded without peer behavior demonstrating receipt capability and willingness on the validated path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   This helps reduce the effects of address spoofing by limiting the\n   number of packets sent to a spoofed address.",
+      "line_start": 7016,
+      "line_end": 7017,
+      "condition": "When packets might be directed to a spoofed address.",
+      "required_behavior": "Limit the number of packets sent to the spoofed address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The passage identifies packet limiting as the intended mitigation, but supplies no quantitative limit or precise trigger, so a conformance test cannot determine an exact pass condition from this chunk alone.",
+      "eligibility": "exclude"
+    }
+  ]
+}

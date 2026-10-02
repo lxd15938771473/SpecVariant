@@ -1,0 +1,91 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0019",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "QUIC senders use acknowledgments to detect lost packets",
+                             "line_start":  502,
+                             "line_end":  502,
+                             "condition":  "When a QUIC sender performs packet-loss detection",
+                             "required_behavior":  "Use received acknowledgment information to detect packets that have been lost.",
+                             "forbidden_behavior":  "Implement sender packet-loss detection without using acknowledgment information.",
+                             "error_behavior":  "No separate error response is specified.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "A sender implementation can be inspected or exercised to verify that acknowledgment processing feeds packet-loss detection.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "a PTO to\n   ensure acknowledgments are received",
+                             "line_start":  502,
+                             "line_end":  503,
+                             "condition":  "When acknowledgment receipt is not otherwise assured",
+                             "required_behavior":  "Use a probe timeout (PTO) mechanism to ensure acknowledgments are received.",
+                             "forbidden_behavior":  "Omit the PTO mechanism that ensures acknowledgment receipt.",
+                             "error_behavior":  "No separate error response is specified.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "Tests can withhold acknowledgments and verify that the sender operates its PTO mechanism rather than waiting indefinitely.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "If a packet is lost, the QUIC transport needs to recover from that\n   loss, such as by retransmitting the data, sending an updated frame,\n   or discarding the frame.",
+                             "line_start":  506,
+                             "line_end":  508,
+                             "condition":  "If a packet is determined to be lost",
+                             "required_behavior":  "Recover from the loss, for example by retransmitting the data, sending an updated frame, or discarding the frame as appropriate.",
+                             "forbidden_behavior":  "Leave the contents or state associated with a lost packet unhandled indefinitely.",
+                             "error_behavior":  "Loss is handled through transport recovery rather than by a separately specified protocol error.",
+                             "check_type":  "error_handling",
+                             "why_checkable":  "A test can declare or induce packet loss and verify that the transport takes a recovery disposition for the lost packet\u0027s contents.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Loss detection is separate per packet number space",
+                             "line_start":  511,
+                             "line_end":  511,
+                             "condition":  "When maintaining loss-detection state for multiple packet number spaces",
+                             "required_behavior":  "Maintain and apply loss detection separately for each packet number space.",
+                             "forbidden_behavior":  "Combine loss-detection state or decisions across packet number spaces.",
+                             "error_behavior":  "No separate error response is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "State inspection and cross-space packet tests can verify that acknowledgment or loss events in one packet number space do not drive loss detection in another.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "unlike RTT\n   measurement and congestion control, because RTT and congestion\n   control are properties of the path",
+                             "line_start":  511,
+                             "line_end":  513,
+                             "condition":  "When maintaining RTT measurement across packet number spaces on the same path",
+                             "required_behavior":  "Maintain RTT measurement as a property of the path rather than as separate state per packet number space.",
+                             "forbidden_behavior":  "Maintain independent RTT measurements solely by packet number space for packets on the same path.",
+                             "error_behavior":  "No separate error response is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Implementation state and tests spanning packet number spaces can verify that RTT samples update path-level measurement state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "unlike RTT\n   measurement and congestion control, because RTT and congestion\n   control are properties of the path",
+                             "line_start":  511,
+                             "line_end":  513,
+                             "condition":  "When maintaining congestion-control state across packet number spaces on the same path",
+                             "required_behavior":  "Maintain congestion control as a property of the path rather than as separate state per packet number space.",
+                             "forbidden_behavior":  "Maintain independent congestion-control state solely by packet number space for packets on the same path.",
+                             "error_behavior":  "No separate error response is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Implementation state and tests spanning packet number spaces can verify that congestion-control events affect path-level state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "loss detection also\n   relies upon key availability.",
+                             "line_start":  513,
+                             "line_end":  514,
+                             "condition":  "When loss detection depends on cryptographic key availability",
+                             "required_behavior":  "Account for key availability in loss detection.",
+                             "forbidden_behavior":  "Not precisely specified by this text.",
+                             "error_behavior":  "Not specified.",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "The passage states a dependency but does not define which keys must be available or what loss detection must do when they are unavailable, so it does not supply a determinate standalone check.",
+                             "eligibility":  "exclude"
+                         }
+                     ]
+}

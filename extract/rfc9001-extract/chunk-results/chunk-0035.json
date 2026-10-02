@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0035",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Once an endpoint successfully receives a packet with a given packet\n   number, it MUST discard all packets in the same packet number space\n   with higher packet numbers if they cannot be successfully unprotected\n   with either the same key, or -- if there is a key update -- a\n   subsequent packet protection key; see Section 6.",
+      "line_start": 1365,
+      "line_end": 1369,
+      "condition": "After successfully receiving a packet with packet number N, when a packet in the same packet number space has a number greater than N and cannot be unprotected with the same key or, during a key update, a subsequent packet-protection key.",
+      "required_behavior": "Discard the higher-numbered packet.",
+      "forbidden_behavior": "Accepting or processing the packet after all permitted unprotection keys fail.",
+      "error_behavior": "Discard the packet.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can establish a successfully received packet, inject a higher-numbered packet that fails both allowed key candidates, and observe disposal.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Similarly, a packet\n   that appears to trigger a key update but cannot be unprotected\n   successfully MUST be discarded.",
+      "line_start": 1369,
+      "line_end": 1371,
+      "condition": "When a packet appears to trigger a key update but cannot be successfully unprotected.",
+      "required_behavior": "Discard the packet.",
+      "forbidden_behavior": "Accepting the packet or committing the apparent key update.",
+      "error_behavior": "Discard the packet.",
+      "check_type": "error_handling",
+      "why_checkable": "A crafted packet with an apparent key-phase change and invalid protection can verify that it is discarded and does not advance key state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Failure to unprotect a packet does not necessarily indicate the\n   existence of a protocol error in a peer or an attack.",
+      "line_start": 1373,
+      "line_end": 1374,
+      "condition": "When packet unprotection fails and no independent evidence of a peer protocol error exists.",
+      "required_behavior": "Handle the failed unprotection without automatically declaring a peer protocol error.",
+      "forbidden_behavior": "Treating unprotection failure alone as conclusive evidence of a peer protocol error.",
+      "error_behavior": "Do not raise a protocol error solely because unprotection failed.",
+      "check_type": "derived_constraint",
+      "why_checkable": "An invalidly protected packet can be injected and the endpoint observed for an otherwise unsupported protocol-error close.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,402 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "batch-01",
+  "decisions": [
+    {
+      "pair_id": "pair-eadb06a64b825069",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The entries range-check different atomic coordinates, y versus x."
+    },
+    {
+      "pair_id": "pair-078327ee63a1a90c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "X and Y are separate serialized fields and require separate length checks."
+    },
+    {
+      "pair_id": "pair-47cce02ac2e47459",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply zero padding to different coordinates, Y versus X."
+    },
+    {
+      "pair_id": "pair-41c2defc85f495ee",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The network-byte-order checks cover different coordinate fields."
+    },
+    {
+      "pair_id": "pair-68e7beb3cc36063c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed-width checks apply to separate P-521 X and Y fields."
+    },
+    {
+      "pair_id": "pair-3edc773a0ad70f6c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed-width checks apply to separate P-384 X and Y fields."
+    },
+    {
+      "pair_id": "pair-63265744c41dd8fe",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed-width checks apply to separate P-256 X and Y fields."
+    },
+    {
+      "pair_id": "pair-e8e789d5eb98ee2a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The structural constraints target different UncompressedPointRepresentation fields."
+    },
+    {
+      "pair_id": "pair-2c214d769b88e10e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same digest rule is conditioned on different RSAE and PSS signature scheme families."
+    },
+    {
+      "pair_id": "pair-d46b6930c9f0bbc2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The MGF digest checks apply to different RSAE and PSS signature scheme families."
+    },
+    {
+      "pair_id": "pair-1b03a488f8056a7a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The MGF1 requirement is separately conditioned on RSAE and PSS scheme families."
+    },
+    {
+      "pair_id": "pair-cca4de6689211278",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requirement checks the client key share and the other checks the server key share."
+    },
+    {
+      "pair_id": "pair-f5812dd7cbbf7df4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The access-control rejection applies to different authentication objects, a PSK and a certificate."
+    },
+    {
+      "pair_id": "pair-c8b76a71a619bb5d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The malformed records have different Alert and Handshake content types."
+    },
+    {
+      "pair_id": "pair-bd54c943231318af",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The negotiation checks are attached to different server and client endpoint roles."
+    },
+    {
+      "pair_id": "pair-72476a27fee21b7c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The salt-length rule applies under different RSAE and PSS signature scheme conditions."
+    },
+    {
+      "pair_id": "pair-be83c560c06f7b94",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "CertificateVerify signature support and certificate signature support are separate capabilities."
+    },
+    {
+      "pair_id": "pair-c92908a6a3da8b3c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "ECDH key generation and ECDH parameter generation are different implementation operations."
+    },
+    {
+      "pair_id": "pair-dd8343ec8209d286",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The transition is checked in different client and server state machines."
+    },
+    {
+      "pair_id": "pair-0e2a6d653cc967f3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations occur at different key-schedule stages and use different input secrets."
+    },
+    {
+      "pair_id": "pair-204cd8795be9cf3c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Server and client CertificateVerify inputs require different exact context strings."
+    },
+    {
+      "pair_id": "pair-1b04be41a7103e2c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The extension encoding is checked in different EncryptedExtensions and ClientHello messages."
+    },
+    {
+      "pair_id": "pair-97070a511bd34241",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Protocol-version handling is checked in different ServerHello and ClientHello directions."
+    },
+    {
+      "pair_id": "pair-d80c856b302c2619",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The prohibited combinations involve different server and client certificate-authentication roles."
+    },
+    {
+      "pair_id": "pair-aaf0666453793866",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Client and server outbound nonces use different directional write IVs."
+    },
+    {
+      "pair_id": "pair-f3fb2d539b93951c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Client and server write nonces use different directional write IVs."
+    },
+    {
+      "pair_id": "pair-064b17a437f56c40",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Deleting an old traffic secret and deleting its associated traffic keys are separate erasure checks."
+    },
+    {
+      "pair_id": "pair-ca0f92de07468c6c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The downgrade sentinels apply to different negotiated-version conditions and require different byte values."
+    },
+    {
+      "pair_id": "pair-a8e58ea381411bee",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The supported_versions checks occur in different HelloRetryRequest and ClientHello states."
+    },
+    {
+      "pair_id": "pair-9dadd67daf6bbd46",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements govern server and client certificates in opposite message directions."
+    },
+    {
+      "pair_id": "pair-bc954e29d14ba4d8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The padding checks apply to different encrypted Alert and Handshake record content."
+    },
+    {
+      "pair_id": "pair-591d5c87b9d6084b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same early-data flight requires two different extension fields."
+    },
+    {
+      "pair_id": "pair-de40c87db8b1b4bf",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One closure check prohibits sending while the other prohibits receiving."
+    },
+    {
+      "pair_id": "pair-4aa2e24a9edef0fd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The post-alert constraints cover opposite receive and send directions."
+    },
+    {
+      "pair_id": "pair-cdda803695462896",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The malformed ClientHello branches omit different required extensions."
+    },
+    {
+      "pair_id": "pair-f21efc65676059ed",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The supported_versions checks occur in different HelloRetryRequest and ServerHello states."
+    },
+    {
+      "pair_id": "pair-3c88c8b93f743189",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Client and server handshake traffic secrets use different labels and produce directional secrets."
+    },
+    {
+      "pair_id": "pair-5423e8c3dc3b22c3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed legacy_version value is checked in different ClientHello and ServerHello fields."
+    },
+    {
+      "pair_id": "pair-61bf5ee30c2b337f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The structural checks target different ClientHello and ServerHello fields."
+    },
+    {
+      "pair_id": "pair-c5e6035f9483730c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Client and server application traffic secrets use different labels and produce directional secrets."
+    },
+    {
+      "pair_id": "pair-ec6d24dc6114e721",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-1765c2c606994e545d06",
+      "reason": "Both prohibit a client Certificate when no CertificateRequest was sent; the canonical evidence is the clearer primary-body MUST-if-and-only-if statement."
+    },
+    {
+      "pair_id": "pair-b1e37165e3920bf6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Fatal-alert transmission and reception are opposite directional events."
+    },
+    {
+      "pair_id": "pair-67e5475f7f84e5a2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks exclude different protocol versions, SSL 3.0 and SSL 2.0."
+    },
+    {
+      "pair_id": "pair-2892a2d1376ec2cf",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements mandate implementation of two different TLS extensions."
+    },
+    {
+      "pair_id": "pair-710723427bf6fcd6",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-823f1b674136150c2ce2",
+      "reason": "The RFC explicitly gives bare 'terminate the connection' and 'abort the handshake' the same alert-selection meaning."
+    },
+    {
+      "pair_id": "pair-36abef1189e44e70",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-48e721fbb187d1537e3c",
+      "reason": "Both require ServerHello.legacy_version 0x0303 for TLS 1.3; the canonical entry has direct primary-body MUST evidence."
+    },
+    {
+      "pair_id": "pair-1811cdcc80539d0c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Read and write sequence numbers are different directional counters."
+    },
+    {
+      "pair_id": "pair-bf5318924b7a5f26",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "RSAE and PSS certificate public keys require different identifying OIDs."
+    },
+    {
+      "pair_id": "pair-e6ae890ca69700b5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The length checks target separate ClientHello.random and ServerHello.random fields."
+    },
+    {
+      "pair_id": "pair-ce77ddee232cad24",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The extension vectors belong to different messages and have different minimum lengths."
+    },
+    {
+      "pair_id": "pair-2a60c2e54151cdf7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "X25519 and secp256r1 are separate mandatory key-exchange capabilities."
+    },
+    {
+      "pair_id": "pair-964669ad89f01446",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Server and client CertificateEntry extensions are checked against different prior offer messages."
+    },
+    {
+      "pair_id": "pair-1b847113158989cb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The synthetic lengths cover different pre_shared_key-extension and overall-ClientHello fields."
+    },
+    {
+      "pair_id": "pair-37e354ccbb7a0725",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements mandate implementation of different supported_versions and supported_groups extensions."
+    },
+    {
+      "pair_id": "pair-bcb37b9cac06a03e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "A write key and a write IV are separate derived fields that must each be recomputed."
+    },
+    {
+      "pair_id": "pair-dab6accedfdda46c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The complementary rules classify different initiating and non-initiating endpoint roles."
+    },
+    {
+      "pair_id": "pair-898ecec4c41924e9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Client and server encryption use different directional AEAD write keys."
+    },
+    {
+      "pair_id": "pair-bafc483bdf59c720",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The binder computation requires separate values for the extensions-block and pre_shared_key-extension length fields."
+    },
+    {
+      "pair_id": "pair-9bf88d761d85f2f8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The unsolicited-extension errors concern different message pairs and handshake directions."
+    },
+    {
+      "pair_id": "pair-84b2a10ba891a293",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The secure-RNG checks target separate client and server random-generation paths."
+    },
+    {
+      "pair_id": "pair-3b4a19bc0dabc63b",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-15c687cdd6575955c38c",
+      "reason": "The RFC explicitly defines both named-alert phrases to impose the same conditional requirement to send alert X."
+    },
+    {
+      "pair_id": "pair-97933ba7e9915db1",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The malformed ClientHello branches omit different independently required extensions."
+    },
+    {
+      "pair_id": "pair-783b04e70a5cbecd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "A present binder that fails validation and an absent binder are different error conditions."
+    },
+    {
+      "pair_id": "pair-1d582d9a43329dd3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements mandate implementation of different supported_versions and key_share extensions."
+    },
+    {
+      "pair_id": "pair-da154555d35edf6e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements mandate implementation of different cookie and key_share extensions."
+    },
+    {
+      "pair_id": "pair-d04343186af32f3f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements mandate implementation of different key_share and server_name extensions."
+    }
+  ]
+}

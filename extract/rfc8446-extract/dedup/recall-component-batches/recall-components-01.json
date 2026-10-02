@@ -1,0 +1,749 @@
+{
+  "schema_version": "speclitmus.dedup-component-partition-batch.v1",
+  "batch_id": "recall-components-01",
+  "rule": "partition every component into exact semantic-equivalence groups; singleton groups preserve distinct requirements",
+  "components": [
+    {
+      "component_id": "recall-comp-0810c43ad8ebb401",
+      "members": [
+        {
+          "requirement_id": "req-2061a6b72d20a00688f5",
+          "condition": "certificate_type is RawPublicKey",
+          "required_behavior": "limit CertificateEntry.ASN1_subjectPublicKeyInfo to 1 through 2^24-1 octets",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n          select (certificate_type) {\n              case RawPublicKey:\n                /* From RFC 7250 ASN.1_subjectPublicKeyInfo */\n                opaque ASN1_subjectPublicKeyInfo<1..2^24-1>;",
+            "line_start": 7346,
+            "line_end": 7350,
+            "verified": true,
+            "chunk_id": "chunk-0104"
+          }
+        },
+        {
+          "requirement_id": "req-6dfb3ca09f00106f36cd",
+          "condition": "certificate_type is RawPublicKey",
+          "required_behavior": "encode ASN1_subjectPublicKeyInfo with a length from 1 through 16777215 octets",
+          "forbidden_behavior": "encode or accept an empty or oversized RawPublicKey payload",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "Boundary tests can exercise the explicit vector limits.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "opaque ASN1_subjectPublicKeyInfo<1..2^24-1>;",
+            "line_start": 3558,
+            "line_end": 3558,
+            "verified": true,
+            "chunk_id": "chunk-0054"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-0810c43ad8ebb401",
+          "members": [
+            "req-6dfb3ca09f00106f36cd",
+            "req-2061a6b72d20a00688f5"
+          ],
+          "reason": "Both limit RawPublicKey ASN1_subjectPublicKeyInfo to 1 through 2^24-1 octets; the canonical evidence is the direct primary-body structure."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-0c2ff33bc60a4529",
+      "members": [
+        {
+          "requirement_id": "req-92ce892162635336fb0b",
+          "condition": "",
+          "required_behavior": "Encode and decode NamedGroup.ffdhe4096 with numeric value 0x0102.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "ffdhe2048(0x0100), ffdhe3072(0x0101), ffdhe4096(0x0102),",
+            "line_start": 7237,
+            "line_end": 7237,
+            "verified": true,
+            "chunk_id": "chunk-0104"
+          }
+        },
+        {
+          "requirement_id": "req-d75f83b499468628323b",
+          "condition": "when encoding or decoding ffdhe4096",
+          "required_behavior": "map ffdhe4096 to NamedGroup code point 0x0102",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The enum name-to-wire-value mapping is exact.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "ffdhe4096(0x0102),",
+            "line_start": 2612,
+            "line_end": 2612,
+            "verified": true,
+            "chunk_id": "chunk-0038"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-0c2ff33bc60a4529",
+          "members": [
+            "req-d75f83b499468628323b",
+            "req-92ce892162635336fb0b"
+          ],
+          "reason": "Both map NamedGroup.ffdhe4096 to 0x0102; the canonical evidence is the direct primary-body enum rather than its appendix repetition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-121d16622d159bc5",
+      "members": [
+        {
+          "requirement_id": "req-0c9294bef28b81e284be",
+          "condition": "when encoding or parsing a ProtocolVersion value",
+          "required_behavior": "represent ProtocolVersion as an unsigned 16-bit value",
+          "forbidden_behavior": "encode ProtocolVersion with a different width",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The wire codec's ProtocolVersion width is directly testable.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "uint16 ProtocolVersion;",
+            "line_start": 1535,
+            "line_end": 1535,
+            "verified": true,
+            "chunk_id": "chunk-0025"
+          }
+        },
+        {
+          "requirement_id": "req-3ca1404a3b7e3dad3156",
+          "condition": "",
+          "required_behavior": "Encode ProtocolVersion as uint16.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "uint16 ProtocolVersion;",
+            "line_start": 6947,
+            "line_end": 6947,
+            "verified": true,
+            "chunk_id": "chunk-0102"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-121d16622d159bc5",
+          "members": [
+            "req-0c9294bef28b81e284be",
+            "req-3ca1404a3b7e3dad3156"
+          ],
+          "reason": "Both require ProtocolVersion to encode as uint16; the canonical evidence is the direct primary-body definition rather than the appendix repetition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-12d1fa2c3371c9dc",
+      "members": [
+        {
+          "requirement_id": "req-1a8576c72b0437765e63",
+          "condition": "",
+          "required_behavior": "Limit OfferedPsks.identities to 7 through 2^16-1 encoded octets.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n        PskIdentity identities<7..2^16-1>;\n        PskBinderEntry binders<33..2^16-1>;",
+            "line_start": 7090,
+            "line_end": 7092,
+            "verified": true,
+            "chunk_id": "chunk-0103"
+          }
+        },
+        {
+          "requirement_id": "req-e4494dddec05c7f4c4cc",
+          "condition": "when encoding OfferedPsks.identities",
+          "required_behavior": "encode identities as a vector with encoded content length from 7 through 2^16-1 octets",
+          "forbidden_behavior": "encode identities outside the declared vector bounds",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The identities vector length prefix and content size are directly parseable.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n          PskIdentity identities<7..2^16-1>;\n          PskBinderEntry binders<33..2^16-1>;\n      } OfferedPsks;",
+            "line_start": 3091,
+            "line_end": 3094,
+            "verified": true,
+            "chunk_id": "chunk-0045"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-12d1fa2c3371c9dc",
+          "members": [
+            "req-e4494dddec05c7f4c4cc",
+            "req-1a8576c72b0437765e63"
+          ],
+          "reason": "Both impose the 7 through 2^16-1 encoded-octet bounds on OfferedPsks.identities; the canonical evidence is the direct primary-body structure definition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-170cd84a8a182f6e",
+      "members": [
+        {
+          "requirement_id": "req-78de548d20f43adff36e",
+          "condition": "",
+          "required_behavior": "Encode and decode SignatureScheme.ecdsa_secp256r1_sha256 with numeric value 0x0403.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "ecdsa_secp256r1_sha256(0x0403),",
+            "line_start": 7178,
+            "line_end": 7178,
+            "verified": true,
+            "chunk_id": "chunk-0103"
+          }
+        },
+        {
+          "requirement_id": "req-87a0a5e039279769d7f0",
+          "condition": "when encoding or decoding ecdsa_secp256r1_sha256",
+          "required_behavior": "map ecdsa_secp256r1_sha256 to SignatureScheme code point 0x0403",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The enum name-to-wire-value mapping is exact.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "ecdsa_secp256r1_sha256(0x0403),",
+            "line_start": 2307,
+            "line_end": 2307,
+            "verified": true,
+            "chunk_id": "chunk-0033"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-170cd84a8a182f6e",
+          "members": [
+            "req-87a0a5e039279769d7f0",
+            "req-78de548d20f43adff36e"
+          ],
+          "reason": "Both map ecdsa_secp256r1_sha256 to 0x0403. The canonical requirement cites the direct primary-body SignatureScheme definition rather than the appendix repetition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-1ddaff9069e3b6df",
+      "members": [
+        {
+          "requirement_id": "req-1068f5c40c1d85369715",
+          "condition": "encoding or parsing ContentType",
+          "required_behavior": "map application_data to numeric value 23",
+          "forbidden_behavior": "using another numeric value for application_data",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The enum's numeric encoding is explicit.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "application_data(23)",
+            "line_start": 4374,
+            "line_end": 4374,
+            "verified": true,
+            "chunk_id": "chunk-0068"
+          }
+        },
+        {
+          "requirement_id": "req-fa5e7380b15fcdd39c15",
+          "condition": "",
+          "required_behavior": "Encode and decode ContentType.application_data with numeric value 23.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "application_data(23),",
+            "line_start": 6792,
+            "line_end": 6792,
+            "verified": true,
+            "chunk_id": "chunk-0102"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-1ddaff9069e3b6df",
+          "members": [
+            "req-1068f5c40c1d85369715",
+            "req-fa5e7380b15fcdd39c15"
+          ],
+          "reason": "Both require the identical ContentType.application_data to 23 mapping; the canonical entry cites the primary-body record-layer definition rather than the appendix repetition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-2abbceb2c7b4d7ed",
+      "members": [
+        {
+          "requirement_id": "req-743966c20830e1a37885",
+          "condition": "encoding or parsing ContentType",
+          "required_behavior": "map change_cipher_spec to numeric value 20",
+          "forbidden_behavior": "using another numeric value for change_cipher_spec",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The enum's numeric encoding is explicit.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "change_cipher_spec(20)",
+            "line_start": 4371,
+            "line_end": 4371,
+            "verified": true,
+            "chunk_id": "chunk-0068"
+          }
+        },
+        {
+          "requirement_id": "req-fb08cdcdb35f83161647",
+          "condition": "",
+          "required_behavior": "Encode and decode ContentType.change_cipher_spec with numeric value 20.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "change_cipher_spec(20),",
+            "line_start": 6789,
+            "line_end": 6789,
+            "verified": true,
+            "chunk_id": "chunk-0102"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-2abbceb2c7b4d7ed",
+          "members": [
+            "req-743966c20830e1a37885",
+            "req-fb08cdcdb35f83161647"
+          ],
+          "reason": "Both map ContentType.change_cipher_spec to numeric value 20 for encoding and decoding; the canonical evidence is the direct primary-body enum definition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-2b0a17c040539111",
+      "members": [
+        {
+          "requirement_id": "req-52ae1ac401656af30629",
+          "condition": "when encoding or decoding rsa_pss_pss_sha384",
+          "required_behavior": "map rsa_pss_pss_sha384 to SignatureScheme code point 0x080a",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The enum name-to-wire-value mapping is exact.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "rsa_pss_pss_sha384(0x080a),",
+            "line_start": 2322,
+            "line_end": 2322,
+            "verified": true,
+            "chunk_id": "chunk-0033"
+          }
+        },
+        {
+          "requirement_id": "req-d040ee61e53384f85263",
+          "condition": "",
+          "required_behavior": "Encode and decode SignatureScheme.rsa_pss_pss_sha384 with numeric value 0x080a.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "rsa_pss_pss_sha384(0x080a),",
+            "line_start": 7193,
+            "line_end": 7193,
+            "verified": true,
+            "chunk_id": "chunk-0103"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-2b0a17c040539111",
+          "members": [
+            "req-52ae1ac401656af30629",
+            "req-d040ee61e53384f85263"
+          ],
+          "reason": "Both map rsa_pss_pss_sha384 to SignatureScheme code point 0x080a; the canonical evidence is the direct primary-body enum definition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-2cceaad4f9fa461a",
+      "members": [
+        {
+          "requirement_id": "req-67c630e527911e12adc7",
+          "condition": "encoding or parsing NewSessionTicket",
+          "required_behavior": "encode ticket_lifetime as a uint32 field",
+          "forbidden_behavior": "omitting the field or using a different width",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The field width and position are fixed by the message structure.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "uint32 ticket_lifetime;",
+            "line_start": 4105,
+            "line_end": 4105,
+            "verified": true,
+            "chunk_id": "chunk-0063"
+          }
+        },
+        {
+          "requirement_id": "req-b44e4e3f63f42196aceb",
+          "condition": "",
+          "required_behavior": "Encode NewSessionTicket.ticket_lifetime as uint32.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n          uint32 ticket_lifetime;",
+            "line_start": 7374,
+            "line_end": 7375,
+            "verified": true,
+            "chunk_id": "chunk-0104"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-2cceaad4f9fa461a",
+          "members": [
+            "req-67c630e527911e12adc7",
+            "req-b44e4e3f63f42196aceb"
+          ],
+          "reason": "Both require NewSessionTicket.ticket_lifetime to be encoded as uint32; the canonical evidence is the direct primary-body structure rather than the repeated appendix definition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-2fc3b0ffcb4829bd",
+      "members": [
+        {
+          "requirement_id": "req-2897c5463ba534425f62",
+          "condition": "adding a handshake message to the transcript hash",
+          "required_behavior": "include the handshake message length field in the hashed bytes",
+          "forbidden_behavior": "omit the handshake length field from the transcript input",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The exact hash input can be captured and checked for the three-byte length.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "This value is computed by hashing the concatenation\nof each included handshake message, including the handshake message\nheader carrying the handshake message type and length fields, but not\nincluding record layer headers.",
+            "line_start": 3475,
+            "line_end": 3479,
+            "verified": true,
+            "chunk_id": "chunk-0053"
+          }
+        },
+        {
+          "requirement_id": "req-b53205e2e0ea01b5462b",
+          "condition": "adding a handshake message to Messages",
+          "required_behavior": "include the handshake message length fields",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "security_consistency",
+          "why_checkable": "Transcript bytes can be checked for the encoded length.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "Messages is the concatenation of the indicated handshake messages,\n   including the handshake message type and length fields, but not\n   including record layer headers.  Note that in some cases a zero-",
+            "line_start": 5064,
+            "line_end": 5066,
+            "verified": true,
+            "chunk_id": "chunk-0078"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-2fc3b0ffcb4829bd",
+          "members": [
+            "req-2897c5463ba534425f62",
+            "req-b53205e2e0ea01b5462b"
+          ],
+          "reason": "Both require each handshake message's length field to be included in the transcript Messages bytes; the canonical evidence directly defines the transcript-hash input."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-3562cc3713fedea3",
+      "members": [
+        {
+          "requirement_id": "req-60f00b028de6d11a6665",
+          "condition": "",
+          "required_behavior": "Encode and decode SignatureScheme.rsa_pkcs1_sha384 with numeric value 0x0501.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "rsa_pkcs1_sha384(0x0501),",
+            "line_start": 7174,
+            "line_end": 7174,
+            "verified": true,
+            "chunk_id": "chunk-0103"
+          }
+        },
+        {
+          "requirement_id": "req-b49cfb275b487f6d51ed",
+          "condition": "when encoding or decoding rsa_pkcs1_sha384",
+          "required_behavior": "map rsa_pkcs1_sha384 to SignatureScheme code point 0x0501",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The enum name-to-wire-value mapping is exact.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "rsa_pkcs1_sha384(0x0501),",
+            "line_start": 2303,
+            "line_end": 2303,
+            "verified": true,
+            "chunk_id": "chunk-0033"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-3562cc3713fedea3",
+          "members": [
+            "req-b49cfb275b487f6d51ed",
+            "req-60f00b028de6d11a6665"
+          ],
+          "reason": "Both require the identical rsa_pkcs1_sha384 to 0x0501 SignatureScheme mapping; the canonical entry cites the primary-body definition rather than the appendix repetition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-39906ba1f200c09e",
+      "members": [
+        {
+          "requirement_id": "req-91ead3bf0bfee475e474",
+          "condition": "ClientHello contains pre_shared_key",
+          "required_behavior": "encode pre_shared_key as the final extension",
+          "forbidden_behavior": "place any extension after pre_shared_key",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The ClientHello extension sequence can be checked for the pre_shared_key index.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "\"pre_shared_key\" (Section 4.2.11) which MUST be the last extension in\n   the ClientHello",
+            "line_start": 2075,
+            "line_end": 2076,
+            "verified": true,
+            "chunk_id": "chunk-0030"
+          }
+        },
+        {
+          "requirement_id": "req-e4c6f31cce27d46d11e4",
+          "condition": "when a client includes pre_shared_key in ClientHello",
+          "required_behavior": "place pre_shared_key last in the ClientHello extension list",
+          "forbidden_behavior": "place another extension after pre_shared_key",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The order of the parsed ClientHello extension list is directly observable.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "The \"pre_shared_key\" extension MUST be the last extension in the\n   ClientHello",
+            "line_start": 3198,
+            "line_end": 3199,
+            "verified": true,
+            "chunk_id": "chunk-0045"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-39906ba1f200c09e",
+          "members": [
+            "req-91ead3bf0bfee475e474",
+            "req-e4c6f31cce27d46d11e4"
+          ],
+          "reason": "Both require pre_shared_key to be the final ClientHello extension under the same applicability; the canonical evidence states the rule directly in the pre_shared_key section."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-39d00e48f98f78af",
+      "members": [
+        {
+          "requirement_id": "req-4fbf4ad29e9b93dbfe38",
+          "condition": "when encoding or decoding rsa_pkcs1_sha1",
+          "required_behavior": "map rsa_pkcs1_sha1 to SignatureScheme code point 0x0201",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The enum name-to-wire-value mapping is exact.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "rsa_pkcs1_sha1(0x0201),",
+            "line_start": 2326,
+            "line_end": 2326,
+            "verified": true,
+            "chunk_id": "chunk-0033"
+          }
+        },
+        {
+          "requirement_id": "req-7b1c314761397adad328",
+          "condition": "",
+          "required_behavior": "Encode and decode SignatureScheme.rsa_pkcs1_sha1 with numeric value 0x0201.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "rsa_pkcs1_sha1(0x0201),",
+            "line_start": 7197,
+            "line_end": 7197,
+            "verified": true,
+            "chunk_id": "chunk-0103"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-39d00e48f98f78af",
+          "members": [
+            "req-4fbf4ad29e9b93dbfe38",
+            "req-7b1c314761397adad328"
+          ],
+          "reason": "Both map SignatureScheme.rsa_pkcs1_sha1 to 0x0201; the canonical evidence is the primary-body enum rather than its appendix repetition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-3aa6e4fa7622aec5",
+      "members": [
+        {
+          "requirement_id": "req-11a637e290f25863d5ad",
+          "condition": "",
+          "required_behavior": "Encode and decode NamedGroup.ffdhe6144 with numeric value 0x0103.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "ffdhe6144(0x0103), ffdhe8192(0x0104),",
+            "line_start": 7238,
+            "line_end": 7238,
+            "verified": true,
+            "chunk_id": "chunk-0104"
+          }
+        },
+        {
+          "requirement_id": "req-ecb451f7a3d55110bf58",
+          "condition": "when encoding or decoding ffdhe6144",
+          "required_behavior": "map ffdhe6144 to NamedGroup code point 0x0103",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The enum name-to-wire-value mapping is exact.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "ffdhe6144(0x0103),",
+            "line_start": 2613,
+            "line_end": 2613,
+            "verified": true,
+            "chunk_id": "chunk-0038"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-3aa6e4fa7622aec5",
+          "members": [
+            "req-ecb451f7a3d55110bf58",
+            "req-11a637e290f25863d5ad"
+          ],
+          "reason": "Both map NamedGroup.ffdhe6144 to 0x0103; the canonical evidence is the direct primary-body enum rather than its appendix repetition."
+        }
+      ],
+      "known_conflicts": []
+    }
+  ]
+}

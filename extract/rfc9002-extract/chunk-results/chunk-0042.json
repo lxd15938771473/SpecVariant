@@ -1,0 +1,139 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0042",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "A sender establishes persistent congestion after the receipt of an\nacknowledgment if two packets that are ack-eliciting are declared\nlost, and:",
+                             "line_start":  1097,
+                             "line_end":  1099,
+                             "condition":  "When a sender processes an acknowledgment and evaluates whether persistent congestion has been established.",
+                             "required_behavior":  "The sender establishes persistent congestion as an acknowledgment-driven state transition after receipt of the acknowledgment.",
+                             "forbidden_behavior":  "The sender must not establish persistent congestion independently of receipt of an acknowledgment that drives the loss evaluation.",
+                             "error_behavior":  "No transport error is specified; an invalid transition is a congestion-control state violation.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can observe whether the persistent-congestion state transition occurs only while processing an acknowledgment.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A sender establishes persistent congestion after the receipt of an\nacknowledgment if two packets that are ack-eliciting are declared\nlost, and:",
+                             "line_start":  1097,
+                             "line_end":  1099,
+                             "condition":  "When a sender evaluates the packet pair used to establish persistent congestion.",
+                             "required_behavior":  "The sender must use two packets that have been declared lost as the bounding pair for the persistent-congestion evaluation.",
+                             "forbidden_behavior":  "The sender must not establish persistent congestion without two bounding packets having been declared lost.",
+                             "error_behavior":  "No transport error is specified; failure to satisfy the prerequisite means persistent congestion is not established.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "Packet loss declarations and the selected bounding pair can be instrumented and compared with the state transition.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "*  across all packet number spaces, none of the packets sent between\n   the send times of these two packets are acknowledged;",
+                             "line_start":  1101,
+                             "line_end":  1102,
+                             "condition":  "When evaluating a candidate persistent-congestion interval, except where the limited-state allowance in this passage applies.",
+                             "required_behavior":  "The sender must determine across packet number spaces that no packet sent between the two bounding send times was acknowledged.",
+                             "forbidden_behavior":  "The sender must not establish persistent congestion when an intervening packet is acknowledged, subject to the expressly permitted limited-state fallback.",
+                             "error_behavior":  "No transport error is specified; an acknowledged intervening packet disqualifies the candidate interval.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A trace with packet send times, packet-number spaces, acknowledgments, and the declaration decision can verify the absence criterion.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "*  the duration between the send times of these two packets exceeds\n   the persistent congestion duration (Section 7.6.1); and",
+                             "line_start":  1104,
+                             "line_end":  1105,
+                             "condition":  "When evaluating two lost bounding packets as a candidate persistent-congestion interval.",
+                             "required_behavior":  "The duration between the packets\u0027 send times must be greater than the persistent congestion duration.",
+                             "forbidden_behavior":  "The sender must not establish persistent congestion from a pair whose send-time separation is less than or equal to the persistent congestion duration.",
+                             "error_behavior":  "No transport error is specified; a duration that does not exceed the threshold disqualifies the candidate interval.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "The two send timestamps and computed persistent-congestion duration provide directly comparable values.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "*  a prior RTT sample existed when these two packets were sent.",
+                             "line_start":  1107,
+                             "line_end":  1107,
+                             "condition":  "When evaluating the two bounding packets used to establish persistent congestion.",
+                             "required_behavior":  "An RTT sample must already have existed when the two bounding packets were sent.",
+                             "forbidden_behavior":  "The sender must not use two packets sent before any RTT sample existed to establish persistent congestion.",
+                             "error_behavior":  "No transport error is specified; absence of a prior RTT sample disqualifies the candidate packet pair.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can record the first RTT-sample event and compare it with the send times of the selected packets.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "These two packets MUST be ack-eliciting, since a receiver is required\nto acknowledge only ack-eliciting packets within its maximum\nacknowledgment delay; see Section 13.2 of [QUIC-TRANSPORT].",
+                             "line_start":  1109,
+                             "line_end":  1111,
+                             "condition":  "When selecting the two lost packets that bound a persistent-congestion interval.",
+                             "required_behavior":  "Both bounding packets must be ack-eliciting.",
+                             "forbidden_behavior":  "The sender must not use a non-ack-eliciting packet as either bounding packet.",
+                             "error_behavior":  "No transport error is specified; a non-ack-eliciting packet is ineligible as an interval boundary.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Packet metadata identifies whether each selected boundary packet is ack-eliciting.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The persistent congestion period SHOULD NOT start until there is at\nleast one RTT sample.",
+                             "line_start":  1113,
+                             "line_end":  1114,
+                             "condition":  "Before the sender has obtained its first RTT sample.",
+                             "required_behavior":  "The sender should defer the start of a persistent-congestion period until at least one RTT sample exists.",
+                             "forbidden_behavior":  "Absent a justified exception to the SHOULD NOT, the sender must not start the period before the first RTT sample.",
+                             "error_behavior":  "No transport error is specified; the implementation should withhold persistent-congestion establishment.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The period start and first RTT-sample event can be ordered in an execution trace.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Since network congestion is not affected by packet number spaces,\npersistent congestion SHOULD consider packets sent across packet\nnumber spaces.",
+                             "line_start":  1120,
+                             "line_end":  1122,
+                             "condition":  "When the sender evaluates packets within a candidate persistent-congestion time interval and has the state needed to compare packet-number spaces.",
+                             "required_behavior":  "The sender should consider packets sent across all packet-number spaces.",
+                             "forbidden_behavior":  "Absent the specified limited-state exception or another justified deviation from the SHOULD, the sender must not restrict the evaluation to one packet-number space.",
+                             "error_behavior":  "No transport error is specified; nonconforming scope can produce an incorrect congestion-control decision.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Cross-space send and acknowledgment traces can show which packet-number spaces contributed to the decision.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A sender that does not have state for all packet\nnumber spaces or an implementation that cannot compare send times\nacross packet number spaces MAY use state for just the packet number\nspace that was acknowledged.",
+                             "line_start":  1122,
+                             "line_end":  1125,
+                             "condition":  "When the sender lacks state for all packet-number spaces or cannot compare send times across packet-number spaces.",
+                             "required_behavior":  "The implementation is permitted to evaluate persistent congestion using only state from the packet-number space that was acknowledged.",
+                             "forbidden_behavior":  "The single-space fallback is not permitted by this exception when neither stated limitation applies.",
+                             "error_behavior":  "No transport error is specified; use outside the allowance is a congestion-control compliance violation.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can establish the implementation\u0027s state or timestamp-comparison limitation and observe the scope of state used after an acknowledgment.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "This might result in erroneously\ndeclaring persistent congestion, but it will not lead to a failure to\ndetect persistent congestion.",
+                             "line_start":  1125,
+                             "line_end":  1127,
+                             "condition":  "When the sender uses only the acknowledged packet-number space under the permitted fallback.",
+                             "required_behavior":  "The fallback must preserve detection of persistent congestion, even though it can introduce false-positive declarations.",
+                             "forbidden_behavior":  "The fallback must not cause an actual persistent-congestion condition to go undetected.",
+                             "error_behavior":  "No transport error is specified; a missed detection violates the stated consistency property of the fallback.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "Known persistent-congestion traces can be replayed with the fallback enabled to verify that detection is not lost.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When persistent congestion is declared, the sender\u0027s congestion\nwindow MUST be reduced to the minimum congestion window\n(kMinimumWindow), similar to a TCP sender\u0027s response on an RTO\n[RFC5681].",
+                             "line_start":  1129,
+                             "line_end":  1132,
+                             "condition":  "When the sender declares persistent congestion.",
+                             "required_behavior":  "The sender must reduce its congestion window to kMinimumWindow.",
+                             "forbidden_behavior":  "The sender must not retain a congestion window above or below kMinimumWindow as its response to the declaration.",
+                             "error_behavior":  "No transport error is specified; failure to set the window to kMinimumWindow is a congestion-control state violation.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The congestion-window value can be inspected immediately after the persistent-congestion declaration.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

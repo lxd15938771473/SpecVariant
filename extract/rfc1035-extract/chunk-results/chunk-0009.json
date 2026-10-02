@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0009",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "For example, when naming a mail domain, the user should satisfy both the\nrules of this memo and those in RFC-822.  When creating a new host name,\nthe old rules for HOSTS.TXT should be followed.  This avoids problems\nwhen old software is converted to use domain names.",
+      "line_start": 405,
+      "line_end": 408,
+      "condition": "When naming a mail domain.",
+      "required_behavior": "The user should choose a name satisfying both this memo and RFC-822.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The recommendation refers to external RFC-822 naming rules that are not defined in this chunk; a complete implementation check cannot be derived here.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "For example, when naming a mail domain, the user should satisfy both the\nrules of this memo and those in RFC-822.  When creating a new host name,\nthe old rules for HOSTS.TXT should be followed.  This avoids problems\nwhen old software is converted to use domain names.",
+      "line_start": 405,
+      "line_end": 408,
+      "condition": "When creating a new host name.",
+      "required_behavior": "The old HOSTS.TXT naming rules should be followed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The recommendation depends on the old HOSTS.TXT rules, whose complete definition is absent from this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "The following syntax will result in fewer problems with many\n\napplications that use domain names (e.g., mail, TELNET).\n\n<domain> ::= <subdomain> | \" \"",
+      "line_start": 410,
+      "line_end": 414,
+      "condition": "When applying the preferred domain-name syntax recommended for compatibility with applications.",
+      "required_behavior": "The domain grammar allows a subdomain or the alternative written as a quoted space.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The quoted-space alternative is shown but its intended name representation is not explained; this evidence does not support an unambiguous implementation check for an empty name or a literal-space name.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "The following syntax will result in fewer problems with many\n\napplications that use domain names (e.g., mail, TELNET).\n\n<domain> ::= <subdomain> | \" \"\n\n<subdomain> ::= <label> | <subdomain> \".\" <label>",
+      "line_start": 410,
+      "line_end": 416,
+      "condition": "When representing a nonblank domain using the preferred syntax recommended for compatibility with applications.",
+      "required_behavior": "Represent a subdomain as one label or a sequence of labels joined by a period between adjacent labels.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A preferred-syntax parser or name generator can be checked against the recursive label-and-period production.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following syntax will result in fewer problems with many\n\napplications that use domain names (e.g., mail, TELNET).\n\n<domain> ::= <subdomain> | \" \"\n\n<subdomain> ::= <label> | <subdomain> \".\" <label>\n\n<label> ::= <letter> [ [ <ldh-str> ] <let-dig> ]",
+      "line_start": 410,
+      "line_end": 418,
+      "condition": "When applying the preferred domain-name syntax recommended for compatibility with applications.",
+      "required_behavior": "Each label contains at least one character; a single-letter label is permitted.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The mandatory initial letter and optional remainder establish a directly testable minimum label length of one.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following syntax will result in fewer problems with many\n\napplications that use domain names (e.g., mail, TELNET).\n\n<domain> ::= <subdomain> | \" \"\n\n<subdomain> ::= <label> | <subdomain> \".\" <label>\n\n<label> ::= <letter> [ [ <ldh-str> ] <let-dig> ]\n\n<ldh-str> ::= <let-dig-hyp> | <let-dig-hyp> <ldh-str>\n\n<let-dig-hyp> ::= <let-dig> | \"-\"\n\n<let-dig> ::= <letter> | <digit>\n\n<letter> ::= any one of the 52 alphabetic characters A through Z in\nupper case and a through z in lower case\n\n<digit> ::= any one of the ten digits 0 through 9\n\nNote that while upper and lower case letters are allowed in domain\nnames, no significance is attached to the case.  That is, two names with\nthe same spelling but different case are to be treated as if identical.\n\nThe labels must follow the rules for ARPANET host names.  They must\nstart with a letter, end with a letter or digit, and have as interior\ncharacters only letters, digits, and hyphen.  There are also some\nrestrictions on the length.  Labels must be 63 characters or less.",
+      "line_start": 410,
+      "line_end": 438,
+      "condition": "When applying the preferred domain-name syntax recommended for compatibility with applications.",
+      "required_behavior": "Each label starts with a letter.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The first-character constraint can be checked in preferred-name validation or generation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following syntax will result in fewer problems with many\n\napplications that use domain names (e.g., mail, TELNET).\n\n<domain> ::= <subdomain> | \" \"\n\n<subdomain> ::= <label> | <subdomain> \".\" <label>\n\n<label> ::= <letter> [ [ <ldh-str> ] <let-dig> ]\n\n<ldh-str> ::= <let-dig-hyp> | <let-dig-hyp> <ldh-str>\n\n<let-dig-hyp> ::= <let-dig> | \"-\"\n\n<let-dig> ::= <letter> | <digit>\n\n<letter> ::= any one of the 52 alphabetic characters A through Z in\nupper case and a through z in lower case\n\n<digit> ::= any one of the ten digits 0 through 9\n\nNote that while upper and lower case letters are allowed in domain\nnames, no significance is attached to the case.  That is, two names with\nthe same spelling but different case are to be treated as if identical.\n\nThe labels must follow the rules for ARPANET host names.  They must\nstart with a letter, end with a letter or digit, and have as interior\ncharacters only letters, digits, and hyphen.  There are also some\nrestrictions on the length.  Labels must be 63 characters or less.",
+      "line_start": 410,
+      "line_end": 438,
+      "condition": "When applying the preferred domain-name syntax recommended for compatibility with applications.",
+      "required_behavior": "Each label ends with a letter or digit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The final-character constraint can be checked independently of the first and interior characters.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following syntax will result in fewer problems with many\n\napplications that use domain names (e.g., mail, TELNET).\n\n<domain> ::= <subdomain> | \" \"\n\n<subdomain> ::= <label> | <subdomain> \".\" <label>\n\n<label> ::= <letter> [ [ <ldh-str> ] <let-dig> ]\n\n<ldh-str> ::= <let-dig-hyp> | <let-dig-hyp> <ldh-str>\n\n<let-dig-hyp> ::= <let-dig> | \"-\"\n\n<let-dig> ::= <letter> | <digit>\n\n<letter> ::= any one of the 52 alphabetic characters A through Z in\nupper case and a through z in lower case\n\n<digit> ::= any one of the ten digits 0 through 9\n\nNote that while upper and lower case letters are allowed in domain\nnames, no significance is attached to the case.  That is, two names with\nthe same spelling but different case are to be treated as if identical.\n\nThe labels must follow the rules for ARPANET host names.  They must\nstart with a letter, end with a letter or digit, and have as interior\ncharacters only letters, digits, and hyphen.  There are also some\nrestrictions on the length.  Labels must be 63 characters or less.",
+      "line_start": 410,
+      "line_end": 438,
+      "condition": "When applying the preferred domain-name syntax recommended for compatibility with applications and a label has interior characters.",
+      "required_behavior": "Every interior label character is a letter, digit, or hyphen.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The permitted character set for interior label positions can be checked directly.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following syntax will result in fewer problems with many\n\napplications that use domain names (e.g., mail, TELNET).\n\n<domain> ::= <subdomain> | \" \"\n\n<subdomain> ::= <label> | <subdomain> \".\" <label>\n\n<label> ::= <letter> [ [ <ldh-str> ] <let-dig> ]\n\n<ldh-str> ::= <let-dig-hyp> | <let-dig-hyp> <ldh-str>\n\n<let-dig-hyp> ::= <let-dig> | \"-\"\n\n<let-dig> ::= <letter> | <digit>\n\n<letter> ::= any one of the 52 alphabetic characters A through Z in\nupper case and a through z in lower case",
+      "line_start": 410,
+      "line_end": 427,
+      "condition": "When interpreting the letter category in the preferred domain-name syntax recommended for compatibility with applications.",
+      "required_behavior": "The letter category consists of exactly the 52 characters A through Z and a through z.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The grammar provides a finite alphabet that can be compared with the implementation character classifier.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following syntax will result in fewer problems with many\n\napplications that use domain names (e.g., mail, TELNET).\n\n<domain> ::= <subdomain> | \" \"\n\n<subdomain> ::= <label> | <subdomain> \".\" <label>\n\n<label> ::= <letter> [ [ <ldh-str> ] <let-dig> ]\n\n<ldh-str> ::= <let-dig-hyp> | <let-dig-hyp> <ldh-str>\n\n<let-dig-hyp> ::= <let-dig> | \"-\"\n\n<let-dig> ::= <letter> | <digit>\n\n<letter> ::= any one of the 52 alphabetic characters A through Z in\nupper case and a through z in lower case\n\n<digit> ::= any one of the ten digits 0 through 9",
+      "line_start": 410,
+      "line_end": 429,
+      "condition": "When interpreting the digit category in the preferred domain-name syntax recommended for compatibility with applications.",
+      "required_behavior": "The digit category consists of exactly the ten characters 0 through 9.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The grammar provides a finite digit set that can be compared with the implementation character classifier.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Note that while upper and lower case letters are allowed in domain\nnames, no significance is attached to the case.  That is, two names with\nthe same spelling but different case are to be treated as if identical.",
+      "line_start": 431,
+      "line_end": 433,
+      "condition": "When processing domain-name letters.",
+      "required_behavior": "Allow both uppercase and lowercase letters in domain names.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Name handling can be checked with otherwise identical names containing uppercase and lowercase letters.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Note that while upper and lower case letters are allowed in domain\nnames, no significance is attached to the case.  That is, two names with\nthe same spelling but different case are to be treated as if identical.",
+      "line_start": 431,
+      "line_end": 433,
+      "condition": "When two domain names have the same spelling and differ only in letter case.",
+      "required_behavior": "Treat the names as identical.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Comparison or lookup behavior can be checked using names whose only differences are letter case.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The following syntax will result in fewer problems with many\n\napplications that use domain names (e.g., mail, TELNET).\n\n<domain> ::= <subdomain> | \" \"\n\n<subdomain> ::= <label> | <subdomain> \".\" <label>\n\n<label> ::= <letter> [ [ <ldh-str> ] <let-dig> ]\n\n<ldh-str> ::= <let-dig-hyp> | <let-dig-hyp> <ldh-str>\n\n<let-dig-hyp> ::= <let-dig> | \"-\"\n\n<let-dig> ::= <letter> | <digit>\n\n<letter> ::= any one of the 52 alphabetic characters A through Z in\nupper case and a through z in lower case\n\n<digit> ::= any one of the ten digits 0 through 9\n\nNote that while upper and lower case letters are allowed in domain\nnames, no significance is attached to the case.  That is, two names with\nthe same spelling but different case are to be treated as if identical.\n\nThe labels must follow the rules for ARPANET host names.  They must\nstart with a letter, end with a letter or digit, and have as interior\ncharacters only letters, digits, and hyphen.  There are also some\nrestrictions on the length.  Labels must be 63 characters or less.",
+      "line_start": 410,
+      "line_end": 438,
+      "condition": "When applying the preferred domain-name syntax recommended for compatibility with applications.",
+      "required_behavior": "Each label contains at most 63 characters.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The numeric per-label upper bound can be checked at 63 and 64 characters without inventing a required error response.",
+      "eligibility": "eligible"
+    }
+  ]
+}

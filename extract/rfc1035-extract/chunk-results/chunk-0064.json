@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0064",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Name servers that support inverse queries can support these operations\nthrough exhaustive searches of their databases, but this becomes\nimpractical as the size of the database increases.  An alternative\napproach is to invert the database according to the search key.",
+      "line_start": 2359,
+      "line_end": 2362,
+      "condition": "A name server supports inverse queries.",
+      "required_behavior": "The server may answer inverse queries through exhaustive searches of its databases.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The inverse-query lookup path can be inspected to identify exhaustive database search as a permitted implementation strategy.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Name servers that support inverse queries can support these operations\nthrough exhaustive searches of their databases, but this becomes\nimpractical as the size of the database increases.  An alternative\napproach is to invert the database according to the search key.",
+      "line_start": 2359,
+      "line_end": 2362,
+      "condition": "A name server supports inverse queries and chooses a database inversion strategy.",
+      "required_behavior": "As an alternative to exhaustive searches, the server may invert the database according to the search key.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The construction and use of an inverted lookup keyed by the inverse-query search key can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For name servers that support multiple zones and a large amount of data,\nthe recommended approach is separate inversions for each zone.  When a\nparticular zone is changed during a refresh, only its inversions need to\nbe redone.",
+      "line_start": 2364,
+      "line_end": 2367,
+      "condition": "A name server supports multiple zones and a large amount of data.",
+      "required_behavior": "It is recommended to maintain separate database inversions for each zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The ownership and partitioning of inverse-query indexes can be inspected to determine whether each zone has separate inversions; the source states this as a recommendation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For name servers that support multiple zones and a large amount of data,\nthe recommended approach is separate inversions for each zone.  When a\nparticular zone is changed during a refresh, only its inversions need to\nbe redone.",
+      "line_start": 2364,
+      "line_end": 2367,
+      "condition": "The name server follows the recommended approach of separate inversions for each zone, and a particular zone changes during a refresh.",
+      "required_behavior": "It is sufficient to redo the changed zone's inversions; redoing other zones' inversions is not required.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The refresh maintenance path can be inspected to determine whether a changed zone's inversions can be rebuilt independently; rebuilding additional zones is not prohibited.",
+      "eligibility": "eligible"
+    }
+  ]
+}

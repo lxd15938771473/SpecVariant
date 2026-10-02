@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0077",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A BGP speaker may originate BGP routes by injecting routing\n   information acquired by some other means (e.g., via an IGP) into BGP.",
+      "line_start": 4967,
+      "line_end": 4968,
+      "condition": "A BGP speaker originates routes from routing information acquired outside BGP, such as via an IGP.",
+      "required_behavior": "The speaker may inject that routing information into BGP to originate BGP routes.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Route origination logic can be checked for the permitted injection of externally acquired routing information.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker that originates BGP routes assigns the degree of\n   preference (e.g., according to local configuration) to these routes\n   by passing them through the Decision Process (see Section 9.1).",
+      "line_start": 4969,
+      "line_end": 4971,
+      "condition": "A BGP speaker originates BGP routes.",
+      "required_behavior": "Assign a degree of preference to the originated routes by passing them through the Decision Process.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The origination path can be inspected to confirm that originated routes pass through the Decision Process and receive a degree of preference.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "These routes MAY also be distributed to other BGP speakers within the\n   local AS as part of the update process (see Section 9.2).",
+      "line_start": 4972,
+      "line_end": 4973,
+      "condition": "A BGP speaker has originated routes from non-BGP routing information.",
+      "required_behavior": "The originated routes MAY be distributed to other BGP speakers within the local AS as part of the update process.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Update generation can be checked for the permitted advertisement of locally originated non-BGP routes to speakers in the local AS.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The\n   decision of whether to distribute non-BGP acquired routes within an\n   AS via BGP depends on the environment within the AS (e.g., type of\n   IGP) and SHOULD be controlled via configuration.",
+      "line_start": 4973,
+      "line_end": 4976,
+      "condition": "Deciding whether to distribute non-BGP acquired routes within an AS via BGP.",
+      "required_behavior": "The distribution decision SHOULD be controlled via configuration.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Configuration controls and their effect on distributing non-BGP acquired routes within the AS can be inspected and exercised.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0021",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If the zone does not contain any RRsets that exactly match <SNAME,\n   SCLASS> but does contain an RRset that matches <SNAME, SCLASS, STYPE>\n   via wildcard name expansion, the name server MUST include the\n\n\n\nArends, et al.              Standards Track                    [Page 12]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   wildcard-expanded answer and the corresponding wildcard-expanded\n   RRSIG RRs in the Answer section and MUST include in the Authority\n   section an NSEC RR and associated RRSIG RR(s) proving that the zone\n   does not contain a closer match for <SNAME, SCLASS>.",
+      "line_start": 679,
+      "line_end": 694,
+      "condition": "The zone contains no RRsets that exactly match <SNAME, SCLASS>, but contains an RRset matching <SNAME, SCLASS, STYPE> through wildcard name expansion.",
+      "required_behavior": "The name server MUST include the wildcard-expanded answer in the Answer section.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A wildcard-answer response can be inspected for the expanded answer and its placement in the Answer section.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone does not contain any RRsets that exactly match <SNAME,\n   SCLASS> but does contain an RRset that matches <SNAME, SCLASS, STYPE>\n   via wildcard name expansion, the name server MUST include the\n\n\n\nArends, et al.              Standards Track                    [Page 12]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   wildcard-expanded answer and the corresponding wildcard-expanded\n   RRSIG RRs in the Answer section and MUST include in the Authority\n   section an NSEC RR and associated RRSIG RR(s) proving that the zone\n   does not contain a closer match for <SNAME, SCLASS>.",
+      "line_start": 679,
+      "line_end": 694,
+      "condition": "The zone contains no RRsets that exactly match <SNAME, SCLASS>, but contains an RRset matching <SNAME, SCLASS, STYPE> through wildcard name expansion.",
+      "required_behavior": "The name server MUST include the corresponding wildcard-expanded RRSIG RRs in the Answer section.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The wildcard answer can be compared with its expanded signature records and their response section.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone does not contain any RRsets that exactly match <SNAME,\n   SCLASS> but does contain an RRset that matches <SNAME, SCLASS, STYPE>\n   via wildcard name expansion, the name server MUST include the\n\n\n\nArends, et al.              Standards Track                    [Page 12]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   wildcard-expanded answer and the corresponding wildcard-expanded\n   RRSIG RRs in the Answer section and MUST include in the Authority\n   section an NSEC RR and associated RRSIG RR(s) proving that the zone\n   does not contain a closer match for <SNAME, SCLASS>.",
+      "line_start": 679,
+      "line_end": 694,
+      "condition": "The zone contains no RRsets that exactly match <SNAME, SCLASS>, but contains an RRset matching <SNAME, SCLASS, STYPE> through wildcard name expansion.",
+      "required_behavior": "The name server MUST include in the Authority section an NSEC RR proving that the zone contains no closer match for <SNAME, SCLASS>.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The response can be checked for an Authority-section NSEC RR whose covered names establish the absence of a closer match.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone does not contain any RRsets that exactly match <SNAME,\n   SCLASS> but does contain an RRset that matches <SNAME, SCLASS, STYPE>\n   via wildcard name expansion, the name server MUST include the\n\n\n\nArends, et al.              Standards Track                    [Page 12]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   wildcard-expanded answer and the corresponding wildcard-expanded\n   RRSIG RRs in the Answer section and MUST include in the Authority\n   section an NSEC RR and associated RRSIG RR(s) proving that the zone\n   does not contain a closer match for <SNAME, SCLASS>.",
+      "line_start": 679,
+      "line_end": 694,
+      "condition": "The zone contains no RRsets that exactly match <SNAME, SCLASS>, but contains an RRset matching <SNAME, SCLASS, STYPE> through wildcard name expansion.",
+      "required_behavior": "The name server MUST include in the Authority section the RRSIG RR(s) associated with the NSEC RR proving the absence of a closer match for <SNAME, SCLASS>.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The Authority-section signatures can be matched to the NSEC RR used for the closer-match denial proof.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone does not contain any RRsets that exactly match <SNAME,\n   SCLASS> but does contain an RRset that matches <SNAME, SCLASS, STYPE>\n   via wildcard name expansion, the name server MUST include the\n\n\n\nArends, et al.              Standards Track                    [Page 12]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   wildcard-expanded answer and the corresponding wildcard-expanded\n   RRSIG RRs in the Answer section and MUST include in the Authority\n   section an NSEC RR and associated RRSIG RR(s) proving that the zone\n   does not contain a closer match for <SNAME, SCLASS>.  If space does\n   not permit inclusion of the answer, NSEC and RRSIG RRs, the name\n   server MUST set the TC bit (see Section 3.1.1).",
+      "line_start": 679,
+      "line_end": 696,
+      "condition": "The zone contains no RRsets that exactly match <SNAME, SCLASS>, but contains an RRset matching <SNAME, SCLASS, STYPE> through wildcard name expansion. Space does not permit inclusion of the answer, NSEC and RRSIG RRs.",
+      "required_behavior": "The name server MUST set the TC bit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A size-constrained wildcard-answer response can be inspected to verify that its TC bit is set.",
+      "eligibility": "eligible"
+    }
+  ]
+}

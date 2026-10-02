@@ -1,0 +1,19 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0032",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "   If a path has been validated to support Explicit Congestion\n   Notification (ECN) [RFC3168] [RFC8311], QUIC treats a Congestion\n   Experienced (CE) codepoint in the IP header as a signal of\n   congestion.",
+                             "line_start":  904,
+                             "line_end":  907,
+                             "condition":  "A path has been validated to support ECN and a packet on that path carries the ECN-CE codepoint in its IP header.",
+                             "required_behavior":  "Treat the ECN-CE codepoint as a congestion signal.",
+                             "forbidden_behavior":  "Do not ignore an ECN-CE codepoint as a congestion signal after the path has been validated to support ECN.",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can validate ECN support for a path, deliver a packet marked ECN-CE, and observe whether the congestion controller processes that mark as congestion.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

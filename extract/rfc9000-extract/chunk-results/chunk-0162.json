@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0162",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "     Type (i) = 0x1a,",
+      "line_start": 6607,
+      "line_end": 6607,
+      "condition": "When encoding or parsing a PATH_CHALLENGE frame",
+      "required_behavior": "The frame Type field has the value 0x1a.",
+      "forbidden_behavior": "A PATH_CHALLENGE frame must not use any other type value.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded frame type can be inspected and compared with the fixed value 0x1a.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "     Data (64),",
+      "line_start": 6608,
+      "line_end": 6608,
+      "condition": "When encoding or parsing a PATH_CHALLENGE frame",
+      "required_behavior": "The Data field is exactly 64 bits long.",
+      "forbidden_behavior": "The Data field must not have a length other than 64 bits.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded Data field length can be measured directly.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Data:  This 8-byte field contains arbitrary data.",
+      "line_start": 6615,
+      "line_end": 6615,
+      "condition": "When encoding or parsing the Data field of a PATH_CHALLENGE frame",
+      "required_behavior": "The Data field is exactly 8 bytes and its contents may be any byte value.",
+      "forbidden_behavior": "The implementation must not encode the Data field with a length other than 8 bytes.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field length and acceptance of arbitrary byte sequences can be tested with encoded frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Including 64 bits of entropy in a PATH_CHALLENGE frame ensures that\n   it is easier to receive the packet than it is to guess the value\n   correctly.",
+      "line_start": 6617,
+      "line_end": 6619,
+      "condition": "When generating a PATH_CHALLENGE frame",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The passage describes a security property of using 64 bits of entropy, but it does not clearly require implementations to generate the Data value with that entropy.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   The recipient of this frame MUST generate a PATH_RESPONSE frame\n   (Section 19.18) containing the same Data value.",
+      "line_start": 6621,
+      "line_end": 6622,
+      "condition": "When an endpoint receives a PATH_CHALLENGE frame",
+      "required_behavior": "The endpoint generates a PATH_RESPONSE frame.",
+      "forbidden_behavior": "The endpoint must not omit generation of the PATH_RESPONSE frame.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can deliver a PATH_CHALLENGE frame and observe whether the recipient generates a PATH_RESPONSE frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The recipient of this frame MUST generate a PATH_RESPONSE frame\n   (Section 19.18) containing the same Data value.",
+      "line_start": 6621,
+      "line_end": 6622,
+      "condition": "When generating the PATH_RESPONSE frame required in response to a received PATH_CHALLENGE frame",
+      "required_behavior": "The PATH_RESPONSE contains exactly the Data value from the received PATH_CHALLENGE frame.",
+      "forbidden_behavior": "The endpoint must not place a different Data value in the generated PATH_RESPONSE frame.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can compare the received PATH_CHALLENGE Data value with the Data value in the generated PATH_RESPONSE.",
+      "eligibility": "eligible"
+    }
+  ]
+}

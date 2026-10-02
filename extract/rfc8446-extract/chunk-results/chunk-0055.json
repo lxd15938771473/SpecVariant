@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0055",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "In TLS 1.3, the server's OCSP information\nis carried in an extension in the CertificateEntry containing the\nassociated certificate.",
+      "line_start": 3654,
+      "line_end": 3656,
+      "condition": "a TLS 1.3 server sends OCSP information for a certificate",
+      "required_behavior": "place the OCSP extension in the CertificateEntry containing that certificate",
+      "forbidden_behavior": "place the OCSP information in a separate handshake message or a different certificate entry",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The decoded extension location can be correlated with its certificate entry.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Specifically, the body of the\n\"status_request\" extension from the server MUST be a\nCertificateStatus structure as defined in [RFC6066], which is\ninterpreted as defined in [RFC6960].",
+      "line_start": 3656,
+      "line_end": 3659,
+      "condition": "a TLS 1.3 server sends a status_request extension in Certificate",
+      "required_behavior": "encode its body as an RFC 6066 CertificateStatus structure interpreted according to RFC 6960",
+      "forbidden_behavior": "send an empty or differently structured server status_request body",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The extension body can be decoded against the required CertificateStatus grammar.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "TLS 1.3 servers MUST NOT act upon its presence or information in it\nwhen processing ClientHello messages;",
+      "line_start": 3662,
+      "line_end": 3663,
+      "condition": "a TLS 1.3 server processes status_request_v2 in ClientHello",
+      "required_behavior": "ignore the extension's presence and information for TLS 1.3 behavior",
+      "forbidden_behavior": "alter TLS 1.3 negotiation or authentication based on status_request_v2",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Paired handshakes with varied status_request_v2 contents can be compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "in particular, they MUST NOT\nsend the status_request_v2 extension in the EncryptedExtensions,\nCertificateRequest, or Certificate messages.",
+      "line_start": 3663,
+      "line_end": 3665,
+      "condition": "a TLS 1.3 server sends EncryptedExtensions",
+      "required_behavior": "",
+      "forbidden_behavior": "include status_request_v2",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The EncryptedExtensions extension list can be inspected for the forbidden type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "in particular, they MUST NOT\nsend the status_request_v2 extension in the EncryptedExtensions,\nCertificateRequest, or Certificate messages.",
+      "line_start": 3663,
+      "line_end": 3665,
+      "condition": "a TLS 1.3 server sends CertificateRequest",
+      "required_behavior": "",
+      "forbidden_behavior": "include status_request_v2",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The CertificateRequest extension list can be inspected for the forbidden type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "in particular, they MUST NOT\nsend the status_request_v2 extension in the EncryptedExtensions,\nCertificateRequest, or Certificate messages.",
+      "line_start": 3663,
+      "line_end": 3665,
+      "condition": "a TLS 1.3 server sends Certificate",
+      "required_behavior": "",
+      "forbidden_behavior": "include status_request_v2 in a CertificateEntry",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "CertificateEntry extension lists can be inspected for the forbidden type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "TLS 1.3 servers MUST be\nable to process ClientHello messages that include it, as it MAY be\nsent by clients that wish to use it in earlier protocol versions.",
+      "line_start": 3665,
+      "line_end": 3667,
+      "condition": "a ClientHello offered to a TLS 1.3 server contains status_request_v2",
+      "required_behavior": "process the ClientHello without failing solely because status_request_v2 is present",
+      "forbidden_behavior": "reject the ClientHello solely for containing status_request_v2",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A ClientHello containing the deprecated extension can exercise parser compatibility.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A server MAY request that a client present an OCSP response with its\ncertificate by sending an empty \"status_request\" extension in its\nCertificateRequest message.",
+      "line_start": 3669,
+      "line_end": 3671,
+      "condition": "a server requests an OCSP response with the client's certificate",
+      "required_behavior": "send an empty status_request extension in CertificateRequest",
+      "forbidden_behavior": "encode request data in the status_request body for this purpose",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The request extension location and zero-length body are observable on the wire.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the client opts to send an OCSP\nresponse, the body of its \"status_request\" extension MUST be a\nCertificateStatus structure as defined in [RFC6066].",
+      "line_start": 3671,
+      "line_end": 3673,
+      "condition": "a client includes an OCSP response with its certificate",
+      "required_behavior": "encode the status_request extension body as an RFC 6066 CertificateStatus structure",
+      "forbidden_behavior": "use a different or empty response-body structure",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The client extension body can be decoded against CertificateStatus.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In TLS 1.3, the server's SCT information is\ncarried in an extension in the CertificateEntry.",
+      "line_start": 3677,
+      "line_end": 3678,
+      "condition": "a TLS 1.3 server sends Signed Certificate Timestamp information",
+      "required_behavior": "carry the SCT information in a CertificateEntry extension",
+      "forbidden_behavior": "carry TLS 1.3 SCT information in ServerHello",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The SCT extension's handshake-message location is visible in a decoded trace.",
+      "eligibility": "eligible"
+    }
+  ]
+}

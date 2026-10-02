@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0047",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Initial packets are not protected with a secret key",
+      "line_start": 1859,
+      "line_end": 1859,
+      "condition": "When applying packet protection to Initial packets",
+      "required_behavior": "Use Initial protection that does not depend on a key kept secret from an observer of the connection identifiers.",
+      "forbidden_behavior": "Treat Initial packet protection as providing confidentiality or authenticity based on a secret key unknown to an on-path attacker.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can derive Initial protection material from public packet fields and verify that no pre-established or handshake-secret key is required.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Implementations\n   SHOULD use caution in relying on any data that is contained in\n   Initial packets that is not otherwise authenticated.",
+      "line_start": 1871,
+      "line_end": 1873,
+      "condition": "When an implementation relies on unauthenticated data carried in an Initial packet",
+      "required_behavior": "Use caution in relying on that data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The chunk does not define a concrete validation, state transition, threshold, or prohibited reliance, so the phrase \"use caution\" cannot be evaluated as an implementation conformance check.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "because that sort of tampering\n   requires modifying TLS handshake messages, any such tampering will\n   cause the TLS handshake to fail.",
+      "line_start": 1876,
+      "line_end": 1878,
+      "condition": "When an attacker tampers with Handshake-packet data by modifying TLS handshake messages",
+      "required_behavior": "The TLS handshake fails.",
+      "forbidden_behavior": "Successfully complete the TLS handshake with the modified handshake messages.",
+      "error_behavior": "Fail the TLS handshake upon detection of the modified handshake messages.",
+      "check_type": "security_consistency",
+      "why_checkable": "Handshake messages can be modified in transit and the endpoint's TLS completion or failure state observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

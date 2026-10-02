@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0216",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   To start testing a path, the ECN state is set to \"testing\", and\n   existing ECN counts are remembered as a baseline.",
+      "line_start": 8405,
+      "line_end": 8406,
+      "condition": "When an endpoint starts testing a path for ECN support.",
+      "required_behavior": "Set the path's ECN state to \"testing\" and remember the existing ECN counts as the validation baseline.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can initialize path testing and inspect both the resulting ECN state and the stored baseline counts.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The testing period runs for a number of packets or a limited time, as\n   determined by the endpoint.  The goal is not to limit the duration of\n   the testing period but to ensure that enough marked packets are sent\n   for received ECN counts to provide a clear indication of how the path\n   treats marked packets.  Section 13.4.2 suggests limiting this to ten\n   packets or three times the PTO.",
+      "line_start": 8408,
+      "line_end": 8413,
+      "condition": "While a path is in the ECN testing period.",
+      "required_behavior": "Bound the testing period by either a number of packets or a time limit selected by the endpoint, while sending enough marked packets to make received ECN counts informative.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The implementation's testing termination criterion and transmission of marked packets can be observed, though the exact sufficient packet quantity is not defined in this passage.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   The testing period runs for a number of packets or a limited time, as\n   determined by the endpoint.  The goal is not to limit the duration of\n   the testing period but to ensure that enough marked packets are sent\n   for received ECN counts to provide a clear indication of how the path\n   treats marked packets.  Section 13.4.2 suggests limiting this to ten\n   packets or three times the PTO.",
+      "line_start": 8408,
+      "line_end": 8413,
+      "condition": "When selecting a suggested limit for the ECN testing period.",
+      "required_behavior": "The testing period may be limited to ten packets or three times the PTO.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet-count and elapsed-time limits are measurable, but this passage only offers a nonbinding suggestion and does not unambiguously constrain implementations.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   After the testing period ends, the ECN state for the path becomes\n   \"unknown\".  From the \"unknown\" state, successful validation of the\n   ECN counts in an ACK frame (see Section 13.4.2.1) causes the ECN\n   state for the path to become \"capable\", unless no marked packet has\n   been acknowledged.",
+      "line_start": 8415,
+      "line_end": 8419,
+      "condition": "When the ECN testing period for a path ends.",
+      "required_behavior": "Set the path's ECN state to \"unknown\".",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can end the testing period and inspect the path's resulting ECN state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   After the testing period ends, the ECN state for the path becomes\n   \"unknown\".  From the \"unknown\" state, successful validation of the\n   ECN counts in an ACK frame (see Section 13.4.2.1) causes the ECN\n   state for the path to become \"capable\", unless no marked packet has\n   been acknowledged.",
+      "line_start": 8415,
+      "line_end": 8419,
+      "condition": "When a path is in the \"unknown\" ECN state, ECN counts in an ACK frame validate successfully, and at least one marked packet has been acknowledged.",
+      "required_behavior": "Set the path's ECN state to \"capable\".",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can supply a successfully validated ACK with an acknowledged marked packet and inspect the state transition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   After the testing period ends, the ECN state for the path becomes\n   \"unknown\".  From the \"unknown\" state, successful validation of the\n   ECN counts in an ACK frame (see Section 13.4.2.1) causes the ECN\n   state for the path to become \"capable\", unless no marked packet has\n   been acknowledged.",
+      "line_start": 8415,
+      "line_end": 8419,
+      "condition": "When a path is in the \"unknown\" ECN state, ECN counts in an ACK frame validate successfully, but no marked packet has been acknowledged.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not transition the path's ECN state to \"capable\" on the basis of that validation.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can validate an ACK without any acknowledged marked packet and verify that the path does not enter the \"capable\" state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If validation of ECN counts fails at any time, the ECN state for the\n   affected path becomes \"failed\".  An endpoint can also mark the ECN\n   state for a path as \"failed\" if marked packets are all declared lost\n   or if they are all ECN-CE marked.",
+      "line_start": 8421,
+      "line_end": 8424,
+      "condition": "Whenever validation of ECN counts fails for a path.",
+      "required_behavior": "Set the affected path's ECN state to \"failed\".",
+      "forbidden_behavior": "",
+      "error_behavior": "Treat failed ECN-count validation as failure of ECN capability for the affected path.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can induce ECN-count validation failure and inspect the affected path's ECN state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If validation of ECN counts fails at any time, the ECN state for the\n   affected path becomes \"failed\".  An endpoint can also mark the ECN\n   state for a path as \"failed\" if marked packets are all declared lost\n   or if they are all ECN-CE marked.",
+      "line_start": 8421,
+      "line_end": 8424,
+      "condition": "When all marked packets on a path are declared lost.",
+      "required_behavior": "The endpoint is permitted to set the path's ECN state to \"failed\".",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can declare every marked packet lost and observe whether the implementation exercises the explicitly permitted failure transition; the transition is optional.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   If validation of ECN counts fails at any time, the ECN state for the\n   affected path becomes \"failed\".  An endpoint can also mark the ECN\n   state for a path as \"failed\" if marked packets are all declared lost\n   or if they are all ECN-CE marked.",
+      "line_start": 8421,
+      "line_end": 8424,
+      "condition": "When all marked packets on a path are ECN-CE marked.",
+      "required_behavior": "The endpoint is permitted to set the path's ECN state to \"failed\".",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can arrange for every marked packet to be ECN-CE marked and observe whether the implementation exercises the explicitly permitted failure transition; the transition is optional.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   Following this algorithm ensures that ECN is rarely disabled for\n   paths that properly support ECN.  Any path that incorrectly modifies\n   markings will cause ECN to be disabled.  For those rare cases where\n   marked packets are discarded by the path, the short duration of the\n   testing period limits the number of losses incurred.",
+      "line_start": 8426,
+      "line_end": 8430,
+      "condition": "When a path incorrectly modifies ECN markings.",
+      "required_behavior": "Disable ECN for that path.",
+      "forbidden_behavior": "",
+      "error_behavior": "Treat incorrect modification of ECN markings as a reason to disable ECN.",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can simulate inconsistent marking changes and verify that ECN is disabled for the path.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0198",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   versions of QUIC that use Version Negotiation packets MUST define a\n   mechanism that is robust against version downgrade attacks.",
+      "line_start": 7672,
+      "line_end": 7673,
+      "condition": "A future version of QUIC uses Version Negotiation packets.",
+      "required_behavior": "The QUIC version must define a mechanism that is robust against version downgrade attacks.",
+      "forbidden_behavior": "Using Version Negotiation packets without defining a mechanism robust against version downgrade attacks.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The specification and implementation of a future QUIC version that uses Version Negotiation packets can be inspected and tested for a downgrade-resistant mechanism.",
+      "eligibility": "eligible"
+    }
+  ]
+}

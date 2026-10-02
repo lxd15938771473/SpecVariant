@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0073",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An established QUIC connection can be terminated in one of three ways: * idle timeout (Section 10.1) * immediate close (Section 10.2) * stateless reset (Section 10.3)",
+      "line_start": 3086,
+      "line_end": 3093,
+      "condition": "When an established QUIC connection is terminated",
+      "required_behavior": "The termination mechanism is idle timeout, immediate close, or stateless reset.",
+      "forbidden_behavior": "Do not terminate an established connection using a mechanism outside the three enumerated mechanisms.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation's connection-termination paths can be enumerated and checked against the three listed mechanisms.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MAY discard connection state if it does not have a validated path on which it can send packets; see Section 8.2.",
+      "line_start": 3095,
+      "line_end": 3096,
+      "condition": "The endpoint does not have a validated path on which it can send packets.",
+      "required_behavior": "The endpoint is permitted to discard connection state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can remove all validated sending paths and verify that discarding connection state is an allowed implementation outcome.",
+      "eligibility": "eligible"
+    }
+  ]
+}

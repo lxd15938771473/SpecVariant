@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0019",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "When a server receives a ClientHello with the early_data extension,\n   it has to decide whether to accept or reject 0-RTT data from the\n   client.",
+      "line_start": 846,
+      "line_end": 848,
+      "condition": "When a server receives a ClientHello containing the early_data extension.",
+      "required_behavior": "Decide whether to accept or reject the client's 0-RTT data.",
+      "forbidden_behavior": "Proceeding with 0-RTT data without making an acceptance decision.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A server handshake test can observe whether an explicit 0-RTT acceptance or rejection state is reached.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Some of this decision is made by the TLS stack (e.g.,\n   checking that the cipher suite being resumed was included in the\n   ClientHello; see Section 4.2.10 of [TLS13]).",
+      "line_start": 848,
+      "line_end": 850,
+      "condition": "When the TLS stack evaluates a resumed session for 0-RTT.",
+      "required_behavior": "Check that the cipher suite being resumed is included in the ClientHello.",
+      "forbidden_behavior": "Treating a resumed cipher suite absent from the ClientHello as satisfying this TLS acceptance check.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A ClientHello can be constructed without the resumed cipher suite and the TLS 0-RTT decision observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QUIC requires additional transport state to be associated with a\n   0-RTT session ticket.",
+      "line_start": 856,
+      "line_end": 857,
+      "condition": "When a session ticket can be used for QUIC 0-RTT.",
+      "required_behavior": "Associate the additional QUIC transport state with the session ticket.",
+      "forbidden_behavior": "Treating a 0-RTT session ticket as complete without its associated transport state.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Ticket issuance and lookup state can be inspected for an association with QUIC transport state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This associated\n   state is used for deciding whether 0-RTT data must be rejected.",
+      "line_start": 860,
+      "line_end": 861,
+      "condition": "When deciding whether 0-RTT data associated with a resumed session must be rejected.",
+      "required_behavior": "Use the state associated with the 0-RTT session ticket in the rejection decision.",
+      "forbidden_behavior": "Making the required rejection decision without consulting the associated state.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can vary associated ticket state while holding the TLS inputs constant and observe the rejection decision path.",
+      "eligibility": "eligible"
+    }
+  ]
+}

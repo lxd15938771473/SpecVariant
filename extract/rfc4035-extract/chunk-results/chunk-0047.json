@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0047",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Islands of security (see [RFC4033]) are signed zones for which it is\n   not possible to construct an authentication chain to the zone from\n   its parent.  Validating signatures within an island of security\n   requires that the validator have some other means of obtaining an\n   initial authenticated zone key for the island.",
+      "line_start": 1447,
+      "line_end": 1451,
+      "condition": "A validator validates signatures within an island of security.",
+      "required_behavior": "The validator needs a means other than an authentication chain from the parent to obtain an initial authenticated zone key for the island.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The island signature-validation path can be checked for the prerequisite of an initial authenticated zone key obtained through an alternative trust source.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Validating signatures within an island of security\n   requires that the validator have some other means of obtaining an\n   initial authenticated zone key for the island.  If a validator cannot\n   obtain such a key, it SHOULD switch to operating as if the zones in\n   the island of security are unsigned.",
+      "line_start": 1449,
+      "line_end": 1453,
+      "condition": "A validator cannot obtain an initial authenticated zone key for an island of security.",
+      "required_behavior": "The validator SHOULD switch to operating as if the zones in the island of security are unsigned.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The validator branch for absence of an initial authenticated island key can be checked for the recommended transition to unsigned-zone operation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "All the normal processes for validating responses apply to islands of\n   security.  The only difference between normal validation and\n   validation within an island of security is in how the validator\n   obtains a trust anchor for the authentication chain.",
+      "line_start": 1455,
+      "line_end": 1458,
+      "condition": "A validator validates responses within an island of security.",
+      "required_behavior": "Apply all normal response-validation processes within the island; the only difference from normal validation is how the validator obtains a trust anchor for the authentication chain.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The response-validation paths for islands and ordinary authenticated zones can be compared to verify that only trust-anchor acquisition differs.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0114",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A client MUST expand the payload of all UDP datagrams carrying\n   Initial packets to at least the smallest allowed maximum datagram\n   size of 1200 bytes by adding PADDING frames to the Initial packet or\n   by coalescing the Initial packet; see Section 12.2.  Initial packets",
+      "line_start": 4642,
+      "line_end": 4645,
+      "condition": "A client sends a UDP datagram carrying an Initial packet.",
+      "required_behavior": "Expand the UDP datagram payload to at least 1200 bytes by adding PADDING frames to the Initial packet or by coalescing the Initial packet.",
+      "forbidden_behavior": "Do not send such a UDP datagram with a payload smaller than 1200 bytes.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can inspect every client UDP datagram carrying an Initial packet, measure its payload, and verify both the 1200-byte minimum and the permitted expansion mechanism.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   can even be coalesced with invalid packets, which a receiver will\n   discard.  Similarly, a server MUST expand the payload of all UDP",
+      "line_start": 4646,
+      "line_end": 4647,
+      "condition": "A receiver encounters an invalid packet coalesced with an Initial packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Discard the invalid packet.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can deliver a datagram containing a valid Initial packet coalesced with an invalid packet and observe whether the receiver discards the invalid packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   discard.  Similarly, a server MUST expand the payload of all UDP\n   datagrams carrying ack-eliciting Initial packets to at least the\n   smallest allowed maximum datagram size of 1200 bytes.",
+      "line_start": 4647,
+      "line_end": 4649,
+      "condition": "A server sends a UDP datagram carrying an ack-eliciting Initial packet.",
+      "required_behavior": "Expand the UDP datagram payload to at least 1200 bytes.",
+      "forbidden_behavior": "Do not send such a UDP datagram with a payload smaller than 1200 bytes.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can inspect server UDP datagrams carrying ack-eliciting Initial packets and measure whether each payload is at least 1200 bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Datagrams containing Initial packets MAY exceed 1200 bytes if the\n   sender believes that the network path and peer both support the size\n   that it chooses.",
+      "line_start": 4657,
+      "line_end": 4659,
+      "condition": "The sender believes both the network path and the peer support the chosen size.",
+      "required_behavior": "A datagram containing an Initial packet is permitted to exceed 1200 bytes.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test with observable sender path and peer size-support state can verify that datagrams larger than 1200 bytes are allowed under the stated condition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A server MUST discard an Initial packet that is carried in a UDP\n   datagram with a payload that is smaller than the smallest allowed\n   maximum datagram size of 1200 bytes.  A server MAY also immediately",
+      "line_start": 4661,
+      "line_end": 4663,
+      "condition": "A server receives an Initial packet in a UDP datagram whose payload is smaller than 1200 bytes.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not accept or process the Initial packet as valid.",
+      "error_behavior": "Discard the Initial packet.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can send an Initial packet in a UDP datagram below 1200 bytes and observe whether the server discards it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   maximum datagram size of 1200 bytes.  A server MAY also immediately\n   close the connection by sending a CONNECTION_CLOSE frame with an\n   error code of PROTOCOL_VIOLATION; see Section 10.2.3.",
+      "line_start": 4663,
+      "line_end": 4665,
+      "condition": "A server receives an Initial packet in a UDP datagram whose payload is smaller than 1200 bytes.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The server is permitted to immediately close the connection by sending a CONNECTION_CLOSE frame with error code PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can provoke the undersized-datagram condition and, if the server closes immediately, verify the frame type and error code.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The server MUST also limit the number of bytes it sends before\n   validating the address of the client; see Section 8.",
+      "line_start": 4667,
+      "line_end": 4668,
+      "condition": "Before the server validates the client's address.",
+      "required_behavior": "Limit the number of bytes sent.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The chunk requires a transmission limit but does not provide the limit value or algorithm, so compliance cannot be determined from this chunk alone.",
+      "eligibility": "exclude"
+    }
+  ]
+}

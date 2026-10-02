@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0040",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   To prevent such unnecessary DNS traffic, security-aware resolvers MAY\n   cache data with invalid signatures, with some restrictions.",
+      "line_start": 1250,
+      "line_end": 1251,
+      "condition": "A security-aware resolver encounters data with invalid signatures.",
+      "required_behavior": "The security-aware resolver MAY cache the data with invalid signatures, subject to the BAD-cache restrictions; implementing this cache is optional.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The optional cache path for data with invalid signatures can be identified; absence of a BAD cache does not violate this permission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Resolvers that implement a BAD cache MUST take steps to prevent the\n   cache from being useful as a denial-of-service attack amplifier,\n   particularly the following:",
+      "line_start": 1267,
+      "line_end": 1269,
+      "condition": "A resolver implements a BAD cache.",
+      "required_behavior": "The resolver MUST take steps to prevent the BAD cache from being useful as a denial-of-service attack amplifier.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Excluded as an independently scored checkpoint: the broad prevention objective does not specify an additional concrete criterion beyond the specific safeguards extracted separately.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   Resolvers that implement a BAD cache MUST take steps to prevent the\n   cache from being useful as a denial-of-service attack amplifier,\n   particularly the following:\n\n   o  Since RRsets that fail to validate do not have trustworthy TTLs,\n      the implementation MUST assign a TTL.  This TTL SHOULD be small,\n      in order to mitigate the effect of caching the results of an\n      attack.",
+      "line_start": 1267,
+      "line_end": 1274,
+      "condition": "A resolver implements a BAD cache and caches an RRset that fails to validate.",
+      "required_behavior": "The implementation MUST assign a TTL to the RRset in the BAD cache, because the RRset does not have a trustworthy TTL.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The cache insertion path and stored expiry metadata can show whether the implementation assigns a TTL for validation-failed RRsets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Resolvers that implement a BAD cache MUST take steps to prevent the\n   cache from being useful as a denial-of-service attack amplifier,\n   particularly the following:\n\n   o  Since RRsets that fail to validate do not have trustworthy TTLs,\n      the implementation MUST assign a TTL.  This TTL SHOULD be small,\n      in order to mitigate the effect of caching the results of an\n      attack.",
+      "line_start": 1267,
+      "line_end": 1274,
+      "condition": "A resolver implements a BAD cache and assigns a TTL to an RRset that fails to validate.",
+      "required_behavior": "The assigned TTL SHOULD be small to mitigate the effect of caching attack results.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Excluded because the source gives no quantitative bound or comparison defining a small TTL; a definite implementation criterion cannot be derived from this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   Resolvers that implement a BAD cache MUST take steps to prevent the\n   cache from being useful as a denial-of-service attack amplifier,\n   particularly the following:\n\n   o  Since RRsets that fail to validate do not have trustworthy TTLs,\n      the implementation MUST assign a TTL.  This TTL SHOULD be small,\n      in order to mitigate the effect of caching the results of an\n      attack.\n\n   o  In order to prevent caching of a transient validation failure\n      (which might be the result of an attack), resolvers SHOULD track\n      queries that result in validation failures and SHOULD only answer\n      from the BAD cache after the number of times that responses to\n      queries for that particular <QNAME, QTYPE, QCLASS> have failed to\n      validate exceeds a threshold value.",
+      "line_start": 1267,
+      "line_end": 1281,
+      "condition": "A resolver implements a BAD cache.",
+      "required_behavior": "The resolver SHOULD track queries that result in validation failures.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Query outcome tracking and updates after validation failures can be inspected or exercised; the source recommendation remains advisory.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Resolvers that implement a BAD cache MUST take steps to prevent the\n   cache from being useful as a denial-of-service attack amplifier,\n   particularly the following:\n\n   o  Since RRsets that fail to validate do not have trustworthy TTLs,\n      the implementation MUST assign a TTL.  This TTL SHOULD be small,\n      in order to mitigate the effect of caching the results of an\n      attack.\n\n   o  In order to prevent caching of a transient validation failure\n      (which might be the result of an attack), resolvers SHOULD track\n      queries that result in validation failures and SHOULD only answer\n      from the BAD cache after the number of times that responses to\n      queries for that particular <QNAME, QTYPE, QCLASS> have failed to\n      validate exceeds a threshold value.",
+      "line_start": 1267,
+      "line_end": 1281,
+      "condition": "A resolver implements a BAD cache and considers answering a query from it.",
+      "required_behavior": "The resolver SHOULD answer from the BAD cache only after the count of responses to queries for that particular <QNAME, QTYPE, QCLASS> that have failed to validate exceeds a threshold value.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A chosen threshold permits checks below, at, and above the threshold, and distinct query tuples permit checks that failure counts apply to the particular tuple; this remains a SHOULD recommendation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Resolvers MUST NOT return RRsets from the BAD cache unless the\n   resolver is not required to validate the signatures of the RRsets in\n   question under the rules given in Section 4.2 of this document.  See",
+      "line_start": 1283,
+      "line_end": 1285,
+      "condition": "Under the rules in Section 4.2, a resolver is required to validate the signatures of the RRsets in question.",
+      "required_behavior": "",
+      "forbidden_behavior": "The resolver MUST NOT return those RRsets from the BAD cache.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Given the signature-validation requirement as the applicability precondition, the response path can be checked to ensure no RRsets are returned from the BAD cache. This item does not reconstruct the referenced Section 4.2 rules.",
+      "eligibility": "eligible"
+    }
+  ]
+}

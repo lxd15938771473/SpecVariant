@@ -1,0 +1,402 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "batch-09",
+  "decisions": [
+    {
+      "pair_id": "pair-7e79e89a820ed1f5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements constrain different extensions and different allowed message sets: supported_groups in CH/EE versus supported_versions in CH/SH/HRR."
+    },
+    {
+      "pair_id": "pair-a9014d8c89507261",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One checks the offered obfuscated_ticket_age value, while the other checks that server processing does not use that value."
+    },
+    {
+      "pair_id": "pair-f59aaa32ee941d5a",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-f67173a58d3923a515d8",
+      "reason": "Both require a server to ignore an unrecognized ClientHello extension and continue processing; the canonical requirement has direct primary-body normative evidence."
+    },
+    {
+      "pair_id": "pair-d5d25ad33d7abbe7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The PSK case forbids CertificateVerify, whereas the certificate-authentication case requires Certificate; the states and checked messages differ."
+    },
+    {
+      "pair_id": "pair-26fa5a4b5d20cc71",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake discriminants and body types differ: certificate/Certificate versus new_session_ticket/NewSessionTicket."
+    },
+    {
+      "pair_id": "pair-78de028bf1250cae",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One checks omission when certificate authentication is not used; the other checks presence when certificate-based key exchange is used."
+    },
+    {
+      "pair_id": "pair-2a92444bbde8c265",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake discriminants and body types differ: encrypted_extensions/EncryptedExtensions versus finished/Finished."
+    },
+    {
+      "pair_id": "pair-d3785ffa60d94796",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different ContentType values: handshake to 22 and application_data to 23."
+    },
+    {
+      "pair_id": "pair-351c19af44b6e149",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They constrain different enum types with different encoded widths: AlertLevel to 255 and SignatureScheme to 0xFFFF."
+    },
+    {
+      "pair_id": "pair-a29483f8c128648f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The first specifically requires CertificateVerify for a certificate-authenticating client; the second additionally checks Certificate and ordering before Finished."
+    },
+    {
+      "pair_id": "pair-6073177d77806918",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same placement set applies to different extension fields, server_name and max_fragment_length."
+    },
+    {
+      "pair_id": "pair-dad321a9ec5a14ba",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One forbids a server CertificateVerify under PSK authentication; the other requires a client CertificateVerify for certificate authentication."
+    },
+    {
+      "pair_id": "pair-e1c6873edb0e8410",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different ContentType values: alert to 21 and application_data to 23."
+    },
+    {
+      "pair_id": "pair-abf1f4e34d588d39",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One applies to records containing ServerHello, while the other applies specifically to TLSCiphertext records."
+    },
+    {
+      "pair_id": "pair-3a3ad3687b86fa30",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting secp256r1 key exchange and implementing signature_algorithms_cert are different implementation capabilities."
+    },
+    {
+      "pair_id": "pair-9b5502cd81f12309",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They assign different wire values to different CertificateType members: X509 to 0 and RawPublicKey to 2."
+    },
+    {
+      "pair_id": "pair-4c96dcf58244de6f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One checks integrity against modification; the other checks post-establishment confidentiality against disclosure."
+    },
+    {
+      "pair_id": "pair-e1475fa8e3b74f3a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same extension is forbidden in different handshake messages: Certificate versus EncryptedExtensions."
+    },
+    {
+      "pair_id": "pair-dd8b08636a2ce79e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They constrain different enum types and widths: NamedGroup to 0xFFFF and KeyUpdateRequest to 255."
+    },
+    {
+      "pair_id": "pair-82d020dbe74903e3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Early-data acceptance compares different PSK-associated values: TLS version versus selected ALPN protocol."
+    },
+    {
+      "pair_id": "pair-a3b00a8787398093",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One zero-pads a Diffie-Hellman shared secret; the other zero-pads a Diffie-Hellman public key value."
+    },
+    {
+      "pair_id": "pair-6fadf9eb86ad5c7d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "key_share has different extension_data types in ClientHello and HelloRetryRequest."
+    },
+    {
+      "pair_id": "pair-fc4342f515fefa31",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting rsa_pkcs1_sha256 certificate signatures and implementing key_share are different capabilities."
+    },
+    {
+      "pair_id": "pair-475040ccf1fe3a11",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting rsa_pss_rsae_sha256 certificate signatures and implementing supported_versions are different capabilities."
+    },
+    {
+      "pair_id": "pair-0a56d94299682dd2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations use different labels and produce different secrets: client early traffic versus early exporter master."
+    },
+    {
+      "pair_id": "pair-e884f37cf0e9d372",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting rsa_pkcs1_sha256 certificate signatures and implementing supported_groups are different capabilities."
+    },
+    {
+      "pair_id": "pair-4c15b786b70fe87e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake discriminants and body types differ: end_of_early_data/EndOfEarlyData versus certificate/Certificate."
+    },
+    {
+      "pair_id": "pair-2ffa48924afd4bf7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake discriminants and body types differ: client_hello/ClientHello versus encrypted_extensions/EncryptedExtensions."
+    },
+    {
+      "pair_id": "pair-0573055772282226",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same placement set applies to different extension fields, max_fragment_length and supported_groups."
+    },
+    {
+      "pair_id": "pair-b64d2262077f67ae",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They cover opposite negotiated-version conditions and directions: forbid supported_versions before TLS 1.3 and require it for TLS 1.3."
+    },
+    {
+      "pair_id": "pair-8ae71a7d82c1aea7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They constrain certificate_request_context in different message types: CertificateRequest outside post-handshake authentication versus server Certificate."
+    },
+    {
+      "pair_id": "pair-c12e04e2298620d4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They constrain different enum types and widths: SignatureScheme to 0xFFFF and KeyUpdateRequest to 255."
+    },
+    {
+      "pair_id": "pair-893fac59e8a2743c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake discriminants and body types differ: server_hello/ServerHello versus encrypted_extensions/EncryptedExtensions."
+    },
+    {
+      "pair_id": "pair-4e1b50dcdcc8f248",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One checks the mask-generation digest for an RSAE PSS scheme; the other checks the signed digest for a PSS-key PSS scheme."
+    },
+    {
+      "pair_id": "pair-e9ef12beebb38064",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They constrain different enum types, ExtensionType and NamedGroup, despite equivalent numeric maxima."
+    },
+    {
+      "pair_id": "pair-d149d20f8191299d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One checks the signed digest for an RSAE PSS scheme; the other checks the mask-generation digest for a PSS-key PSS scheme."
+    },
+    {
+      "pair_id": "pair-c6b8bf7c64f22c84",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting rsa_pss_rsae_sha256 for CertificateVerify and implementing supported_versions are different capabilities."
+    },
+    {
+      "pair_id": "pair-7b810c65428ea911",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting rsa_pkcs1_sha256 certificate signatures and implementing signature_algorithms are different capabilities."
+    },
+    {
+      "pair_id": "pair-8a1d40f58346ffc1",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different cipher suites to different wire values: TLS_AES_128_GCM_SHA256 to 0x1301 and TLS_AES_128_CCM_8_SHA256 to 0x1305."
+    },
+    {
+      "pair_id": "pair-ae3c06b67905ddbf",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Early-data acceptance compares different PSK-associated values: selected cipher suite versus selected ALPN protocol."
+    },
+    {
+      "pair_id": "pair-4adcc72f2fec7f47",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They constrain different vectors with different bounds: ClientHello.cipher_suites and ServerHello.extensions."
+    },
+    {
+      "pair_id": "pair-c22b0a907b27d152",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One checks the peer public key as the scalar-multiplication input; the other checks use of the multiplication result as the shared secret."
+    },
+    {
+      "pair_id": "pair-0cb8b5a4ffe33d9c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The figure markers select different traffic epochs and keys: handshake_traffic_secret versus application_traffic_secret_N."
+    },
+    {
+      "pair_id": "pair-47215be04b540a68",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical vector bounds apply to different fields and data types: DistinguishedName and KeyShareEntry.key_exchange."
+    },
+    {
+      "pair_id": "pair-03c44e9117d4668d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One forbids server Certificate under PSK authentication; the other requires server CertificateVerify under certificate authentication."
+    },
+    {
+      "pair_id": "pair-3f2c7bf447e0f42e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They apply to complementary external-PSK hash states and require different actions: default absent hashes versus set defined hashes at establishment."
+    },
+    {
+      "pair_id": "pair-8aaa6752d382ba3b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They reserve different, disjoint SignatureScheme value ranges."
+    },
+    {
+      "pair_id": "pair-787c5124aedc0332",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same bounds apply to different vectors and element interpretations: OID filter values versus client key shares."
+    },
+    {
+      "pair_id": "pair-dbb5ad60d6e011b6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They check length-delimited bodies in different record structures: TLSPlaintext.fragment versus TLSCiphertext.encrypted_record."
+    },
+    {
+      "pair_id": "pair-270be3011c9c3b47",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They reserve different, disjoint SignatureScheme value ranges."
+    },
+    {
+      "pair_id": "pair-13d58972cd42ed30",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One forbids a client Certificate when none was requested; the other requires it when certificate-based client authentication was requested."
+    },
+    {
+      "pair_id": "pair-ee199ab7d425f1b2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations use different secrets, labels, and transcript endpoints: server handshake traffic versus client application traffic."
+    },
+    {
+      "pair_id": "pair-cca6a3a30f21dd0a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They constrain different enum types, ExtensionType and SignatureScheme, despite equivalent numeric maxima."
+    },
+    {
+      "pair_id": "pair-ce149c69b3d1ac5f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They constrain different extensions and allowed message sets: pre_shared_key in CH/SH versus cookie in CH/HRR."
+    },
+    {
+      "pair_id": "pair-7b66b538812fb0ee",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They constrain different enum types with different encoded widths: ExtensionType to 65535 and PskKeyExchangeMode to 255."
+    },
+    {
+      "pair_id": "pair-a10d4d3b57c38b44",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requires presence of each recognized requested extension OID; the other separately requires all requested values for each recognized OID."
+    },
+    {
+      "pair_id": "pair-acc9ba9609dabca2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting rsa_pss_rsae_sha256 certificate signatures and implementing key_share are different capabilities."
+    },
+    {
+      "pair_id": "pair-147e697c484c4d49",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "key_share has different extension_data types in HelloRetryRequest and ServerHello."
+    },
+    {
+      "pair_id": "pair-177f2aef5bffe5b5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The first generally requires a Certificate response when requested; the second applies only when no suitable certificate exists and requires that response to be empty."
+    },
+    {
+      "pair_id": "pair-9a1dcc02244e5c59",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting rsa_pss_rsae_sha256 certificate signatures and implementing supported_groups are different capabilities."
+    },
+    {
+      "pair_id": "pair-a51912ef0175fbff",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They check length consistency in different record structures: TLSPlaintext.fragment versus TLSCiphertext.encrypted_record."
+    },
+    {
+      "pair_id": "pair-07f4cd6747e97426",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same HelloRetryRequest validation step checks different fields: legacy_compression_method and legacy_session_id_echo."
+    },
+    {
+      "pair_id": "pair-8bf738ba851583a4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They apply to different records and require different legacy versions: initial ClientHello uses 0x0301, while ServerHello uses 0x0303."
+    },
+    {
+      "pair_id": "pair-bbb9eba336b6c72a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations use different secrets, labels, and transcript endpoints: client handshake traffic versus server application traffic."
+    },
+    {
+      "pair_id": "pair-3247fe76ff829ae6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake discriminants and body types differ: certificate_request/CertificateRequest versus key_update/KeyUpdate."
+    },
+    {
+      "pair_id": "pair-fd4344bc8069e788",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting rsa_pss_rsae_sha256 certificate signatures and implementing signature_algorithms are different capabilities."
+    }
+  ]
+}

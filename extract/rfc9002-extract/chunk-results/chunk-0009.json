@@ -1,0 +1,19 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0009",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "However, QUIC does not allow a\n   packet acknowledgment to be reneged",
+                             "line_start":  248,
+                             "line_end":  249,
+                             "condition":  "Once a packet acknowledgment has been communicated in a QUIC ACK frame.",
+                             "required_behavior":  "Treat the packet acknowledgment as final and preserve the packet\u0027s acknowledged status.",
+                             "forbidden_behavior":  "Do not later renege on, withdraw, or reverse the packet acknowledgment.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A packet can be acknowledged and subsequent ACK-processing behavior can be checked to ensure that its acknowledged state is never reversed.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

@@ -1,0 +1,79 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0080",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "Once the handshake is complete, it is possible for either side to\n   update its sending traffic keys using the KeyUpdate handshake message\n   defined in Section 4.6.3.  The next generation of traffic keys is\n   computed by generating client_/server_application_traffic_secret_N+1\n   from client_/server_application_traffic_secret_N as described in this\n   section and then re-deriving the traffic keys as described in\n   Section 7.3.",
+                             "line_start":  5238,
+                             "line_end":  5244,
+                             "condition":  "a side updates its sending traffic keys",
+                             "required_behavior":  "perform the update only after the handshake is complete",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A pre-handshake KeyUpdate can be rejected and state transitions inspected.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Once the handshake is complete, it is possible for either side to\n   update its sending traffic keys using the KeyUpdate handshake message\n   defined in Section 4.6.3.  The next generation of traffic keys is\n   computed by generating client_/server_application_traffic_secret_N+1\n   from client_/server_application_traffic_secret_N as described in this\n   section and then re-deriving the traffic keys as described in\n   Section 7.3.",
+                             "line_start":  5238,
+                             "line_end":  5244,
+                             "condition":  "a side initiates an update of its sending traffic keys",
+                             "required_behavior":  "use the KeyUpdate handshake message",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "The update trigger and emitted handshake message are observable.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "computed by generating client_/server_application_traffic_secret_N+1\n   from client_/server_application_traffic_secret_N as described in this\n   section and then re-deriving the traffic keys as described in\n   Section 7.3.\n\n   The next-generation application_traffic_secret is computed as:\n\n       application_traffic_secret_N+1 =\n           HKDF-Expand-Label(application_traffic_secret_N,\n                             \"traffic upd\", \"\", Hash.length)",
+                             "line_start":  5241,
+                             "line_end":  5250,
+                             "condition":  "computing application_traffic_secret_N+1",
+                             "required_behavior":  "compute HKDF-Expand-Label(application_traffic_secret_N, \u0027traffic upd\u0027, empty context, Hash.length)",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "All expansion arguments and the output length are fixed and vector-testable.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "computed by generating client_/server_application_traffic_secret_N+1\n   from client_/server_application_traffic_secret_N as described in this\n   section and then re-deriving the traffic keys as described in\n   Section 7.3.",
+                             "line_start":  5241,
+                             "line_end":  5244,
+                             "condition":  "application_traffic_secret_N+1 has been generated",
+                             "required_behavior":  "re-derive its associated traffic keys as specified in Section 7.3",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "The next secret-to-key derivation and ordering can be inspected.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Once client_/server_application_traffic_secret_N+1 and its associated\n   traffic keys have been computed, implementations SHOULD delete\n   client_/server_application_traffic_secret_N and its associated\n   traffic keys.",
+                             "line_start":  5252,
+                             "line_end":  5255,
+                             "condition":  "application_traffic_secret_N+1 and its associated traffic keys have been computed",
+                             "required_behavior":  "delete application_traffic_secret_N",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Prior-generation secret storage can be inspected after the update.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Once client_/server_application_traffic_secret_N+1 and its associated\n   traffic keys have been computed, implementations SHOULD delete\n   client_/server_application_traffic_secret_N and its associated\n   traffic keys.",
+                             "line_start":  5252,
+                             "line_end":  5255,
+                             "condition":  "application_traffic_secret_N+1 and its associated traffic keys have been computed",
+                             "required_behavior":  "delete the traffic keys associated with application_traffic_secret_N",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Prior-generation key storage can be inspected after the update.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

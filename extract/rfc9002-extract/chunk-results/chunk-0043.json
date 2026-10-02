@@ -1,0 +1,67 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0043",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "Packets 2 through 8 are declared lost when the acknowledgment for\n   packet 9 is received at \"t = 12.2\".",
+                             "line_start":  1172,
+                             "line_end":  1173,
+                             "condition":  "Given the stated timing assumptions and packet sequence, when the acknowledgment for packet 9 is received at t=12.2.",
+                             "required_behavior":  "Declare packets 2 through 8 lost at that point.",
+                             "forbidden_behavior":  "Leave any of packets 2 through 8 not declared lost under the stated example conditions.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A deterministic trace can inject the listed sends and acknowledgments and assert the loss status of packets 2 through 8 when packet 9 is acknowledged.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The congestion period is calculated as the time between the oldest\n   and newest lost packets: \"8 - 1 = 7\".",
+                             "line_start":  1175,
+                             "line_end":  1176,
+                             "condition":  "When packets 2 through 8 are the lost packets in the stated example, with the oldest sent at t=1 and the newest sent at t=8.",
+                             "required_behavior":  "Calculate the congestion period as the elapsed time between the oldest and newest lost packets, yielding 7.",
+                             "forbidden_behavior":  "Calculate this example\u0027s congestion period from acknowledgment time or other endpoints instead of the send times of the oldest and newest lost packets.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "The packet send times and expected numeric congestion period are fully specified and can be asserted in a deterministic test.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The persistent congestion\n   duration is \"2 * 3 = 6\".",
+                             "line_start":  1176,
+                             "line_end":  1177,
+                             "condition":  "When the base duration is 2 and kPersistentCongestionThreshold is 3 as assumed in the example.",
+                             "required_behavior":  "Calculate the persistent congestion duration as 6.",
+                             "forbidden_behavior":  "Use a persistent congestion duration other than 6 for the stated inputs.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "The example supplies both operands and an exact expected result.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Because the threshold was reached and\n   because none of the packets between the oldest and the newest lost\n   packets were acknowledged, the network is considered to have\n   experienced persistent congestion.",
+                             "line_start":  1177,
+                             "line_end":  1180,
+                             "condition":  "When the lost-packet congestion period reaches the persistent congestion duration and no packet between the oldest and newest lost packets was acknowledged.",
+                             "required_behavior":  "Classify the network as having experienced persistent congestion.",
+                             "forbidden_behavior":  "Decline to classify persistent congestion despite both stated conditions being satisfied.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A test can construct the stated loss interval, verify that its duration reaches the threshold, ensure no intervening packet is acknowledged, and assert the classification.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "While this example shows PTO expiration, they are not required for\n   persistent congestion to be established.",
+                             "line_start":  1182,
+                             "line_end":  1183,
+                             "condition":  "When evaluating whether persistent congestion has been established.",
+                             "required_behavior":  "Permit persistent congestion to be established without PTO expiration.",
+                             "forbidden_behavior":  "Require PTO expiration as a prerequisite for establishing persistent congestion.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A trace that meets the persistent-congestion conditions without a PTO expiration can verify that detection does not depend on PTO expiration.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

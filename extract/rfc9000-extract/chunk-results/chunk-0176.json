@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0176",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   The entire handshake is cryptographically protected, with the Initial\n   packets being encrypted with per-version keys and the Handshake and\n   later packets being encrypted with keys derived from the TLS key\n   exchange.",
+      "line_start": 6954,
+      "line_end": 6957,
+      "condition": "During the entire QUIC handshake.",
+      "required_behavior": "Cryptographically protect the entire handshake.",
+      "forbidden_behavior": "Allow any part of the handshake to proceed without cryptographic protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet traces and implementation key state can verify that every handshake phase is cryptographically protected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The entire handshake is cryptographically protected, with the Initial\n   packets being encrypted with per-version keys and the Handshake and\n   later packets being encrypted with keys derived from the TLS key\n   exchange.",
+      "line_start": 6954,
+      "line_end": 6957,
+      "condition": "When sending or receiving Initial packets.",
+      "required_behavior": "Encrypt Initial packets with per-version keys.",
+      "forbidden_behavior": "Use non-version-specific keys or transmit Initial packets without encryption.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests can inspect Initial packet protection and confirm that the selected keys correspond to the QUIC version.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   packets being encrypted with per-version keys and the Handshake and\n   later packets being encrypted with keys derived from the TLS key\n   exchange.",
+      "line_start": 6955,
+      "line_end": 6957,
+      "condition": "When sending or receiving Handshake or later packets.",
+      "required_behavior": "Encrypt the packets with keys derived from the TLS key exchange.",
+      "forbidden_behavior": "Protect Handshake or later packets using keys not derived from the TLS key exchange, or leave them unencrypted.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Runtime tests can correlate packet-encryption keys with key material derived by the TLS exchange.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   exchange.  Further, parameter negotiation is folded into the TLS\n   transcript and thus provides the same integrity guarantees as\n   ordinary TLS negotiation.",
+      "line_start": 6957,
+      "line_end": 6959,
+      "condition": "During transport parameter negotiation.",
+      "required_behavior": "Include parameter negotiation in the TLS transcript so that it receives the integrity guarantees of ordinary TLS negotiation.",
+      "forbidden_behavior": "Negotiate parameters outside the integrity-protected TLS transcript.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Transcript construction and tampering tests can verify that negotiated parameters are covered by TLS transcript integrity.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ordinary TLS negotiation.  An attacker can observe the client's\n   transport parameters (as long as it knows the version-specific salt)\n   but cannot observe the server's transport parameters and cannot\n   influence parameter negotiation.",
+      "line_start": 6959,
+      "line_end": 6962,
+      "condition": "When an attacker observes traffic and knows the version-specific salt.",
+      "required_behavior": "Preserve the confidentiality of the server's transport parameters.",
+      "forbidden_behavior": "Expose the server's transport parameters to the attacker.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A traffic-observation test with Initial-key knowledge can verify that server transport parameters remain unreadable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ordinary TLS negotiation.  An attacker can observe the client's\n   transport parameters (as long as it knows the version-specific salt)\n   but cannot observe the server's transport parameters and cannot\n   influence parameter negotiation.",
+      "line_start": 6959,
+      "line_end": 6962,
+      "condition": "When an attacker attempts to tamper with parameter negotiation.",
+      "required_behavior": "Prevent the attacker from influencing the negotiated parameters.",
+      "forbidden_behavior": "Accept attacker modifications that alter parameter negotiation.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Active tampering tests can determine whether modifications can change the negotiation outcome.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Connection IDs are unencrypted but integrity protected in all\n   packets.",
+      "line_start": 6964,
+      "line_end": 6965,
+      "condition": "For a Connection ID carried in any packet.",
+      "required_behavior": "Carry the Connection ID unencrypted while integrity protecting it.",
+      "forbidden_behavior": "Encrypt the Connection ID or omit its integrity protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet inspection and mutation tests can verify both plaintext visibility and integrity coverage of Connection IDs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   This version of QUIC does not incorporate a version negotiation\n   mechanism; implementations of incompatible versions will simply fail\n   to establish a connection.",
+      "line_start": 6967,
+      "line_end": 6969,
+      "condition": "When peers implement incompatible versions of this QUIC version.",
+      "required_behavior": "",
+      "forbidden_behavior": "Establish a connection between the incompatible implementations through a version negotiation mechanism.",
+      "error_behavior": "Fail to establish the connection.",
+      "check_type": "error_handling",
+      "why_checkable": "An interoperability test between implementations restricted to incompatible versions can verify that connection establishment fails.",
+      "eligibility": "eligible"
+    }
+  ]
+}

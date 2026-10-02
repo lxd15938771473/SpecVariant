@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0036",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A client\n   therefore MUST NOT use 0-RTT for application data unless specifically\n   requested by the application that is in use.",
+      "line_start": 1390,
+      "line_end": 1392,
+      "condition": "When an application has not specifically requested that its application data use 0-RTT",
+      "required_behavior": "",
+      "forbidden_behavior": "The client sends application data using 0-RTT.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A client API test can omit application authorization and inspect outgoing 0-RTT packets for application-data frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An application protocol that uses QUIC MUST include a profile that\n   defines acceptable use of 0-RTT",
+      "line_start": 1394,
+      "line_end": 1395,
+      "condition": "When an application protocol uses QUIC",
+      "required_behavior": "Define a protocol profile specifying acceptable uses of 0-RTT.",
+      "forbidden_behavior": "Omit a profile defining the protocol's acceptable use of 0-RTT.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation's application-protocol integration can be checked for an explicit 0-RTT policy/profile before application data is enabled in 0-RTT.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "otherwise, 0-RTT can only be used to\n   carry QUIC frames that do not carry application data.",
+      "line_start": 1395,
+      "line_end": 1396,
+      "condition": "When the application protocol has no profile defining acceptable use of 0-RTT",
+      "required_behavior": "Use 0-RTT only for QUIC frames that carry no application data.",
+      "forbidden_behavior": "Carry an application-data-bearing QUIC frame in 0-RTT.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A no-profile test can decode every emitted 0-RTT frame and determine whether any carries application data.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A TLS handshake cannot be successfully completed using\n   replayed packets.",
+      "line_start": 1403,
+      "line_end": 1404,
+      "condition": "When an attacker or test peer supplies only replayed packets from an earlier exchange",
+      "required_behavior": "Prevent the replayed packets from successfully completing the TLS handshake.",
+      "forbidden_behavior": "Accept the replay alone as a successfully completed TLS handshake.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A captured handshake flight can be replayed into a fresh connection and the endpoint's handshake completion state observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A client SHOULD stop sending 0-RTT data\n   if it receives an indication that 0-RTT data has been rejected.",
+      "line_start": 1415,
+      "line_end": 1416,
+      "condition": "When a client receives an indication that its 0-RTT data was rejected",
+      "required_behavior": "Stop sending 0-RTT data.",
+      "forbidden_behavior": "Continue emitting new 0-RTT data without a justified exception to the SHOULD.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A server can reject 0-RTT and the subsequent client packet trace can be checked for additional 0-RTT data.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A server MUST NOT use 0-RTT keys to protect packets",
+      "line_start": 1418,
+      "line_end": 1418,
+      "condition": "When a server protects an outgoing QUIC packet",
+      "required_behavior": "",
+      "forbidden_behavior": "Use 0-RTT keys for packet protection.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Server packets can be captured and tested against the server's 0-RTT and 1-RTT protection keys to identify the key level used.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "it uses 1-RTT\n   keys to protect acknowledgments of 0-RTT packets.",
+      "line_start": 1418,
+      "line_end": 1419,
+      "condition": "When a server protects a packet carrying an acknowledgment of a 0-RTT packet",
+      "required_behavior": "Protect the acknowledgment using 1-RTT keys.",
+      "forbidden_behavior": "Protect the acknowledgment using 0-RTT keys.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The acknowledgment-bearing packet can be decrypted with candidate traffic keys to verify that the server used the 1-RTT key set.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A client MUST NOT\n   attempt to decrypt 0-RTT packets it receives",
+      "line_start": 1419,
+      "line_end": 1420,
+      "condition": "When a client receives a packet identified as 0-RTT",
+      "required_behavior": "",
+      "forbidden_behavior": "Attempt to decrypt the received 0-RTT packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Instrumentation can verify that reception of a 0-RTT packet at a client does not invoke a decryption operation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "instead MUST discard\n   them.",
+      "line_start": 1420,
+      "line_end": 1421,
+      "condition": "When a client receives a 0-RTT packet",
+      "required_behavior": "Discard the packet.",
+      "forbidden_behavior": "Pass the packet or its contents to further protocol or application processing.",
+      "error_behavior": "Discard the packet without attempting decryption.",
+      "check_type": "error_handling",
+      "why_checkable": "A client can be sent a 0-RTT packet and observed to ensure the packet is dropped and produces no downstream processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Once a client has installed 1-RTT keys, it MUST NOT send any more\n   0-RTT packets.",
+      "line_start": 1423,
+      "line_end": 1424,
+      "condition": "After a client installs 1-RTT keys",
+      "required_behavior": "",
+      "forbidden_behavior": "Send any additional 0-RTT packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A client trace can correlate the 1-RTT key-install event with packet encryption levels and assert that no later packet is 0-RTT.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "any packets containing acknowledgments of\n      |  0-RTT data cannot have packet protection removed by the client\n      |  until the TLS handshake is complete.",
+      "line_start": 1427,
+      "line_end": 1429,
+      "condition": "Before the TLS handshake is complete, when the client receives a packet containing acknowledgments of 0-RTT data",
+      "required_behavior": "Defer removal of packet protection from that packet until handshake completion.",
+      "forbidden_behavior": "Remove the packet's protection before the TLS handshake completes.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can deliver an acknowledgment-bearing 1-RTT packet before handshake completion and observe whether decryption is deferred until the completion transition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The 1-RTT keys necessary\n      |  to remove packet protection cannot be derived until the client\n      |  receives all server handshake messages.",
+      "line_start": 1429,
+      "line_end": 1431,
+      "condition": "Before the client has received all server handshake messages",
+      "required_behavior": "",
+      "forbidden_behavior": "Derive the 1-RTT keys needed to remove packet protection.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Handshake and key-derivation events can be ordered to verify that 1-RTT key derivation occurs only after all server handshake messages arrive.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0191",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   authentication.  Endpoints MAY prevent connection attempts or\n   migration to a loopback address.  Endpoints SHOULD NOT allow",
+      "line_start": 7491,
+      "line_end": 7492,
+      "condition": "When the destination is a loopback address.",
+      "required_behavior": "The endpoint may prevent connection attempts to that address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can attempt a new connection to a loopback address and observe whether the endpoint blocks it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   authentication.  Endpoints MAY prevent connection attempts or\n   migration to a loopback address.  Endpoints SHOULD NOT allow",
+      "line_start": 7491,
+      "line_end": 7492,
+      "condition": "When migration would change the peer address to a loopback address.",
+      "required_behavior": "The endpoint may prevent the migration.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can initiate migration to a loopback address and observe whether the endpoint blocks it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   migration to a loopback address.  Endpoints SHOULD NOT allow\n   connections or migration to a loopback address if the same service\n   was previously available at a different interface or if the address\n   was provided by a service at a non-loopback address.  Endpoints that",
+      "line_start": 7492,
+      "line_end": 7495,
+      "condition": "The same service was previously available at a different interface.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint should not allow a connection or migration to a loopback address.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can establish prior availability on another interface and then verify that connection or migration to loopback is rejected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   migration to a loopback address.  Endpoints SHOULD NOT allow\n   connections or migration to a loopback address if the same service\n   was previously available at a different interface or if the address\n   was provided by a service at a non-loopback address.  Endpoints that",
+      "line_start": 7492,
+      "line_end": 7495,
+      "condition": "The loopback address was provided by a service at a non-loopback address.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint should not allow a connection or migration to that loopback address.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can have a non-loopback service supply a loopback address and verify that the endpoint rejects connection or migration to it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   interfering with legitimate uses.  Endpoints SHOULD NOT refuse to use\n   an address unless they have specific knowledge about the network\n   indicating that sending datagrams to unvalidated addresses in a given\n   range is not safe.",
+      "line_start": 7504,
+      "line_end": 7507,
+      "condition": "The endpoint lacks specific network knowledge indicating that sending datagrams to unvalidated addresses in the address's range is unsafe.",
+      "required_behavior": "The endpoint should permit use of the address.",
+      "forbidden_behavior": "The endpoint should not refuse to use the address solely because it is in the considered address range.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests can configure the endpoint without the specified network knowledge and verify whether it refuses an otherwise usable address.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Endpoints MAY choose to reduce the risk of request forgery by not\n   including values from NEW_TOKEN frames in Initial packets or by only\n   sending probing frames in packets prior to completing address\n   validation.  Note that this does not prevent an attacker from using",
+      "line_start": 7509,
+      "line_end": 7512,
+      "condition": "When constructing Initial packets as a request-forgery countermeasure.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint may omit values obtained from NEW_TOKEN frames from Initial packets.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet inspection can determine whether Initial packets contain values derived from NEW_TOKEN frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Endpoints MAY choose to reduce the risk of request forgery by not\n   including values from NEW_TOKEN frames in Initial packets or by only\n   sending probing frames in packets prior to completing address\n   validation.  Note that this does not prevent an attacker from using",
+      "line_start": 7509,
+      "line_end": 7512,
+      "condition": "Before address validation has completed, when this request-forgery countermeasure is selected.",
+      "required_behavior": "The endpoint may send only probing frames in packets.",
+      "forbidden_behavior": "The endpoint does not send non-probing frames in packets before completing address validation.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Captured packets sent before validation completes can be inspected to verify that every included frame is probing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   patterns in datagrams that are used for attacks.  Endpoints MAY\n   choose to avoid sending datagrams to these ports or not send\n   datagrams that match these patterns prior to validating the\n   destination address.  Endpoints MAY retire connection IDs containing",
+      "line_start": 7519,
+      "line_end": 7522,
+      "condition": "A UDP port has been identified as a common target of attacks.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint may avoid sending datagrams to that port.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests can configure a targeted-port list and observe whether datagrams addressed to those ports are suppressed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   patterns in datagrams that are used for attacks.  Endpoints MAY\n   choose to avoid sending datagrams to these ports or not send\n   datagrams that match these patterns prior to validating the\n   destination address.  Endpoints MAY retire connection IDs containing",
+      "line_start": 7519,
+      "line_end": 7522,
+      "condition": "Before the destination address is validated, and a datagram matches a pattern identified as being used for attacks.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint may refrain from sending the matching datagram.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests can supply a known attack pattern before validation and observe whether matching datagrams are transmitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   destination address.  Endpoints MAY retire connection IDs containing\n   patterns known to be problematic without using them.",
+      "line_start": 7522,
+      "line_end": 7523,
+      "condition": "A connection ID contains a pattern known to be problematic.",
+      "required_behavior": "The endpoint may retire the connection ID without first using it.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can provide a connection ID containing a configured problematic pattern and verify that it is retired without appearing in use on transmitted packets.",
+      "eligibility": "eligible"
+    }
+  ]
+}

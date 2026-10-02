@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0120",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   An endpoint using DPLPMTUD requires the validation of any received\n   ICMP PTB message before using the PTB information, as defined in\n   Section 4.6 of [DPLPMTUD].  In addition to UDP port validation, QUIC\n   validates an ICMP message by using other PL information (e.g.,\n   validation of connection IDs in the quoted packet of any received\n   ICMP message).",
+      "line_start": 4774,
+      "line_end": 4779,
+      "condition": "An endpoint using DPLPMTUD receives an ICMP PTB message and would use its PTB information.",
+      "required_behavior": "Validate the received ICMP PTB message before using its PTB information.",
+      "forbidden_behavior": "Use the PTB information before validating the received ICMP PTB message.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can supply an unvalidated ICMP PTB message and verify that its PTB information does not affect path state until validation succeeds.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint using DPLPMTUD requires the validation of any received\n   ICMP PTB message before using the PTB information, as defined in\n   Section 4.6 of [DPLPMTUD].  In addition to UDP port validation, QUIC\n   validates an ICMP message by using other PL information (e.g.,\n   validation of connection IDs in the quoted packet of any received\n   ICMP message).",
+      "line_start": 4774,
+      "line_end": 4779,
+      "condition": "QUIC validates an ICMP message for use by DPLPMTUD.",
+      "required_behavior": "Perform UDP port validation and validation using other packet-layer information, such as connection IDs in the quoted packet.",
+      "forbidden_behavior": "Treat UDP port validation alone as sufficient validation of the ICMP message.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Focused inputs can vary the UDP ports and quoted-packet connection IDs independently and verify that validation checks both port information and additional packet-layer information.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The considerations for processing ICMP messages described in\n   Section 14.2.1 also apply if these messages are used by DPLPMTUD.",
+      "line_start": 4781,
+      "line_end": 4782,
+      "condition": "ICMP messages are used by DPLPMTUD.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The applicable processing considerations are only identified by an external section reference and are not stated in this chunk, so the constrained behavior cannot be determined from the supplied evidence alone.",
+      "eligibility": "exclude"
+    }
+  ]
+}

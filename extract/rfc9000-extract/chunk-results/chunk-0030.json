@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0030",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Incoming packets are classified on receipt.",
+      "line_start": 1454,
+      "line_end": 1454,
+      "condition": "When an endpoint receives a packet.",
+      "required_behavior": "Classify the packet on receipt.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A receipt-path test can verify that connection classification occurs when the packet is received.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Packets can either be associated with an existing connection or -- for servers -- potentially create a new connection.",
+      "line_start": 1454,
+      "line_end": 1456,
+      "condition": "When an incoming packet is classified.",
+      "required_behavior": "Classify it as associated with an existing connection or, at a server, as potentially creating a new connection.",
+      "forbidden_behavior": "A client must not classify an incoming packet as potentially creating a new connection.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The implementation's classification outcome and the server-only new-connection branch can be observed for incoming packets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the packet has a non-zero-length Destination Connection ID corresponding to an existing connection, QUIC processes that packet accordingly.",
+      "line_start": 1458,
+      "line_end": 1461,
+      "condition": "The packet has a non-zero-length Destination Connection ID corresponding to an existing connection.",
+      "required_behavior": "Process the packet in association with that existing connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A packet carrying a known nonempty Destination Connection ID can be injected and its selected connection observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Note that more than one connection ID can be associated with a connection; see Section 5.1.",
+      "line_start": 1461,
+      "line_end": 1462,
+      "condition": "When connection IDs are associated with connections.",
+      "required_behavior": "Permit more than one connection ID to map to the same connection.",
+      "forbidden_behavior": "Do not enforce a one-connection-ID-per-connection invariant.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Connection lookup state can be inspected or exercised with multiple connection IDs assigned to one connection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the Destination Connection ID is zero length and the addressing information in the packet matches the addressing information the endpoint uses to identify a connection with a zero-length connection ID, QUIC processes the packet as part of that connection.",
+      "line_start": 1464,
+      "line_end": 1467,
+      "condition": "The Destination Connection ID is zero length and the packet's addressing information matches that used by the endpoint to identify a zero-length-ID connection.",
+      "required_behavior": "Process the packet as part of the matching connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A packet with a zero-length Destination Connection ID and matching address tuple can be sent and the selected connection observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint can use just destination IP and port or both source and destination addresses for identification",
+      "line_start": 1467,
+      "line_end": 1469,
+      "condition": "When an endpoint identifies a connection having a zero-length connection ID from addressing information.",
+      "required_behavior": "The endpoint may use destination IP and port alone, or both source and destination addresses, as its identification key.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The endpoint's connection-key construction or lookup behavior can be tested for either permitted addressing scheme.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints can send a Stateless Reset (Section 10.3) for any packets that cannot be attributed to an existing connection.",
+      "line_start": 1472,
+      "line_end": 1473,
+      "condition": "A packet cannot be attributed to an existing connection.",
+      "required_behavior": "The endpoint may send a Stateless Reset for that packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An unattributable packet can be delivered and the endpoint can be observed for an optional Stateless Reset response.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Packets that are matched to an existing connection are discarded if the packets are inconsistent with the state of that connection.",
+      "line_start": 1477,
+      "line_end": 1478,
+      "condition": "A packet is matched to an existing connection but is inconsistent with that connection's state.",
+      "required_behavior": "Discard the packet.",
+      "forbidden_behavior": "Do not process the inconsistent packet as valid connection input.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can construct state-inconsistent packets that still match a connection and verify that they produce no accepted processing effects.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "packets are discarded if they indicate a different protocol version than that of the connection",
+      "line_start": 1479,
+      "line_end": 1480,
+      "condition": "A packet matched to an existing connection indicates a protocol version different from the connection's version.",
+      "required_behavior": "Discard the packet.",
+      "forbidden_behavior": "Do not accept or process the packet under the existing connection.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A connection-matching packet bearing a different protocol version can be injected and its disposition observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "packets are discarded if they indicate a different protocol version than that of the connection or if the removal of packet protection is unsuccessful once the expected keys are available.",
+      "line_start": 1479,
+      "line_end": 1481,
+      "condition": "The expected keys are available, but removal of packet protection from a packet matched to the connection is unsuccessful.",
+      "required_behavior": "Discard the packet.",
+      "forbidden_behavior": "Do not process the packet contents as authenticated connection input.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "With expected keys installed, a packet whose protection cannot be removed can be supplied and checked for discard without state effects.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Invalid packets that lack strong integrity protection, such as Initial, Retry, or Version Negotiation, MAY be discarded.",
+      "line_start": 1483,
+      "line_end": 1484,
+      "condition": "A packet is invalid and lacks strong integrity protection, including an Initial, Retry, or Version Negotiation packet.",
+      "required_behavior": "The endpoint may discard the packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Malformed packets of the identified weakly protected classes can be supplied and discard behavior observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST generate a connection error if processing the contents of these packets prior to discovering an error, or fully revert any changes made during that processing.",
+      "line_start": 1484,
+      "line_end": 1487,
+      "condition": "Before discovering an error, the endpoint processed the contents of an invalid packet lacking strong integrity protection.",
+      "required_behavior": "Either generate a connection error or fully revert every change made while processing the packet.",
+      "forbidden_behavior": "Do not continue without a connection error while retaining any change made during the invalid packet's processing.",
+      "error_behavior": "Generating a connection error satisfies the required alternative to fully reverting all processing changes.",
+      "check_type": "error_handling",
+      "why_checkable": "A crafted invalid weakly protected packet can cause provisional state changes before a later error, after which tests can verify either a connection error or complete rollback.",
+      "eligibility": "eligible"
+    }
+  ]
+}

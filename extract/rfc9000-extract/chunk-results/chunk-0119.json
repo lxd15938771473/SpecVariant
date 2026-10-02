@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0119",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   QUIC is an acknowledged PL; therefore, a QUIC sender does not\n   implement a DPLPMTUD CONFIRMATION_TIMER while in the SEARCH_COMPLETE\n   state; see Section 5.2 of [DPLPMTUD].",
+      "line_start": 4768,
+      "line_end": 4770,
+      "condition": "A QUIC sender is in the DPLPMTUD SEARCH_COMPLETE state.",
+      "required_behavior": "",
+      "forbidden_behavior": "The sender must not implement a DPLPMTUD CONFIRMATION_TIMER in this state.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation can be inspected or instrumented to verify that no DPLPMTUD CONFIRMATION_TIMER exists or runs while the sender is in SEARCH_COMPLETE.",
+      "eligibility": "eligible"
+    }
+  ]
+}

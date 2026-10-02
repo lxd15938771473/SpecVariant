@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0082",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   This stateless reset design is specific to QUIC version 1.  An\n   endpoint that supports multiple versions of QUIC needs to generate a\n   Stateless Reset that will be accepted by peers that support any\n   version that the endpoint might support (or might have supported\n   prior to losing state).  Designers of new versions of QUIC need to be",
+      "line_start": 3477,
+      "line_end": 3481,
+      "condition": "An endpoint supports multiple QUIC versions and generates a Stateless Reset.",
+      "required_behavior": "Generate a Stateless Reset accepted by peers supporting every version that the endpoint currently supports or might have supported before losing state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can present the generated Stateless Reset to peer implementations for each currently or formerly supported version and verify acceptance.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   prior to losing state).  Designers of new versions of QUIC need to be\n   aware of this and either (1) reuse this design or (2) use a portion\n   of the packet other than the last 16 bytes for carrying data.",
+      "line_start": 3481,
+      "line_end": 3483,
+      "condition": "A new QUIC version is designed.",
+      "required_behavior": "Either reuse the QUIC version 1 stateless reset design or carry data in a packet portion other than the last 16 bytes.",
+      "forbidden_behavior": "A new version that does not reuse this stateless reset design must not use the last 16 bytes of the packet for carrying data.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The new version's packet format and stateless-reset implementation can be inspected to verify that it either reuses this design or reserves the final 16 bytes from ordinary data carriage.",
+      "eligibility": "eligible"
+    }
+  ]
+}

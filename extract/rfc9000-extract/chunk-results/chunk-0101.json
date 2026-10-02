@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0101",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   When an ACK frame is sent, one or more ranges of acknowledged packets\n   are included.",
+      "line_start": 4192,
+      "line_end": 4193,
+      "condition": "When an ACK frame is sent.",
+      "required_behavior": "Include one or more ranges of acknowledged packets.",
+      "forbidden_behavior": "Send an ACK frame containing no acknowledged-packet range.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An encoded ACK frame can be inspected to verify that it contains at least one ACK Range.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ACK frames SHOULD always acknowledge the most recently received\n   packets, and the more out of order the packets are, the more\n   important it is to send an updated ACK frame quickly, to prevent the\n   peer from declaring a packet as lost and spuriously retransmitting\n   the frames it contains.",
+      "line_start": 4197,
+      "line_end": 4201,
+      "condition": "When generating an ACK frame.",
+      "required_behavior": "Acknowledge the most recently received packets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can compare received packet numbers with the ranges emitted in each ACK frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   the frames it contains.  An ACK frame is expected to fit within a\n   single QUIC packet.  If it does not, then older ranges (those with\n   the smallest packet numbers) are omitted.",
+      "line_start": 4201,
+      "line_end": 4203,
+      "condition": "When constructing an ACK frame.",
+      "required_behavior": "Make the ACK frame fit within a single QUIC packet.",
+      "forbidden_behavior": "Emit an ACK frame spanning multiple QUIC packets.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The implementation's packet construction output can be checked to determine whether each ACK frame is wholly contained in one packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   the frames it contains.  An ACK frame is expected to fit within a\n   single QUIC packet.  If it does not, then older ranges (those with\n   the smallest packet numbers) are omitted.",
+      "line_start": 4201,
+      "line_end": 4203,
+      "condition": "If the ACK frame would not fit within a single QUIC packet.",
+      "required_behavior": "Omit older ACK Ranges, meaning those with the smallest packet numbers.",
+      "forbidden_behavior": "Resolve the overflow by preferentially omitting newer ranges while retaining older ranges.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can force ACK-frame overflow and verify which packet-number ranges are omitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A receiver limits the number of ACK Ranges (Section 19.3.1) it\n   remembers and sends in ACK frames, both to limit the size of ACK\n   frames and to avoid resource exhaustion.",
+      "line_start": 4205,
+      "line_end": 4207,
+      "condition": "While remembering ACK Ranges and constructing ACK frames.",
+      "required_behavior": "Apply a limit to the number of ACK Ranges remembered and sent.",
+      "forbidden_behavior": "Remember and send an unbounded number of ACK Ranges.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The implementation can be exercised with many disjoint received ranges to verify that stored and emitted range counts are bounded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   frames and to avoid resource exhaustion.  After receiving\n   acknowledgments for an ACK frame, the receiver SHOULD stop tracking\n   those acknowledged ACK Ranges.",
+      "line_start": 4207,
+      "line_end": 4209,
+      "condition": "After receiving acknowledgment for an ACK frame.",
+      "required_behavior": "Stop tracking the ACK Ranges acknowledged by that acknowledgment.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Receiver state before and after acknowledgment of an ACK frame can be inspected for removal of the corresponding ranges.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Ranges to limit ACK frame size, at the cost of increased\n   retransmissions from the sender.  This is necessary if an ACK frame\n   would be too large to fit in a packet.",
+      "line_start": 4215,
+      "line_end": 4217,
+      "condition": "If retaining the ACK Ranges would make an ACK frame too large to fit in a packet.",
+      "required_behavior": "Discard unacknowledged ACK Ranges as necessary to limit the ACK frame size so it fits in a packet.",
+      "forbidden_behavior": "Retain enough ranges that the ACK frame remains too large to fit in a packet.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can create enough disjoint ranges to exceed packet capacity and verify that ranges are discarded until the ACK frame fits.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   would be too large to fit in a packet.  Receivers MAY also limit ACK\n   frame size further to preserve space for other frames or to limit the\n   capacity that acknowledgments consume.",
+      "line_start": 4217,
+      "line_end": 4219,
+      "condition": "When preserving packet space for other frames or limiting acknowledgment capacity consumption.",
+      "required_behavior": "The receiver may impose an ACK-frame size limit smaller than the maximum size that would fit in a packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Configuration and generated packets can be inspected to verify that the receiver is permitted to cap ACK frames below packet capacity.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A receiver MUST retain an ACK Range unless it can ensure that it will\n   not subsequently accept packets with numbers in that range.",
+      "line_start": 4221,
+      "line_end": 4222,
+      "condition": "Unless the receiver can ensure that it will not subsequently accept packets whose numbers are in an ACK Range.",
+      "required_behavior": "Retain the ACK Range.",
+      "forbidden_behavior": "Discard an ACK Range while still potentially accepting a subsequent packet with a number in that range.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can correlate range-discard decisions with the receiver's later packet-number acceptance policy.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Receivers can discard all ACK Ranges, but they MUST retain the\n   largest packet number that has been successfully processed, as that\n   is used to recover packet numbers from subsequent packets; see\n   Section 17.1.",
+      "line_start": 4226,
+      "line_end": 4229,
+      "condition": "Even when the receiver discards all ACK Ranges.",
+      "required_behavior": "Retain the largest packet number that has been successfully processed.",
+      "forbidden_behavior": "Discard or forget the largest successfully processed packet number.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Receiver state can be inspected after all ACK Ranges are discarded to verify preservation of the largest successfully processed packet number.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A receiver SHOULD include an ACK Range containing the largest\n   received packet number in every ACK frame.",
+      "line_start": 4231,
+      "line_end": 4232,
+      "condition": "Whenever a receiver sends an ACK frame.",
+      "required_behavior": "Include an ACK Range containing the largest received packet number.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Each emitted ACK frame can be compared with receiver state to verify coverage of the largest received packet number.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   received packet number in every ACK frame.  The Largest Acknowledged\n   field is used in ECN validation at a sender, and including a lower\n   value than what was included in a previous ACK frame could cause ECN\n   to be unnecessarily disabled; see Section 13.4.2.",
+      "line_start": 4232,
+      "line_end": 4235,
+      "condition": "When selecting the Largest Acknowledged value for a later ACK frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The passage identifies a possible ECN consequence but does not unambiguously require that Largest Acknowledged values never decrease.",
+      "eligibility": "exclude"
+    }
+  ]
+}

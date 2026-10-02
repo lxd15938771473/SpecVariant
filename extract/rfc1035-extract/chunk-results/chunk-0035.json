@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0035",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "TXT-DATA        One or more <character-string>s.",
+      "line_start": 1111,
+      "line_end": 1111,
+      "condition": "When encoding or interpreting TXT-DATA in a TXT resource record.",
+      "required_behavior": "Represent each element of TXT-DATA as a <character-string>.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The TXT RDATA serializer and parser can be checked for a sequence of <character-string> elements.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "TXT-DATA        One or more <character-string>s.",
+      "line_start": 1111,
+      "line_end": 1111,
+      "condition": "When encoding or interpreting TXT-DATA in a TXT resource record.",
+      "required_behavior": "Require TXT-DATA to contain at least one <character-string>.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The number of <character-string> elements in TXT-DATA can be counted to check its lower bound of one.",
+      "eligibility": "eligible"
+    }
+  ]
+}

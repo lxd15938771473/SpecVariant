@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0052",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Once the resolver has validated the RRSIG RR as described in Section\n   5.3.1 and reconstructed the original signed data as described in\n   Section 5.3.2, the validator can attempt to use the cryptographic\n   signature to authenticate the signed data, and thus (finally!)\n   authenticate the RRset.",
+      "line_start": 1719,
+      "line_end": 1723,
+      "condition": "The resolver has validated the RRSIG RR as described in Section 5.3.1 and reconstructed the original signed data as described in Section 5.3.2.",
+      "required_behavior": "The validator may attempt to use the cryptographic signature to authenticate the signed data and the RRset.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The permitted signature-authentication step and its preceding RRSIG-validation and signed-data-reconstruction conditions can be identified in the validation flow.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Algorithm field in the RRSIG RR identifies the cryptographic\n   algorithm used to generate the signature.",
+      "line_start": 1725,
+      "line_end": 1726,
+      "condition": "Interpreting an RRSIG RR for cryptographic signature checking.",
+      "required_behavior": "Interpret the RRSIG RR Algorithm field as identifying the cryptographic algorithm used to generate the signature.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The algorithm-selection input can be checked against the RRSIG Algorithm field.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The signature itself is\n   contained in the Signature field of the RRSIG RDATA, and the public\n   key used to verify the signature is contained in the Public Key field\n   of the matching DNSKEY RR(s) (found in Section 5.3.1).",
+      "line_start": 1726,
+      "line_end": 1729,
+      "condition": "Obtaining the signature for checking an RRSIG RR.",
+      "required_behavior": "Obtain the signature from the Signature field of the RRSIG RDATA.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The bytes supplied as the cryptographic signature can be traced to the RRSIG RDATA Signature field.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The signature itself is\n   contained in the Signature field of the RRSIG RDATA, and the public\n   key used to verify the signature is contained in the Public Key field\n   of the matching DNSKEY RR(s) (found in Section 5.3.1).",
+      "line_start": 1726,
+      "line_end": 1729,
+      "condition": "Obtaining a public key to verify an RRSIG RR signature.",
+      "required_behavior": "Use the Public Key field of a matching DNSKEY RR, with matching DNSKEY RRs found as described in Section 5.3.1, as the verification public key.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The source of each candidate verification key can be checked for its matching DNSKEY RR and Public Key field.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Note that it is possible for more than one DNSKEY RR to match the\n   conditions in Section 5.3.1.  In this case, the validator can only\n   determine which DNSKEY RR is correct by trying each matching public\n   key until the validator either succeeds in validating the signature\n   or runs out of keys to try.",
+      "line_start": 1733,
+      "line_end": 1737,
+      "condition": "More than one DNSKEY RR matches the conditions in Section 5.3.1 and the validator is determining which DNSKEY RR is correct.",
+      "required_behavior": "Try each matching public key until signature validation succeeds or all matching keys have been tried.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Multiple matching candidate keys allow the retry behavior and its success-or-exhaustion termination conditions to be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the Labels field of the RRSIG RR is not equal to the number of\n   labels in the RRset's fully qualified owner name, then the RRset is\n   either invalid or the result of wildcard expansion.  The resolver\n   MUST verify that wildcard expansion was applied properly before\n   considering the RRset to be authentic.  Section 5.3.4 describes how\n   to determine whether a wildcard was applied properly.",
+      "line_start": 1739,
+      "line_end": 1744,
+      "condition": "The RRSIG RR Labels field is not equal to the number of labels in the RRset's fully qualified owner name.",
+      "required_behavior": "The resolver MUST verify that wildcard expansion was applied properly before considering the RRset authentic.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The Labels comparison and the requirement to verify proper wildcard expansion before authenticity acceptance can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If other RRSIG RRs also cover this RRset, the local resolver security\n   policy determines whether the resolver also has to test these RRSIG\n   RRs and how to resolve conflicts if these RRSIG RRs lead to differing\n   results.",
+      "line_start": 1746,
+      "line_end": 1749,
+      "condition": "Other RRSIG RRs also cover this RRset.",
+      "required_behavior": "Let the local resolver security policy determine whether the resolver also has to test the other covering RRSIG RRs.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The decision to test additional covering signatures can be compared with the configured local resolver security policy.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If other RRSIG RRs also cover this RRset, the local resolver security\n   policy determines whether the resolver also has to test these RRSIG\n   RRs and how to resolve conflicts if these RRSIG RRs lead to differing\n   results.",
+      "line_start": 1746,
+      "line_end": 1749,
+      "condition": "Other RRSIG RRs cover this RRset and those RRSIG RRs lead to differing results.",
+      "required_behavior": "Resolve the conflicting RRSIG results according to the local resolver security policy.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Conflicting covering-signature results allow the resolver conflict-resolution behavior to be compared with its local security policy.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the resolver accepts the RRset as authentic, the validator MUST\n   set the TTL of the RRSIG RR and each RR in the authenticated RRset to\n   a value no greater than the minimum of:\n\n   o  the RRset's TTL as received in the response;\n\n   o  the RRSIG RR's TTL as received in the response;\n\n   o  the value in the RRSIG RR's Original TTL field; and\n\n   o  the difference of the RRSIG RR's Signature Expiration time and the\n      current time.",
+      "line_start": 1751,
+      "line_end": 1762,
+      "condition": "The resolver accepts the RRset as authentic.",
+      "required_behavior": "The validator MUST set the TTL of the RRSIG RR to a value no greater than the minimum of the RRset's TTL as received in the response, the RRSIG RR's TTL as received in the response, the value in the RRSIG RR's Original TTL field, and the RRSIG RR's Signature Expiration time minus the current time.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The resulting RRSIG TTL can be compared with the minimum of all four specified inputs, including the remaining signature lifetime.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the resolver accepts the RRset as authentic, the validator MUST\n   set the TTL of the RRSIG RR and each RR in the authenticated RRset to\n   a value no greater than the minimum of:\n\n   o  the RRset's TTL as received in the response;\n\n   o  the RRSIG RR's TTL as received in the response;\n\n   o  the value in the RRSIG RR's Original TTL field; and\n\n   o  the difference of the RRSIG RR's Signature Expiration time and the\n      current time.",
+      "line_start": 1751,
+      "line_end": 1762,
+      "condition": "The resolver accepts the RRset as authentic.",
+      "required_behavior": "The validator MUST set the TTL of each RR in the authenticated RRset to a value no greater than the minimum of the RRset's TTL as received in the response, the RRSIG RR's TTL as received in the response, the value in the RRSIG RR's Original TTL field, and the RRSIG RR's Signature Expiration time minus the current time.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Every authenticated RR TTL can be checked against the minimum of all four specified inputs, including the remaining signature lifetime.",
+      "eligibility": "eligible"
+    }
+  ]
+}

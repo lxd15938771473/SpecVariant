@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0179",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   *  Modify an authenticated portion of a packet and cause the\n      recipient to accept that packet",
+      "line_start": 7048,
+      "line_end": 7049,
+      "condition": "An authenticated portion of a packet has been modified.",
+      "required_behavior": "",
+      "forbidden_behavior": "The recipient must not accept the modified packet.",
+      "error_behavior": "The packet is treated as unacceptable.",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can modify authenticated packet bytes and verify that the receiving endpoint does not accept the packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An on-path attacker has the opportunity to modify the packets that it\n   observes; however, any modifications to an authenticated portion of a\n   packet will cause it to be dropped by the receiving endpoint as\n   invalid, as packet payloads are both authenticated and encrypted.",
+      "line_start": 7051,
+      "line_end": 7054,
+      "condition": "A receiving endpoint receives a packet whose authenticated portion has been modified.",
+      "required_behavior": "The receiving endpoint drops the packet.",
+      "forbidden_behavior": "The receiving endpoint must not process or accept the packet as valid.",
+      "error_behavior": "The receiving endpoint treats the packet as invalid.",
+      "check_type": "error_handling",
+      "why_checkable": "A runtime test can alter an authenticated portion of a packet and verify that the receiver classifies it as invalid and drops it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An on-path attacker has the opportunity to modify the packets that it\n   observes; however, any modifications to an authenticated portion of a\n   packet will cause it to be dropped by the receiving endpoint as\n   invalid, as packet payloads are both authenticated and encrypted.",
+      "line_start": 7051,
+      "line_end": 7054,
+      "condition": "A QUIC packet payload is produced or received.",
+      "required_behavior": "The packet payload is authenticated.",
+      "forbidden_behavior": "Packet payloads must not be transmitted without authentication.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet construction and processing can be inspected or tested to verify that payload authentication is applied.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An on-path attacker has the opportunity to modify the packets that it\n   observes; however, any modifications to an authenticated portion of a\n   packet will cause it to be dropped by the receiving endpoint as\n   invalid, as packet payloads are both authenticated and encrypted.",
+      "line_start": 7051,
+      "line_end": 7054,
+      "condition": "A QUIC packet payload is transmitted.",
+      "required_behavior": "The packet payload is encrypted.",
+      "forbidden_behavior": "Packet payloads must not be transmitted without encryption.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet serialization and wire output can be inspected or tested to verify payload encryption.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   3.  An on-path attacker cannot prevent a client from migrating to a\n       path for which the attacker is not on-path.",
+      "line_start": 7069,
+      "line_end": 7070,
+      "condition": "A client migrates to a path on which the existing attacker is not on-path.",
+      "required_behavior": "The client remains capable of migrating to that path despite interference by the attacker on the old path.",
+      "forbidden_behavior": "The implementation must not allow an attacker confined to the old path to prevent migration to the new path.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "An adversarial migration test can interfere with the old path while verifying successful migration over a distinct path outside the attacker's position.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   5.  An on-path attacker cannot cause an endpoint to accept a packet\n       for which it has modified an authenticated portion of that\n       packet.",
+      "line_start": 7075,
+      "line_end": 7077,
+      "condition": "An on-path attacker modifies an authenticated portion of a packet and delivers it to an endpoint.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not accept the modified packet.",
+      "error_behavior": "The modified packet is rejected as unauthentic.",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can modify authenticated bytes in transit and verify that the destination endpoint never accepts the packet.",
+      "eligibility": "eligible"
+    }
+  ]
+}

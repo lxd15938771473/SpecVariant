@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0020",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "QCLASS fields appear in the question section of a query.",
+      "line_start": 709,
+      "line_end": 709,
+      "condition": "When encoding or parsing a query.",
+      "required_behavior": "Place and interpret QCLASS fields in the question section of the query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The query encoder and parser identify which section contains each QCLASS field.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QCLASS values\nare a superset of CLASS values; every CLASS is a valid QCLASS.",
+      "line_start": 709,
+      "line_end": 710,
+      "condition": "When determining whether a QCLASS value is valid.",
+      "required_behavior": "Treat every valid CLASS value as a valid QCLASS value.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The set of values accepted as QCLASS can be compared against the valid CLASS values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In\naddition to CLASS values, the following QCLASSes are defined:\n\n*               255 any class",
+      "line_start": 710,
+      "line_end": 713,
+      "condition": "When encoding or interpreting the any-class QCLASS (*).",
+      "required_behavior": "Use QCLASS value 255 to denote any class.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The QCLASS encoding and decoding mapping for the any-class selector can be checked against numeric value 255.",
+      "eligibility": "eligible"
+    }
+  ]
+}

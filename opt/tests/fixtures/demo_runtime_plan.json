@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "task_id": "demo-limit-boundary",
+  "round": 1,
+  "remaining_uncertainty": "Whether the implementation rejects the first value above the normative maximum",
+  "competing_hypotheses": [
+    "The implementation rejects Limit value 11",
+    "The implementation accepts Limit value 11"
+  ],
+  "distinguishing_observation": "A valid value 10 succeeds while value 11 is accepted or rejected",
+  "difference_from_previous": "First focused runtime experiment",
+  "steps": [
+    {
+      "id": "control",
+      "role": "positive_control",
+      "argv": [
+        "python",
+        "control_limit.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 30,
+      "expected_exit_codes": [
+        0
+      ],
+      "continue_on_failure": false
+    },
+    {
+      "id": "reproducer",
+      "role": "reproducer",
+      "argv": [
+        "python",
+        "repro_limit.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 30,
+      "expected_exit_codes": [
+        1
+      ],
+      "continue_on_failure": false
+    }
+  ]
+}

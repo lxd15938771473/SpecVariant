@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0123",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   QUIC versions are identified using a 32-bit unsigned number.",
+      "line_start": 4825,
+      "line_end": 4825,
+      "condition": "When representing or processing a QUIC version identifier.",
+      "required_behavior": "Represent the version identifier as a 32-bit unsigned number.",
+      "forbidden_behavior": "Do not use a value outside the unsigned 32-bit range for a QUIC version identifier.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The width and unsigned numeric domain of the version field can be checked in declarations, encoders, decoders, and boundary tests.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The version 0x00000000 is reserved to represent version negotiation.",
+      "line_start": 4827,
+      "line_end": 4827,
+      "condition": "When the version field has value 0x00000000.",
+      "required_behavior": "Interpret the value as representing version negotiation.",
+      "forbidden_behavior": "Do not treat 0x00000000 as an ordinary protocol version.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A focused parser or packet-processing test can verify the fixed value's reserved meaning and dispatch behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   This version of the specification is identified by the number\n   0x00000001.",
+      "line_start": 4828,
+      "line_end": 4829,
+      "condition": "When identifying the QUIC version defined by this specification.",
+      "required_behavior": "Use version number 0x00000001.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The implementation's supported version constant and encoded version field can be compared with the fixed value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Version 0x00000001 of QUIC uses TLS as a cryptographic handshake\n   protocol, as described in [QUIC-TLS].",
+      "line_start": 4836,
+      "line_end": 4837,
+      "condition": "When performing the cryptographic handshake for QUIC version 0x00000001.",
+      "required_behavior": "Use TLS as the cryptographic handshake protocol.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Handshake selection for version 0x00000001 can be inspected statically and exercised in an interoperability test.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Versions with the most significant 16 bits of the version number\n   cleared are reserved for use in future IETF consensus documents.",
+      "line_start": 4839,
+      "line_end": 4840,
+      "condition": "When a version number has its most significant 16 bits cleared.",
+      "required_behavior": "Classify the version number as reserved.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The bit-pattern predicate and resulting reserved classification can be tested across matching and nonmatching values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Versions that follow the pattern 0x?a?a?a?a are reserved for use in\n   forcing version negotiation to be exercised -- that is, any version\n   number where the low four bits of all bytes is 1010 (in binary).  A\n   client or server MAY advertise support for any of these reserved\n   versions.",
+      "line_start": 4842,
+      "line_end": 4846,
+      "condition": "When every byte of a version number has low four bits equal to binary 1010.",
+      "required_behavior": "Classify the version number as reserved for exercising version negotiation.",
+      "forbidden_behavior": "Do not classify a version matching 0x?a?a?a?a as a real protocol version.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A mask-based test can enumerate matching values and verify their reserved classification.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Versions that follow the pattern 0x?a?a?a?a are reserved for use in\n   forcing version negotiation to be exercised -- that is, any version\n   number where the low four bits of all bytes is 1010 (in binary).  A\n   client or server MAY advertise support for any of these reserved\n   versions.",
+      "line_start": 4842,
+      "line_end": 4846,
+      "condition": "When a client or server constructs a supported-version advertisement.",
+      "required_behavior": "Permit advertising support for a reserved version matching 0x?a?a?a?a.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Configuration and advertisement-generation tests can verify that the implementation accepts and emits such a reserved value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Reserved version numbers will never represent a real protocol; a",
+      "line_start": 4848,
+      "line_end": 4848,
+      "condition": "When processing any reserved version number.",
+      "required_behavior": "Treat the number as reserved rather than as a real protocol version.",
+      "forbidden_behavior": "Do not associate a reserved version number with a real protocol implementation.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Static version tables and runtime dispatch tests can verify that no reserved value selects a real protocol handler.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   client MAY use one of these version numbers with the expectation that\n   the server will initiate version negotiation; a server MAY advertise\n   support for one of these versions and can expect that clients ignore\n   the value.",
+      "line_start": 4849,
+      "line_end": 4852,
+      "condition": "When a client sends one of the reserved version numbers described by the preceding pattern.",
+      "required_behavior": "Permit the client to use that reserved version number to cause the server to initiate version negotiation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A client configuration and packet-generation test can verify that use of the reserved value is allowed and produces the intended version-negotiation stimulus.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   client MAY use one of these version numbers with the expectation that\n   the server will initiate version negotiation; a server MAY advertise\n   support for one of these versions and can expect that clients ignore\n   the value.",
+      "line_start": 4849,
+      "line_end": 4852,
+      "condition": "When a server advertises supported versions.",
+      "required_behavior": "Permit the server to advertise support for one of the reserved version numbers.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A server advertisement-generation test can verify that a reserved version is accepted and encoded in the advertised list.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   client MAY use one of these version numbers with the expectation that\n   the server will initiate version negotiation; a server MAY advertise\n   support for one of these versions and can expect that clients ignore\n   the value.",
+      "line_start": 4849,
+      "line_end": 4852,
+      "condition": "When a client receives a server advertisement containing one of these reserved version numbers.",
+      "required_behavior": "Ignore the reserved version value.",
+      "forbidden_behavior": "Do not select or attempt to use the advertised reserved value as a real protocol version.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A client test can inject an advertisement containing a reserved value and verify that it is excluded from version selection.",
+      "eligibility": "eligible"
+    }
+  ]
+}

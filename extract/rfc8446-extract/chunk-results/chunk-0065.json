@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0065",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "When the client has sent the \"post_handshake_auth\" extension (see\n   Section 4.2.6), a server MAY request client authentication",
+      "line_start": 4187,
+      "line_end": 4189,
+      "condition": "a server sends a post-handshake CertificateRequest",
+      "required_behavior": "ensure the client previously sent the post_handshake_auth extension",
+      "forbidden_behavior": "requesting post-handshake authentication from a client that did not offer post_handshake_auth",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The server's request emission can be compared with the recorded ClientHello extensions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "a server MAY request client authentication at any\n   time after the handshake has completed by sending a\n   CertificateRequest message.",
+      "line_start": 4188,
+      "line_end": 4190,
+      "condition": "a server sends a post-handshake CertificateRequest",
+      "required_behavior": "send it only after the handshake has completed",
+      "forbidden_behavior": "sending a post-handshake CertificateRequest before handshake completion",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The message position can be checked against the handshake completion transition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The client MUST respond with the\n   appropriate Authentication messages (see Section 4.4).",
+      "line_start": 4190,
+      "line_end": 4191,
+      "condition": "a client receives a valid post-handshake CertificateRequest",
+      "required_behavior": "send the applicable client Authentication response messages",
+      "forbidden_behavior": "silently omitting the authentication response",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A post-handshake trace can verify that each accepted request receives a response.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the client\n   chooses to authenticate, it MUST send Certificate, CertificateVerify,\n\n\n\nRescorla                     Standards Track                   [Page 75]\n\nRFC 8446                           TLS                       August 2018\n\n\n   and Finished.",
+      "line_start": 4191,
+      "line_end": 4201,
+      "condition": "the client accepts a post-handshake authentication request and chooses to authenticate",
+      "required_behavior": "send Certificate, then CertificateVerify, then Finished",
+      "forbidden_behavior": "omitting or reordering any message in the authentication sequence",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The required three-message sequence and order are visible on the wire.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If it declines, it MUST send a Certificate message\n   containing no certificates followed by Finished.",
+      "line_start": 4201,
+      "line_end": 4202,
+      "condition": "the client declines a post-handshake authentication request",
+      "required_behavior": "send an empty Certificate message followed by Finished",
+      "forbidden_behavior": "omitting Finished, including certificates, or reordering the two messages",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The response body and two-message ordering are directly observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "All of the client's\n   messages for a given response MUST appear consecutively on the wire\n   with no intervening messages of other types.",
+      "line_start": 4202,
+      "line_end": 4204,
+      "condition": "a client sends messages for one post-handshake authentication response",
+      "required_behavior": "send all messages for that response consecutively",
+      "forbidden_behavior": "interleaving messages of other types within the response sequence",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Wire-message adjacency can be checked for each certificate request context.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A client that receives a CertificateRequest message without having\n   sent the \"post_handshake_auth\" extension MUST send an\n   \"unexpected_message\" fatal alert.",
+      "line_start": 4206,
+      "line_end": 4208,
+      "condition": "a client receives CertificateRequest without previously offering post_handshake_auth",
+      "required_behavior": "abort the connection",
+      "forbidden_behavior": "processing or answering the unauthorized CertificateRequest",
+      "error_behavior": "send a fatal unexpected_message alert",
+      "check_type": "error_handling",
+      "why_checkable": "A missing-extension test has an exact required fatal alert.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "servers MUST be prepared for some delay, including receiving an\n   arbitrary number of other messages between sending the\n   CertificateRequest and receiving a response.",
+      "line_start": 4211,
+      "line_end": 4213,
+      "condition": "a server is awaiting a post-handshake authentication response",
+      "required_behavior": "continue to handle otherwise valid intervening messages without requiring an immediate response",
+      "forbidden_behavior": "treating intervening messages or response delay alone as a protocol violation",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can insert multiple valid messages before the authentication response and observe server handling.",
+      "eligibility": "eligible"
+    }
+  ]
+}

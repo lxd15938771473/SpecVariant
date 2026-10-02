@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0016",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The sender of a stream sends just three frame types that affect the\n   state of a stream at either the sender or the receiver: STREAM\n   (Section 19.8), STREAM_DATA_BLOCKED (Section 19.13), and RESET_STREAM\n   (Section 19.4).",
+      "line_start": 886,
+      "line_end": 889,
+      "condition": "When a stream sender sends a frame that affects the state of the stream at either endpoint",
+      "required_behavior": "The state-affecting frame type is STREAM, STREAM_DATA_BLOCKED, or RESET_STREAM.",
+      "forbidden_behavior": "The sender uses any other frame type to affect the state of the stream at either endpoint.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation trace can identify sender-emitted frames that cause stream-state changes and verify that every such frame has one of the three listed types.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A sender MUST NOT send any of these frames from a terminal state\n   (\"Data Recvd\" or \"Reset Recvd\").",
+      "line_start": 891,
+      "line_end": 892,
+      "condition": "When the sending side of a stream is in the \"Data Recvd\" or \"Reset Recvd\" terminal state",
+      "required_behavior": "",
+      "forbidden_behavior": "The sender sends a RESET_STREAM frame for that stream.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A state-aware send trace can verify that RESET_STREAM is never emitted while the stream is in either named terminal state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A sender MUST NOT send any of these frames from a terminal state\n   (\"Data Recvd\" or \"Reset Recvd\").  A sender MUST NOT send a STREAM or\n   STREAM_DATA_BLOCKED frame for a stream in the \"Reset Sent\" state or\n   any terminal state -- that is, after sending a RESET_STREAM frame.",
+      "line_start": 891,
+      "line_end": 895,
+      "condition": "When a stream is in \"Reset Sent\", \"Data Recvd\", or \"Reset Recvd\", including after the sender has sent RESET_STREAM",
+      "required_behavior": "",
+      "forbidden_behavior": "The sender sends a STREAM frame for that stream.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation trace can correlate the stream state and prior RESET_STREAM transmission with every attempted STREAM transmission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A sender MUST NOT send any of these frames from a terminal state\n   (\"Data Recvd\" or \"Reset Recvd\").  A sender MUST NOT send a STREAM or\n   STREAM_DATA_BLOCKED frame for a stream in the \"Reset Sent\" state or\n   any terminal state -- that is, after sending a RESET_STREAM frame.",
+      "line_start": 891,
+      "line_end": 895,
+      "condition": "When a stream is in \"Reset Sent\", \"Data Recvd\", or \"Reset Recvd\", including after the sender has sent RESET_STREAM",
+      "required_behavior": "",
+      "forbidden_behavior": "The sender sends a STREAM_DATA_BLOCKED frame for that stream.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation trace can correlate the stream state and prior RESET_STREAM transmission with every attempted STREAM_DATA_BLOCKED transmission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The receiver only sends MAX_STREAM_DATA frames in the \"Recv\" state.",
+      "line_start": 901,
+      "line_end": 901,
+      "condition": "When the receiver sends a MAX_STREAM_DATA frame for a stream",
+      "required_behavior": "The receiving side of that stream is in the \"Recv\" state.",
+      "forbidden_behavior": "The receiver sends MAX_STREAM_DATA while the stream is in any state other than \"Recv\".",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A frame-emission trace can compare the receiver's stream state with every emitted MAX_STREAM_DATA frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A receiver MAY send a STOP_SENDING frame in any state where it has\n   not received a RESET_STREAM frame -- that is, states other than\n   \"Reset Recvd\" or \"Reset Read\".",
+      "line_start": 902,
+      "line_end": 904,
+      "condition": "When the receiver has not received RESET_STREAM and the stream state is neither \"Reset Recvd\" nor \"Reset Read\"",
+      "required_behavior": "The implementation is permitted, but not required, to send STOP_SENDING.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The quoted text grants optional behavior rather than requiring an observable action, and it does not explicitly prohibit STOP_SENDING after RESET_STREAM is received; therefore it does not yield a mandatory implementation checkpoint.",
+      "eligibility": "exclude"
+    }
+  ]
+}

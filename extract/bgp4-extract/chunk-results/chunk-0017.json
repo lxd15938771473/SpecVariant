@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0017",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "BGP does not use any TCP-based, keep-alive mechanism to determine if\n   peers are reachable.",
+      "line_start": 1149,
+      "line_end": 1150,
+      "condition": "determining whether BGP peers are reachable",
+      "required_behavior": "",
+      "forbidden_behavior": "Use a TCP-based keep-alive mechanism to determine BGP peer reachability.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Peer reachability logic can be checked for reliance on TCP keep-alive.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Instead, KEEPALIVE messages are exchanged\n   between peers often enough not to cause the Hold Timer to expire.",
+      "line_start": 1150,
+      "line_end": 1151,
+      "condition": "maintaining a BGP session with an active Hold Timer",
+      "required_behavior": "Exchange KEEPALIVE messages often enough to prevent Hold Timer expiration due to insufficient KEEPALIVE frequency.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "KEEPALIVE scheduling can be compared against the active Hold Timer interval.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A\n   reasonable maximum time between KEEPALIVE messages would be one third\n   of the Hold Time interval.",
+      "line_start": 1151,
+      "line_end": 1153,
+      "condition": "choosing a KEEPALIVE interval for a nonzero Hold Time",
+      "required_behavior": "Use one third of the Hold Time interval as the suggested maximum time between KEEPALIVE messages; this is advisory.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The suggested scheduling bound is a concrete ratio that can be compared with configured or observed intervals.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "KEEPALIVE messages MUST NOT be sent more\n   frequently than one per second.",
+      "line_start": 1153,
+      "line_end": 1154,
+      "condition": "sending KEEPALIVE messages",
+      "required_behavior": "",
+      "forbidden_behavior": "Send KEEPALIVE messages more frequently than one per second.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Successive KEEPALIVE transmission timestamps can be checked against the one-second minimum spacing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An implementation MAY adjust the\n   rate at which it sends KEEPALIVE messages as a function of the Hold\n   Time interval.",
+      "line_start": 1154,
+      "line_end": 1156,
+      "condition": "selecting the KEEPALIVE transmission rate",
+      "required_behavior": "MAY adjust the KEEPALIVE transmission rate as a function of the Hold Time interval; adjustment is permitted, not required.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Timer configuration can reveal whether the permitted Hold-Time-dependent scheduling is implemented.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the negotiated Hold Time interval is zero, then periodic KEEPALIVE\n   messages MUST NOT be sent.",
+      "line_start": 1158,
+      "line_end": 1159,
+      "condition": "the negotiated Hold Time interval is zero",
+      "required_behavior": "",
+      "forbidden_behavior": "Send periodic KEEPALIVE messages.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A session negotiated with zero Hold Time can be observed for periodic KEEPALIVE transmission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A KEEPALIVE message consists of only the message header and has a\n   length of 19 octets.",
+      "line_start": 1161,
+      "line_end": 1162,
+      "condition": "encoding or accepting a KEEPALIVE message",
+      "required_behavior": "The KEEPALIVE message contains only the message header.",
+      "forbidden_behavior": "Include a body or other content after the header in a KEEPALIVE message.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "KEEPALIVE encoding and parsing can be checked for header-only structure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A KEEPALIVE message consists of only the message header and has a\n   length of 19 octets.",
+      "line_start": 1161,
+      "line_end": 1162,
+      "condition": "encoding or accepting a KEEPALIVE message",
+      "required_behavior": "The KEEPALIVE message length is exactly 19 octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded message size and accepted Length field can be checked against 19 octets.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,402 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "batch-04",
+  "decisions": [
+    {
+      "pair_id": "pair-087294c5fca1417a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check is limited to encoding missing_extension as 109, while the right check explicitly covers both encoding and decoding; the implementation directions are not identical."
+    },
+    {
+      "pair_id": "pair-cde7b53988112fa7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check is limited to encoding unsupported_extension as 110, while the right check explicitly covers both encoding and decoding; the implementation directions are not identical."
+    },
+    {
+      "pair_id": "pair-7692d53147ffe358",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply the same record-boundary rule to different handshake messages: ServerHello versus KeyUpdate."
+    },
+    {
+      "pair_id": "pair-7ea20f1f29252c9b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The malformed ClientHello conditions differ: one lacks supported_groups when pre_shared_key is absent, while the other has key_share without supported_groups."
+    },
+    {
+      "pair_id": "pair-d651c26a84c0a2fb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check is limited to encoding unexpected_message as 10, while the right check explicitly covers both encoding and decoding; the implementation directions are not identical."
+    },
+    {
+      "pair_id": "pair-70824c31b7ba2340",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check is limited to encoding certificate_required as 116, while the right check explicitly covers both encoding and decoding; the implementation directions are not identical."
+    },
+    {
+      "pair_id": "pair-213853c11943ff52",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These constrain different structures and successor fields: CertificateRequest context before extensions versus Certificate context before certificate_list."
+    },
+    {
+      "pair_id": "pair-6fa17796f517262a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are different ordering edges in the client authentication flight: CertificateVerify before Finished versus Certificate before CertificateVerify."
+    },
+    {
+      "pair_id": "pair-b5d7e7d19f97b65e",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-f7792f5bd464774c918c",
+      "reason": "Both require a server to ignore an unrecognized ClientHello cipher suite and continue processing. The canonical requirement has direct primary-body MUST evidence rather than a derived implementation-checklist restatement."
+    },
+    {
+      "pair_id": "pair-4d744717fdeb64e0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check is limited to encoding illegal_parameter as 47, while the right check explicitly covers both encoding and decoding; the implementation directions are not identical."
+    },
+    {
+      "pair_id": "pair-cec40da129875a6c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The maximum encoded value applies to different enum types, AlertLevel and KeyUpdateRequest."
+    },
+    {
+      "pair_id": "pair-01d2757845579f97",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The certificate-only restriction applies to different SignatureScheme families: RSASSA-PKCS1-v1_5 versus legacy SHA-1."
+    },
+    {
+      "pair_id": "pair-7ffa913d618fb536",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check is limited to encoding bad_certificate as 42, while the right check explicitly covers both encoding and decoding; the implementation directions are not identical."
+    },
+    {
+      "pair_id": "pair-514fd7ca522af8d2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply the same record-boundary rule to different handshake messages: KeyUpdate versus Finished."
+    },
+    {
+      "pair_id": "pair-84d4d524ca4610ed",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks cover different message classes and traffic-secret generations: handshake messages with handshake traffic secrets versus application data with application traffic secrets."
+    },
+    {
+      "pair_id": "pair-05a5689f2dbbb0dc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are different key-schedule derivations with different inputs and outputs: Handshake Secret versus Master Secret."
+    },
+    {
+      "pair_id": "pair-c0990f12194fcafd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The required traffic-keying inputs differ: a purpose value versus the generated value's length."
+    },
+    {
+      "pair_id": "pair-c3e867f717e6dfc7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "PSK key agreement requires two different extensions; checking pre_shared_key does not check psk_key_exchange_modes."
+    },
+    {
+      "pair_id": "pair-dc04258156a60638",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The dispatch checks use different Handshake.msg_type values and different body structures: Certificate versus CertificateVerify."
+    },
+    {
+      "pair_id": "pair-ee0776bb7e94c835",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These require inclusion of different handshake-header fields in the transcript: the length field versus the type field."
+    },
+    {
+      "pair_id": "pair-91ca59aab55cc4c8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One check governs application authorization to send 0-RTT, while the other governs authorization to accept 0-RTT."
+    },
+    {
+      "pair_id": "pair-8a6fc71b08946b28",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The ignored ClientHello item differs: an unrecognized key share versus an unrecognized extension."
+    },
+    {
+      "pair_id": "pair-a21a0dac07830b7f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Under the same ticket-age condition, these are separate required actions: proceed with the handshake versus reject 0-RTT."
+    },
+    {
+      "pair_id": "pair-5e0a9fe5e147ade5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The encryption rule is applied to different handshake messages, Certificate and Finished."
+    },
+    {
+      "pair_id": "pair-2d4b52dc527b56c7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The downgrade sentinels have different negotiated-version conditions and different final-byte values, ending in 01 versus 00."
+    },
+    {
+      "pair_id": "pair-131543d194f53b12",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The maximum encoded value applies to different enum types, HandshakeType and PskKeyExchangeMode."
+    },
+    {
+      "pair_id": "pair-b888e009dbac39e5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Early-data acceptance must compare two different PSK-associated values: the TLS version and the cipher suite."
+    },
+    {
+      "pair_id": "pair-8142e7a2ce5f2b0c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These constrain different NewSessionTicket fields; ticket_age_add also has a distinct ordering requirement after ticket_lifetime."
+    },
+    {
+      "pair_id": "pair-d98087d39bcc735b",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-bf10b3078f0770db5b56",
+      "reason": "Both require the client Certificate response when the server requested certificate-based client authentication. The canonical requirement is the direct primary-body MUST statement and states the CertificateRequest condition explicitly."
+    },
+    {
+      "pair_id": "pair-4c3f41836e5cff61",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The maximum encoded value applies to different enum types, ContentType and PskKeyExchangeMode."
+    },
+    {
+      "pair_id": "pair-d957d01e178a3a37",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These remove different obsolete capabilities from a TLS 1.3 configuration: EXPORT ciphers versus SSL."
+    },
+    {
+      "pair_id": "pair-1214c2611ca99b19",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The handshake-signature prohibition applies to different SignatureScheme families: RSASSA-PKCS1-v1_5 versus legacy SHA-1."
+    },
+    {
+      "pair_id": "pair-ef6c3d0bac72042d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The required traffic-keying inputs differ: a secret value versus the generated value's length."
+    },
+    {
+      "pair_id": "pair-ca11c8c7d184d3bd",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-f24a762065341c0b988c",
+      "reason": "Both require supported_versions in ServerHello or HelloRetryRequest to encode and parse exactly one selected ProtocolVersion. The canonical requirement cites the direct primary-body supported_versions definition."
+    },
+    {
+      "pair_id": "pair-7db15e6ddbc015fa",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The maximum encoded value applies to different enum types, AlertDescription and PskKeyExchangeMode."
+    },
+    {
+      "pair_id": "pair-854be1e9162a4096",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical numeric upper bound applies to different vectors in different structures: CertificateEntry.extensions and CertificateVerify.signature."
+    },
+    {
+      "pair_id": "pair-1ab82151ff2d46d6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These encode different halves of exclusive choice: at most one authentication method versus at least one authentication method."
+    },
+    {
+      "pair_id": "pair-4ef782db69e20a3b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The declared field-order constraints apply to different structures with different fields: ClientHello and ServerHello."
+    },
+    {
+      "pair_id": "pair-a6393f4f25e364b7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The malformed ClientHello conditions differ: one lacks supported_groups when pre_shared_key is absent, while the other has supported_groups without key_share."
+    },
+    {
+      "pair_id": "pair-d7d0c36199273ead",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left condition is limited to PSK-authenticating servers, while the right applies to any server sending a post-handshake CertificateRequest; the scopes are not equivalent."
+    },
+    {
+      "pair_id": "pair-58984e9a26e6be19",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These remove different obsolete capabilities from a TLS 1.3 configuration: RC4 versus EXPORT ciphers."
+    },
+    {
+      "pair_id": "pair-abf7fd556aac1087",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The ignored ClientHello item differs: an unrecognized cipher suite versus an unrecognized extension."
+    },
+    {
+      "pair_id": "pair-12d8649080367e0c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Figure 4 ClientHello checks require different extensions: psk_key_exchange_modes versus pre_shared_key."
+    },
+    {
+      "pair_id": "pair-782b21b804cf23f7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The maximum encoded value applies to different enum types, PskKeyExchangeMode and CertificateType."
+    },
+    {
+      "pair_id": "pair-c2ae7d2347da218e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply the same record-boundary rule to different handshake messages: ServerHello versus EndOfEarlyData."
+    },
+    {
+      "pair_id": "pair-1b8704669465d3e2",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-347f1ca3f848a0d29194",
+      "reason": "Both require generated TLSCiphertext records to set legacy_record_version to 0x0303. The canonical requirement cites the direct primary-body statement that the field is always 0x0303."
+    },
+    {
+      "pair_id": "pair-3a3c9f8e3bfe482d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are opposite state-machine branches with different conditions, receive keys, and destination states depending on whether 0-RTT is in use."
+    },
+    {
+      "pair_id": "pair-f24d1fcc55f41cff",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The maximum encoded value applies to different enum types, AlertLevel and PskKeyExchangeMode."
+    },
+    {
+      "pair_id": "pair-bc05a20ef8dd7576",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check is limited to encoding AlertLevel.warning as 1, while the right check explicitly covers both encoding and decoding; the implementation directions are not identical."
+    },
+    {
+      "pair_id": "pair-95d7f148d16367b9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks have different authentication conditions and opposite behavior: omit CertificateVerify for PSK authentication versus send it for certificate authentication."
+    },
+    {
+      "pair_id": "pair-45021e7a3d05fa17",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These derive different outputs with different labels and lengths: the sender write key using key versus the sender write IV using iv."
+    },
+    {
+      "pair_id": "pair-9c327f85bc5a5efe",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The dispatch checks use different Handshake.msg_type values and different body structures: ClientHello versus ServerHello."
+    },
+    {
+      "pair_id": "pair-5cff33dfa14e7706",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check is limited to encoding close_notify as 0, while the right check explicitly covers both encoding and decoding; the implementation directions are not identical."
+    },
+    {
+      "pair_id": "pair-1a1e5fdf0024e666",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply the same record-boundary rule to different handshake messages: Finished versus EndOfEarlyData."
+    },
+    {
+      "pair_id": "pair-d975d8f7d144ce6a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The server must ignore different unrecognized ClientHello items: a cipher suite versus an extension."
+    },
+    {
+      "pair_id": "pair-cc02aa2af2285864",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The ignored ClientHello item differs: an unrecognized key share versus an unrecognized cipher suite."
+    },
+    {
+      "pair_id": "pair-3c93ee819e79f5c3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The maximum encoded value applies to different enum types, PskKeyExchangeMode and KeyUpdateRequest."
+    },
+    {
+      "pair_id": "pair-dac2b92e35d78b48",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Although both errors use bad_certificate, the triggering certificate defects differ: a non-verifying signature versus corrupt certificate data."
+    },
+    {
+      "pair_id": "pair-f06f3a94f8a7f4fb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These require support for different cipher suites and have different normative strength: TLS_AES_128_GCM_SHA256 is MUST, while TLS_CHACHA20_POLY1305_SHA256 is SHOULD."
+    },
+    {
+      "pair_id": "pair-338ebe603af8bcc7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations concern different exporters and different Handshake Contexts: early traffic versus application traffic."
+    },
+    {
+      "pair_id": "pair-2c72fd8edbd0d01d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These map different KeyUpdateRequest enum members to different values: update_requested to 1 versus update_not_requested to 0."
+    },
+    {
+      "pair_id": "pair-9054f8b670a466f9",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-4fb61c06d6631cd377eb",
+      "reason": "Both require Transcript-Hash input to exclude record-layer headers. The canonical requirement is the clearer direct definition of what is and is not hashed when computing the transcript."
+    },
+    {
+      "pair_id": "pair-62296f2acbffb876",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The ignored ClientHello item differs: an unrecognized supported version versus an unrecognized extension."
+    },
+    {
+      "pair_id": "pair-5dc109b90f4366bc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The bounds apply to different extension vectors, and their minimum lengths differ: CertificateRequest.extensions starts at 2 while CertificateEntry.extensions starts at 0."
+    },
+    {
+      "pair_id": "pair-286f52b9d6ed39e4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are implementation requirements for different protocol capabilities: a cipher suite versus the key_share extension."
+    },
+    {
+      "pair_id": "pair-bfd54b378c416800",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Figure 4 ClientHello checks require different extensions: psk_key_exchange_modes versus early_data."
+    }
+  ]
+}

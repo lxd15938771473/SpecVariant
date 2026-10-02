@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0049",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Messages sent over TCP connections use server port 53 (decimal).",
+      "line_start": 1814,
+      "line_end": 1814,
+      "condition": "When sending DNS messages over TCP.",
+      "required_behavior": "Use server port 53 (decimal).",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The server listening port and client destination port can be inspected or observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Messages sent over TCP connections use server port 53 (decimal).  The\nmessage is prefixed with a two byte length field",
+      "line_start": 1814,
+      "line_end": 1815,
+      "condition": "When encoding a DNS message sent over TCP.",
+      "required_behavior": "Prefix the message with a length field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The framing encoder and transmitted bytes expose whether a length field precedes the message.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Messages sent over TCP connections use server port 53 (decimal).  The\nmessage is prefixed with a two byte length field",
+      "line_start": 1814,
+      "line_end": 1815,
+      "condition": "For the length field prefixed to a DNS message sent over TCP.",
+      "required_behavior": "Encode the length field in two bytes.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The prefix width can be checked in the encoder and on the TCP stream.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Messages sent over TCP connections use server port 53 (decimal).  The\nmessage is prefixed with a two byte length field which gives the message\n\n\n\nMockapetris                                                    [Page 32]\n\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n\nlength, excluding the two byte length field.",
+      "line_start": 1814,
+      "line_end": 1825,
+      "condition": "For the length field prefixed to a DNS message sent over TCP.",
+      "required_behavior": "Set the length field to the message length excluding the two-byte length field itself.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded length can be compared with the framed message byte count after its prefix.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- The server should not block other activities waiting for TCP\n     data.",
+      "line_start": 1831,
+      "line_end": 1832,
+      "condition": "While the server is waiting for TCP data.",
+      "required_behavior": "",
+      "forbidden_behavior": "The server should not block other activities while waiting for TCP data.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A stalled TCP sender can be used to check whether the server continues other work.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- The server should support multiple connections.",
+      "line_start": 1834,
+      "line_end": 1834,
+      "condition": "For a DNS server using TCP.",
+      "required_behavior": "The server should support multiple connections.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Opening multiple TCP connections checks the recommended connection support.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- The server should assume that the client will initiate\n     connection closing, and should delay closing its end of the\n     connection until all outstanding client requests have been\n     satisfied.",
+      "line_start": 1836,
+      "line_end": 1839,
+      "condition": "When managing an established TCP connection.",
+      "required_behavior": "The server should assume that the client will initiate connection closing.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The connection lifecycle policy can be inspected for its expected initiator and exercised after responses complete.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- The server should assume that the client will initiate\n     connection closing, and should delay closing its end of the\n     connection until all outstanding client requests have been\n     satisfied.",
+      "line_start": 1836,
+      "line_end": 1839,
+      "condition": "When a TCP connection has outstanding client requests.",
+      "required_behavior": "The server should delay closing its end of the connection until all outstanding client requests have been satisfied.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Multiple pending requests can be exercised while observing whether server closure precedes their completion.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- If the server needs to close a dormant connection to reclaim\n     resources, it should wait until the connection has been idle\n     for a period on the order of two minutes.",
+      "line_start": 1841,
+      "line_end": 1843,
+      "condition": "If the server needs to close a dormant TCP connection to reclaim resources.",
+      "required_behavior": "The server should wait until the connection has been idle for a period on the order of two minutes before closing it.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The dormant-connection reclamation timer and observed idle duration can be checked against the approximate recommended interval.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- If the server needs to close a dormant connection to reclaim\n     resources, it should wait until the connection has been idle\n     for a period on the order of two minutes.  In particular, the\n     server should allow the SOA and AXFR request sequence (which\n     begins a refresh operation) to be made on a single connection.",
+      "line_start": 1841,
+      "line_end": 1845,
+      "condition": "When managing dormant TCP connections, including resource reclamation.",
+      "required_behavior": "The server should allow the SOA and AXFR request sequence that begins a refresh operation to be made on a single connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Issuing SOA followed by AXFR on one connection checks whether the recommended sequence remains possible.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- If the server needs to close a dormant connection to reclaim\n     resources, it should wait until the connection has been idle\n     for a period on the order of two minutes.  In particular, the\n     server should allow the SOA and AXFR request sequence (which\n     begins a refresh operation) to be made on a single connection.\n     Since the server would be unable to answer queries anyway, a\n     unilateral close or reset may be used instead of a graceful\n     close.",
+      "line_start": 1841,
+      "line_end": 1848,
+      "condition": "If the server needs to close a dormant TCP connection to reclaim resources and would be unable to answer queries anyway.",
+      "required_behavior": "The server may use a unilateral close or reset instead of a graceful close.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The resource-reclamation closure path can be checked for the permitted unilateral close or reset behavior.",
+      "eligibility": "eligible"
+    }
+  ]
+}

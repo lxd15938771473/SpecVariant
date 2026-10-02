@@ -1,0 +1,396 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "recall-02",
+  "decisions": [
+    {
+      "pair_id": "pair-75cdfff5a0a031ab",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply to different integer types and require different wire widths: three bytes for uint24 versus four bytes for uint32."
+    },
+    {
+      "pair_id": "pair-18d6a31ea67b8b90",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement allowlists target different extension fields, application_layer_protocol_negotiation versus server_certificate_type."
+    },
+    {
+      "pair_id": "pair-5445569cb8639fcb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The EarlyDataIndication variants have different message applicability and payloads: a uint32 in NewSessionTicket versus Empty in ClientHello."
+    },
+    {
+      "pair_id": "pair-1781a18cc4dc7e38",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requires binder validation before accepting PSK establishment; the other requires aborting for a missing binder, so the conditions and outcomes are not equivalent."
+    },
+    {
+      "pair_id": "pair-92c75a354d9e36c2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The permitted branches arise from different certificate failures, and only the empty Certificate case specifies certificate_required when aborting."
+    },
+    {
+      "pair_id": "pair-50d4a38ce6761ce8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are separate state transitions triggered by different messages: WAIT_CERT to WAIT_CV on Certificate and WAIT_CV to WAIT_FINISHED on CertificateVerify."
+    },
+    {
+      "pair_id": "pair-8a6af83cda7ad879",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints target different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-3337e5b711f4be89",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same container rule applies to different key-exchange parameter families, finite-field DH and ECDHE, which are separate implementation scopes."
+    },
+    {
+      "pair_id": "pair-db9da90d981095c8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The first is a broad TLS 1.3 RSA-signature constraint, while the second specifically governs CertificateVerify; their applicability scopes are not equivalent."
+    },
+    {
+      "pair_id": "pair-367adbfc712c0dbf",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-25b2911edc563096",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The allowlists apply to different extension fields and differ on the second permitted message, EncryptedExtensions versus CertificateRequest."
+    },
+    {
+      "pair_id": "pair-23517b8adf4ec15d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One prohibits a client Certificate when no CertificateRequest was sent; the other requires a server Certificate during server certificate authentication."
+    },
+    {
+      "pair_id": "pair-e5d8c4fe9657b5a1",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply to different extensions with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-b7aa2cfd992f567c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints target different extension fields and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-87398e6ff9808ad3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The enum checks map different SignatureScheme members to different numeric values."
+    },
+    {
+      "pair_id": "pair-bed6ec720df84e51",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The first checks the server nonce's role-specific inputs, while the second additionally checks the exact padded-sequence-number XOR operation; the former is only a partial constraint."
+    },
+    {
+      "pair_id": "pair-ac7347f5b4cc7220",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One defines how a PKCS1-v1_5 scheme dispatches when used; the other forbids that scheme for signed TLS handshake messages."
+    },
+    {
+      "pair_id": "pair-9592dc61c8728413",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The first checks the client nonce's role-specific inputs, while the second additionally checks the exact padded-sequence-number XOR operation; the former is only a partial constraint."
+    },
+    {
+      "pair_id": "pair-39906ba1f200c09e",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-e4c6f31cce27d46d11e4",
+      "reason": "Both require pre_shared_key to be the final ClientHello extension under the same applicability; the canonical evidence states the rule directly in the pre_shared_key section."
+    },
+    {
+      "pair_id": "pair-d01e8f2d7ab738c2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The transitions occur at different states and perform opposite key changes: entering WAIT_EOED with early-data keys versus leaving it with handshake keys."
+    },
+    {
+      "pair_id": "pair-450cc6fe3fe3a5b0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-7877f963de481266",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The implementation requirements cover different capabilities: a cipher suite versus a key-exchange group."
+    },
+    {
+      "pair_id": "pair-a81953028ab79276",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different SignatureScheme members to different code points."
+    },
+    {
+      "pair_id": "pair-5784de4bd878bd7c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The allowlists target different extension fields and permit different message types."
+    },
+    {
+      "pair_id": "pair-c2757db633693264",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-b1bf2ec534f7b45c8da3",
+      "reason": "Both impose the same check that modification of protected channel data is detected under an active network attacker; the canonical evidence directly states the integrity property."
+    },
+    {
+      "pair_id": "pair-2fc3b0ffcb4829bd",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-2897c5463ba534425f62",
+      "reason": "Both require each handshake message's length field to be included in the transcript Messages bytes; the canonical evidence directly defines the transcript-hash input."
+    },
+    {
+      "pair_id": "pair-8af36faf455e75e2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One specifies the serialized type of TLSPlaintext.legacy_record_version, while the other requires receivers to ignore that field's value."
+    },
+    {
+      "pair_id": "pair-49a27a1be69a28be",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-4514521dbba62f89",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One defines the receive-side alert outcome for empty Alert content; the other prohibits send-side empty Handshake content."
+    },
+    {
+      "pair_id": "pair-8e24e7e3806f424e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The one-octet range constraints apply to different enum types, CertificateType and AlertLevel."
+    },
+    {
+      "pair_id": "pair-c335365a761b7883",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks assign different numeric values to different AlertLevel members."
+    },
+    {
+      "pair_id": "pair-b7d8ca93ecfbd763",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake dispatch checks use different msg_type values and different body types."
+    },
+    {
+      "pair_id": "pair-2c7c9029267d1843",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The allowlists target different extensions and differ on the second permitted message."
+    },
+    {
+      "pair_id": "pair-5c0830d50f6ef805",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed-width checks apply to the X coordinate of different curves and require different sizes, 32 versus 48 octets."
+    },
+    {
+      "pair_id": "pair-e1b142a27bfdb464",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One fixes the record version for a second ClientHello after HelloRetryRequest, while the other fixes the field for TLSCiphertext records; their record scopes differ."
+    },
+    {
+      "pair_id": "pair-e812c53d6082ddbe",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The enum checks map different HandshakeType members to different numeric values."
+    },
+    {
+      "pair_id": "pair-e0228095dcc55791",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed legacy_version value applies to different fields in different messages, ServerHello versus ClientHello."
+    },
+    {
+      "pair_id": "pair-292ac69356d54c9d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks target different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-a3d23256feeee0f9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The enum checks map different SignatureScheme members to different numeric values."
+    },
+    {
+      "pair_id": "pair-d870b6f0dc97cfdd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed legacy_version value applies to different fields in different messages, ClientHello versus ServerHello."
+    },
+    {
+      "pair_id": "pair-405cedb8de862587",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed-width checks apply to the Y coordinate of different curves and require different sizes, 32 versus 48 octets."
+    },
+    {
+      "pair_id": "pair-b42ec4299f9cf9ed",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Retaining the exact previous protocol version is stronger than merely not negotiating TLS 1.3, so the latter is only a partial constraint."
+    },
+    {
+      "pair_id": "pair-5000d2789c9538d5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The allowlists target different extensions and differ on the second permitted message."
+    },
+    {
+      "pair_id": "pair-b02360620f3e39e6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-0a347cca1eb7a444",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The first is a fallback rule specifically for certificate signatures when signature_algorithms_cert is absent; the second is a general certificate-authentication requirement."
+    },
+    {
+      "pair_id": "pair-ae19571045a3e1c8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints target different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-8a4450f2c437ad98",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "ASCII encoding and omission of a trailing NUL are separate atomic label-format checks."
+    },
+    {
+      "pair_id": "pair-8736596807632f51",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-00734c1fb5b1439d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks target different extensions and have different allowed message sets."
+    },
+    {
+      "pair_id": "pair-2abbceb2c7b4d7ed",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-743966c20830e1a37885",
+      "reason": "Both map ContentType.change_cipher_spec to numeric value 20 for encoding and decoding; the canonical evidence is the direct primary-body enum definition."
+    },
+    {
+      "pair_id": "pair-9038daf0196f3a72",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The allowlists target different extensions and differ on the second permitted message."
+    },
+    {
+      "pair_id": "pair-d527844a82803f4a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The vector constraints apply to different fields and have different minimum content lengths, three versus two bytes."
+    },
+    {
+      "pair_id": "pair-b098bcf2547a5efa",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The enum checks map different SignatureScheme members to different numeric values."
+    },
+    {
+      "pair_id": "pair-3c53170279de5ec6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Although both failures use illegal_parameter, one rejects a pre-TLS-1.3 selected version and the other rejects a NamedGroup inconsistent with HelloRetryRequest."
+    },
+    {
+      "pair_id": "pair-58895e0ecc530c79",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The mandatory support checks cover different capabilities, a cipher suite and a digital-signature scheme."
+    },
+    {
+      "pair_id": "pair-11a78eab2c5c8f02",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Requiring ClientHello.legacy_version to equal 0x0303 is stronger and more specific than requiring it merely to exceed 0x0300."
+    },
+    {
+      "pair_id": "pair-7da5647af214f223",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The rules cover unnamed versus explicitly named alert paths and differ in normative strength and alert selection."
+    },
+    {
+      "pair_id": "pair-b1575319b8d29140",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requires the client's Certificate after requested client authentication; the other requires the server's Certificate during server authentication."
+    },
+    {
+      "pair_id": "pair-b24dbfdd0f1dc556",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-ff8df4e3def9eac5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks target different extensions and different three-message allowlists."
+    },
+    {
+      "pair_id": "pair-7c602fa43ea62f49",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The EarlyDataIndication variants have different message applicability and payloads: Empty in EncryptedExtensions versus a uint32 in NewSessionTicket."
+    },
+    {
+      "pair_id": "pair-c709249ba3c99c40",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The selected_identity checks use different applicability and predicates: general offered-identity bounds versus equality to zero when early_data is present."
+    },
+    {
+      "pair_id": "pair-a4cce3bd4ef428b2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations produce different secrets from different base secrets, labels, and transcript boundaries."
+    },
+    {
+      "pair_id": "pair-6687cc9a4ecc6fd5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same length range applies under different certificate_type branches to different CertificateEntry fields."
+    },
+    {
+      "pair_id": "pair-3eba61241721847e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and differ on the second permitted message."
+    }
+  ]
+}

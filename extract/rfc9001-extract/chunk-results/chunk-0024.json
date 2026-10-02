@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0024",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An endpoint MUST discard its Handshake keys when the TLS handshake is\n   confirmed (Section 4.1.2).",
+      "line_start": 953,
+      "line_end": 954,
+      "condition": "When the TLS handshake is confirmed",
+      "required_behavior": "The endpoint discards its Handshake keys.",
+      "forbidden_behavior": "Retain or continue using Handshake keys after handshake confirmation.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A handshake-state test can observe key storage and attempt Handshake-level processing immediately after confirmation to verify that the keys were discarded.",
+      "eligibility": "eligible"
+    }
+  ]
+}

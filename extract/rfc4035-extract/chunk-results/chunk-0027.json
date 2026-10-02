@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0027",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A security-aware name server does not perform signature validation\n   for authoritative data during query processing, even when the CD bit\n   is clear.",
+      "line_start": 904,
+      "line_end": 906,
+      "condition": "A security-aware name server is processing a query for authoritative data, including when the CD bit is clear.",
+      "required_behavior": "",
+      "forbidden_behavior": "Perform signature validation for authoritative data during query processing.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The authoritative query-processing path can be inspected for signature validation and exercised with both values of the CD bit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware name server SHOULD clear the CD bit when\n   composing an authoritative response.",
+      "line_start": 906,
+      "line_end": 907,
+      "condition": "A security-aware name server is composing an authoritative response.",
+      "required_behavior": "SHOULD clear the CD bit in the authoritative response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The CD bit emitted in an authoritative response is observable; clearing is a recommendation, not an unconditional requirement.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware name server MUST NOT set the AD bit in a response\n   unless the name server considers all RRsets in the Answer and\n   Authority sections of the response to be authentic.",
+      "line_start": 919,
+      "line_end": 921,
+      "condition": "A security-aware name server is composing a response and does not consider every RRset in its Answer and Authority sections authentic.",
+      "required_behavior": "",
+      "forbidden_behavior": "MUST NOT set the AD bit in the response.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "AD-bit generation can be checked against the authenticity assessment of every Answer and Authority RRset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware\n   name server's local policy MAY consider data from an authoritative\n   zone to be authentic without further validation.  However, the name\n   server MUST NOT do so unless the name server obtained the\n   authoritative zone via secure means (such as a secure zone transfer\n   mechanism) and MUST NOT do so unless this behavior has been\n   configured explicitly.",
+      "line_start": 921,
+      "line_end": 927,
+      "condition": "A security-aware name server obtained an authoritative zone via secure means and the behavior of treating its data as authentic without further validation has been explicitly configured.",
+      "required_behavior": "The name server's local policy MAY consider data from that authoritative zone authentic without further validation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The local-policy path for accepting authoritative data without additional validation is concrete and optional, with secure acquisition and explicit configuration as applicability conditions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware\n   name server's local policy MAY consider data from an authoritative\n   zone to be authentic without further validation.  However, the name\n   server MUST NOT do so unless the name server obtained the\n   authoritative zone via secure means (such as a secure zone transfer\n   mechanism) and MUST NOT do so unless this behavior has been\n   configured explicitly.",
+      "line_start": 921,
+      "line_end": 927,
+      "condition": "A security-aware name server did not obtain an authoritative zone via secure means.",
+      "required_behavior": "",
+      "forbidden_behavior": "MUST NOT use local policy to consider data from that authoritative zone authentic without further validation.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The policy allowing authoritative data to bypass further validation can be checked for a secure-zone-acquisition precondition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware\n   name server's local policy MAY consider data from an authoritative\n   zone to be authentic without further validation.  However, the name\n   server MUST NOT do so unless the name server obtained the\n   authoritative zone via secure means (such as a secure zone transfer\n   mechanism) and MUST NOT do so unless this behavior has been\n   configured explicitly.",
+      "line_start": 921,
+      "line_end": 927,
+      "condition": "A security-aware name server has not been explicitly configured to consider data from an authoritative zone authentic without further validation.",
+      "required_behavior": "",
+      "forbidden_behavior": "MUST NOT use local policy to consider data from that authoritative zone authentic without further validation.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The policy allowing authoritative data to bypass further validation can be checked for an explicit-configuration precondition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware name server that supports recursion MUST follow the\n   rules for the CD and AD bits given in Section 3.2 when generating a\n   response that involves data obtained via recursion.",
+      "line_start": 929,
+      "line_end": 931,
+      "condition": "A security-aware name server supports recursion and is generating a response involving data obtained via recursion.",
+      "required_behavior": "MUST follow the rules for the CD bit given in Section 3.2.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The recursive-data response path is identifiable, but the referenced CD-bit rules in Section 3.2 are absent from this chunk, so the constrained behavior has incomplete evidence.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "A security-aware name server that supports recursion MUST follow the\n   rules for the CD and AD bits given in Section 3.2 when generating a\n   response that involves data obtained via recursion.",
+      "line_start": 929,
+      "line_end": 931,
+      "condition": "A security-aware name server supports recursion and is generating a response involving data obtained via recursion.",
+      "required_behavior": "MUST follow the rules for the AD bit given in Section 3.2.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The recursive-data response path is identifiable, but the referenced AD-bit rules in Section 3.2 are absent from this chunk, so the constrained behavior has incomplete evidence.",
+      "eligibility": "exclude"
+    }
+  ]
+}

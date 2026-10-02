@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0181",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   *  Modify the authenticated and encrypted portion of a packet and\n      cause the recipient to accept that packet",
+      "line_start": 7179,
+      "line_end": 7180,
+      "condition": "A limited on-path attacker modifies the authenticated and encrypted portion of a packet.",
+      "required_behavior": "The recipient must reject the modified packet.",
+      "forbidden_behavior": "The recipient must not accept the modified packet.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can modify authenticated or encrypted packet bytes and verify that the receiving endpoint does not accept the packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   1.  A limited on-path attacker cannot cause a connection to close\n       once the handshake has completed.",
+      "line_start": 7191,
+      "line_end": 7192,
+      "condition": "The handshake has completed and a limited on-path attacker exercises its available packet inspection, injection, header-modification, or reordering capabilities.",
+      "required_behavior": "The connection must remain open unless a closure condition independent of the limited on-path attack occurs.",
+      "forbidden_behavior": "The implementation must not allow the limited on-path attacker to cause the connection to close.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "After completing a handshake, focused adversarial packet tests can verify that actions available to this attacker do not trigger connection closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   2.  A limited on-path attacker cannot cause an idle connection to\n       close if the client is first to resume activity.",
+      "line_start": 7194,
+      "line_end": 7195,
+      "condition": "A connection is idle and the client is the first endpoint to resume activity while a limited on-path attacker is present.",
+      "required_behavior": "The connection must not be closed as a consequence of the limited on-path attack.",
+      "forbidden_behavior": "The implementation must not allow the limited on-path attacker to cause the idle connection to close.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A runtime test can idle a connection, have the client resume first under the specified attack model, and observe whether the connection closes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   3.  A limited on-path attacker can cause an idle connection to be\n       deemed lost if the server is the first to resume activity.",
+      "line_start": 7197,
+      "line_end": 7198,
+      "condition": "An idle connection exists and the server is the first endpoint to resume activity.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The statement describes a testable attacker capability, but it does not require an implementation to deem the connection lost or forbid an implementation from resisting that outcome.",
+      "eligibility": "exclude"
+    }
+  ]
+}

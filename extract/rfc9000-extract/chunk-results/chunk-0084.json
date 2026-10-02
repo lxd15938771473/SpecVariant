@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0084",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   The stateless reset token MUST be difficult to guess.  In order to",
+      "line_start": 3528,
+      "line_end": 3528,
+      "condition": "When generating a stateless reset token.",
+      "required_behavior": "Generate a stateless reset token that is difficult to guess.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The token-generation implementation and statistical or cryptographic properties of generated tokens can be tested for predictability.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   output of this function is truncated to 16 bytes to produce the\n   stateless reset token for that connection.",
+      "line_start": 3543,
+      "line_end": 3544,
+      "condition": "When the described static-key pseudorandom-function method is used to derive a stateless reset token.",
+      "required_behavior": "Truncate the function output to 16 bytes to form the connection's stateless reset token.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Tests can invoke the derivation method and verify that its resulting stateless reset token is exactly 16 bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   either use the same connection ID length for all connections or\n   encode the length of the connection ID such that it can be recovered\n   without state.  In addition, it cannot provide a zero-length\n   connection ID.",
+      "line_start": 3553,
+      "line_end": 3556,
+      "condition": "When an endpoint uses the stateless-reset design that recovers the connection ID from received packets without retained connection state.",
+      "required_behavior": "Either use one connection ID length for all connections or encode the connection ID length so it can be recovered without state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The endpoint's issued connection IDs and stateless recovery logic can be inspected or tested to verify one of the two permitted length-handling strategies.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   either use the same connection ID length for all connections or\n   encode the length of the connection ID such that it can be recovered\n   without state.  In addition, it cannot provide a zero-length\n   connection ID.",
+      "line_start": 3553,
+      "line_end": 3556,
+      "condition": "When an endpoint uses this stateless-reset design.",
+      "required_behavior": "",
+      "forbidden_behavior": "Provide a zero-length connection ID.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Tests can inspect connection IDs provided by such an endpoint and reject any with a length of zero.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Revealing the stateless reset token allows any entity to terminate\n   the connection, so a value can only be used once.  This method for",
+      "line_start": 3558,
+      "line_end": 3559,
+      "condition": "When selecting or revealing a stateless reset token value.",
+      "required_behavior": "Use each stateless reset token value only once.",
+      "forbidden_behavior": "Reuse a stateless reset token value after it has been used.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Token assignment and revelation history can be tracked to detect reuse of a value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   choosing the stateless reset token means that the combination of\n   connection ID and static key MUST NOT be used for another connection.",
+      "line_start": 3560,
+      "line_end": 3561,
+      "condition": "When the described static-key method is used to choose stateless reset tokens.",
+      "required_behavior": "",
+      "forbidden_behavior": "Use the same combination of connection ID and static key for another connection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Connection creation records can be checked for repeated connection-ID/static-key pairs across distinct connections.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   that is reset by revealing the stateless reset token MUST NOT be\n   reused for new connections at nodes that share a static key.",
+      "line_start": 3566,
+      "line_end": 3567,
+      "condition": "After a connection has been reset by revealing its stateless reset token, at nodes that share the relevant static key.",
+      "required_behavior": "",
+      "forbidden_behavior": "Reuse that connection's connection ID for a new connection.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can reveal a token to reset a connection and then verify that nodes sharing the static key never assign its connection ID to later connections.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The same stateless reset token MUST NOT be used for multiple\n   connection IDs.  Endpoints are not required to compare new values",
+      "line_start": 3569,
+      "line_end": 3570,
+      "condition": "When assigning stateless reset tokens to connection IDs.",
+      "required_behavior": "",
+      "forbidden_behavior": "Use the same stateless reset token for multiple connection IDs.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Token assignments can be compared to verify that no token maps to more than one connection ID.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   against all previous values, but a duplicate value MAY be treated as\n   a connection error of type PROTOCOL_VIOLATION.",
+      "line_start": 3571,
+      "line_end": 3572,
+      "condition": "When an endpoint detects a duplicate stateless reset token value.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The endpoint may treat the duplicate as a connection error of type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A focused test can supply a detected duplicate value and verify that closing the connection with PROTOCOL_VIOLATION is accepted behavior.",
+      "eligibility": "eligible"
+    }
+  ]
+}

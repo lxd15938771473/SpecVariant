@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0080",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Section 4.1.2 of [QUIC-TLS]), an endpoint MUST send any\n   CONNECTION_CLOSE frames in a 1-RTT packet.  However, prior to",
+      "line_start": 3296,
+      "line_end": 3297,
+      "condition": "After the handshake is confirmed, when an endpoint sends a CONNECTION_CLOSE frame.",
+      "required_behavior": "Send every CONNECTION_CLOSE frame in a 1-RTT packet.",
+      "forbidden_behavior": "Do not send a CONNECTION_CLOSE frame solely in a non-1-RTT packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can confirm the packet type carrying each CONNECTION_CLOSE frame after handshake confirmation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   confirming the handshake, it is possible that more advanced packet\n   protection keys are not available to the peer, so another\n   CONNECTION_CLOSE frame MAY be sent in a packet that uses a lower\n   packet protection level.  More specifically:",
+      "line_start": 3298,
+      "line_end": 3301,
+      "condition": "Before the handshake is confirmed and more advanced packet-protection keys might not be available to the peer.",
+      "required_behavior": "An additional CONNECTION_CLOSE frame is permitted in a packet using a lower packet-protection level.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet traces can establish whether an additional close frame uses a lower protection level only in the stated pre-confirmation condition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "      know whether the client has Handshake keys.  Under these\n      circumstances, a server SHOULD send a CONNECTION_CLOSE frame in\n      both Handshake and Initial packets to ensure that at least one of\n      them is processable by the client.",
+      "line_start": 3305,
+      "line_end": 3308,
+      "condition": "A server does not know whether the client has Handshake keys.",
+      "required_behavior": "Send a CONNECTION_CLOSE frame in both a Handshake packet and an Initial packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A packet trace can verify that the server emits the close frame at both required encryption levels under the stated uncertainty.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  Prior to confirming the handshake, a peer might be unable to\n      process 1-RTT packets, so an endpoint SHOULD send a\n      CONNECTION_CLOSE frame in both Handshake and 1-RTT packets.  A",
+      "line_start": 3316,
+      "line_end": 3318,
+      "condition": "Before the handshake is confirmed, when an endpoint sends a CONNECTION_CLOSE frame.",
+      "required_behavior": "Send the CONNECTION_CLOSE frame in both Handshake and 1-RTT packets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A pre-confirmation packet trace can verify transmission of the close frame in both packet types.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "      CONNECTION_CLOSE frame in both Handshake and 1-RTT packets.  A\n      server SHOULD also send a CONNECTION_CLOSE frame in an Initial\n      packet.",
+      "line_start": 3318,
+      "line_end": 3320,
+      "condition": "Before the handshake is confirmed, when a server sends a CONNECTION_CLOSE frame.",
+      "required_behavior": "Also send a CONNECTION_CLOSE frame in an Initial packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A packet trace can verify the server's additional Initial-packet close frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   state.  A CONNECTION_CLOSE of type 0x1d MUST be replaced by a\n   CONNECTION_CLOSE of type 0x1c when sending the frame in Initial or\n   Handshake packets.  Otherwise, information about the application",
+      "line_start": 3324,
+      "line_end": 3326,
+      "condition": "A CONNECTION_CLOSE corresponding to type 0x1d is sent in an Initial or Handshake packet.",
+      "required_behavior": "Replace it with a CONNECTION_CLOSE of type 0x1c.",
+      "forbidden_behavior": "Do not send a CONNECTION_CLOSE of type 0x1d in an Initial or Handshake packet.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Frame decoding can verify that the wire frame type is 0x1c rather than 0x1d at either specified packet-protection level.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Handshake packets.  Otherwise, information about the application\n   state might be revealed.  Endpoints MUST clear the value of the\n   Reason Phrase field and SHOULD use the APPLICATION_ERROR code when\n   converting to a CONNECTION_CLOSE of type 0x1c.",
+      "line_start": 3326,
+      "line_end": 3329,
+      "condition": "An endpoint converts a CONNECTION_CLOSE of type 0x1d to type 0x1c for an Initial or Handshake packet.",
+      "required_behavior": "Clear the value of the Reason Phrase field.",
+      "forbidden_behavior": "Do not preserve or emit a nonempty Reason Phrase value in the converted frame.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The converted CONNECTION_CLOSE frame can be decoded and its Reason Phrase checked for an empty value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Handshake packets.  Otherwise, information about the application\n   state might be revealed.  Endpoints MUST clear the value of the\n   Reason Phrase field and SHOULD use the APPLICATION_ERROR code when\n   converting to a CONNECTION_CLOSE of type 0x1c.",
+      "line_start": 3326,
+      "line_end": 3329,
+      "condition": "An endpoint converts a CONNECTION_CLOSE of type 0x1d to type 0x1c for an Initial or Handshake packet.",
+      "required_behavior": "Use the APPLICATION_ERROR code in the converted CONNECTION_CLOSE frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The converted frame's error code can be decoded and compared with APPLICATION_ERROR.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   more difficult for an attacker if endpoints discard illegal packets\n   rather than terminating a connection with CONNECTION_CLOSE.  For this\n   reason, endpoints MAY discard packets rather than immediately close\n   if errors are detected in packets that lack authentication.",
+      "line_start": 3341,
+      "line_end": 3344,
+      "condition": "An error is detected in a packet that lacks authentication.",
+      "required_behavior": "The endpoint is permitted to discard the packet instead of immediately closing the connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "Packet discard may replace immediate termination with CONNECTION_CLOSE.",
+      "check_type": "error_handling",
+      "why_checkable": "A focused test can supply an unauthenticated erroneous packet and observe whether the endpoint chooses the permitted discard behavior without an immediate close.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint that has not established state, such as a server that\n   detects an error in an Initial packet, does not enter the closing\n   state.  An endpoint that has no state for the connection does not",
+      "line_start": 3346,
+      "line_end": 3348,
+      "condition": "An endpoint has not established connection state, including a server detecting an error in an Initial packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not enter the closing state.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Endpoint state transitions can be inspected after triggering an Initial-packet error before connection state is established.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   state.  An endpoint that has no state for the connection does not\n   enter a closing or draining period on sending a CONNECTION_CLOSE\n   frame.",
+      "line_start": 3348,
+      "line_end": 3350,
+      "condition": "An endpoint with no state for the connection sends a CONNECTION_CLOSE frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not enter a closing period.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-machine test can verify that sending the frame without connection state does not start a closing period.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   state.  An endpoint that has no state for the connection does not\n   enter a closing or draining period on sending a CONNECTION_CLOSE\n   frame.",
+      "line_start": 3348,
+      "line_end": 3350,
+      "condition": "An endpoint with no state for the connection sends a CONNECTION_CLOSE frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not enter a draining period.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-machine test can verify that sending the frame without connection state does not start a draining period.",
+      "eligibility": "eligible"
+    }
+  ]
+}

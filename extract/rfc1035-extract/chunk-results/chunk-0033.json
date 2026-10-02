@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0033",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   PTRDNAME                    /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nPTRDNAME        A <domain-name> which points to some location in the\n                domain name space.",
+      "line_start": 999,
+      "line_end": 1006,
+      "condition": "When encoding or parsing PTR RDATA.",
+      "required_behavior": "Represent the RDATA as a single PTRDNAME field containing a domain name that points to a location in the domain name space.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The PTR RDATA encoder and parser can be checked for the single domain-name field shown in the format.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "PTR records cause no additional section processing.",
+      "line_start": 1008,
+      "line_end": 1008,
+      "condition": "When processing a PTR resource record.",
+      "required_behavior": "",
+      "forbidden_behavior": "Trigger additional section processing because of the PTR record.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "PTR response construction can be checked to ensure this record type does not trigger additional section processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "PTR records cause no additional section processing.  These RRs are used\nin special domains to point to some other location in the domain space.\nThese records are simple data, and don't imply any special processing\nsimilar to that performed by CNAME, which identifies aliases.  See the\ndescription of the IN-ADDR.ARPA domain for an example.",
+      "line_start": 1008,
+      "line_end": 1012,
+      "condition": "When processing a PTR resource record.",
+      "required_behavior": "Treat the PTR record as simple data.",
+      "forbidden_behavior": "Apply special CNAME-like alias processing because of the PTR record.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "PTR handling can be checked to ensure its target is treated as data rather than followed as a CNAME alias.",
+      "eligibility": "eligible"
+    }
+  ]
+}

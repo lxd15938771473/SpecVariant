@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0058",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If the server supplies an empty Certificate message, the client MUST\nabort the handshake with a \"decode_error\" alert.",
+      "line_start": 3781,
+      "line_end": 3782,
+      "condition": "a client receives an empty server Certificate message",
+      "required_behavior": "abort the handshake",
+      "forbidden_behavior": "continue the handshake",
+      "error_behavior": "send a decode_error alert",
+      "check_type": "error_handling",
+      "why_checkable": "An empty server certificate_list can be injected and the client alert observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the client does not send any certificates (i.e., it sends an empty\nCertificate message), the server MAY at its discretion either\ncontinue the handshake without client authentication or abort the\nhandshake with a \"certificate_required\" alert.",
+      "line_start": 3784,
+      "line_end": 3787,
+      "condition": "the server receives an empty client Certificate message",
+      "required_behavior": "either continue while treating the client as unauthenticated or abort the handshake",
+      "forbidden_behavior": "treat the client as certificate-authenticated",
+      "error_behavior": "if aborting for the empty client Certificate, send certificate_required",
+      "check_type": "error_handling",
+      "why_checkable": "An empty client certificate_list exposes both explicitly permitted server branches.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Also, if some aspect\nof the certificate chain was unacceptable (e.g., it was not signed by\na known, trusted CA), the server MAY at its discretion either\ncontinue the handshake (considering the client unauthenticated) or\nabort the handshake.",
+      "line_start": 3787,
+      "line_end": 3791,
+      "condition": "some aspect of the client's certificate chain is unacceptable",
+      "required_behavior": "either continue while treating the client as unauthenticated or abort the handshake",
+      "forbidden_behavior": "treat the client as authenticated by the unacceptable chain",
+      "error_behavior": "if not continuing unauthenticated, abort the handshake",
+      "check_type": "error_handling",
+      "why_checkable": "A chain failing trust validation can test authentication state and termination behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Any endpoint receiving any certificate which it would need to\nvalidate using any signature algorithm using an MD5 hash MUST abort\nthe handshake with a \"bad_certificate\" alert.",
+      "line_start": 3793,
+      "line_end": 3795,
+      "condition": "an endpoint would need to validate a received certificate using an MD5-based signature algorithm",
+      "required_behavior": "abort the handshake",
+      "forbidden_behavior": "validate or accept the certificate chain",
+      "error_behavior": "send a bad_certificate alert",
+      "check_type": "error_handling",
+      "why_checkable": "A non-anchor MD5-signed certificate can exercise the mandatory alert branch.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "SHA-1 is deprecated,\nand it is RECOMMENDED that any endpoint receiving any certificate\nwhich it would need to validate using any signature algorithm using a\nSHA-1 hash abort the handshake with a \"bad_certificate\" alert.",
+      "line_start": 3795,
+      "line_end": 3798,
+      "condition": "an endpoint would need to validate a received certificate using a SHA-1-based signature algorithm",
+      "required_behavior": "abort the handshake",
+      "forbidden_behavior": "accept the SHA-1-validated chain without a reason to depart from the recommendation",
+      "error_behavior": "send a bad_certificate alert",
+      "check_type": "error_handling",
+      "why_checkable": "A non-anchor SHA-1-signed certificate can exercise the recommended alert branch.",
+      "eligibility": "eligible"
+    }
+  ]
+}

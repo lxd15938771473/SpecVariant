@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0025",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MADNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMADNAME         A <domain-name> which specifies a host which has a mail\n                agent for the domain which should be able to deliver\n                mail for the domain.",
+      "line_start": 804,
+      "line_end": 813,
+      "condition": "When encoding or decoding an MD resource record.",
+      "required_behavior": "Represent its RDATA as one MADNAME field encoded as a domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The MD RDATA encoder and decoder can be inspected for the single domain-name field shown in the format.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "MADNAME         A <domain-name> which specifies a host which has a mail\n                agent for the domain which should be able to deliver\n                mail for the domain.",
+      "line_start": 811,
+      "line_end": 813,
+      "condition": "When interpreting the MADNAME field of an MD resource record.",
+      "required_behavior": "Interpret MADNAME as the name of a host that has a mail agent for the domain.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The record representation and mail-routing interpretation can be checked for the meaning assigned to MADNAME.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "MD records cause additional section processing which looks up an A type\nrecord corresponding to MADNAME.",
+      "line_start": 815,
+      "line_end": 816,
+      "condition": "When processing an MD record for a DNS response.",
+      "required_behavior": "Trigger additional-section processing that looks up an A record corresponding to MADNAME.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An MD response fixture can establish whether additional-section processing performs an A lookup using MADNAME.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the new scheme.  The recommended policy for dealing with MD RRs found in\na master file is to reject them, or to convert them to MX RRs with a\npreference of 0.",
+      "line_start": 819,
+      "line_end": 821,
+      "condition": "When an MD resource record is found in a master file, under the recommended policy.",
+      "required_behavior": "It is recommended to reject the MD record or convert it to an MX record.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Master-file loading can be checked for either recommended handling alternative; this recommendation does not require all implementations to reject or convert.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the new scheme.  The recommended policy for dealing with MD RRs found in\na master file is to reject them, or to convert them to MX RRs with a\npreference of 0.",
+      "line_start": 819,
+      "line_end": 821,
+      "condition": "When following the recommended master-file policy by converting an MD resource record to MX.",
+      "required_behavior": "Set the converted MX record preference to 0, as part of the recommended policy.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The preference value in the converted MX record can be inspected; applicability is limited to the recommended conversion policy.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0012",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An application protocol can assume that a QUIC implementation provides an interface that includes the operations described in this section.",
+      "line_start": 613,
+      "line_end": 615,
+      "condition": "For a QUIC implementation exposing an interface to application protocols",
+      "required_behavior": "Provide an interface that includes the stream operations described in this section.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The implementation interface can be inspected to determine whether the described stream operations are exposed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An implementation designed for use with a specific application protocol might provide only those operations that are used by that protocol.",
+      "line_start": 615,
+      "line_end": 617,
+      "condition": "When the implementation is designed for use with one specific application protocol",
+      "required_behavior": "The interface may be limited to the stream operations used by that protocol.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The implementation's declared target protocol and exposed stream operations can be compared with the operations that protocol uses.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "write data, understanding when stream flow control credit (Section 4.1) has successfully been reserved to send the written data;",
+      "line_start": 621,
+      "line_end": 623,
+      "condition": "When an application protocol writes data on the sending part of a stream",
+      "required_behavior": "Provide an indication of when stream flow-control credit has successfully been reserved for sending the written data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can write stream data and verify that the interface reports successful reservation of the required stream flow-control credit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "end the stream (clean termination), resulting in a STREAM frame (Section 19.8) with the FIN bit set;",
+      "line_start": 625,
+      "line_end": 626,
+      "condition": "When an application protocol cleanly ends the sending part of a stream",
+      "required_behavior": "Produce a STREAM frame with the FIN bit set.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Emitted frames can be inspected after clean stream termination to verify the frame type and FIN-bit value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "reset the stream (abrupt termination), resulting in a RESET_STREAM frame (Section 19.4) if the stream was not already in a terminal state.",
+      "line_start": 628,
+      "line_end": 630,
+      "condition": "When an application protocol resets a stream that is not already in a terminal state",
+      "required_behavior": "Produce a RESET_STREAM frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can reset a nonterminal stream and inspect transmitted frames for RESET_STREAM.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "read data;",
+      "line_start": 634,
+      "line_end": 634,
+      "condition": "On the receiving part of a stream",
+      "required_behavior": "Provide an operation through which the application protocol can read data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The receiving-stream interface can be inspected and exercised to verify that stream data can be read.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "abort reading of the stream and request closure, possibly resulting in a STOP_SENDING frame (Section 19.5).",
+      "line_start": 636,
+      "line_end": 637,
+      "condition": "On the receiving part of a stream, when the application protocol chooses to stop reading and request closure",
+      "required_behavior": "Provide an operation that aborts reading of the stream and requests closure.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The receiving-stream interface can be exercised to verify that the application can abort further reads and request stream closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "possibly resulting in a STOP_SENDING frame (Section 19.5).",
+      "line_start": 636,
+      "line_end": 637,
+      "condition": "When the application protocol aborts reading of a stream and requests closure",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The passage says STOP_SENDING is only a possible result and does not specify the circumstances in which the frame must or must not be emitted.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "An application protocol can also request to be informed of state changes on streams, including when the peer has opened or reset a stream, when a peer aborts reading on a stream, when new data is available, and when data can or cannot be written to the stream due to flow control.",
+      "line_start": 639,
+      "line_end": 643,
+      "condition": "When the application protocol requests notification that the peer has opened a stream",
+      "required_behavior": "Inform the application protocol that the peer opened the stream.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A peer can open a stream and a test can verify that the requested state-change notification is delivered.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An application protocol can also request to be informed of state changes on streams, including when the peer has opened or reset a stream, when a peer aborts reading on a stream, when new data is available, and when data can or cannot be written to the stream due to flow control.",
+      "line_start": 639,
+      "line_end": 643,
+      "condition": "When the application protocol requests notification that the peer has reset a stream",
+      "required_behavior": "Inform the application protocol that the peer reset the stream.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A peer can reset a stream and a test can verify that the requested state-change notification is delivered.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An application protocol can also request to be informed of state changes on streams, including when the peer has opened or reset a stream, when a peer aborts reading on a stream, when new data is available, and when data can or cannot be written to the stream due to flow control.",
+      "line_start": 639,
+      "line_end": 643,
+      "condition": "When the application protocol requests notification that the peer has aborted reading on a stream",
+      "required_behavior": "Inform the application protocol that the peer aborted reading on the stream.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A peer can abort reading and a test can verify that the requested state-change notification is delivered.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An application protocol can also request to be informed of state changes on streams, including when the peer has opened or reset a stream, when a peer aborts reading on a stream, when new data is available, and when data can or cannot be written to the stream due to flow control.",
+      "line_start": 639,
+      "line_end": 643,
+      "condition": "When the application protocol requests notification and new stream data becomes available",
+      "required_behavior": "Inform the application protocol that new data is available.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A peer can make new data available and a test can verify that the requested availability notification is delivered.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An application protocol can also request to be informed of state changes on streams, including when the peer has opened or reset a stream, when a peer aborts reading on a stream, when new data is available, and when data can or cannot be written to the stream due to flow control.",
+      "line_start": 639,
+      "line_end": 643,
+      "condition": "When the application protocol requests notification and flow control changes whether data can be written to a stream",
+      "required_behavior": "Inform the application protocol when data becomes writable or non-writable due to flow control.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can exhaust and restore flow-control credit and verify notifications for both loss and restoration of writability.",
+      "eligibility": "eligible"
+    }
+  ]
+}

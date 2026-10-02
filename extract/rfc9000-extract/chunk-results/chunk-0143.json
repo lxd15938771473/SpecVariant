@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0143",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   As described in Section 12.4, packets contain one or more frames.",
+      "line_start": 5851,
+      "line_end": 5851,
+      "condition": "For every packet.",
+      "required_behavior": "The packet contains at least one frame.",
+      "forbidden_behavior": "A packet contains zero frames.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation check can parse each packet and verify that its frame count is one or greater.",
+      "eligibility": "eligible"
+    }
+  ]
+}

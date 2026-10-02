@@ -1,0 +1,402 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "batch-05",
+  "decisions": [
+    {
+      "pair_id": "pair-8f974160e8dbc8ed",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements cover different error triggers: handshake failure versus another TLS protocol error. The common termination outcome does not make those atomic checks equivalent."
+    },
+    {
+      "pair_id": "pair-fcb32f70e61b8e8b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the key_share extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-6cf176fd08d3c04f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same forbidden extension is checked in different handshake messages: Certificate and CertificateRequest."
+    },
+    {
+      "pair_id": "pair-da87f089473aff07",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same forbidden extension is checked in different handshake messages: EncryptedExtensions and CertificateRequest."
+    },
+    {
+      "pair_id": "pair-d52a7dcbf6d4ab9e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One check requires a server to emit a downgrade sentinel; the other requires a client to inspect a received sentinel. They apply to different roles and actions."
+    },
+    {
+      "pair_id": "pair-23b38eb25952db47",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-cdb0aaa654ce797c002a",
+      "reason": "Both require the NewSessionTicket early_data extension body to be a uint32 max_early_data_size. The canonical requirement uses the direct Section 4.2.10 body definition rather than the appendix restatement."
+    },
+    {
+      "pair_id": "pair-275d7cdb7ca3865b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These derive different secrets with different labels and transcript endpoints: exporter_master_secret through server Finished and resumption_master_secret through client Finished."
+    },
+    {
+      "pair_id": "pair-655a3d5b0eed68ed",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements map different ContentType enum members to different numeric values."
+    },
+    {
+      "pair_id": "pair-b41b3e8a4d511052",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "HelloRetryRequest selected_group must satisfy two independent predicates: presence in supported_groups and absence from the original key_share entries."
+    },
+    {
+      "pair_id": "pair-4b49e9b29c6f23bc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Forbidding a certificate does not fully require the replacement value to correspond to the server's long-term key; these are separate constraints on the Certificate message content."
+    },
+    {
+      "pair_id": "pair-7c131339e9991b6f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Key Usage bits and Extended Key Usage OIDs are separate certificate fields with different matching checks."
+    },
+    {
+      "pair_id": "pair-535d30d5db171d22",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "An unrecognized extension type and an unrecognized named-group value are different ClientHello elements and require separate parser tests."
+    },
+    {
+      "pair_id": "pair-3e88728a1192bcdd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints apply different length ranges to different ClientHello vectors: cipher_suites and extensions."
+    },
+    {
+      "pair_id": "pair-bcd58af1a8ba4633",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One check defines the shared secret as the scalar-multiplication result; the other checks only the local-secret scalar input to that operation."
+    },
+    {
+      "pair_id": "pair-192f0dcfaa9ae5ec",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "An unrecognized signature algorithm and an unrecognized extension type are different ClientHello elements and require separate parser tests."
+    },
+    {
+      "pair_id": "pair-724b07bd85b7b770",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements encode different PskKeyExchangeMode enum members with different values."
+    },
+    {
+      "pair_id": "pair-fc5339675d50c6a8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Finished and CertificateVerify are different handshake messages, so their encryption checks are distinct despite using the same traffic-secret generation."
+    },
+    {
+      "pair_id": "pair-32ec42f8271bb20f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The supported_versions presence rule is applied to different message types: HelloRetryRequest and ClientHello."
+    },
+    {
+      "pair_id": "pair-d57f6a5aa84f63bd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements encode different KeyUpdateRequest enum members with different values."
+    },
+    {
+      "pair_id": "pair-12cfc4e0586ef558",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the supported_versions extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-e7242c54565c7fd0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "An out-of-range field and an incorrect encoded length are different malformed-message conditions, even though both produce decode_error."
+    },
+    {
+      "pair_id": "pair-5ca04c9d2064f609",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the cookie extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-2ff2ea764e399ab6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements constrain separate ClientHello fields: actual offered versions in supported_versions and the fixed legacy_version value."
+    },
+    {
+      "pair_id": "pair-7827a8a8fcdebe10",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One check requires sending supported_groups in ClientHello; the other requires using the received extension during group negotiation."
+    },
+    {
+      "pair_id": "pair-7a7c2fac511c2031",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the supported_versions extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-a1916f27b7fd008c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the server_name extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-322cc600a362f7cb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "An unrecognized key share and an unrecognized supported version are different ClientHello elements and require separate parser tests."
+    },
+    {
+      "pair_id": "pair-38a06dfb13394a3f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the cookie extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-8b8c223826e3312e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Empty and EndOfEarlyData are different protocol structures, even though both have zero fields."
+    },
+    {
+      "pair_id": "pair-d544701f577f7a3b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Different Handshake.msg_type values select different message-body structures: Certificate and Finished."
+    },
+    {
+      "pair_id": "pair-d828995643d4d4ca",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The ContentType field belongs to different record structures and positions: TLSPlaintext and TLSInnerPlaintext."
+    },
+    {
+      "pair_id": "pair-76bd614c6b87ed3a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "An unrecognized key share and an unrecognized named group are different ClientHello elements and require separate parser tests."
+    },
+    {
+      "pair_id": "pair-a2b94eb9158d462d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Record-boundary alignment is checked for different handshake messages: KeyUpdate and EndOfEarlyData."
+    },
+    {
+      "pair_id": "pair-af54ac21ab5e885a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "An unrecognized key share and an unrecognized signature algorithm are different ClientHello elements and require separate parser tests."
+    },
+    {
+      "pair_id": "pair-742ce1a56e86dbca",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the server_name extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-601de6340e020afb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Offering an obsolete_RESERVED group and negotiating one are different protocol actions and independently testable prohibitions."
+    },
+    {
+      "pair_id": "pair-c447c1ac9e046be3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the supported_groups extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-56077d63fb8933f3",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-ce59276c206bd1190f48",
+      "reason": "Both require AlertLevel.fatal to encode as numeric value 2. The canonical requirement uses the direct alert protocol definition rather than the appendix restatement."
+    },
+    {
+      "pair_id": "pair-bcd2040ae0f5d466",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivation has separate required inputs: the handshake transcript and the handshake-established input secrets."
+    },
+    {
+      "pair_id": "pair-2db859136c1b8b38",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "A defined Section 6.2 alert and an unknown alert are different received values and separate fatal-alert cases."
+    },
+    {
+      "pair_id": "pair-759e75ed086c83dc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The peer public key as u-coordinate and the local secret key as scalar are separate inputs to the ECDH operation."
+    },
+    {
+      "pair_id": "pair-c057cc903075ac95",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "An oversized decrypted TLSPlaintext and an oversized received TLSCiphertext are different record-layer conditions, despite sharing record_overflow."
+    },
+    {
+      "pair_id": "pair-01131659afee6b67",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Different Handshake.msg_type values select different message-body structures: ClientHello and Certificate."
+    },
+    {
+      "pair_id": "pair-f016ed2637eeb8ac",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The key_share extension has message-specific bodies in ClientHello and ServerHello, requiring separate encoding and parsing checks."
+    },
+    {
+      "pair_id": "pair-363ad8384d8b9721",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Different Handshake.msg_type values select different message-body structures: CertificateRequest and CertificateVerify."
+    },
+    {
+      "pair_id": "pair-59abcf7c09b9844c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules apply to different extension types: server_name and supported_groups."
+    },
+    {
+      "pair_id": "pair-dd8efe9032a61258",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Different Handshake.msg_type values select different message-body structures: ServerHello and Certificate."
+    },
+    {
+      "pair_id": "pair-78394331c1b7e3bc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the supported_groups extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-1494c16f74a576b7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules apply to different extensions and allowed message sets: key_share and cookie."
+    },
+    {
+      "pair_id": "pair-f0128cf46789990a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks protect different endpoint identities against different attacker classes: client identity against passive and active attackers, and server identity against passive attackers."
+    },
+    {
+      "pair_id": "pair-b366fa79a7c796cb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting rsa_pkcs1_sha256 for certificates and supporting ecdsa_secp256r1_sha256 are separate signature-scheme capabilities."
+    },
+    {
+      "pair_id": "pair-d20303be77b8f7bd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements mandate support for different cipher suites."
+    },
+    {
+      "pair_id": "pair-efdc6e5e24a5e3a9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules apply to different extension types: server_name and server_certificate_type."
+    },
+    {
+      "pair_id": "pair-dfab8a18c0aa4453",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Omitting CertificateVerify when an endpoint is not certificate-authenticated and requiring it when a server is certificate-authenticated cover different conditions and role-specific state paths."
+    },
+    {
+      "pair_id": "pair-68f4f343a8144509",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "ECDSA signature support and secp256r1 key-exchange support are separate cryptographic capabilities."
+    },
+    {
+      "pair_id": "pair-2285b67a66ef9c49",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The transitions belong to different endpoint state machines, and the server transition additionally depends on receiving a non-empty Certificate."
+    },
+    {
+      "pair_id": "pair-0cd401b5455abea0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the signature_algorithms extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-a83a4a40016a4c6a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the key_share extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-72d6bc1a6cbd6275",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "An unrecognized cipher suite and an unrecognized supported version are different ClientHello elements and require separate parser tests."
+    },
+    {
+      "pair_id": "pair-437688164c42ce70",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "psk_ke and psk_dhe_ke are different negotiated modes with opposite key-share and key-establishment requirements."
+    },
+    {
+      "pair_id": "pair-6756b843df14c6a1",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Using MGF1 and selecting the corresponding hash for its digest are separate RSASSA-PSS parameter checks."
+    },
+    {
+      "pair_id": "pair-de106ce18b47fac2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting X25519 key exchange and implementing the supported_versions extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-2377ff92da45f8cf",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requirement governs receiving an invalid zero-length Alert and mandates termination with unexpected_message; the other governs sending Alert records and forbids zero-length content."
+    },
+    {
+      "pair_id": "pair-d019b0598ca49ef9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Using MGF1 and selecting the corresponding hash for its digest are separate RSASSA-PSS parameter checks."
+    },
+    {
+      "pair_id": "pair-779499e2e4e6fa7b",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-37eec4ebfa6e17387291",
+      "reason": "Both require TLS 1.3 elliptic-curve key shares to use each curve's single defined point format without point-format negotiation. The canonical requirement is the clearer rule in the key_share section."
+    },
+    {
+      "pair_id": "pair-44c104448906c313",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Implementing a particular cipher suite and implementing the signature_algorithms extension are separate implementation capabilities."
+    }
+  ]
+}

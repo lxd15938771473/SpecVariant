@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0014",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The first Initial packet from a client contains the start or all of\n   its first cryptographic handshake message, which for TLS is the\n   ClientHello.",
+      "line_start": 664,
+      "line_end": 666,
+      "condition": "For the first Initial packet sent by a client using TLS.",
+      "required_behavior": "Include at least the beginning, and possibly all, of the client's first ClientHello message.",
+      "forbidden_behavior": "Do not send the first Initial packet without any portion of the first ClientHello.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The first client Initial can be decrypted and its CRYPTO data inspected for the beginning of the first ClientHello.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To\n   avoid this, servers MAY use the Retry feature (see Section 8.1 of\n   [QUIC-TRANSPORT]) to only buffer partial ClientHello messages from\n   clients with a validated address.",
+      "line_start": 672,
+      "line_end": 675,
+      "condition": "When a server wants to avoid buffering a partial ClientHello for a client whose address is not validated.",
+      "required_behavior": "Permit the server to use Retry and restrict partial-ClientHello buffering to clients with validated addresses.",
+      "forbidden_behavior": "Do not reject an implementation solely because it sends Retry instead of buffering a partial ClientHello from an unvalidated address.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A fragmented ClientHello from an unvalidated address can be used to observe whether the allowed Retry-and-defer-buffering policy is applied.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QUIC packet and framing add at least 36 bytes of overhead to the\n   ClientHello message.",
+      "line_start": 677,
+      "line_end": 678,
+      "condition": "When placing a ClientHello in a QUIC packet.",
+      "required_behavior": "Account for at least 36 bytes beyond the ClientHello message itself for QUIC packet and framing overhead.",
+      "forbidden_behavior": "Do not calculate the resulting QUIC packet as adding fewer than 36 bytes of packet-and-framing overhead.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serialized packet size minus the carried ClientHello bytes can be measured and compared with the stated lower bound.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "That overhead increases if the client chooses a\n   Source Connection ID field longer than zero bytes.",
+      "line_start": 678,
+      "line_end": 679,
+      "condition": "If a client chooses a non-empty Source Connection ID for a packet carrying ClientHello.",
+      "required_behavior": "Include the additional Source Connection ID contribution in the packet overhead.",
+      "forbidden_behavior": "Do not treat overhead with a non-empty Source Connection ID as equal to the zero-length Source Connection ID baseline.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Otherwise equivalent serialized packets with empty and non-empty Source Connection IDs can be compared to verify the increase.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The TLS implementation does not need to ensure that the ClientHello\n   is large enough to meet QUIC's requirements for datagrams that carry\n   Initial packets; see Section 14.1 of [QUIC-TRANSPORT].",
+      "line_start": 698,
+      "line_end": 700,
+      "condition": "When constructing a ClientHello for carriage in a datagram containing an Initial packet.",
+      "required_behavior": "Permit the TLS implementation to produce the ClientHello without padding it to satisfy QUIC's datagram-size requirement.",
+      "forbidden_behavior": "Do not require the TLS implementation itself to make the ClientHello large enough for QUIC's Initial-datagram sizing rule.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "An integration test can use a small TLS-produced ClientHello and verify that conformance does not depend on TLS padding it to the QUIC datagram size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QUIC\n   implementations use PADDING frames or packet coalescing to ensure\n   that datagrams are large enough.",
+      "line_start": 700,
+      "line_end": 702,
+      "condition": "When a datagram carrying an Initial packet would otherwise be smaller than QUIC requires.",
+      "required_behavior": "Use PADDING frames or packet coalescing to make the datagram large enough.",
+      "forbidden_behavior": "Do not send an undersized datagram carrying an Initial packet.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The responsibility and allowed mechanisms are clear, but this chunk does not provide the minimum datagram size needed to turn 'large enough' into a self-contained concrete check.",
+      "eligibility": "exclude"
+    }
+  ]
+}

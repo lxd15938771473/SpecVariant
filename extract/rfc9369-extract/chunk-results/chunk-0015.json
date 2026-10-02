@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0015",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Therefore, all Application-\n   Layer Protocol Negotiation (ALPN) [RFC7301] codepoints specified to\n   operate over QUIC version 1 can also operate over this version of\n   QUIC.",
+      "line_start": 309,
+      "line_end": 312,
+      "condition": "when an ALPN codepoint is specified to operate over QUIC version 1",
+      "required_behavior": "allow that ALPN codepoint to operate over QUIC version 2",
+      "forbidden_behavior": "reject the ALPN codepoint solely because the connection uses QUIC version 2",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Each ALPN codepoint supported over QUIC version 1 can be negotiated over QUIC version 2 to verify the same application capability is available.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In particular, both the \"h3\" [HTTP/3] and \"doq\" [RFC9250]\n   ALPNs can operate over QUIC version 2.",
+      "line_start": 312,
+      "line_end": 313,
+      "condition": "when negotiating the \"h3\" ALPN over QUIC version 2",
+      "required_behavior": "allow the \"h3\" ALPN to operate over QUIC version 2",
+      "forbidden_behavior": "reject the \"h3\" ALPN solely because the connection uses QUIC version 2",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A QUIC version 2 connection can negotiate \"h3\" and be checked for successful HTTP/3 operation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In particular, both the \"h3\" [HTTP/3] and \"doq\" [RFC9250]\n   ALPNs can operate over QUIC version 2.",
+      "line_start": 312,
+      "line_end": 313,
+      "condition": "when negotiating the \"doq\" ALPN over QUIC version 2",
+      "required_behavior": "allow the \"doq\" ALPN to operate over QUIC version 2",
+      "forbidden_behavior": "reject the \"doq\" ALPN solely because the connection uses QUIC version 2",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A QUIC version 2 connection can negotiate \"doq\" and be checked for successful DNS-over-QUIC operation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Unless otherwise stated, all QUIC extensions defined to work with\n   version 1 also work with version 2.",
+      "line_start": 315,
+      "line_end": 316,
+      "condition": "when a QUIC extension is defined to work with version 1 and no exception is stated",
+      "required_behavior": "support the extension with QUIC version 2",
+      "forbidden_behavior": "treat the extension as incompatible solely because the connection uses QUIC version 2",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An extension supported with QUIC version 1 can be exercised with version 2 to verify equivalent applicability unless its specification states an exception.",
+      "eligibility": "eligible"
+    }
+  ]
+}

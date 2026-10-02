@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0043",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "During connection establishment, both endpoints make authenticated declarations of their transport parameters.",
+      "line_start": 1997,
+      "line_end": 1998,
+      "condition": "During connection establishment",
+      "required_behavior": "Both endpoints make authenticated declarations of their transport parameters.",
+      "forbidden_behavior": "Unauthenticated declaration of transport parameters.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Handshake processing can be inspected or tested to verify that each endpoint's transport parameters are carried in authenticated handshake data.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints are required to comply with the restrictions that each parameter defines; the description of each parameter includes rules for its handling.",
+      "line_start": 1998,
+      "line_end": 2000,
+      "condition": "When an endpoint handles or uses a transport parameter",
+      "required_behavior": "The endpoint complies with the restrictions defined for that parameter.",
+      "forbidden_behavior": "Handling or using a parameter contrary to its defined restrictions.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Implementation behavior for each parameter can be compared with the parameter's defined restrictions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Transport parameters are declarations that are made unilaterally by each endpoint.",
+      "line_start": 2002,
+      "line_end": 2003,
+      "condition": "When transport parameters are declared",
+      "required_behavior": "Each endpoint declares its own transport parameters unilaterally.",
+      "forbidden_behavior": "Treating the peer as jointly declaring the endpoint's transport parameter values.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Handshake generation and parsing can verify that parameter declarations are associated separately with the endpoint that sent them.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QUIC includes the encoded transport parameters in the cryptographic handshake.",
+      "line_start": 2008,
+      "line_end": 2009,
+      "condition": "During the cryptographic handshake",
+      "required_behavior": "Include encoded transport parameters in the cryptographic handshake.",
+      "forbidden_behavior": "Transmit the connection's transport-parameter declaration outside the cryptographic handshake as a substitute for handshake inclusion.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Handshake messages can be inspected to verify the presence of the encoded transport parameters.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Once the handshake completes, the transport parameters declared by the peer are available.",
+      "line_start": 2009,
+      "line_end": 2010,
+      "condition": "Once the handshake completes",
+      "required_behavior": "Make the peer-declared transport parameters available to the endpoint.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can complete the handshake and verify that the peer's declared parameters are then accessible to connection logic.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Each endpoint validates the values provided by its peer.",
+      "line_start": 2010,
+      "line_end": 2011,
+      "condition": "When an endpoint receives transport parameter values from its peer",
+      "required_behavior": "Validate the peer-provided values.",
+      "forbidden_behavior": "Accept peer-provided transport parameter values without validation.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can supply valid and invalid peer parameter values and observe whether validation is performed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST treat receipt of a transport parameter with an invalid value as a connection error of type TRANSPORT_PARAMETER_ERROR.",
+      "line_start": 2016,
+      "line_end": 2018,
+      "condition": "Upon receipt of a transport parameter with an invalid value",
+      "required_behavior": "",
+      "forbidden_behavior": "Continue treating the connection as valid after receiving the invalid transport parameter.",
+      "error_behavior": "Treat the receipt as a connection error of type TRANSPORT_PARAMETER_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A malformed or out-of-range parameter can be injected and the resulting connection error code observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST NOT send a parameter more than once in a given transport parameters extension.",
+      "line_start": 2020,
+      "line_end": 2021,
+      "condition": "When constructing a given transport parameters extension",
+      "required_behavior": "Send each parameter at most once in that extension.",
+      "forbidden_behavior": "Send the same parameter more than once in the extension.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serialized extension can be parsed and occurrences of each parameter identifier counted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint SHOULD treat receipt of duplicate transport parameters as a connection error of type TRANSPORT_PARAMETER_ERROR.",
+      "line_start": 2021,
+      "line_end": 2023,
+      "condition": "Upon receipt of duplicate transport parameters",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Treat the receipt as a connection error of type TRANSPORT_PARAMETER_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A transport parameters extension containing duplicate parameters can be supplied and the endpoint's connection-error response observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints use transport parameters to authenticate the negotiation of connection IDs during the handshake; see Section 7.3.",
+      "line_start": 2025,
+      "line_end": 2026,
+      "condition": "During handshake negotiation of connection IDs",
+      "required_behavior": "Use transport parameters to authenticate the connection ID negotiation.",
+      "forbidden_behavior": "Accept unauthenticated connection ID negotiation.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The implementation's handshake and connection-ID validation paths can be inspected to verify that authenticated transport parameters bind the negotiation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The transport parameters that a client includes during the handshake apply to all application protocols that the client offers.",
+      "line_start": 2029,
+      "line_end": 2032,
+      "condition": "When a client offers multiple application protocols and includes transport parameters during the handshake",
+      "required_behavior": "Apply the client's included transport parameters to every application protocol offered by that client.",
+      "forbidden_behavior": "Associate those handshake transport parameters with only a subset of the application protocols offered by the client.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A client offering multiple ALPN protocols can be tested to verify that its single transport-parameter declaration is interpreted identically for every offered protocol.",
+      "eligibility": "eligible"
+    }
+  ]
+}

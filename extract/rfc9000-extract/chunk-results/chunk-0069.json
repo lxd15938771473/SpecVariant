@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0069",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A server conveys a preferred address by including the preferred_address transport parameter in the TLS handshake.",
+      "line_start": 2982,
+      "line_end": 2983,
+      "condition": "When a server conveys a preferred address",
+      "required_behavior": "Include the preferred_address transport parameter in the TLS handshake.",
+      "forbidden_behavior": "Convey the preferred address through this mechanism without including the preferred_address transport parameter in the TLS handshake.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The server's TLS handshake can be inspected for presence of the transport parameter used to convey the preferred address.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Servers MAY communicate a preferred address of each address family (IPv4 and IPv6) to allow clients to pick the one most suited to their network attachment.",
+      "line_start": 2985,
+      "line_end": 2987,
+      "condition": "When a server chooses to communicate preferred addresses",
+      "required_behavior": "The server is permitted to communicate a preferred IPv4 address and a preferred IPv6 address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation can be checked to ensure it permits preferred addresses for both enumerated address families.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Once the handshake is confirmed, the client SHOULD select one of the two addresses provided by the server and initiate path validation (see Section 8.2).",
+      "line_start": 2989,
+      "line_end": 2991,
+      "condition": "Once the handshake is confirmed and the server provided two addresses",
+      "required_behavior": "Select one of the two addresses provided by the server.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Client address selection after handshake confirmation is observable and can be compared with the two addresses supplied by the server.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Once the handshake is confirmed, the client SHOULD select one of the two addresses provided by the server and initiate path validation (see Section 8.2).",
+      "line_start": 2989,
+      "line_end": 2991,
+      "condition": "Once the handshake is confirmed and the client has selected one of the two server-provided addresses",
+      "required_behavior": "Initiate path validation for the selected address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can confirm that path validation is initiated after handshake confirmation for the selected preferred address.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A client constructs packets using any previously unused active connection ID, taken from either the preferred_address transport parameter or a NEW_CONNECTION_ID frame.",
+      "line_start": 2991,
+      "line_end": 2993,
+      "condition": "When the client constructs packets for the preferred-address path",
+      "required_behavior": "Use an active connection ID that was not previously used.",
+      "forbidden_behavior": "Use an inactive or previously used connection ID.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet connection IDs can be compared against the client's active connection-ID set and its history of previously used IDs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A client constructs packets using any previously unused active connection ID, taken from either the preferred_address transport parameter or a NEW_CONNECTION_ID frame.",
+      "line_start": 2991,
+      "line_end": 2993,
+      "condition": "When the client selects a connection ID for packets on the preferred-address path",
+      "required_behavior": "Take the connection ID from either the preferred_address transport parameter or a NEW_CONNECTION_ID frame.",
+      "forbidden_behavior": "Take the connection ID from a source other than the preferred_address transport parameter or a NEW_CONNECTION_ID frame.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The selected connection ID can be traced to the transport parameter or received NEW_CONNECTION_ID frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As soon as path validation succeeds, the client SHOULD begin sending all future packets to the new server address using the new connection ID and discontinue use of the old server address.",
+      "line_start": 2995,
+      "line_end": 2997,
+      "condition": "As soon as path validation of the new server address succeeds",
+      "required_behavior": "Begin sending all future packets to the new server address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet destinations after successful path validation can be observed and checked against the validated new server address.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As soon as path validation succeeds, the client SHOULD begin sending all future packets to the new server address using the new connection ID and discontinue use of the old server address.",
+      "line_start": 2995,
+      "line_end": 2997,
+      "condition": "As soon as path validation of the new server address succeeds",
+      "required_behavior": "Use the new connection ID for all future packets sent to the new server address.",
+      "forbidden_behavior": "Use the old connection ID for future packets sent to the new server address.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Connection IDs in packets sent after successful validation can be checked against the new connection ID.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As soon as path validation succeeds, the client SHOULD begin sending all future packets to the new server address using the new connection ID and discontinue use of the old server address.",
+      "line_start": 2995,
+      "line_end": 2997,
+      "condition": "As soon as path validation of the new server address succeeds",
+      "required_behavior": "Discontinue use of the old server address.",
+      "forbidden_behavior": "Continue using the old server address for future packets.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The destination addresses of packets after validation succeeds reveal whether use of the old server address continues.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If path validation fails, the client MUST continue sending all future packets to the server's original IP address.",
+      "line_start": 2997,
+      "line_end": 2999,
+      "condition": "If path validation of the preferred address fails",
+      "required_behavior": "Continue sending all future packets to the server's original IP address.",
+      "forbidden_behavior": "Send future packets to the unvalidated preferred address instead of the server's original IP address.",
+      "error_behavior": "Continue using the server's original IP address after path-validation failure.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can force path-validation failure and inspect the destination IP address of every subsequent client packet.",
+      "eligibility": "eligible"
+    }
+  ]
+}

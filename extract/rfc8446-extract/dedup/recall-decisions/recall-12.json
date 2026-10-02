@@ -1,0 +1,366 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "recall-12",
+  "decisions": [
+    {
+      "pair_id": "pair-c2baa09900eacc0d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left forbids zero-length Alert content, while the right defines the general TLSInnerPlaintext.content length from TLSPlaintext.length."
+    },
+    {
+      "pair_id": "pair-67f0453899eb47a3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks assign value 22 to different enum members in different enum types: ContentType.handshake and HandshakeType.certificate_status_RESERVED."
+    },
+    {
+      "pair_id": "pair-983fd89b3a981709",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left requires record-fragment sequencing without interleaving, while the right requires receiver reassembly and processing of a fragmented handshake message."
+    },
+    {
+      "pair_id": "pair-c9b1af8d6a8c42bb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different fields in different messages, with different lower bounds: CertificateVerify.signature and NewSessionTicket.ticket."
+    },
+    {
+      "pair_id": "pair-3f9f8b5fdaf91df9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "PSK key agreement requires both extensions, but using pre_shared_key and using psk_key_exchange_modes are separate implementation checks."
+    },
+    {
+      "pair_id": "pair-f0637080c556a9f9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply different bounds to different vectors: OIDFilterExtension.filters and NewSessionTicket.extensions."
+    },
+    {
+      "pair_id": "pair-765c106e27dc9a2d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Extension.extension_data permits an empty value, whereas NewSessionTicket.ticket is a different field and must contain at least one octet."
+    },
+    {
+      "pair_id": "pair-7a24a0f86c057616",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left permits an unauthenticated client endpoint when client authentication is not selected; the right requires server authentication for the channel."
+    },
+    {
+      "pair_id": "pair-40ee43730abf7b34",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Accepting fresh in-window 0-RTT and recording the accepted ClientHello afterward are separate state-machine actions."
+    },
+    {
+      "pair_id": "pair-3415152a6fdae7e9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks assign different values to different AlertDescription members."
+    },
+    {
+      "pair_id": "pair-67166fe11eeaf2c8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left constrains what a legacy-version server sends; the right specifies the client's illegal_parameter failure when ServerHello carries an invalid supported_versions selection."
+    },
+    {
+      "pair_id": "pair-34421491f9e3b713",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left is the specific no-mutually-supported-group case when no PSK is selected, while the right covers any failure to negotiate an overlapping parameter set."
+    },
+    {
+      "pair_id": "pair-4d60b362058a726e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different RSA signature schemes to different code points."
+    },
+    {
+      "pair_id": "pair-68b032880b377d6a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The initial ClientHello record may use the compatibility value 0x0301, while a second ClientHello record must use 0x0303."
+    },
+    {
+      "pair_id": "pair-31ca35e6662f28c0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks govern placement of different extensions and allow different handshake-message sets."
+    },
+    {
+      "pair_id": "pair-4cff6e4856eec371",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One check ignores an unrecognized extension, while the other ignores an unrecognized cipher suite; these are different ClientHello parameter classes."
+    },
+    {
+      "pair_id": "pair-452fd9b124b43859",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left orders a response KeyUpdate before Application Data, while the right selects the keys used to encrypt the KeyUpdate."
+    },
+    {
+      "pair_id": "pair-118ae1807ee93f71",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different vectors in different messages and use different minimum encoded lengths."
+    },
+    {
+      "pair_id": "pair-908ec4e3a08fff6e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical numeric bounds apply to different fields: KeyShareEntry.key_exchange and DistinguishedName."
+    },
+    {
+      "pair_id": "pair-53ecc4aa3d9f65e2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different RSA signature schemes to different code points."
+    },
+    {
+      "pair_id": "pair-a5c724ab0dda7533",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "ClientHello uses a one-element legacy_compression_methods vector, whereas ServerHello has a scalar legacy_compression_method field; they are different message checks."
+    },
+    {
+      "pair_id": "pair-22fc78b030f370db",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different vectors in different certificate messages and have different maximum lengths."
+    },
+    {
+      "pair_id": "pair-efef6c93925151db",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply different bounds to OfferedPsks.identities and NewSessionTicket.extensions."
+    },
+    {
+      "pair_id": "pair-8293de9489d48f5e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different ExtensionType members to different numeric values."
+    },
+    {
+      "pair_id": "pair-bb8eb862224d0b2b",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-0128aaa445a7bc135be8",
+      "reason": "Both require CertificateType.RawPublicKey to use wire value 2; the canonical member is the direct primary-body definition rather than the repeated appendix definition."
+    },
+    {
+      "pair_id": "pair-5401b4fd57b463bd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The dummy change_cipher_spec placement differs depending on whether early data is offered: before the second flight versus immediately after the first ClientHello."
+    },
+    {
+      "pair_id": "pair-25caf1483fdeaf75",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "An unrecognized extension and an unrecognized version value inside supported_versions are different ClientHello parsing checks."
+    },
+    {
+      "pair_id": "pair-c2fe775edbe31b98",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different named groups, secp521r1 and secp384r1, to different code points."
+    },
+    {
+      "pair_id": "pair-02ab4d4658dc71bc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different vectors and have different lower bounds: CertificateAuthoritiesExtension.authorities and EncryptedExtensions.extensions."
+    },
+    {
+      "pair_id": "pair-ba4cfea7ad623fa6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left states the complete initial binder transcript formula, while the right specifically governs direct first-flight hashing rather than message_hash reinjection."
+    },
+    {
+      "pair_id": "pair-bda711a0386512e8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different HandshakeType members to different numeric values."
+    },
+    {
+      "pair_id": "pair-f9a0948a57284097",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different ExtensionType members to different numeric values."
+    },
+    {
+      "pair_id": "pair-7f66a5348459c6d7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations use different input secrets, labels, transcript endpoints, and output secrets."
+    },
+    {
+      "pair_id": "pair-c310cec43ddf746d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different RSA signature schemes to different code points."
+    },
+    {
+      "pair_id": "pair-378b3ce5f37070ac",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left excludes static RSA suites from TLS 1.3, while the right forbids RC4 suites for every TLS version."
+    },
+    {
+      "pair_id": "pair-084dfd4ebf8f661a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks govern placement of different extensions and allow different handshake-message sets."
+    },
+    {
+      "pair_id": "pair-19f3b056383ef536",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different RSA signature schemes to different code points."
+    },
+    {
+      "pair_id": "pair-548d0d2ee18140c6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Encoding psk_ke as value 0 is a member-specific value check; encoding every PskKeyExchangeMode in one octet is a separate type-width check."
+    },
+    {
+      "pair_id": "pair-03c2feef56521b68",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different named groups, secp256r1 and secp384r1, to different code points."
+    },
+    {
+      "pair_id": "pair-6285aeac2af82f3f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different HandshakeType members to different numeric values."
+    },
+    {
+      "pair_id": "pair-0b8b848462a87d38",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left applies to the depicted subsequent PSK-resumption handshake, while the right applies to the distinct 0-RTT handshake condition."
+    },
+    {
+      "pair_id": "pair-2dbabde49292a95a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks copy different TLSPlaintext properties into different TLSInnerPlaintext fields: fragment bytes into content and the record type into type."
+    },
+    {
+      "pair_id": "pair-22c663b1994e1279",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left limits PKCS1-v1_5 scheme values to certificate signatures, while the right requires PSS for RSA signatures in CertificateVerify."
+    },
+    {
+      "pair_id": "pair-6c6de7970be6f6c0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different ExtensionType members to different numeric values."
+    },
+    {
+      "pair_id": "pair-3d2a705eaf8dd787",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations use different input secrets, labels, transcript endpoints, and output secrets."
+    },
+    {
+      "pair_id": "pair-0e5337165726b758",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different HandshakeType members to different numeric values."
+    },
+    {
+      "pair_id": "pair-95461315441f1c29",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks govern placement of different extensions and allow different handshake-message sets."
+    },
+    {
+      "pair_id": "pair-8c2f1f752e2fe4d5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left rejects replay of an already accepted record; the right rejects an out-of-order record whose predecessor has not been processed."
+    },
+    {
+      "pair_id": "pair-da4095af4b78a13a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical bounds apply to different fields: Extension.extension_data and OIDFilter.certificate_extension_values."
+    },
+    {
+      "pair_id": "pair-c6f5cbeb5571dadc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left checks the middlebox's server role and client-acceptable certificate, while the right checks its client role toward the original server."
+    },
+    {
+      "pair_id": "pair-be5d5606465d4f4e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks govern placement of different extensions and allow different handshake-message sets."
+    },
+    {
+      "pair_id": "pair-56789d076b0c2a57",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-cbb9ad88001cf798f7fd",
+      "reason": "Both require CipherSuite to be encoded as exactly two uint8 octets; the canonical member is the direct primary-body definition rather than the repeated appendix definition."
+    },
+    {
+      "pair_id": "pair-078dc1f5e321d1e0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different ExtensionType members to different numeric values."
+    },
+    {
+      "pair_id": "pair-d05826b41ce39588",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Sending supported_versions in ClientHello and using a present supported_versions extension for version negotiation are separate sender and server-processing checks."
+    },
+    {
+      "pair_id": "pair-adb765c48f4340da",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different vectors in different messages and use different minimum encoded lengths."
+    },
+    {
+      "pair_id": "pair-f8736c2b7039f8bb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left rejects 0-RTT outside the recording window, while the right accepts a fresh ClientHello inside the window."
+    },
+    {
+      "pair_id": "pair-868757265bd33120",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different HandshakeType members to different numeric values."
+    },
+    {
+      "pair_id": "pair-ff00f2fe699c9e96",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The initial ClientHello compatibility record SHOULD use 0x0301, whereas TLSCiphertext always uses 0x0303; the record contexts and normative strengths differ."
+    },
+    {
+      "pair_id": "pair-de68adf13872b150",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different vectors and have different lower bounds: OfferedPsks.identities and CertificateAuthoritiesExtension.authorities."
+    },
+    {
+      "pair_id": "pair-0d9aa2448e695e2f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks constrain different fields in different messages, and PskIdentity.identity is non-empty while EncryptedExtensions.extensions may be empty."
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0034",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "The NewReno congestion controller described in this document has\n   three distinct states, as shown in Figure 1.",
+                             "line_start":  941,
+                             "line_end":  942,
+                             "condition":  "When implementing the NewReno congestion controller described in this document",
+                             "required_behavior":  "Represent the controller with three distinct congestion-control states.",
+                             "forbidden_behavior":  "Represent the controller with fewer or more than three distinct congestion-control states.",
+                             "error_behavior":  "",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "A test or code inspection can enumerate the controller\u0027s distinct states and verify that the count is exactly three.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "New path or      +------------+\n               persistent congestion |   Slow     |\n           (O)----------------------\u003e|   Start    |\n                                     +------------+",
+                             "line_start":  944,
+                             "line_end":  947,
+                             "condition":  "When a new path is initialized",
+                             "required_behavior":  "Enter the Slow Start state.",
+                             "forbidden_behavior":  "Initialize the new path in Recovery Period or Congestion Avoidance.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A state-machine test can create a new path and assert that its initial congestion-control state is Slow Start.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "New path or      +------------+\n               persistent congestion |   Slow     |\n           (O)----------------------\u003e|   Start    |\n                                     +------------+",
+                             "line_start":  944,
+                             "line_end":  947,
+                             "condition":  "When persistent congestion is established",
+                             "required_behavior":  "Enter the Slow Start state.",
+                             "forbidden_behavior":  "Remain in or enter Recovery Period or Congestion Avoidance instead of Slow Start.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can establish persistent congestion from a non-Slow-Start state and observe that the controller transitions to Slow Start.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "+------------+\n                                           |\n                                   Loss or |\n                           ECN-CE increase |\n                                           v\n    +------------+     Loss or       +------------+\n    | Congestion |  ECN-CE increase  |  Recovery  |\n    | Avoidance  |------------------\u003e|   Period   |",
+                             "line_start":  947,
+                             "line_end":  954,
+                             "condition":  "When loss is detected while the controller is in Slow Start",
+                             "required_behavior":  "Transition to the Recovery Period state.",
+                             "forbidden_behavior":  "Remain in Slow Start or transition directly to Congestion Avoidance.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can inject a loss event in Slow Start and inspect the resulting controller state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "+------------+\n                                           |\n                                   Loss or |\n                           ECN-CE increase |\n                                           v\n    +------------+     Loss or       +------------+\n    | Congestion |  ECN-CE increase  |  Recovery  |\n    | Avoidance  |------------------\u003e|   Period   |",
+                             "line_start":  947,
+                             "line_end":  954,
+                             "condition":  "When an ECN-CE increase is detected while the controller is in Slow Start",
+                             "required_behavior":  "Transition to the Recovery Period state.",
+                             "forbidden_behavior":  "Remain in Slow Start or transition directly to Congestion Avoidance.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can inject an ECN-CE increase in Slow Start and inspect the resulting controller state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "+------------+     Loss or       +------------+\n    | Congestion |  ECN-CE increase  |  Recovery  |\n    | Avoidance  |------------------\u003e|   Period   |",
+                             "line_start":  952,
+                             "line_end":  954,
+                             "condition":  "When loss is detected while the controller is in Congestion Avoidance",
+                             "required_behavior":  "Transition to the Recovery Period state.",
+                             "forbidden_behavior":  "Remain in Congestion Avoidance or transition to Slow Start solely because of this loss event.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can inject a loss event in Congestion Avoidance and inspect the resulting controller state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "+------------+     Loss or       +------------+\n    | Congestion |  ECN-CE increase  |  Recovery  |\n    | Avoidance  |------------------\u003e|   Period   |",
+                             "line_start":  952,
+                             "line_end":  954,
+                             "condition":  "When an ECN-CE increase is detected while the controller is in Congestion Avoidance",
+                             "required_behavior":  "Transition to the Recovery Period state.",
+                             "forbidden_behavior":  "Remain in Congestion Avoidance or transition to Slow Start solely because of this ECN-CE increase.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can inject an ECN-CE increase in Congestion Avoidance and inspect the resulting controller state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "+------------+                   +------------+\n              ^                            |\n              |                            |\n              +----------------------------+\n                 Acknowledgment of packet\n                   sent during recovery",
+                             "line_start":  955,
+                             "line_end":  960,
+                             "condition":  "When a packet that was sent during the Recovery Period is acknowledged",
+                             "required_behavior":  "Transition from Recovery Period to Congestion Avoidance.",
+                             "forbidden_behavior":  "Remain in Recovery Period after that acknowledgment or transition to Slow Start solely because of it.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can enter recovery, acknowledge a packet sent during that period, and assert the resulting state is Congestion Avoidance.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

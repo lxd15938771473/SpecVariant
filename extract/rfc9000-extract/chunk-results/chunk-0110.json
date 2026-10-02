@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0110",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   It is possible for faulty network devices to corrupt or erroneously\n   drop packets that carry a non-zero ECN codepoint.  To ensure\n   connectivity in the presence of such devices, an endpoint validates\n   the ECN counts for each network path and disables the use of ECN on\n   that path if errors are detected.",
+      "line_start": 4495,
+      "line_end": 4499,
+      "condition": "For each network path.",
+      "required_behavior": "The endpoint validates the ECN counts for that path.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation can be inspected or tested to determine whether ECN counts are validated independently for every network path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   It is possible for faulty network devices to corrupt or erroneously\n   drop packets that carry a non-zero ECN codepoint.  To ensure\n   connectivity in the presence of such devices, an endpoint validates\n   the ECN counts for each network path and disables the use of ECN on\n   that path if errors are detected.",
+      "line_start": 4495,
+      "line_end": 4499,
+      "condition": "When errors are detected by ECN validation on a network path.",
+      "required_behavior": "The endpoint disables the use of ECN on that path.",
+      "forbidden_behavior": "The endpoint must not continue using ECN on the affected path after detecting validation errors.",
+      "error_behavior": "Disable ECN specifically on the path for which errors were detected.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can induce erroneous ECN feedback on one path and verify that ECN is disabled on that path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  The endpoint sets an ECT(0) codepoint in the IP header of early\n      outgoing packets sent on a new path to the peer [RFC8311].",
+      "line_start": 4503,
+      "line_end": 4504,
+      "condition": "When performing ECN validation for a new path to the peer.",
+      "required_behavior": "The endpoint sets the ECT(0) codepoint in the IP header of early outgoing packets on that path.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet captures can verify the ECN codepoint in IP headers of early outgoing packets on a newly used path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  The endpoint monitors whether all packets sent with an ECT\n      codepoint are eventually deemed lost (Section 6 of\n      [QUIC-RECOVERY]), indicating that ECN validation has failed.",
+      "line_start": 4506,
+      "line_end": 4508,
+      "condition": "While performing ECN validation for a new path.",
+      "required_behavior": "The endpoint monitors whether every packet sent with an ECT codepoint is eventually deemed lost.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Instrumentation can verify that loss outcomes for all ECT-marked packets used during validation are tracked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  The endpoint monitors whether all packets sent with an ECT\n      codepoint are eventually deemed lost (Section 6 of\n      [QUIC-RECOVERY]), indicating that ECN validation has failed.",
+      "line_start": 4506,
+      "line_end": 4508,
+      "condition": "When all packets sent with an ECT codepoint are eventually deemed lost.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not treat ECN validation as successful.",
+      "error_behavior": "ECN validation is classified as failed.",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can cause every ECT-marked validation packet to be deemed lost and inspect the resulting validation state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If an endpoint has cause to expect that IP packets with an ECT\n   codepoint might be dropped by a faulty network element, the endpoint\n   could set an ECT codepoint for only the first ten outgoing packets on\n   a path, or for a period of three PTOs (see Section 6.2 of\n   [QUIC-RECOVERY]).  If all packets marked with non-zero ECN codepoints\n   are subsequently lost, it can disable marking on the assumption that\n   the marking caused the loss.",
+      "line_start": 4510,
+      "line_end": 4516,
+      "condition": "If the endpoint has cause to expect a faulty network element might drop packets carrying an ECT codepoint.",
+      "required_behavior": "The endpoint is permitted to limit ECT marking either to the first ten outgoing packets on the path or to a period of three PTOs.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The two stated optional probing limits are measurable in transmitted packet counts and elapsed PTO periods.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If an endpoint has cause to expect that IP packets with an ECT\n   codepoint might be dropped by a faulty network element, the endpoint\n   could set an ECT codepoint for only the first ten outgoing packets on\n   a path, or for a period of three PTOs (see Section 6.2 of\n   [QUIC-RECOVERY]).  If all packets marked with non-zero ECN codepoints\n   are subsequently lost, it can disable marking on the assumption that\n   the marking caused the loss.",
+      "line_start": 4510,
+      "line_end": 4516,
+      "condition": "If all packets marked with non-zero ECN codepoints are subsequently lost.",
+      "required_behavior": "The endpoint is permitted to disable ECN marking.",
+      "forbidden_behavior": "",
+      "error_behavior": "The endpoint may treat the marking as the cause of the loss and disable it.",
+      "check_type": "error_handling",
+      "why_checkable": "A loss test can verify that disabling ECN marking is an allowed implementation response when every non-zero-ECN packet is lost.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint thus attempts to use ECN and validates this for each new\n   connection, when switching to a server's preferred address, and on\n   active connection migration to a new path.  Appendix A.4 describes\n   one possible algorithm.",
+      "line_start": 4518,
+      "line_end": 4521,
+      "condition": "For each new connection.",
+      "required_behavior": "The endpoint attempts to use ECN and validates its use.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Connection initialization tests can observe whether ECN is attempted and validation is initiated for every new connection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint thus attempts to use ECN and validates this for each new\n   connection, when switching to a server's preferred address, and on\n   active connection migration to a new path.  Appendix A.4 describes\n   one possible algorithm.",
+      "line_start": 4518,
+      "line_end": 4521,
+      "condition": "When switching to a server's preferred address.",
+      "required_behavior": "The endpoint attempts to use ECN and validates its use for the switched path.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A preferred-address switch can be exercised while observing ECN marking and validation state for the resulting path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint thus attempts to use ECN and validates this for each new\n   connection, when switching to a server's preferred address, and on\n   active connection migration to a new path.  Appendix A.4 describes\n   one possible algorithm.",
+      "line_start": 4518,
+      "line_end": 4521,
+      "condition": "On active connection migration to a new path.",
+      "required_behavior": "The endpoint attempts to use ECN and validates its use on the new path.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An active migration test can verify that the implementation starts per-path ECN use and validation after moving to the new path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Other methods of probing paths for ECN support are possible, as are\n   different marking strategies.  Implementations MAY use other methods\n   defined in RFCs; see [RFC8311].  Implementations that use the ECT(1)\n   codepoint need to perform ECN validation using the reported ECT(1)\n   counts.",
+      "line_start": 4523,
+      "line_end": 4527,
+      "condition": "When an implementation selects an alternative method of probing paths for ECN support.",
+      "required_behavior": "The selected alternative method is permitted if it is defined in an RFC.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation's selected probing method can be identified and checked for definition in an RFC, though that verification requires the referenced external material.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Other methods of probing paths for ECN support are possible, as are\n   different marking strategies.  Implementations MAY use other methods\n   defined in RFCs; see [RFC8311].  Implementations that use the ECT(1)\n   codepoint need to perform ECN validation using the reported ECT(1)\n   counts.",
+      "line_start": 4523,
+      "line_end": 4527,
+      "condition": "When an implementation uses the ECT(1) codepoint.",
+      "required_behavior": "The implementation performs ECN validation using the reported ECT(1) counts.",
+      "forbidden_behavior": "The implementation must not validate ECT(1) use without using the reported ECT(1) counts.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can supply reported ECT(1) counts and verify that those counts drive ECN validation when outgoing packets use ECT(1).",
+      "eligibility": "eligible"
+    }
+  ]
+}

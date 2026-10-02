@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0050",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "In all handshakes, the server MUST send the EncryptedExtensions\n   message immediately after the ServerHello message.",
+      "line_start": 3307,
+      "line_end": 3308,
+      "condition": "in every TLS 1.3 handshake",
+      "required_behavior": "have the server send EncryptedExtensions",
+      "forbidden_behavior": "omit EncryptedExtensions",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Every completed server handshake trace can be checked for the message's presence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In all handshakes, the server MUST send the EncryptedExtensions\n   message immediately after the ServerHello message.",
+      "line_start": 3307,
+      "line_end": 3308,
+      "condition": "in every TLS 1.3 handshake",
+      "required_behavior": "send EncryptedExtensions immediately after ServerHello",
+      "forbidden_behavior": "insert another handshake message between ServerHello and EncryptedExtensions",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Adjacent server handshake message types can be inspected directly.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This is the first\n   message that is encrypted under keys derived from the\n   server_handshake_traffic_secret.",
+      "line_start": 3308,
+      "line_end": 3310,
+      "condition": "when the server begins using keys derived from server_handshake_traffic_secret",
+      "required_behavior": "make EncryptedExtensions the first message encrypted under those keys",
+      "forbidden_behavior": "encrypt an earlier message under server_handshake_traffic_secret-derived keys",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Handshake message order and record protection epochs can be correlated.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The EncryptedExtensions message contains extensions that can be\n   protected, i.e., any which are not needed to establish the\n   cryptographic context but which are not associated with individual\n   certificates.",
+      "line_start": 3312,
+      "line_end": 3315,
+      "condition": "when the server places an extension in EncryptedExtensions",
+      "required_behavior": "limit it to an extension not needed to establish the cryptographic context",
+      "forbidden_behavior": "place an extension needed to establish the cryptographic context in EncryptedExtensions",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Extension placement can be checked against each extension's protocol role and allowed-message table.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The EncryptedExtensions message contains extensions that can be\n   protected, i.e., any which are not needed to establish the\n   cryptographic context but which are not associated with individual\n   certificates.",
+      "line_start": 3312,
+      "line_end": 3315,
+      "condition": "when the server places an extension in EncryptedExtensions",
+      "required_behavior": "limit it to an extension not associated with an individual certificate",
+      "forbidden_behavior": "place a certificate-specific extension in EncryptedExtensions",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Extension placement can be checked against whether the extension belongs on a certificate entry.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The client MUST check EncryptedExtensions for the\n   presence of any forbidden extensions and if any are found MUST abort\n   the handshake with an \"illegal_parameter\" alert.",
+      "line_start": 3315,
+      "line_end": 3317,
+      "condition": "when a client processes EncryptedExtensions",
+      "required_behavior": "check for every extension forbidden in EncryptedExtensions",
+      "forbidden_behavior": "accept EncryptedExtensions containing a forbidden extension",
+      "error_behavior": "abort the handshake with an illegal_parameter alert if any forbidden extension is present",
+      "check_type": "error_handling",
+      "why_checkable": "The parsed extension types can be checked against the allowed-message table and the resulting alert observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "struct {\n          Extension extensions<0..2^16-1>;\n      } EncryptedExtensions;",
+      "line_start": 3321,
+      "line_end": 3323,
+      "condition": "when encoding the EncryptedExtensions message body",
+      "required_behavior": "encode extensions as a vector with encoded content length from 0 through 2^16-1 octets",
+      "forbidden_behavior": "encode an extensions vector longer than 2^16-1 octets",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The vector length prefix and payload size are directly parseable, including the permitted empty vector.",
+      "eligibility": "eligible"
+    }
+  ]
+}

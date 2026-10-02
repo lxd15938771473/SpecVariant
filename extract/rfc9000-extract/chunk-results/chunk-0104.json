@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0104",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   ACK frames MUST only be carried in a packet that has the same packet\n   number space as the packet being acknowledged; see Section 12.1.  For\n   instance, packets that are protected with 1-RTT keys MUST be\n   acknowledged in packets that are also protected with 1-RTT keys.",
+      "line_start": 4291,
+      "line_end": 4294,
+      "condition": "When an ACK frame acknowledges a packet.",
+      "required_behavior": "Carry the ACK frame in a packet belonging to the same packet number space as the acknowledged packet.",
+      "forbidden_behavior": "Do not carry the ACK frame in a packet belonging to a different packet number space from the acknowledged packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation test can compare the packet number space of each ACK-carrying packet with that of every packet it acknowledges.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ACK frames MUST only be carried in a packet that has the same packet\n   number space as the packet being acknowledged; see Section 12.1.  For\n   instance, packets that are protected with 1-RTT keys MUST be\n   acknowledged in packets that are also protected with 1-RTT keys.",
+      "line_start": 4291,
+      "line_end": 4294,
+      "condition": "When acknowledging a packet protected with 1-RTT keys.",
+      "required_behavior": "Send the acknowledgment in a packet that is also protected with 1-RTT keys.",
+      "forbidden_behavior": "Do not acknowledge a 1-RTT-protected packet in a packet protected with other keys.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A packet trace can verify the protection level of an acknowledged 1-RTT packet and the packet carrying its acknowledgment.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Packets that a client sends with 0-RTT packet protection MUST be\n   acknowledged by the server in packets protected by 1-RTT keys.  This",
+      "line_start": 4296,
+      "line_end": 4297,
+      "condition": "When the server acknowledges a packet that the client sent with 0-RTT packet protection.",
+      "required_behavior": "The server must carry the acknowledgment in a packet protected by 1-RTT keys.",
+      "forbidden_behavior": "The server must not carry the acknowledgment in a packet using a protection level other than 1-RTT.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A packet trace can identify client 0-RTT packets and verify that the server packets acknowledging them use 1-RTT protection.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0050",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "This token MUST be repeated by the client in all Initial packets it sends for that connection after it receives the Retry packet.",
+      "line_start": 2272,
+      "line_end": 2274,
+      "condition": "The client has received a Retry packet containing a token and subsequently sends an Initial packet for that connection.",
+      "required_behavior": "The client includes the Retry token in every subsequent Initial packet for that connection.",
+      "forbidden_behavior": "The client must not send a subsequent Initial packet for that connection without repeating the Retry token.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet traces or generated Initial packets can be inspected to verify that every Initial sent after receipt of Retry contains the supplied token.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In response to processing an Initial packet containing a token that was provided in a Retry packet, a server cannot send another Retry packet;",
+      "line_start": 2276,
+      "line_end": 2278,
+      "condition": "A server processes an Initial packet containing a token previously provided in a Retry packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "The server must not send another Retry packet in response.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can provide a Retry token in a subsequent Initial and verify that the server does not emit a second Retry.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In response to processing an Initial packet containing a token that was provided in a Retry packet, a server cannot send another Retry packet; it can only refuse the connection or permit it to proceed.",
+      "line_start": 2276,
+      "line_end": 2278,
+      "condition": "A server processes an Initial packet containing a token previously provided in a Retry packet.",
+      "required_behavior": "The server either refuses the connection or permits the connection to proceed.",
+      "forbidden_behavior": "The server must not choose a response outcome other than refusing the connection or permitting it to proceed.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The server's resulting connection state and emitted packets can be checked to ensure the outcome is one of the two permitted branches.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a server receives a client Initial that contains an invalid Retry token but is otherwise valid, it knows the client will not accept another Retry token.",
+      "line_start": 2295,
+      "line_end": 2297,
+      "condition": "A server receives an otherwise valid client Initial containing an invalid Retry token.",
+      "required_behavior": "",
+      "forbidden_behavior": "The server must not rely on the client accepting another Retry token.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The implementation's invalid-token branch can be inspected or exercised to determine whether it attempts recovery by issuing and relying on another Retry token.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Instead, the server SHOULD immediately close (Section 10.2) the connection with an INVALID_TOKEN error.",
+      "line_start": 2299,
+      "line_end": 2301,
+      "condition": "A server receives an otherwise valid client Initial containing an invalid Retry token.",
+      "required_behavior": "The server should immediately close the connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "The immediate close should use an INVALID_TOKEN error.",
+      "check_type": "error_handling",
+      "why_checkable": "A focused test can send an otherwise valid Initial with an invalid Retry token and observe whether the server immediately closes with INVALID_TOKEN.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Note that a server has not established any state for the connection at this point and so does not enter the closing period.",
+      "line_start": 2301,
+      "line_end": 2303,
+      "condition": "The server closes in response to an otherwise valid client Initial containing an invalid Retry token, before connection state has been established.",
+      "required_behavior": "The server does not enter the closing period.",
+      "forbidden_behavior": "The server must not transition the connection into the closing-period state.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The implementation's state transition after rejecting the invalid Retry token can be inspected or tested to verify that no closing-period state or timer is entered.",
+      "eligibility": "eligible"
+    }
+  ]
+}

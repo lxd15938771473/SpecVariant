@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0018",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Implementations need to be able to parse and ignore unknown values\n   unless the definition of the field states otherwise.",
+      "line_start": 1164,
+      "line_end": 1166,
+      "condition": "an implementation receives an unknown enumerated value and the field definition does not specify different handling",
+      "required_behavior": "parse the unknown value according to the enumerated field's wire width",
+      "forbidden_behavior": "fail solely because the enumerated value is unknown",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A field can be populated with an unassigned in-width value and tested for successful parsing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Implementations need to be able to parse and ignore unknown values\n   unless the definition of the field states otherwise.",
+      "line_start": 1164,
+      "line_end": 1166,
+      "condition": "an implementation receives an unknown enumerated value and the field definition does not specify different handling",
+      "required_behavior": "ignore the unknown value after parsing it",
+      "forbidden_behavior": "assign defined-value semantics to the unknown value",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Processing after a successfully parsed unknown enum can be observed for side effects or rejection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An enumerated occupies as much space in the byte stream as would its\n   maximal defined ordinal value.",
+      "line_start": 1177,
+      "line_end": 1178,
+      "condition": "an enumerated type is encoded or decoded",
+      "required_behavior": "use the wire width required by the type's maximal defined ordinal value",
+      "forbidden_behavior": "vary the enum width by the selected element or use a width too small for the maximal ordinal",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The enum definition fixes a deterministic byte width for every value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "One may optionally specify a value without its associated tag to\n   force the width definition without defining a superfluous element.",
+      "line_start": 1183,
+      "line_end": 1184,
+      "condition": "an enum definition contains an untagged numerical value",
+      "required_behavior": "include that value when determining the enum's wire width",
+      "forbidden_behavior": "ignore the untagged value when determining the width",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The resulting enum width can be compared with the width required by the untagged value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In the following example, Taste will consume two bytes in the data\n   stream but can only assume the values 1, 2, or 4 in the current\n   version of the protocol.\n\n      enum { sweet(1), sour(2), bitter(4), (32000) } Taste;",
+      "line_start": 1186,
+      "line_end": 1190,
+      "condition": "an enum definition contains an untagged value used only to force its width",
+      "required_behavior": "treat only tagged values or tagged ranges as currently defined enum values",
+      "forbidden_behavior": "treat the untagged width-forcing value as a defined enum element",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The parser's known-value set can be tested independently from the width forced by the anonymous value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The\n   numerical value can describe a range over which the same name\n   applies.  The value includes the minimum and maximum inclusive values\n   in that range, separated by two period characters.",
+      "line_start": 1201,
+      "line_end": 1204,
+      "condition": "an enumerated element is declared with a minimum..maximum range",
+      "required_behavior": "apply that element name to every numerical value from the minimum through the maximum inclusive",
+      "forbidden_behavior": "exclude either endpoint from the declared range",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Tests at both endpoints and adjacent values can verify inclusive range handling.",
+      "eligibility": "eligible"
+    }
+  ]
+}

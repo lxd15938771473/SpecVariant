@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0008",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Streams in QUIC provide a lightweight, ordered byte-stream abstraction to an application.",
+      "line_start": 497,
+      "line_end": 498,
+      "condition": "When QUIC exposes a stream to an application",
+      "required_behavior": "Provide an ordered byte-stream abstraction, preserving byte order within that stream.",
+      "forbidden_behavior": "Do not expose bytes within a stream out of order.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation test can send ordered bytes on one stream and verify that the receiving application observes the same byte order.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Streams can be unidirectional or bidirectional.",
+      "line_start": 498,
+      "line_end": 499,
+      "condition": "When a stream is created",
+      "required_behavior": "Support streams whose permitted data direction is either unidirectional or bidirectional.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The implementation's stream types and permitted send directions can be inspected or exercised for both stated alternatives.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Streams can be created by sending data.",
+      "line_start": 501,
+      "line_end": 501,
+      "condition": "When an endpoint sends data for a new stream",
+      "required_behavior": "Create or open the stream as part of sending that data, without requiring a separate stream-creation operation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can send data using a previously unused stream identifier and verify that the stream is created.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For instance, a single STREAM frame (Section 19.8) can open, carry data for, and close a stream.",
+      "line_start": 503,
+      "line_end": 505,
+      "condition": "When one STREAM frame encodes the opening data and closure of a stream",
+      "required_behavior": "Allow that single frame to open the stream, carry its data, and close it.",
+      "forbidden_behavior": "Do not require separate frames solely to perform those three operations when they are represented by one STREAM frame.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A crafted single STREAM frame can be processed and the resulting stream creation, delivered data, and closed state can all be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Streams can be created by either endpoint, can concurrently send data interleaved with other streams, and can be canceled.",
+      "line_start": 508,
+      "line_end": 509,
+      "condition": "During a QUIC connection",
+      "required_behavior": "Allow either endpoint to create streams, allow stream data to be sent concurrently and interleaved across streams, and allow streams to be canceled.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Bidirectional endpoint tests can create, interleave data on, and cancel streams while observing implementation state and wire output.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QUIC does not provide any means of ensuring ordering between bytes on different streams.",
+      "line_start": 509,
+      "line_end": 511,
+      "condition": "When bytes are transmitted on different streams",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not expose or rely on a QUIC-level guarantee that bytes on different streams are ordered relative to one another.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "API contracts and runtime behavior can be checked to ensure cross-stream delivery is not constrained by a global byte-order guarantee.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QUIC allows for an arbitrary number of streams to operate concurrently and for an arbitrary amount of data to be sent on any stream, subject to flow control constraints and stream limits; see Section 4.",
+      "line_start": 513,
+      "line_end": 516,
+      "condition": "While applicable flow-control constraints and stream limits are not exceeded",
+      "required_behavior": "Allow streams to operate concurrently and allow data to be sent on each stream without imposing an additional fixed protocol limit beyond the applicable flow-control and stream limits.",
+      "forbidden_behavior": "Do not impose an unrelated fixed bound on concurrent streams or per-stream data below the applicable flow-control and stream limits.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Boundary tests can vary concurrent stream counts and transmitted data up to negotiated limits and detect any additional implementation-imposed protocol bound.",
+      "eligibility": "eligible"
+    }
+  ]
+}

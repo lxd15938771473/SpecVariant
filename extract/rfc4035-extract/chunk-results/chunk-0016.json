@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0016",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server SHOULD attempt to send RRSIG RRs that a\n   security-aware resolver can use to authenticate the RRsets in the\n   response.",
+      "line_start": 538,
+      "line_end": 541,
+      "condition": "A security-aware authoritative name server is responding to a query with the DO bit set",
+      "required_behavior": "The server SHOULD attempt to send RRSIG RRs that a security-aware resolver can use to authenticate the RRsets in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Response construction can be inspected for an attempt to include signatures usable to authenticate the returned RRsets; this is advisory, not an unconditional inclusion requirement.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server SHOULD attempt to send RRSIG RRs that a\n   security-aware resolver can use to authenticate the RRsets in the\n   response.  A name server SHOULD make every attempt to keep the RRset\n   and its associated RRSIG(s) together in a response.  Inclusion of\n   RRSIG RRs in a response is subject to the following rules:",
+      "line_start": 538,
+      "line_end": 543,
+      "condition": "A security-aware authoritative name server is responding to a query with the DO bit set",
+      "required_behavior": "The name server SHOULD make every attempt to keep an RRset and its associated RRSIG records together in a response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Response construction and size handling can be inspected for efforts to include RRsets together with their associated signatures; the source preserves this as a SHOULD.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server SHOULD attempt to send RRSIG RRs that a\n   security-aware resolver can use to authenticate the RRsets in the\n   response.  A name server SHOULD make every attempt to keep the RRset\n   and its associated RRSIG(s) together in a response.  Inclusion of\n   RRSIG RRs in a response is subject to the following rules:\n\n   o  When placing a signed RRset in the Answer section, the name server\n      MUST also place its RRSIG RRs in the Answer section.  The RRSIG\n      RRs have a higher priority for inclusion than any other RRsets\n      that may have to be included.  If space does not permit inclusion\n      of these RRSIG RRs, the name server MUST set the TC bit.",
+      "line_start": 538,
+      "line_end": 549,
+      "condition": "A security-aware authoritative name server is responding to a query with the DO bit set and is placing a signed RRset in the Answer section",
+      "required_behavior": "The server MUST also place the associated RRSIG RRs in the Answer section, subject to setting TC when space does not permit their inclusion.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The Answer section can be examined for signatures associated with each signed RRset, with insufficient-space cases handled by the separate TC rule.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server SHOULD attempt to send RRSIG RRs that a\n   security-aware resolver can use to authenticate the RRsets in the\n   response.  A name server SHOULD make every attempt to keep the RRset\n   and its associated RRSIG(s) together in a response.  Inclusion of\n   RRSIG RRs in a response is subject to the following rules:\n\n   o  When placing a signed RRset in the Answer section, the name server\n      MUST also place its RRSIG RRs in the Answer section.  The RRSIG\n      RRs have a higher priority for inclusion than any other RRsets\n      that may have to be included.  If space does not permit inclusion\n      of these RRSIG RRs, the name server MUST set the TC bit.",
+      "line_start": 538,
+      "line_end": 549,
+      "condition": "A security-aware authoritative name server is responding to a query with the DO bit set and is selecting records for inclusion after placing a signed RRset in the Answer section",
+      "required_behavior": "The associated RRSIG RRs have higher priority for inclusion than any other RRsets that may have to be included.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Under a response-size limit, record-selection logic can be inspected to verify that these signatures take precedence over other RRsets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server SHOULD attempt to send RRSIG RRs that a\n   security-aware resolver can use to authenticate the RRsets in the\n   response.  A name server SHOULD make every attempt to keep the RRset\n   and its associated RRSIG(s) together in a response.  Inclusion of\n   RRSIG RRs in a response is subject to the following rules:\n\n   o  When placing a signed RRset in the Answer section, the name server\n      MUST also place its RRSIG RRs in the Answer section.  The RRSIG\n      RRs have a higher priority for inclusion than any other RRsets\n      that may have to be included.  If space does not permit inclusion\n      of these RRSIG RRs, the name server MUST set the TC bit.",
+      "line_start": 538,
+      "line_end": 549,
+      "condition": "A security-aware authoritative name server is responding to a query with the DO bit set and has placed a signed RRset in the Answer section, but space does not permit inclusion of its RRSIG RRs",
+      "required_behavior": "The server MUST set the TC bit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A size-constrained response omitting the Answer RRset signatures has a directly observable TC bit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server SHOULD attempt to send RRSIG RRs that a\n   security-aware resolver can use to authenticate the RRsets in the\n   response.  A name server SHOULD make every attempt to keep the RRset\n   and its associated RRSIG(s) together in a response.  Inclusion of\n   RRSIG RRs in a response is subject to the following rules:\n\n   o  When placing a signed RRset in the Answer section, the name server\n      MUST also place its RRSIG RRs in the Answer section.  The RRSIG\n      RRs have a higher priority for inclusion than any other RRsets\n      that may have to be included.  If space does not permit inclusion\n      of these RRSIG RRs, the name server MUST set the TC bit.\n\n   o  When placing a signed RRset in the Authority section, the name\n      server MUST also place its RRSIG RRs in the Authority section.\n      The RRSIG RRs have a higher priority for inclusion than any other\n      RRsets that may have to be included.  If space does not permit\n      inclusion of these RRSIG RRs, the name server MUST set the TC bit.",
+      "line_start": 538,
+      "line_end": 555,
+      "condition": "A security-aware authoritative name server is responding to a query with the DO bit set and is placing a signed RRset in the Authority section",
+      "required_behavior": "The server MUST also place the associated RRSIG RRs in the Authority section, subject to setting TC when space does not permit their inclusion.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The Authority section can be examined for signatures associated with each signed RRset, with insufficient-space cases handled by the separate TC rule.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server SHOULD attempt to send RRSIG RRs that a\n   security-aware resolver can use to authenticate the RRsets in the\n   response.  A name server SHOULD make every attempt to keep the RRset\n   and its associated RRSIG(s) together in a response.  Inclusion of\n   RRSIG RRs in a response is subject to the following rules:\n\n   o  When placing a signed RRset in the Answer section, the name server\n      MUST also place its RRSIG RRs in the Answer section.  The RRSIG\n      RRs have a higher priority for inclusion than any other RRsets\n      that may have to be included.  If space does not permit inclusion\n      of these RRSIG RRs, the name server MUST set the TC bit.\n\n   o  When placing a signed RRset in the Authority section, the name\n      server MUST also place its RRSIG RRs in the Authority section.\n      The RRSIG RRs have a higher priority for inclusion than any other\n      RRsets that may have to be included.  If space does not permit\n      inclusion of these RRSIG RRs, the name server MUST set the TC bit.",
+      "line_start": 538,
+      "line_end": 555,
+      "condition": "A security-aware authoritative name server is responding to a query with the DO bit set and is selecting records for inclusion after placing a signed RRset in the Authority section",
+      "required_behavior": "The associated RRSIG RRs have higher priority for inclusion than any other RRsets that may have to be included.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Under a response-size limit, record-selection logic can be inspected to verify that these signatures take precedence over other RRsets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server SHOULD attempt to send RRSIG RRs that a\n   security-aware resolver can use to authenticate the RRsets in the\n   response.  A name server SHOULD make every attempt to keep the RRset\n   and its associated RRSIG(s) together in a response.  Inclusion of\n   RRSIG RRs in a response is subject to the following rules:\n\n   o  When placing a signed RRset in the Answer section, the name server\n      MUST also place its RRSIG RRs in the Answer section.  The RRSIG\n      RRs have a higher priority for inclusion than any other RRsets\n      that may have to be included.  If space does not permit inclusion\n      of these RRSIG RRs, the name server MUST set the TC bit.\n\n   o  When placing a signed RRset in the Authority section, the name\n      server MUST also place its RRSIG RRs in the Authority section.\n      The RRSIG RRs have a higher priority for inclusion than any other\n      RRsets that may have to be included.  If space does not permit\n      inclusion of these RRSIG RRs, the name server MUST set the TC bit.",
+      "line_start": 538,
+      "line_end": 555,
+      "condition": "A security-aware authoritative name server is responding to a query with the DO bit set and has placed a signed RRset in the Authority section, but space does not permit inclusion of its RRSIG RRs",
+      "required_behavior": "The server MUST set the TC bit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A size-constrained response omitting the Authority RRset signatures has a directly observable TC bit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server SHOULD attempt to send RRSIG RRs that a\n   security-aware resolver can use to authenticate the RRsets in the\n   response.  A name server SHOULD make every attempt to keep the RRset\n   and its associated RRSIG(s) together in a response.  Inclusion of\n   RRSIG RRs in a response is subject to the following rules:\n\n   o  When placing a signed RRset in the Answer section, the name server\n      MUST also place its RRSIG RRs in the Answer section.  The RRSIG\n      RRs have a higher priority for inclusion than any other RRsets\n      that may have to be included.  If space does not permit inclusion\n      of these RRSIG RRs, the name server MUST set the TC bit.\n\n   o  When placing a signed RRset in the Authority section, the name\n      server MUST also place its RRSIG RRs in the Authority section.\n      The RRSIG RRs have a higher priority for inclusion than any other\n      RRsets that may have to be included.  If space does not permit\n      inclusion of these RRSIG RRs, the name server MUST set the TC bit.\n\n   o  When placing a signed RRset in the Additional section, the name\n      server MUST also place its RRSIG RRs in the Additional section.\n      If space does not permit inclusion of both the RRset and its\n      associated RRSIG RRs, the name server MAY retain the RRset while\n      dropping the RRSIG RRs.  If this happens, the name server MUST NOT\n      set the TC bit solely because these RRSIG RRs didn't fit.",
+      "line_start": 538,
+      "line_end": 562,
+      "condition": "A security-aware authoritative name server is responding to a query with the DO bit set and is placing a signed RRset in the Additional section",
+      "required_behavior": "The server MUST also place the associated RRSIG RRs in the Additional section, subject to the permitted omission when space does not allow both the RRset and its associated RRSIG RRs.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The Additional section can be checked for the associated signatures, accounting for the explicit insufficient-space exception.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server SHOULD attempt to send RRSIG RRs that a\n   security-aware resolver can use to authenticate the RRsets in the\n   response.  A name server SHOULD make every attempt to keep the RRset\n   and its associated RRSIG(s) together in a response.  Inclusion of\n   RRSIG RRs in a response is subject to the following rules:\n\n   o  When placing a signed RRset in the Answer section, the name server\n      MUST also place its RRSIG RRs in the Answer section.  The RRSIG\n      RRs have a higher priority for inclusion than any other RRsets\n      that may have to be included.  If space does not permit inclusion\n      of these RRSIG RRs, the name server MUST set the TC bit.\n\n   o  When placing a signed RRset in the Authority section, the name\n      server MUST also place its RRSIG RRs in the Authority section.\n      The RRSIG RRs have a higher priority for inclusion than any other\n      RRsets that may have to be included.  If space does not permit\n      inclusion of these RRSIG RRs, the name server MUST set the TC bit.\n\n   o  When placing a signed RRset in the Additional section, the name\n      server MUST also place its RRSIG RRs in the Additional section.\n      If space does not permit inclusion of both the RRset and its\n      associated RRSIG RRs, the name server MAY retain the RRset while\n      dropping the RRSIG RRs.  If this happens, the name server MUST NOT\n      set the TC bit solely because these RRSIG RRs didn't fit.",
+      "line_start": 538,
+      "line_end": 562,
+      "condition": "A security-aware authoritative name server is responding to a query with the DO bit set and is placing a signed RRset in the Additional section, but space does not permit inclusion of both the RRset and its associated RRSIG RRs",
+      "required_behavior": "The server MAY retain the RRset while dropping its associated RRSIG RRs.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The size-handling branch can be checked for the permitted outcome of retaining the RRset without its signatures; this does not require the server to choose that outcome.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set, a security-aware\n   authoritative name server SHOULD attempt to send RRSIG RRs that a\n   security-aware resolver can use to authenticate the RRsets in the\n   response.  A name server SHOULD make every attempt to keep the RRset\n   and its associated RRSIG(s) together in a response.  Inclusion of\n   RRSIG RRs in a response is subject to the following rules:\n\n   o  When placing a signed RRset in the Answer section, the name server\n      MUST also place its RRSIG RRs in the Answer section.  The RRSIG\n      RRs have a higher priority for inclusion than any other RRsets\n      that may have to be included.  If space does not permit inclusion\n      of these RRSIG RRs, the name server MUST set the TC bit.\n\n   o  When placing a signed RRset in the Authority section, the name\n      server MUST also place its RRSIG RRs in the Authority section.\n      The RRSIG RRs have a higher priority for inclusion than any other\n      RRsets that may have to be included.  If space does not permit\n      inclusion of these RRSIG RRs, the name server MUST set the TC bit.\n\n   o  When placing a signed RRset in the Additional section, the name\n      server MUST also place its RRSIG RRs in the Additional section.\n      If space does not permit inclusion of both the RRset and its\n      associated RRSIG RRs, the name server MAY retain the RRset while\n      dropping the RRSIG RRs.  If this happens, the name server MUST NOT\n      set the TC bit solely because these RRSIG RRs didn't fit.",
+      "line_start": 538,
+      "line_end": 562,
+      "condition": "A security-aware authoritative name server is responding to a query with the DO bit set and, because space does not permit both, retains a signed RRset in the Additional section while dropping its associated RRSIG RRs",
+      "required_behavior": "",
+      "forbidden_behavior": "The server MUST NOT set the TC bit solely because these RRSIG RRs did not fit.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A response with this omission and no other truncation cause can be checked to ensure that the TC bit is not set.",
+      "eligibility": "eligible"
+    }
+  ]
+}

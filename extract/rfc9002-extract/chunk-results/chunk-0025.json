@@ -1,0 +1,151 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0025",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "Resumed connections over the same network MAY use the previous\n   connection\u0027s final smoothed RTT value as the resumed connection\u0027s\n   initial RTT.",
+                             "line_start":  696,
+                             "line_end":  698,
+                             "condition":  "A connection is resumed over the same network and the previous connection has a final smoothed RTT value.",
+                             "required_behavior":  "The implementation permits the previous connection\u0027s final smoothed RTT value to be used as the resumed connection\u0027s initial RTT.",
+                             "forbidden_behavior":  "The implementation must not treat this initialization choice as invalid solely because the value came from the previous connection.",
+                             "error_behavior":  "No specific error response is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can resume a connection on the same network with a known prior smoothed RTT and inspect the resumed connection\u0027s initial RTT.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When no previous RTT is available, the initial RTT\n   SHOULD be set to 333 milliseconds.",
+                             "line_start":  698,
+                             "line_end":  699,
+                             "condition":  "No previous RTT value is available when initializing a connection.",
+                             "required_behavior":  "Set the initial RTT to 333 milliseconds unless there is a justified reason to deviate from this recommendation.",
+                             "forbidden_behavior":  "Do not select a different initial RTT without a justified exception to the SHOULD requirement.",
+                             "error_behavior":  "No specific error response is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can initialize a connection without prior RTT state and inspect the configured initial RTT.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A connection MAY use the delay between sending a PATH_CHALLENGE and\n   receiving a PATH_RESPONSE to set the initial RTT (see kInitialRtt in\n   Appendix A.2) for a new path",
+                             "line_start":  703,
+                             "line_end":  705,
+                             "condition":  "A PATH_RESPONSE is received for a PATH_CHALLENGE sent on a new path.",
+                             "required_behavior":  "The implementation permits the measured PATH_CHALLENGE-to-PATH_RESPONSE delay to initialize the RTT for the new path.",
+                             "forbidden_behavior":  "The implementation must not reject this initialization choice solely because the delay was measured using PATH_CHALLENGE and PATH_RESPONSE.",
+                             "error_behavior":  "No specific error response is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can control the response delay on a new path and observe whether that delay may be installed as the path\u0027s initial RTT.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "the delay SHOULD NOT be considered\n   an RTT sample.",
+                             "line_start":  705,
+                             "line_end":  706,
+                             "condition":  "The delay between sending a PATH_CHALLENGE and receiving its PATH_RESPONSE is measured for a new path.",
+                             "required_behavior":  "Keep that delay out of ordinary RTT-sample processing unless there is a justified reason to deviate from this recommendation.",
+                             "forbidden_behavior":  "Do not treat the PATH_CHALLENGE-to-PATH_RESPONSE delay as an RTT sample without a justified exception to the SHOULD NOT requirement.",
+                             "error_behavior":  "No specific error response is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can deliver a PATH_RESPONSE after a controlled delay and verify that RTT-sample estimators are not updated as though the delay were an RTT sample.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When the Initial keys and Handshake keys are discarded (see\n   Section 6.4), any Initial packets and Handshake packets can no longer\n   be acknowledged",
+                             "line_start":  708,
+                             "line_end":  710,
+                             "condition":  "Initial keys have been discarded.",
+                             "required_behavior":  "Stop acknowledging Initial packets.",
+                             "forbidden_behavior":  "Do not generate acknowledgments for Initial packets after Initial keys are discarded.",
+                             "error_behavior":  "No specific error response is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A stateful test can discard Initial keys, then inspect outgoing acknowledgments for references to Initial packets.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When the Initial keys and Handshake keys are discarded (see\n   Section 6.4), any Initial packets and Handshake packets can no longer\n   be acknowledged",
+                             "line_start":  708,
+                             "line_end":  710,
+                             "condition":  "Handshake keys have been discarded.",
+                             "required_behavior":  "Stop acknowledging Handshake packets.",
+                             "forbidden_behavior":  "Do not generate acknowledgments for Handshake packets after Handshake keys are discarded.",
+                             "error_behavior":  "No specific error response is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A stateful test can discard Handshake keys, then inspect outgoing acknowledgments for references to Handshake packets.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "any Initial packets and Handshake packets can no longer\n   be acknowledged, so they are removed from bytes in flight.",
+                             "line_start":  709,
+                             "line_end":  710,
+                             "condition":  "Initial keys are discarded while Initial packets remain counted as bytes in flight.",
+                             "required_behavior":  "Remove all Initial-packet bytes from the bytes-in-flight accounting.",
+                             "forbidden_behavior":  "Do not retain Initial-packet bytes in bytes in flight after Initial keys are discarded.",
+                             "error_behavior":  "No specific error response is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can leave Initial packets outstanding, discard Initial keys, and compare bytes-in-flight accounting before and after the transition.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "any Initial packets and Handshake packets can no longer\n   be acknowledged, so they are removed from bytes in flight.",
+                             "line_start":  709,
+                             "line_end":  710,
+                             "condition":  "Handshake keys are discarded while Handshake packets remain counted as bytes in flight.",
+                             "required_behavior":  "Remove all Handshake-packet bytes from the bytes-in-flight accounting.",
+                             "forbidden_behavior":  "Do not retain Handshake-packet bytes in bytes in flight after Handshake keys are discarded.",
+                             "error_behavior":  "No specific error response is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can leave Handshake packets outstanding, discard Handshake keys, and compare bytes-in-flight accounting before and after the transition.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When\n   Initial or Handshake keys are discarded, the PTO and loss detection\n   timers MUST be reset",
+                             "line_start":  710,
+                             "line_end":  712,
+                             "condition":  "Initial keys are discarded.",
+                             "required_behavior":  "Reset the PTO timer.",
+                             "forbidden_behavior":  "Do not leave the existing PTO timer state or deadline unchanged after discarding Initial keys.",
+                             "error_behavior":  "No specific error response is specified; the required action is a timer reset.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can arm PTO, discard Initial keys, and inspect the PTO timer state or deadline after the transition.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When\n   Initial or Handshake keys are discarded, the PTO and loss detection\n   timers MUST be reset",
+                             "line_start":  710,
+                             "line_end":  712,
+                             "condition":  "Handshake keys are discarded.",
+                             "required_behavior":  "Reset the PTO timer.",
+                             "forbidden_behavior":  "Do not leave the existing PTO timer state or deadline unchanged after discarding Handshake keys.",
+                             "error_behavior":  "No specific error response is specified; the required action is a timer reset.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can arm PTO, discard Handshake keys, and inspect the PTO timer state or deadline after the transition.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When\n   Initial or Handshake keys are discarded, the PTO and loss detection\n   timers MUST be reset",
+                             "line_start":  710,
+                             "line_end":  712,
+                             "condition":  "Initial keys are discarded.",
+                             "required_behavior":  "Reset the loss detection timers.",
+                             "forbidden_behavior":  "Do not leave loss detection timers armed against the pre-discard Initial packet number space after discarding Initial keys.",
+                             "error_behavior":  "No specific error response is specified; the required action is a timer reset.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can arm loss detection for Initial packets, discard Initial keys, and inspect timer state after the transition.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When\n   Initial or Handshake keys are discarded, the PTO and loss detection\n   timers MUST be reset",
+                             "line_start":  710,
+                             "line_end":  712,
+                             "condition":  "Handshake keys are discarded.",
+                             "required_behavior":  "Reset the loss detection timers.",
+                             "forbidden_behavior":  "Do not leave loss detection timers armed against the pre-discard Handshake packet number space after discarding Handshake keys.",
+                             "error_behavior":  "No specific error response is specified; the required action is a timer reset.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can arm loss detection for Handshake packets, discard Handshake keys, and inspect timer state after the transition.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

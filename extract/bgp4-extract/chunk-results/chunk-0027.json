@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0027",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "AGGREGATOR is an optional transitive attribute",
+      "line_start": 1641,
+      "line_end": 1641,
+      "condition": "processing or encoding the AGGREGATOR attribute",
+      "required_behavior": "Treat AGGREGATOR as an optional attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The attribute classification and optional flag can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "AGGREGATOR is an optional transitive attribute",
+      "line_start": 1641,
+      "line_end": 1641,
+      "condition": "processing or encoding the AGGREGATOR attribute",
+      "required_behavior": "Treat AGGREGATOR as a transitive attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The attribute classification and transitive flag can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "AGGREGATOR is an optional transitive attribute, which MAY be included\n   in updates that are formed by aggregation (see Section 9.2.2.2).",
+      "line_start": 1641,
+      "line_end": 1642,
+      "condition": "a BGP speaker forms updates by route aggregation",
+      "required_behavior": "The speaker MAY include the AGGREGATOR attribute in the aggregated updates.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The aggregate-update construction path exposes whether this permitted optional attribute is included.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A\n   BGP speaker that performs route aggregation MAY add the AGGREGATOR\n   attribute, which SHALL contain its own AS number and IP address.",
+      "line_start": 1642,
+      "line_end": 1644,
+      "condition": "a BGP speaker performing route aggregation adds the AGGREGATOR attribute",
+      "required_behavior": "The AGGREGATOR attribute SHALL contain the aggregating speaker's own AS number.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The emitted attribute's AS number can be compared with the aggregating speaker's AS number.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A\n   BGP speaker that performs route aggregation MAY add the AGGREGATOR\n   attribute, which SHALL contain its own AS number and IP address.",
+      "line_start": 1642,
+      "line_end": 1644,
+      "condition": "a BGP speaker performing route aggregation adds the AGGREGATOR attribute",
+      "required_behavior": "The AGGREGATOR attribute SHALL contain the aggregating speaker's own IP address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The emitted attribute's IP address can be checked against the speaker's own addresses.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The\n   IP address SHOULD be the same as the BGP Identifier of the speaker.",
+      "line_start": 1644,
+      "line_end": 1645,
+      "condition": "a BGP speaker supplies its IP address in the AGGREGATOR attribute",
+      "required_behavior": "The IP address SHOULD equal the speaker's BGP Identifier.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The encoded AGGREGATOR IP address can be compared with the speaker's BGP Identifier while preserving the SHOULD strength.",
+      "eligibility": "eligible"
+    }
+  ]
+}

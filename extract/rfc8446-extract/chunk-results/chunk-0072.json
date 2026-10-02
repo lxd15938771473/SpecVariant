@@ -1,0 +1,31 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0072",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "There are cryptographic limits on the amount of plaintext which can\n   be safely encrypted under a given set of keys.  [AEAD-LIMITS]\n   provides an analysis of these limits under the assumption that the\n   underlying primitive (AES or ChaCha20) has no weaknesses.\n   Implementations SHOULD do a key update as described in Section 4.6.3\n   prior to reaching these limits.",
+                             "line_start":  4683,
+                             "line_end":  4688,
+                             "condition":  "the active traffic keys are approaching their cryptographic usage limit",
+                             "required_behavior":  "perform a KeyUpdate before reaching the limit",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Per-key record accounting and the update threshold can be inspected and tested.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "For AES-GCM, up to 2^24.5 full-size records (about 24 million) may be\n   encrypted on a given connection while keeping a safety margin of\n   approximately 2^-57 for Authenticated Encryption (AE) security.  For",
+                             "line_start":  4690,
+                             "line_end":  4692,
+                             "condition":  "AES-GCM protects full-size records under one key set on a connection",
+                             "required_behavior":  "treat 2^24.5 records as the stated per-key safety limit",
+                             "forbidden_behavior":  "continue using the same keys beyond the stated safety limit without update or closure",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "A counter can enforce the numeric AES-GCM usage threshold referenced by the update requirement.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0063",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "As described in Section 9.3, an endpoint is required to validate a peer's new address to confirm the peer's possession of the new address.",
+      "line_start": 2765,
+      "line_end": 2767,
+      "condition": "When a peer uses a new address.",
+      "required_behavior": "The endpoint must validate the peer's new address to confirm that the peer possesses it.",
+      "forbidden_behavior": "The endpoint must not treat the peer's new address as validated without confirming the peer's possession of that address.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation can be tested to verify that use of a new peer address initiates address validation and that validation confirms reachability or possession before the address is accepted as valid.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Until a peer's address is deemed valid, an endpoint limits the amount of data it sends to that address; see Section 8.",
+      "line_start": 2767,
+      "line_end": 2768,
+      "condition": "While a peer's address has not yet been deemed valid.",
+      "required_behavior": "The endpoint must limit the amount of data sent to that address.",
+      "forbidden_behavior": "The endpoint must not send an unlimited amount of data to an address that has not been deemed valid.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests can keep an address in the unvalidated state and verify that outbound data to it is subject to an enforced limit, though the precise bound is defined outside this chunk.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If an endpoint skips validation of a peer address as described above, it does not need to limit its sending rate.",
+      "line_start": 2772,
+      "line_end": 2773,
+      "condition": "If the endpoint skips peer-address validation under the circumstances described above.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The statement only removes an obligation to limit sending; it neither requires unlimited sending nor forbids an implementation from retaining a limit, and this chunk does not identify when validation may be skipped.",
+      "eligibility": "exclude"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0019",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "CLASS fields appear in resource records.  The following CLASS mnemonics\nand values are defined:",
+      "line_start": 695,
+      "line_end": 696,
+      "condition": "When representing a resource record.",
+      "required_behavior": "Include a CLASS field in the resource record.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The resource-record format can be inspected for the presence of a CLASS field.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "CLASS fields appear in resource records.  The following CLASS mnemonics\nand values are defined:\n\nIN              1 the Internet",
+      "line_start": 695,
+      "line_end": 698,
+      "condition": "When encoding or interpreting the Internet CLASS (IN) in a resource record.",
+      "required_behavior": "Map the Internet CLASS mnemonic IN to numeric CLASS value 1.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The IN mnemonic and numeric CLASS mapping can be checked in record parsing and encoding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "CLASS fields appear in resource records.  The following CLASS mnemonics\nand values are defined:\n\nIN              1 the Internet\n\nCS              2 the CSNET class (Obsolete - used only for examples in\n                some obsolete RFCs)",
+      "line_start": 695,
+      "line_end": 701,
+      "condition": "If representing the obsolete CSNET CLASS (CS), described as used only for examples in obsolete RFCs.",
+      "required_behavior": "Map the obsolete CSNET CLASS mnemonic CS to numeric CLASS value 2.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The optional representation of the obsolete class can be inspected for the CS-to-2 mapping; this does not require active support for CSNET.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "CH              3 the CHAOS class",
+      "line_start": 703,
+      "line_end": 703,
+      "condition": "When encoding or interpreting the CHAOS CLASS (CH) in a resource record.",
+      "required_behavior": "Map the CHAOS CLASS mnemonic CH to numeric CLASS value 3.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The CH mnemonic and numeric CLASS mapping can be checked in record parsing and encoding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "HS              4 Hesiod [Dyer 87]",
+      "line_start": 705,
+      "line_end": 705,
+      "condition": "When encoding or interpreting the Hesiod CLASS (HS) in a resource record.",
+      "required_behavior": "Map the Hesiod CLASS mnemonic HS to numeric CLASS value 4.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The HS mnemonic and numeric CLASS mapping can be checked in record parsing and encoding.",
+      "eligibility": "eligible"
+    }
+  ]
+}

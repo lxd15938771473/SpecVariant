@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0043",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A non-validating security-aware stub resolver MAY include the DNSSEC\n   RRs returned by a security-aware recursive name server as part of the\n   data that the stub resolver hands back to the application that\n   invoked it, but is not required to do so.",
+      "line_start": 1320,
+      "line_end": 1323,
+      "condition": "A non-validating security-aware stub resolver receives DNSSEC RRs from a security-aware recursive name server and returns data to the application that invoked it.",
+      "required_behavior": "MAY include the returned DNSSEC RRs in the data handed back to the invoking application; including them is optional.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The application-facing response can be inspected to determine whether the optional DNSSEC RRs are included; either inclusion or omission is permitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A non-validating security-aware stub resolver MAY include the DNSSEC\n   RRs returned by a security-aware recursive name server as part of the\n   data that the stub resolver hands back to the application that\n   invoked it, but is not required to do so.  A non-validating stub\n   resolver that seeks to do this will need to set the DO bit in order\n   to receive DNSSEC RRs from the recursive name server.",
+      "line_start": 1320,
+      "line_end": 1325,
+      "condition": "A non-validating security-aware stub resolver seeks to include DNSSEC RRs received from the recursive name server in the data returned to the invoking application.",
+      "required_behavior": "Set the DO bit to receive the DNSSEC RRs from the recursive name server.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "When the resolver is configured to obtain DNSSEC RRs for application delivery, its outgoing query to the recursive name server can be checked for a set DO bit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A validating security-aware stub resolver MUST set the DO bit,\n   because otherwise it will not receive the DNSSEC RRs it needs to\n   perform signature validation.",
+      "line_start": 1327,
+      "line_end": 1329,
+      "condition": "The stub resolver is validating and security-aware.",
+      "required_behavior": "MUST set the DO bit to obtain the DNSSEC RRs needed for signature validation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Queries emitted by a validating security-aware stub resolver can be inspected for a set DO bit.",
+      "eligibility": "eligible"
+    }
+  ]
+}

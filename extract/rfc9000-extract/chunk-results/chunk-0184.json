@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0184",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   network supports.  An endpoint MAY skip packet numbers when sending\n   packets to detect this behavior.  An endpoint can then immediately",
+      "line_start": 7274,
+      "line_end": 7275,
+      "condition": "When sending packets to detect whether the peer acknowledges packets it has not received.",
+      "required_behavior": "The endpoint is permitted to skip packet numbers.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet traces can verify that the sender's implementation supports intentionally leaving gaps in packet numbers as an optimistic-ACK detection mechanism.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   packets to detect this behavior.  An endpoint can then immediately\n   close the connection with a connection error of type\n   PROTOCOL_VIOLATION; see Section 10.2.",
+      "line_start": 7275,
+      "line_end": 7277,
+      "condition": "When the endpoint detects that its peer acknowledges packets it has not received.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The endpoint is permitted to immediately close the connection using a PROTOCOL_VIOLATION connection error.",
+      "check_type": "error_handling",
+      "why_checkable": "A focused peer test can acknowledge deliberately skipped packet numbers and verify that an immediate connection close, if performed, uses PROTOCOL_VIOLATION.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0017",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "When responding to a query that has the DO bit set and that requests\n   the SOA or NS RRs at the apex of a signed zone, a security-aware\n   authoritative name server for that zone MAY return the zone apex\n   DNSKEY RRset in the Additional section.",
+      "line_start": 579,
+      "line_end": 582,
+      "condition": "A security-aware authoritative name server for a signed zone is responding to a query with the DO bit set that requests the SOA or NS RRs at the zone apex.",
+      "required_behavior": "The name server MAY return the zone apex DNSKEY RRset in the Additional section.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A response to a DO-enabled apex SOA or NS query can be inspected for the permitted Additional-section DNSKEY RRset; omission is also allowed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set and that requests\n   the SOA or NS RRs at the apex of a signed zone, a security-aware\n   authoritative name server for that zone MAY return the zone apex\n   DNSKEY RRset in the Additional section.  In this situation, the\n   DNSKEY RRset and associated RRSIG RRs have lower priority than does\n   any other information that would be placed in the additional section.",
+      "line_start": 579,
+      "line_end": 584,
+      "condition": "A security-aware authoritative name server for a signed zone is responding to a query with the DO bit set that requests the SOA or NS RRs at the zone apex. The name server considers including the zone apex DNSKEY RRset and associated RRSIG RRs in the Additional section.",
+      "required_behavior": "Give the zone apex DNSKEY RRset and associated RRSIG RRs lower priority than any other information that would be placed in the Additional section.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Additional-section selection under a response size limit can be checked to ensure other information takes priority over these DNSKEY and RRSIG RRs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set and that requests\n   the SOA or NS RRs at the apex of a signed zone, a security-aware\n   authoritative name server for that zone MAY return the zone apex\n   DNSKEY RRset in the Additional section.  In this situation, the\n   DNSKEY RRset and associated RRSIG RRs have lower priority than does\n   any other information that would be placed in the additional section.\n   The name server SHOULD NOT include the DNSKEY RRset unless there is\n   enough space in the response message for both the DNSKEY RRset and\n   its associated RRSIG RR(s).",
+      "line_start": 579,
+      "line_end": 587,
+      "condition": "A security-aware authoritative name server for a signed zone is responding to a query with the DO bit set that requests the SOA or NS RRs at the zone apex. The response message lacks enough space for both the zone apex DNSKEY RRset and its associated RRSIG RR(s).",
+      "required_behavior": "",
+      "forbidden_behavior": "The name server SHOULD NOT include the zone apex DNSKEY RRset.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Response construction can be checked against the recommendation to include the DNSKEY RRset only when it and its associated signatures fit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set and that requests\n   the SOA or NS RRs at the apex of a signed zone, a security-aware\n   authoritative name server for that zone MAY return the zone apex\n   DNSKEY RRset in the Additional section.  In this situation, the\n   DNSKEY RRset and associated RRSIG RRs have lower priority than does\n   any other information that would be placed in the additional section.\n   The name server SHOULD NOT include the DNSKEY RRset unless there is\n   enough space in the response message for both the DNSKEY RRset and\n   its associated RRSIG RR(s).  If there is not enough space to include\n   these DNSKEY and RRSIG RRs, the name server MUST omit them and MUST\n   NOT set the TC bit solely because these RRs didn't fit (see Section\n   3.1.1).",
+      "line_start": 579,
+      "line_end": 590,
+      "condition": "A security-aware authoritative name server for a signed zone is responding to a query with the DO bit set that requests the SOA or NS RRs at the zone apex. There is not enough space in the response to include the zone apex DNSKEY RRset and associated RRSIG RRs.",
+      "required_behavior": "The name server MUST omit these DNSKEY and RRSIG RRs.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A response constrained below the space needed for these DNSKEY and RRSIG RRs can be inspected to verify that both are omitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When responding to a query that has the DO bit set and that requests\n   the SOA or NS RRs at the apex of a signed zone, a security-aware\n   authoritative name server for that zone MAY return the zone apex\n   DNSKEY RRset in the Additional section.  In this situation, the\n   DNSKEY RRset and associated RRSIG RRs have lower priority than does\n   any other information that would be placed in the additional section.\n   The name server SHOULD NOT include the DNSKEY RRset unless there is\n   enough space in the response message for both the DNSKEY RRset and\n   its associated RRSIG RR(s).  If there is not enough space to include\n   these DNSKEY and RRSIG RRs, the name server MUST omit them and MUST\n   NOT set the TC bit solely because these RRs didn't fit (see Section\n   3.1.1).",
+      "line_start": 579,
+      "line_end": 590,
+      "condition": "A security-aware authoritative name server for a signed zone is responding to a query with the DO bit set that requests the SOA or NS RRs at the zone apex. There is not enough space in the response to include the zone apex DNSKEY RRset and associated RRSIG RRs.",
+      "required_behavior": "",
+      "forbidden_behavior": "The name server MUST NOT set the TC bit solely because these DNSKEY and RRSIG RRs did not fit.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A response in which only these optional Additional-section records exceed the size limit can be checked for a clear TC bit.",
+      "eligibility": "eligible"
+    }
+  ]
+}

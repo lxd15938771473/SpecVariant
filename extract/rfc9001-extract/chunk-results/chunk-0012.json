@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0012",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Solid arrows indicate packets that carry handshake data;",
+      "line_start": 593,
+      "line_end": 593,
+      "condition": "When reading a solid arrow in Figure 5.",
+      "required_behavior": "Interpret the arrow as a packet carrying handshake data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "This defines diagram notation only and imposes no behavior on a QUIC implementation.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "dashed arrows show where application data can be sent.",
+      "line_start": 594,
+      "line_end": 594,
+      "condition": "When reading a dashed arrow in Figure 5.",
+      "required_behavior": "Interpret the arrow as a point where application data can be sent.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "This is a legend for an illustrative diagram, not an independently applicable implementation constraint.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "Each arrow is\n   tagged with the encryption level used for that transmission.",
+      "line_start": 594,
+      "line_end": 595,
+      "condition": "For each arrow in Figure 5.",
+      "required_behavior": "Read its tag as the encryption level used for the depicted transmission.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The sentence explains how to read the figure and does not constrain implementation output.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "New handshake messages are requested after incoming packets\n   have been processed.",
+      "line_start": 638,
+      "line_end": 639,
+      "condition": "When an incoming packet can cause TLS to produce new handshake messages.",
+      "required_behavior": "Process the incoming packet before requesting new handshake messages from TLS.",
+      "forbidden_behavior": "Do not request the resulting new handshake messages before processing the incoming packet.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Interface-call instrumentation can verify the ordering of incoming-packet processing and the subsequent handshake-message request.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Figure 5 shows one possible structure for a simple handshake\n   exchange.  The exact process varies based on the structure of\n   endpoint implementations and the order in which packets arrive.\n   Implementations could use a different number of operations or execute\n   them in other orders.",
+      "line_start": 641,
+      "line_end": 645,
+      "condition": "When comparing an implementation's handshake exchange with Figure 5.",
+      "required_behavior": "Allow the implementation to use a different operation count or ordering consistent with its structure and packet arrival order.",
+      "forbidden_behavior": "Do not treat the exact illustrated operation count and ordering as mandatory solely because it appears in Figure 5.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "This text expressly disclaims the figure as a mandatory algorithm; it supplies implementation latitude rather than a concrete conformance behavior to test.",
+      "eligibility": "exclude"
+    }
+  ]
+}

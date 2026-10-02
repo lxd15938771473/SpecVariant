@@ -1,0 +1,31 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0021",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "The RECOMMENDED initial value for the packet reordering threshold\n   (kPacketThreshold) is 3",
+                             "line_start":  549,
+                             "line_end":  550,
+                             "condition":  "When initializing the packet reordering threshold (kPacketThreshold).",
+                             "required_behavior":  "Set the initial kPacketThreshold value to 3.",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "An implementation\u0027s initial kPacketThreshold value can be inspected or observed and compared with 3.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "In order to remain similar to TCP,\n   implementations SHOULD NOT use a packet threshold less than 3; see\n   [RFC5681].",
+                             "line_start":  551,
+                             "line_end":  553,
+                             "condition":  "When an implementation uses a packet threshold for loss detection.",
+                             "required_behavior":  "Use a packet threshold of at least 3.",
+                             "forbidden_behavior":  "Using a packet threshold less than 3.",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The configured or effective packet threshold can be tested to determine whether it is below 3.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

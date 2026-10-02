@@ -1,0 +1,151 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0036",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "   A NewReno sender enters a recovery period when it detects the loss of\n   a packet or when the ECN-CE count reported by its peer increases.",
+                             "line_start":  988,
+                             "line_end":  989,
+                             "condition":  "A NewReno sender detects the loss of a packet while it is not already in a recovery period.",
+                             "required_behavior":  "Enter a recovery period.",
+                             "forbidden_behavior":  "Remaining outside recovery after detecting the packet loss.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can induce packet loss and observe whether the sender transitions into recovery.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   A NewReno sender enters a recovery period when it detects the loss of\n   a packet or when the ECN-CE count reported by its peer increases.",
+                             "line_start":  988,
+                             "line_end":  989,
+                             "condition":  "The ECN-CE count reported by the peer increases while the NewReno sender is not already in a recovery period.",
+                             "required_behavior":  "Enter a recovery period.",
+                             "forbidden_behavior":  "Remaining outside recovery after the reported ECN-CE count increases.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can increase the peer-reported ECN-CE count and observe the sender\u0027s recovery state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   sender that is already in a recovery period stays in it and does not\n   reenter it.",
+                             "line_start":  990,
+                             "line_end":  991,
+                             "condition":  "The sender detects another recovery-triggering event while already in a recovery period.",
+                             "required_behavior":  "Remain in the existing recovery period.",
+                             "forbidden_behavior":  "Leave the existing recovery period solely because another recovery-triggering event occurred.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Recovery state can be observed before and after an additional loss or ECN trigger.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   sender that is already in a recovery period stays in it and does not\n   reenter it.",
+                             "line_start":  990,
+                             "line_end":  991,
+                             "condition":  "The sender is already in a recovery period when another recovery-triggering event occurs.",
+                             "required_behavior":  "Do not reenter or restart recovery.",
+                             "forbidden_behavior":  "Starting a new recovery period while the current recovery period is active.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can compare recovery-period identity or start state across repeated triggers.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   On entering a recovery period, a sender MUST set the slow start\n   threshold to half the value of the congestion window when loss is\n   detected.",
+                             "line_start":  993,
+                             "line_end":  995,
+                             "condition":  "The sender enters a recovery period after detecting loss.",
+                             "required_behavior":  "Set the slow start threshold to one half of the congestion window value used at loss detection.",
+                             "forbidden_behavior":  "Entering loss recovery without setting the slow start threshold to half of that congestion window value.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The congestion window and slow start threshold can be sampled at loss detection and recovery entry and compared numerically.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The congestion window MUST be set to the reduced value of\n   the slow start threshold before exiting the recovery period.",
+                             "line_start":  995,
+                             "line_end":  996,
+                             "condition":  "The sender is about to exit a recovery period.",
+                             "required_behavior":  "Set the congestion window to the reduced slow start threshold value before the recovery period ends.",
+                             "forbidden_behavior":  "Exit recovery while the congestion window has not been set to the reduced slow start threshold value.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can inspect both values immediately before the recovery-to-post-recovery transition.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   Implementations MAY reduce the congestion window immediately upon\n   entering a recovery period or use other mechanisms, such as\n   Proportional Rate Reduction [PRR], to reduce the congestion window\n   more gradually.",
+                             "line_start":  998,
+                             "line_end":  1001,
+                             "condition":  "An implementation selects how to reach the reduced congestion window during recovery.",
+                             "required_behavior":  "The implementation may reduce the congestion window immediately or reduce it gradually using another mechanism.",
+                             "forbidden_behavior":  "None; the statement grants implementation choice and imposes no independent mandatory strategy.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The reduction schedule is observable, but MAY does not require an implementation to support either strategy as a separate feature.",
+                             "eligibility":  "exclude"
+                         },
+                         {
+                             "quote":  "If the congestion window is reduced immediately, a\n   single packet can be sent prior to reduction.",
+                             "line_start":  1001,
+                             "line_end":  1002,
+                             "condition":  "The implementation uses immediate congestion-window reduction upon recovery entry.",
+                             "required_behavior":  "Permit at most one packet to be sent before applying the reduction.",
+                             "forbidden_behavior":  "Sending more than one packet before applying an immediate congestion-window reduction.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "Packet transmission and the congestion-window update can be ordered and counted at recovery entry.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Therefore, during a recovery period, the congestion\n   window does not change in response to new losses or increases in the\n   ECN-CE count.",
+                             "line_start":  1007,
+                             "line_end":  1009,
+                             "condition":  "A new loss is detected during an active recovery period.",
+                             "required_behavior":  "Keep the congestion window unchanged in response to that new loss.",
+                             "forbidden_behavior":  "Changing the congestion window because of the new loss during recovery.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can inject an additional loss during recovery and compare the congestion window before and after it.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Therefore, during a recovery period, the congestion\n   window does not change in response to new losses or increases in the\n   ECN-CE count.",
+                             "line_start":  1007,
+                             "line_end":  1009,
+                             "condition":  "The peer-reported ECN-CE count increases during an active recovery period.",
+                             "required_behavior":  "Keep the congestion window unchanged in response to that ECN-CE count increase.",
+                             "forbidden_behavior":  "Changing the congestion window because of the ECN-CE count increase during recovery.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can report an increased ECN-CE count during recovery and compare the congestion window before and after it.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   A recovery period ends and the sender enters congestion avoidance\n   when a packet sent during the recovery period is acknowledged.",
+                             "line_start":  1011,
+                             "line_end":  1012,
+                             "condition":  "A packet that was sent during the active recovery period is acknowledged.",
+                             "required_behavior":  "End the recovery period.",
+                             "forbidden_behavior":  "Remain in the same recovery period after such a packet is acknowledged.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can track packet send time, acknowledgment, and the recovery-state transition.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   A recovery period ends and the sender enters congestion avoidance\n   when a packet sent during the recovery period is acknowledged.",
+                             "line_start":  1011,
+                             "line_end":  1012,
+                             "condition":  "A packet that was sent during the active recovery period is acknowledged.",
+                             "required_behavior":  "Enter congestion avoidance.",
+                             "forbidden_behavior":  "Transition to a non-congestion-avoidance state as the normal result of that acknowledgment.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "The sender\u0027s congestion-control state can be observed after acknowledging a packet sent during recovery.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

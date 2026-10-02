@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0030",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The name server side MUST copy the setting of the CD bit from a query\n   to the corresponding response.",
+      "line_start": 962,
+      "line_end": 963,
+      "condition": "When the name server side generates the response corresponding to a query.",
+      "required_behavior": "The name server side MUST copy the query CD bit setting into the corresponding response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Both CD bit values can be supplied in queries and compared with the corresponding response bits.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The name server side of a security-aware recursive name server MUST\n   pass the state of the CD bit to the resolver side along with the rest\n\n\n\nArends, et al.              Standards Track                    [Page 17]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   of an initiating query, so that the resolver side will know whether\n   it is required to verify the response data it returns to the name\n   server side.",
+      "line_start": 965,
+      "line_end": 978,
+      "condition": "When the name server side of a security-aware recursive name server forwards an initiating query to its resolver side.",
+      "required_behavior": "The name server side MUST pass the CD bit state to the resolver side along with the rest of the initiating query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The query handoff between the name server and resolver sides can be inspected or instrumented to check preservation of the CD bit state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the CD bit is set, it indicates that the originating\n   resolver is willing to perform whatever authentication its local\n   policy requires.  Thus, the resolver side of the recursive name\n   server need not perform authentication on the RRsets in the response.",
+      "line_start": 978,
+      "line_end": 981,
+      "condition": "When the CD bit is set in the initiating query.",
+      "required_behavior": "The resolver side of the recursive name server need not authenticate the RRsets in the response; omitting this authentication is permitted.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The CD-set processing path can be inspected or exercised to establish that returning response RRsets without local authentication is permitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When the CD bit is set, the recursive name server SHOULD, if\n   possible, return the requested data to the originating resolver, even\n   if the recursive name server's local authentication policy would\n   reject the records in question.",
+      "line_start": 982,
+      "line_end": 985,
+      "condition": "When the CD bit is set and returning the requested data is possible, including when local authentication policy would reject the records.",
+      "required_behavior": "The recursive name server SHOULD return the requested data to the originating resolver, even if its local authentication policy would reject those records.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A CD-set query for data rejected by local authentication policy can be exercised, and the response can be checked for the requested data while preserving the advisory strength.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the resolver side implements a BAD cache (see Section 4.7) and the\n   name server side receives a query that matches an entry in the\n   resolver side's BAD cache, the name server side's response depends on\n   the state of the CD bit in the original query.  If the CD bit is set,\n   the name server side SHOULD return the data from the BAD cache;",
+      "line_start": 990,
+      "line_end": 994,
+      "condition": "When the resolver side implements a BAD cache, the name server side receives a query matching a BAD-cache entry, and the original query CD bit is set.",
+      "required_behavior": "The name server side SHOULD return the data from the BAD cache.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A query matching a populated BAD-cache entry with CD set can be used to check the recommended response data.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the resolver side implements a BAD cache (see Section 4.7) and the\n   name server side receives a query that matches an entry in the\n   resolver side's BAD cache, the name server side's response depends on\n   the state of the CD bit in the original query.  If the CD bit is set,\n   the name server side SHOULD return the data from the BAD cache; if\n   the CD bit is not set, the name server side MUST return RCODE 2\n   (server failure).",
+      "line_start": 990,
+      "line_end": 996,
+      "condition": "When the resolver side implements a BAD cache, the name server side receives a query matching a BAD-cache entry, and the original query CD bit is not set.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The name server side MUST return RCODE 2 (server failure).",
+      "check_type": "error_handling",
+      "why_checkable": "A query matching a populated BAD-cache entry with CD clear has an explicitly prescribed response code that can be checked.",
+      "eligibility": "eligible"
+    }
+  ]
+}

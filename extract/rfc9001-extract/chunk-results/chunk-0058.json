@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0058",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "For authentication to be\n   free from side channels, the entire process of header protection\n   removal, packet number recovery, and packet protection removal MUST\n   be applied together without timing and other side channels.",
+      "line_start": 2109,
+      "line_end": 2112,
+      "condition": "When authenticating any received protected QUIC packet.",
+      "required_behavior": "Apply header-protection removal, packet-number recovery, and packet-protection removal as one side-channel-resistant processing path.",
+      "forbidden_behavior": "Do not expose timing or other observable differences that reveal intermediate packet-number or Key Phase guesses.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Instrumented or statistical timing tests can compare the complete processing path for packets differing only in guessed protected-header values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the recipient of a packet discards packets with\n   duplicate packet numbers without attempting to remove packet\n   protection, they could reveal through timing side channels that the\n   packet number matches a received packet.  For authentication to be\n   free from side channels, the entire process of header protection\n   removal, packet number recovery, and packet protection removal MUST\n   be applied together without timing and other side channels.",
+      "line_start": 2106,
+      "line_end": 2112,
+      "condition": "When recovered packet-number state indicates that a received packet might be a duplicate.",
+      "required_behavior": "Attempt packet-protection removal through the same combined authentication path before discarding the duplicate.",
+      "forbidden_behavior": "Do not short-circuit processing immediately after duplicate packet-number detection.",
+      "error_behavior": "After completing the side-channel-resistant processing path, discard a packet confirmed as a duplicate.",
+      "check_type": "derived_constraint",
+      "why_checkable": "Packet-protection call instrumentation and timing comparison can show whether suspected duplicates take an early-return path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For the sending of packets, construction and protection of packet\n   payloads and packet numbers MUST be free from side channels that\n   would reveal the packet number or its encoded size.",
+      "line_start": 2114,
+      "line_end": 2116,
+      "condition": "When constructing and protecting packet payloads and packet numbers for transmission.",
+      "required_behavior": "Prevent observable side channels from revealing the packet-number value.",
+      "forbidden_behavior": "Do not vary externally observable construction or protection behavior as a function of the secret packet-number value.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Timing and other observable measurements can be compared across controlled packet-number values while holding unrelated inputs constant.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For the sending of packets, construction and protection of packet\n   payloads and packet numbers MUST be free from side channels that\n   would reveal the packet number or its encoded size.",
+      "line_start": 2114,
+      "line_end": 2116,
+      "condition": "When constructing and protecting packet payloads and packet numbers for transmission.",
+      "required_behavior": "Prevent observable side channels from revealing the encoded packet-number size.",
+      "forbidden_behavior": "Do not expose the packet-number encoding length through timing or other side channels in the construction and protection path.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Timing and other observable measurements can be compared across controlled packet-number encoding lengths while holding unrelated inputs constant.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "After\n   receiving a key update, an endpoint SHOULD generate and save the next\n   set of receive packet protection keys, as described in Section 6.3.",
+      "line_start": 2121,
+      "line_end": 2123,
+      "condition": "After an endpoint receives and processes a key update.",
+      "required_behavior": "Generate the next set of receive packet-protection keys in advance of the following key update.",
+      "forbidden_behavior": "Avoid deferring all next-key computation until processing the first packet of the following phase.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Key-schedule instrumentation can verify that next-generation receive keys are generated after the current update and before a packet in the following phase arrives.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "After\n   receiving a key update, an endpoint SHOULD generate and save the next\n   set of receive packet protection keys, as described in Section 6.3.",
+      "line_start": 2121,
+      "line_end": 2123,
+      "condition": "After generating the next set of receive packet-protection keys following a key update.",
+      "required_behavior": "Save the generated next-key set for use when the following key phase arrives.",
+      "forbidden_behavior": "Avoid discarding the precomputed next-key set and regenerating it on the packet-processing path.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "State inspection can verify retention of the next receive key set between its generation and the following phase transition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This depends on not doing this key generation during packet\n   processing,",
+      "line_start": 2128,
+      "line_end": 2129,
+      "condition": "When generating the next receive packet-protection key set to avoid key-phase timing leakage.",
+      "required_behavior": "Perform key generation outside the received-packet processing path.",
+      "forbidden_behavior": "Do not generate the next key set synchronously while processing the packet whose Key Phase could be inferred.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Call-path instrumentation and timing tests can determine whether key generation executes during packet processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints can\n   instead choose to defer generation of the next receive packet\n   protection keys until they discard old keys so that only two sets of\n   receive keys need to be retained at any point in time.",
+      "line_start": 2131,
+      "line_end": 2134,
+      "condition": "When an endpoint chooses the two-receive-key-set storage strategy.",
+      "required_behavior": "Permit generation of the next receive key set to be deferred until the old key set is discarded.",
+      "forbidden_behavior": "Do not reject an implementation solely because it uses this deferred-generation strategy.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Key-state instrumentation can verify that old keys are discarded before the next set is generated and that no more than two receive-key sets are retained.",
+      "eligibility": "eligible"
+    }
+  ]
+}

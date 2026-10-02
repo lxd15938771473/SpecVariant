@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0010",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The Adj-RIBs-In stores routing information learned\n         from inbound UPDATE messages that were received from other BGP\n         speakers.",
+      "line_start": 530,
+      "line_end": 532,
+      "condition": "Routing information is learned from inbound UPDATE messages received from other BGP speakers.",
+      "required_behavior": "Store the learned routing information in the conceptual Adj-RIBs-In.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The association between received routing information and inbound RIB state is inspectable; separate physical copies are not required.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Their contents represent routes that are available\n         as input to the Decision Process.",
+      "line_start": 532,
+      "line_end": 533,
+      "condition": "Routes are represented in the Adj-RIBs-In.",
+      "required_behavior": "Make those routes available as input to the Decision Process.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The Decision Process input set can be compared with the conceptual Adj-RIBs-In contents.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Loc-RIB contains the local routing information the\n         BGP speaker selected by applying its local policies to the\n         routing information contained in its Adj-RIBs-In.",
+      "line_start": 535,
+      "line_end": 537,
+      "condition": "Selecting local BGP routing information for the Loc-RIB.",
+      "required_behavior": "Populate the conceptual Loc-RIB with routing information selected by applying local policies to information in the Adj-RIBs-In.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Selection inputs and configured local policy can be checked against resulting Loc-RIB entries.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The\n         next hop for each of these routes MUST be resolvable via the\n         local BGP speaker's Routing Table.",
+      "line_start": 538,
+      "line_end": 540,
+      "condition": "A route is in the Loc-RIB.",
+      "required_behavior": "The next hop for each such route MUST be resolvable via the local BGP speaker's Routing Table.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Each selected route's next hop can be checked for resolution using the Routing Table.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Adj-RIBs-Out stores information the local BGP\n         speaker selected for advertisement to its peers.",
+      "line_start": 542,
+      "line_end": 543,
+      "condition": "The local BGP speaker selects information for advertisement to its peers.",
+      "required_behavior": "Store the information selected for advertisement in the conceptual Adj-RIBs-Out.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Selected advertisements can be compared with outbound RIB state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The routing\n         information stored in the Adj-RIBs-Out will be carried in the\n         local BGP speaker's UPDATE messages and advertised to its\n         peers.",
+      "line_start": 543,
+      "line_end": 546,
+      "condition": "Routing information is stored in the Adj-RIBs-Out for advertisement.",
+      "required_behavior": "Carry that routing information in the local BGP speaker's UPDATE messages and advertise it to its peers.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Outgoing UPDATE contents can be compared with the outbound routing information.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the Adj-RIBs-Out organizes the routes\n   for advertisement to specific peers (by means of the local speaker's\n   UPDATE messages).",
+      "line_start": 561,
+      "line_end": 563,
+      "condition": "Organizing outbound routes for advertisement.",
+      "required_behavior": "Organize the Adj-RIBs-Out routes for advertisement to specific peers.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Per-peer outbound route associations can be inspected and compared with UPDATE destinations.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Routing information that the BGP speaker uses to forward packets (or\n   to construct the forwarding table used for packet forwarding) is\n   maintained in the Routing Table.",
+      "line_start": 572,
+      "line_end": 574,
+      "condition": "Routing information is used to forward packets or to construct the forwarding table used for packet forwarding.",
+      "required_behavior": "Maintain that routing information in the Routing Table.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Forwarding information and its relationship to Routing Table state can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In addition to actual packet forwarding,\n   the Routing Table is used for resolution of the next-hop addresses\n   specified in BGP updates (see Section 5.1.3).",
+      "line_start": 580,
+      "line_end": 582,
+      "condition": "Resolving next-hop addresses specified in BGP updates.",
+      "required_behavior": "Use the Routing Table to resolve those next-hop addresses.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The next-hop lookup data source can be inspected and its behavior checked with Routing Table entries.",
+      "eligibility": "eligible"
+    }
+  ]
+}

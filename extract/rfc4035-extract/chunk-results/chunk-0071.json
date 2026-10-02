@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0071",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The query in Appendix B.6 returned an answer that was produced as a\n   result of wildcard expansion.  The answer section contains a wildcard\n   RRset expanded as it would be in a traditional DNS response, and the\n   corresponding RRSIG indicates that the expanded wildcard MX RRset was\n   signed by an \"example\" DNSKEY with algorithm 5 and key tag 38519.\n   The RRSIG indicates that the original TTL of the MX RRset was 3600,\n   and, for the purpose of authentication, the current TTL is replaced\n   by 3600.  The RRSIG labels field value of 2 indicates that the answer\n   is the result of wildcard expansion, as the \"a.z.w.example\" name\n   contains 4 labels.  The name \"a.z.w.w.example\" is replaced by\n   \"*.w.example\", the MX RRset is placed in canonical form, and,\n   assuming that the current time falls between the signature inception\n   and expiration dates, the signature is authenticated.\n\n   The NSEC proves that no closer match (exact or closer wildcard) could\n   have been used to answer this query, and the NSEC RR must also be\n   authenticated before the answer is considered valid.",
+      "line_start": 2871,
+      "line_end": 2887,
+      "condition": "When authenticating the wildcard-expanded answer described here, with an NSEC RR proving that no exact or closer wildcard match could have answered the query.",
+      "required_behavior": "The validator must authenticate that NSEC RR before considering the wildcard-expanded answer valid.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The wildcard-answer validation path can be checked for a dependency on successful authentication of the NSEC proof before accepting the answer.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The query in Appendix B.8 returned NSEC RRs that shows the requested\n   was answered by a child server (\"example\" server).  The NSEC RR\n   indicates the presence of an SOA RR, showing that the answer is from\n   the child .  Queries for the \"example\" DS RRset should be sent to the\n   parent servers (\"root\" servers).",
+      "line_start": 2897,
+      "line_end": 2901,
+      "condition": "For the DS lookup illustrated here, where an NSEC indicating an SOA RR identifies the no-data answer as coming from the child zone server.",
+      "required_behavior": "Queries for the child zone DS RRset should be sent to the parent zone servers.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The destination selected for the DS lookup in this child-server no-data situation can be inspected or observed; this is advisory behavior, preserving the source wording should.",
+      "eligibility": "eligible"
+    }
+  ]
+}

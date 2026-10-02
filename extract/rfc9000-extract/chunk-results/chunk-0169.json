@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0169",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   protocols.  Application protocol error codes are used for the\n   RESET_STREAM frame (Section 19.4), the STOP_SENDING frame",
+      "line_start": 6846,
+      "line_end": 6847,
+      "condition": "When encoding or processing a RESET_STREAM frame.",
+      "required_behavior": "Use an application protocol error code for the frame's error code.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The RESET_STREAM frame's error-code field can be inspected to verify that it carries an application protocol error code.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   protocols.  Application protocol error codes are used for the\n   RESET_STREAM frame (Section 19.4), the STOP_SENDING frame\n   (Section 19.5), and the CONNECTION_CLOSE frame with a type of 0x1d",
+      "line_start": 6846,
+      "line_end": 6848,
+      "condition": "When encoding or processing a STOP_SENDING frame.",
+      "required_behavior": "Use an application protocol error code for the frame's error code.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The STOP_SENDING frame's error-code field can be inspected to verify that it carries an application protocol error code.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   protocols.  Application protocol error codes are used for the\n   RESET_STREAM frame (Section 19.4), the STOP_SENDING frame\n   (Section 19.5), and the CONNECTION_CLOSE frame with a type of 0x1d\n   (Section 19.19).",
+      "line_start": 6846,
+      "line_end": 6849,
+      "condition": "When encoding or processing a CONNECTION_CLOSE frame that carries an application protocol error code.",
+      "required_behavior": "Use CONNECTION_CLOSE frame type 0x1d.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The frame type and presence of an application protocol error code can be inspected directly in an encoded or decoded CONNECTION_CLOSE frame.",
+      "eligibility": "eligible"
+    }
+  ]
+}

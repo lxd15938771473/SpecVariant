@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0022",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                     CNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nCNAME           A <domain-name> which specifies the canonical or primary\n                name for the owner.  The owner name is an alias.",
+      "line_start": 744,
+      "line_end": 752,
+      "condition": "Encoding or decoding the RDATA of a CNAME resource record.",
+      "required_behavior": "Represent the RDATA as one CNAME field containing a domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The CNAME RDATA encoder and decoder can be checked for the single domain-name field shown in the format.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "CNAME           A <domain-name> which specifies the canonical or primary\n                name for the owner.  The owner name is an alias.",
+      "line_start": 751,
+      "line_end": 752,
+      "condition": "Interpreting a CNAME resource record.",
+      "required_behavior": "Treat the record owner as an alias for the canonical or primary name specified by the CNAME domain-name value.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The alias mapping can be checked to ensure that it points from the owner to the canonical name carried in RDATA.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "CNAME RRs cause no additional section processing",
+      "line_start": 754,
+      "line_end": 754,
+      "condition": "Processing a CNAME resource record.",
+      "required_behavior": "",
+      "forbidden_behavior": "Trigger additional-section processing because of the CNAME resource record.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Additional-section generation can be inspected or exercised to verify that a CNAME record does not itself trigger that processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "CNAME RRs cause no additional section processing, but name servers may\nchoose to restart the query at the canonical name in certain cases.  See\nthe description of name server logic in [RFC-1034] for details.",
+      "line_start": 754,
+      "line_end": 756,
+      "condition": "A name server encounters a CNAME record in one of the certain cases referenced but not specified in this chunk.",
+      "required_behavior": "The name server may choose to restart the query at the canonical name; the restart is permitted rather than required.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A query restart and its target would be observable, but the applicable cases are delegated to RFC-1034 and cannot be established from this chunk alone.",
+      "eligibility": "exclude"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0118",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Packetization Layer (PL).  A QUIC sender can therefore enter the\n   DPLPMTUD BASE state (Section 5.2 of [DPLPMTUD]) when the QUIC\n   connection handshake has been completed.",
+      "line_start": 4762,
+      "line_end": 4764,
+      "condition": "The QUIC connection handshake has been completed.",
+      "required_behavior": "A QUIC sender is permitted to enter the DPLPMTUD BASE state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-transition test can complete the QUIC handshake and verify that the sender permits transition into the DPLPMTUD BASE state.",
+      "eligibility": "eligible"
+    }
+  ]
+}

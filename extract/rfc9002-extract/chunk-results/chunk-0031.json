@@ -1,0 +1,103 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0031",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "If a sender uses a different controller than that specified in this\ndocument, the chosen controller MUST conform to the congestion\ncontrol guidelines specified in Section 3.1 of [RFC8085].",
+                             "line_start":  879,
+                             "line_end":  881,
+                             "condition":  "A sender uses a congestion controller other than the controller specified by this document.",
+                             "required_behavior":  "The chosen controller conforms to the congestion-control guidelines in Section 3.1 of RFC 8085.",
+                             "forbidden_behavior":  "Using an alternative controller that does not conform to those guidelines.",
+                             "error_behavior":  "No explicit error response is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The selected controller can be identified and its behavior compared with the referenced congestion-control guidelines.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Similar to TCP, packets containing only ACK frames do not count\ntoward bytes in flight and are not congestion controlled.",
+                             "line_start":  883,
+                             "line_end":  884,
+                             "condition":  "A packet contains only ACK frames.",
+                             "required_behavior":  "Exclude the packet\u0027s bytes from bytes_in_flight accounting.",
+                             "forbidden_behavior":  "Increasing bytes_in_flight for the ACK-only packet.",
+                             "error_behavior":  "No explicit error response is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Packet contents and bytes_in_flight before and after sending can be observed and compared.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Similar to TCP, packets containing only ACK frames do not count\ntoward bytes in flight and are not congestion controlled.",
+                             "line_start":  883,
+                             "line_end":  884,
+                             "condition":  "A packet contains only ACK frames.",
+                             "required_behavior":  "Exempt the packet from congestion control.",
+                             "forbidden_behavior":  "Applying congestion-control gating or accounting to the ACK-only packet.",
+                             "error_behavior":  "No explicit error response is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can send an ACK-only packet under congestion-limited conditions and inspect whether congestion control governs it.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Unlike\nTCP, QUIC can detect the loss of these packets and MAY use that\ninformation to adjust the congestion controller or the rate of ACK-\nonly packets being sent, but this document does not describe a\nmechanism for doing so.",
+                             "line_start":  884,
+                             "line_end":  888,
+                             "condition":  "Loss of packets containing only ACK frames is detected.",
+                             "required_behavior":  "No adjustment is required; an implementation is permitted to use the loss information to adjust either the congestion controller or the ACK-only sending rate.",
+                             "forbidden_behavior":  "No behavior is forbidden by this optional statement.",
+                             "error_behavior":  "No explicit error response is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The statement grants an optional choice and deliberately leaves its mechanism unspecified, so it supplies no mandatory pass/fail behavior.",
+                             "eligibility":  "exclude"
+                         },
+                         {
+                             "quote":  "The congestion controller is per path, so packets sent on other paths\ndo not alter the current path\u0027s congestion controller, as described\nin Section 9.4 of [QUIC-TRANSPORT].",
+                             "line_start":  890,
+                             "line_end":  892,
+                             "condition":  "An endpoint maintains congestion-control state for one or more network paths.",
+                             "required_behavior":  "Maintain a congestion controller independently for each path.",
+                             "forbidden_behavior":  "Using one undifferentiated congestion controller as the state for multiple paths.",
+                             "error_behavior":  "No explicit error response is specified.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "An implementation\u0027s state organization and behavior across multiple paths can demonstrate whether controllers are maintained per path.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The congestion controller is per path, so packets sent on other paths\ndo not alter the current path\u0027s congestion controller, as described\nin Section 9.4 of [QUIC-TRANSPORT].",
+                             "line_start":  890,
+                             "line_end":  892,
+                             "condition":  "A packet is sent on a path other than the path whose congestion controller is being observed.",
+                             "required_behavior":  "Leave the observed path\u0027s congestion-controller state unchanged as a consequence of that packet.",
+                             "forbidden_behavior":  "Altering the current path\u0027s congestion controller because a packet was sent on another path.",
+                             "error_behavior":  "No explicit error response is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A multipath test can snapshot one path\u0027s controller state, send on another path, and verify isolation.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The algorithm in this document specifies and uses the controller\u0027s\ncongestion window in bytes.",
+                             "line_start":  894,
+                             "line_end":  895,
+                             "condition":  "The specified congestion-control algorithm represents or uses the congestion window.",
+                             "required_behavior":  "Express and operate on the congestion window in bytes.",
+                             "forbidden_behavior":  "Treating the congestion window as a packet count or another non-byte unit without converting it to bytes for this algorithm.",
+                             "error_behavior":  "No explicit error response is specified.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "Congestion-window storage, arithmetic, and send-limit decisions can be inspected to verify that their unit is bytes.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "An endpoint MUST NOT send a packet if it would cause bytes_in_flight\n(see Appendix B.2) to be larger than the congestion window, unless\nthe packet is sent on a PTO timer expiration (see Section 6.2) or\nwhen entering recovery (see Section 7.3.2).",
+                             "line_start":  897,
+                             "line_end":  900,
+                             "condition":  "Sending a packet would make bytes_in_flight exceed the congestion window, and the send is neither on PTO timer expiration nor while entering recovery.",
+                             "required_behavior":  "Do not send the packet.",
+                             "forbidden_behavior":  "Sending the packet under the stated non-exception condition.",
+                             "error_behavior":  "No protocol error is specified; the sender is required to withhold the packet.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can set bytes_in_flight and the congestion window, attempt a non-exempt send, and observe whether transmission is suppressed.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

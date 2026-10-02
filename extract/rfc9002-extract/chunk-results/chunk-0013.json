@@ -1,0 +1,19 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0013",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "QUIC therefore recommends that the minimum congestion window be two\n   packets.",
+                             "line_start":  300,
+                             "line_end":  301,
+                             "condition":  "When a QUIC sender enforces its minimum congestion window.",
+                             "required_behavior":  "The sender uses two packets as the minimum congestion window.",
+                             "forbidden_behavior":  "The sender permits its congestion window to fall below the two-packet minimum.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "An implementation\u0027s congestion-control state and reduction logic can be inspected or exercised to verify that the congestion window is bounded by a two-packet floor.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

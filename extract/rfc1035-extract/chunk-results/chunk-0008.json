@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0008",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "While the implementor is free to violate these\nconventions WITHIN HIS OWN SYSTEM, he must observe these conventions in\nALL behavior observed from other hosts.",
+      "line_start": 382,
+      "line_end": 384,
+      "condition": "Behavior observed from other hosts.",
+      "required_behavior": "Observe the domain system conventions in all behavior observable by other hosts.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The clause defines an external-observability scope, but the concrete conventions are absent from this chunk, so it does not independently support an implementation check.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "While the implementor is free to violate these\nconventions WITHIN HIS OWN SYSTEM, he must observe these conventions in\nALL behavior observed from other hosts.",
+      "line_start": 382,
+      "line_end": 384,
+      "condition": "Behavior confined within the implementor's own system.",
+      "required_behavior": "Internal deviations from the domain system conventions are permitted; such deviations are not required.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The clause permits internal deviations, but this chunk does not specify the conventions or concrete internal behavior to which a check could be applied.",
+      "eligibility": "exclude"
+    }
+  ]
+}

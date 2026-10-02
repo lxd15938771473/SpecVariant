@@ -1,0 +1,3569 @@
+{
+  "schema_version": "speclitmus.chunks.v1",
+  "metadata": {
+    "document_id": "rfc1035",
+    "source_sha256": "09bf29a8d5e602597e8b39e938a47b331bd7b948d78fde01e2ca41b799a068ea",
+    "source_line_count": 3131,
+    "max_chars": 6000,
+    "overlap_paragraphs": 1,
+    "chunk_count": 75,
+    "covered_nonblank_line_count": 2070,
+    "total_nonblank_line_count": 2070,
+    "coverage_complete": true
+  },
+  "chunks": [
+    {
+      "chunk_id": "chunk-0001",
+      "section": "Preamble",
+      "line_start": 1,
+      "line_end": 6,
+      "text": "Network Working Group                                     P. Mockapetris\nRequest for Comments: 1035                                           ISI\n                                                           November 1987\nObsoletes: RFCs 882, 883, 973\n\n            DOMAIN NAMES - IMPLEMENTATION AND SPECIFICATION",
+      "content_line_ranges": [
+        [
+          1,
+          4
+        ],
+        [
+          6,
+          6
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0002",
+      "section": "1. STATUS OF THIS MEMO",
+      "line_start": 9,
+      "line_end": 112,
+      "text": "1. STATUS OF THIS MEMO\n\nThis RFC describes the details of the domain system and protocol, and\nassumes that the reader is familiar with the concepts discussed in a\ncompanion RFC, \"Domain Names - Concepts and Facilities\" [RFC-1034].\n\nThe domain system is a mixture of functions and data types which are an\nofficial protocol and functions and data types which are still\nexperimental.  Since the domain system is intentionally extensible, new\ndata types and experimental behavior should always be expected in parts\nof the system beyond the official protocol.  The official protocol parts\ninclude standard queries, responses and the Internet class RR data\nformats (e.g., host addresses).  Since the previous RFC set, several\ndefinitions have changed, so some previous definitions are obsolete.\n\nExperimental or obsolete features are clearly marked in these RFCs, and\nsuch information should be used with caution.\n\nThe reader is especially cautioned not to depend on the values which\nappear in examples to be current or complete, since their purpose is\nprimarily pedagogical.  Distribution of this memo is unlimited.\n\n                           Table of Contents\n\n  1. STATUS OF THIS MEMO                                              1\n  2. INTRODUCTION                                                     3\n      2.1. Overview                                                   3\n      2.2. Common configurations                                      4\n      2.3. Conventions                                                7\n          2.3.1. Preferred name syntax                                7\n          2.3.2. Data Transmission Order                              8\n          2.3.3. Character Case                                       9\n          2.3.4. Size limits                                         10\n  3. DOMAIN NAME SPACE AND RR DEFINITIONS                            10\n      3.1. Name space definitions                                    10\n      3.2. RR definitions                                            11\n          3.2.1. Format                                              11\n          3.2.2. TYPE values                                         12\n          3.2.3. QTYPE values                                        12\n          3.2.4. CLASS values                                        13\n\nMockapetris                                                     [Page 1]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n          3.2.5. QCLASS values                                       13\n      3.3. Standard RRs                                              13\n          3.3.1. CNAME RDATA format                                  14\n          3.3.2. HINFO RDATA format                                  14\n          3.3.3. MB RDATA format (EXPERIMENTAL)                      14\n          3.3.4. MD RDATA format (Obsolete)                          15\n          3.3.5. MF RDATA format (Obsolete)                          15\n          3.3.6. MG RDATA format (EXPERIMENTAL)                      16\n          3.3.7. MINFO RDATA format (EXPERIMENTAL)                   16\n          3.3.8. MR RDATA format (EXPERIMENTAL)                      17\n          3.3.9. MX RDATA format                                     17\n          3.3.10. NULL RDATA format (EXPERIMENTAL)                   17\n          3.3.11. NS RDATA format                                    18\n          3.3.12. PTR RDATA format                                   18\n          3.3.13. SOA RDATA format                                   19\n          3.3.14. TXT RDATA format                                   20\n      3.4. ARPA Internet specific RRs                                20\n          3.4.1. A RDATA format                                      20\n          3.4.2. WKS RDATA format                                    21\n      3.5. IN-ADDR.ARPA domain                                       22\n      3.6. Defining new types, classes, and special namespaces       24\n  4. MESSAGES                                                        25\n      4.1. Format                                                    25\n          4.1.1. Header section format                               26\n          4.1.2. Question section format                             28\n          4.1.3. Resource record format                              29\n          4.1.4. Message compression                                 30\n      4.2. Transport                                                 32\n          4.2.1. UDP usage                                           32\n          4.2.2. TCP usage                                           32\n  5. MASTER FILES                                                    33\n      5.1. Format                                                    33\n      5.2. Use of master files to define zones                       35\n      5.3. Master file example                                       36\n  6. NAME SERVER IMPLEMENTATION                                      37\n      6.1. Architecture                                              37\n          6.1.1. Control                                             37\n          6.1.2. Database                                            37\n          6.1.3. Time                                                39\n      6.2. Standard query processing                                 39\n      6.3. Zone refresh and reload processing                        39\n      6.4. Inverse queries (Optional)                                40\n          6.4.1. The contents of inverse queries and responses       40\n          6.4.2. Inverse query and response example                  41\n          6.4.3. Inverse query processing                            42\n\nMockapetris                                                     [Page 2]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          9,
+          9
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          15,
+          22
+        ],
+        [
+          24,
+          25
+        ],
+        [
+          27,
+          29
+        ],
+        [
+          31,
+          31
+        ],
+        [
+          33,
+          48
+        ],
+        [
+          52,
+          52
+        ],
+        [
+          55,
+          55
+        ],
+        [
+          58,
+          102
+        ],
+        [
+          109,
+          109
+        ],
+        [
+          112,
+          112
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0003",
+      "section": "1. STATUS OF THIS MEMO",
+      "line_start": 112,
+      "line_end": 125,
+      "text": "RFC 1035        Domain Implementation and Specification    November 1987\n\n      6.5. Completion queries and responses                          42\n  7. RESOLVER IMPLEMENTATION                                         43\n      7.1. Transforming a user request into a query                  43\n      7.2. Sending the queries                                       44\n      7.3. Processing responses                                      46\n      7.4. Using the cache                                           47\n  8. MAIL SUPPORT                                                    47\n      8.1. Mail exchange binding                                     48\n      8.2. Mailbox binding (Experimental)                            48\n  9. REFERENCES and BIBLIOGRAPHY                                     50\n  Index                                                              54",
+      "content_line_ranges": [
+        [
+          115,
+          125
+        ]
+      ],
+      "overlap_line_ranges": [
+        [
+          112,
+          112
+        ]
+      ]
+    },
+    {
+      "chunk_id": "chunk-0004",
+      "section": "2. INTRODUCTION",
+      "line_start": 127,
+      "line_end": 127,
+      "text": "2. INTRODUCTION",
+      "content_line_ranges": [
+        [
+          127,
+          127
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0005",
+      "section": "2.1. Overview",
+      "line_start": 129,
+      "line_end": 180,
+      "text": "2.1. Overview\n\nThe goal of domain names is to provide a mechanism for naming resources\nin such a way that the names are usable in different hosts, networks,\nprotocol families, internets, and administrative organizations.\n\nFrom the user's point of view, domain names are useful as arguments to a\nlocal agent, called a resolver, which retrieves information associated\nwith the domain name.  Thus a user might ask for the host address or\nmail information associated with a particular domain name.  To enable\nthe user to request a particular type of information, an appropriate\nquery type is passed to the resolver with the domain name.  To the user,\nthe domain tree is a single information space; the resolver is\nresponsible for hiding the distribution of data among name servers from\nthe user.\n\nFrom the resolver's point of view, the database that makes up the domain\nspace is distributed among various name servers.  Different parts of the\ndomain space are stored in different name servers, although a particular\ndata item will be stored redundantly in two or more name servers.  The\nresolver starts with knowledge of at least one name server.  When the\nresolver processes a user query it asks a known name server for the\ninformation; in return, the resolver either receives the desired\ninformation or a referral to another name server.  Using these\nreferrals, resolvers learn the identities and contents of other name\nservers.  Resolvers are responsible for dealing with the distribution of\nthe domain space and dealing with the effects of name server failure by\nconsulting redundant databases in other servers.\n\nName servers manage two kinds of data.  The first kind of data held in\nsets called zones; each zone is the complete database for a particular\n\"pruned\" subtree of the domain space.  This data is called\nauthoritative.  A name server periodically checks to make sure that its\nzones are up to date, and if not, obtains a new copy of updated zones\n\nMockapetris                                                     [Page 3]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nfrom master files stored locally or in another name server.  The second\nkind of data is cached data which was acquired by a local resolver.\nThis data may be incomplete, but improves the performance of the\nretrieval process when non-local data is repeatedly accessed.  Cached\ndata is eventually discarded by a timeout mechanism.\n\nThis functional structure isolates the problems of user interface,\nfailure recovery, and distribution in the resolvers and isolates the\ndatabase update and refresh problems in the name servers.",
+      "content_line_ranges": [
+        [
+          129,
+          129
+        ],
+        [
+          131,
+          133
+        ],
+        [
+          135,
+          143
+        ],
+        [
+          145,
+          156
+        ],
+        [
+          158,
+          162
+        ],
+        [
+          166,
+          166
+        ],
+        [
+          169,
+          169
+        ],
+        [
+          172,
+          176
+        ],
+        [
+          178,
+          180
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0006",
+      "section": "2.2. Common configurations",
+      "line_start": 182,
+      "line_end": 290,
+      "text": "2.2. Common configurations\n\nA host can participate in the domain name system in a number of ways,\ndepending on whether the host runs programs that retrieve information\nfrom the domain system, name servers that answer queries from other\nhosts, or various combinations of both functions.  The simplest, and\nperhaps most typical, configuration is shown below:\n\n                 Local Host                        |  Foreign\n                                                   |\n    +---------+               +----------+         |  +--------+\n    |         | user queries  |          |queries  |  |        |\n    |  User   |-------------->|          |---------|->|Foreign |\n    | Program |               | Resolver |         |  |  Name  |\n    |         |<--------------|          |<--------|--| Server |\n    |         | user responses|          |responses|  |        |\n    +---------+               +----------+         |  +--------+\n                                |     A            |\n                cache additions |     | references |\n                                V     |            |\n                              +----------+         |\n                              |  cache   |         |\n                              +----------+         |\n\nUser programs interact with the domain name space through resolvers; the\nformat of user queries and user responses is specific to the host and\nits operating system.  User queries will typically be operating system\ncalls, and the resolver and its cache will be part of the host operating\nsystem.  Less capable hosts may choose to implement the resolver as a\nsubroutine to be linked in with every program that needs its services.\nResolvers answer user queries with information they acquire via queries\nto foreign name servers and the local cache.\n\nNote that the resolver may have to make several queries to several\ndifferent foreign name servers to answer a particular user query, and\nhence the resolution of a user query may involve several network\naccesses and an arbitrary amount of time.  The queries to foreign name\nservers and the corresponding responses have a standard format described\n\nMockapetris                                                     [Page 4]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nin this memo, and may be datagrams.\n\nDepending on its capabilities, a name server could be a stand alone\nprogram on a dedicated machine or a process or processes on a large\ntimeshared host.  A simple configuration might be:\n\n                 Local Host                        |  Foreign\n                                                   |\n      +---------+                                  |\n     /         /|                                  |\n    +---------+ |             +----------+         |  +--------+\n    |         | |             |          |responses|  |        |\n    |         | |             |   Name   |---------|->|Foreign |\n    |  Master |-------------->|  Server  |         |  |Resolver|\n    |  files  | |             |          |<--------|--|        |\n    |         |/              |          | queries |  +--------+\n    +---------+               +----------+         |\n\nHere a primary name server acquires information about one or more zones\nby reading master files from its local file system, and answers queries\nabout those zones that arrive from foreign resolvers.\n\nThe DNS requires that all zones be redundantly supported by more than\none name server.  Designated secondary servers can acquire zones and\ncheck for updates from the primary server using the zone transfer\nprotocol of the DNS.  This configuration is shown below:\n\n                 Local Host                        |  Foreign\n                                                   |\n      +---------+                                  |\n     /         /|                                  |\n    +---------+ |             +----------+         |  +--------+\n    |         | |             |          |responses|  |        |\n    |         | |             |   Name   |---------|->|Foreign |\n    |  Master |-------------->|  Server  |         |  |Resolver|\n    |  files  | |             |          |<--------|--|        |\n    |         |/              |          | queries |  +--------+\n    +---------+               +----------+         |\n                                A     |maintenance |  +--------+\n                                |     +------------|->|        |\n                                |      queries     |  |Foreign |\n                                |                  |  |  Name  |\n                                +------------------|--| Server |\n                             maintenance responses |  +--------+\n\nIn this configuration, the name server periodically establishes a\nvirtual circuit to a foreign name server to acquire a copy of a zone or\nto check that an existing copy has not changed.  The messages sent for\n\nMockapetris                                                     [Page 5]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nthese maintenance activities follow the same form as queries and\nresponses, but the message sequences are somewhat different.\n\nThe information flow in a host that supports all aspects of the domain\nname system is shown below:",
+      "content_line_ranges": [
+        [
+          182,
+          182
+        ],
+        [
+          184,
+          188
+        ],
+        [
+          190,
+          204
+        ],
+        [
+          206,
+          213
+        ],
+        [
+          215,
+          219
+        ],
+        [
+          223,
+          223
+        ],
+        [
+          226,
+          226
+        ],
+        [
+          229,
+          229
+        ],
+        [
+          231,
+          233
+        ],
+        [
+          235,
+          245
+        ],
+        [
+          247,
+          249
+        ],
+        [
+          251,
+          254
+        ],
+        [
+          256,
+          272
+        ],
+        [
+          274,
+          276
+        ],
+        [
+          280,
+          280
+        ],
+        [
+          283,
+          283
+        ],
+        [
+          286,
+          287
+        ],
+        [
+          289,
+          290
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0007",
+      "section": "2.2. Common configurations",
+      "line_start": 289,
+      "line_end": 377,
+      "text": "The information flow in a host that supports all aspects of the domain\nname system is shown below:\n\n                 Local Host                        |  Foreign\n                                                   |\n    +---------+               +----------+         |  +--------+\n    |         | user queries  |          |queries  |  |        |\n    |  User   |-------------->|          |---------|->|Foreign |\n    | Program |               | Resolver |         |  |  Name  |\n    |         |<--------------|          |<--------|--| Server |\n    |         | user responses|          |responses|  |        |\n    +---------+               +----------+         |  +--------+\n                                |     A            |\n                cache additions |     | references |\n                                V     |            |\n                              +----------+         |\n                              |  Shared  |         |\n                              | database |         |\n                              +----------+         |\n                                A     |            |\n      +---------+     refreshes |     | references |\n     /         /|               |     V            |\n    +---------+ |             +----------+         |  +--------+\n    |         | |             |          |responses|  |        |\n    |         | |             |   Name   |---------|->|Foreign |\n    |  Master |-------------->|  Server  |         |  |Resolver|\n    |  files  | |             |          |<--------|--|        |\n    |         |/              |          | queries |  +--------+\n    +---------+               +----------+         |\n                                A     |maintenance |  +--------+\n                                |     +------------|->|        |\n                                |      queries     |  |Foreign |\n                                |                  |  |  Name  |\n                                +------------------|--| Server |\n                             maintenance responses |  +--------+\n\nThe shared database holds domain space data for the local name server\nand resolver.  The contents of the shared database will typically be a\nmixture of authoritative data maintained by the periodic refresh\noperations of the name server and cached data from previous resolver\nrequests.  The structure of the domain data and the necessity for\nsynchronization between name servers and resolvers imply the general\ncharacteristics of this database, but the actual format is up to the\nlocal implementor.\n\nMockapetris                                                     [Page 6]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nInformation flow can also be tailored so that a group of hosts act\ntogether to optimize activities.  Sometimes this is done to offload less\ncapable hosts so that they do not have to implement a full resolver.\nThis can be appropriate for PCs or hosts which want to minimize the\namount of new network code which is required.  This scheme can also\nallow a group of hosts can share a small number of caches rather than\nmaintaining a large number of separate caches, on the premise that the\ncentralized caches will have a higher hit ratio.  In either case,\nresolvers are replaced with stub resolvers which act as front ends to\nresolvers located in a recursive server in one or more name servers\nknown to perform that service:\n\n                   Local Hosts                     |  Foreign\n                                                   |\n    +---------+                                    |\n    |         | responses                          |\n    | Stub    |<--------------------+              |\n    | Resolver|                     |              |\n    |         |----------------+    |              |\n    +---------+ recursive      |    |              |\n                queries        |    |              |\n                               V    |              |\n    +---------+ recursive     +----------+         |  +--------+\n    |         | queries       |          |queries  |  |        |\n    | Stub    |-------------->| Recursive|---------|->|Foreign |\n    | Resolver|               | Server   |         |  |  Name  |\n    |         |<--------------|          |<--------|--| Server |\n    +---------+ responses     |          |responses|  |        |\n                              +----------+         |  +--------+\n                              |  Central |         |\n                              |   cache  |         |\n                              +----------+         |\n\nIn any case, note that domain components are always replicated for\nreliability whenever possible.",
+      "content_line_ranges": [
+        [
+          292,
+          323
+        ],
+        [
+          325,
+          332
+        ],
+        [
+          337,
+          337
+        ],
+        [
+          340,
+          340
+        ],
+        [
+          343,
+          353
+        ],
+        [
+          355,
+          374
+        ],
+        [
+          376,
+          377
+        ]
+      ],
+      "overlap_line_ranges": [
+        [
+          289,
+          290
+        ]
+      ]
+    },
+    {
+      "chunk_id": "chunk-0008",
+      "section": "2.3. Conventions",
+      "line_start": 379,
+      "line_end": 384,
+      "text": "2.3. Conventions\n\nThe domain system has several conventions dealing with low-level, but\nfundamental, issues.  While the implementor is free to violate these\nconventions WITHIN HIS OWN SYSTEM, he must observe these conventions in\nALL behavior observed from other hosts.",
+      "content_line_ranges": [
+        [
+          379,
+          379
+        ],
+        [
+          381,
+          384
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0009",
+      "section": "2.3.1. Preferred name syntax",
+      "line_start": 386,
+      "line_end": 442,
+      "text": "2.3.1. Preferred name syntax\n\nThe DNS specifications attempt to be as general as possible in the rules\nfor constructing domain names.  The idea is that the name of any\nexisting object can be expressed as a domain name with minimal changes.\n\nMockapetris                                                     [Page 7]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nHowever, when assigning a domain name for an object, the prudent user\nwill select a name which satisfies both the rules of the domain system\nand any existing rules for the object, whether these rules are published\nor implied by existing programs.\n\nFor example, when naming a mail domain, the user should satisfy both the\nrules of this memo and those in RFC-822.  When creating a new host name,\nthe old rules for HOSTS.TXT should be followed.  This avoids problems\nwhen old software is converted to use domain names.\n\nThe following syntax will result in fewer problems with many\n\napplications that use domain names (e.g., mail, TELNET).\n\n<domain> ::= <subdomain> | \" \"\n\n<subdomain> ::= <label> | <subdomain> \".\" <label>\n\n<label> ::= <letter> [ [ <ldh-str> ] <let-dig> ]\n\n<ldh-str> ::= <let-dig-hyp> | <let-dig-hyp> <ldh-str>\n\n<let-dig-hyp> ::= <let-dig> | \"-\"\n\n<let-dig> ::= <letter> | <digit>\n\n<letter> ::= any one of the 52 alphabetic characters A through Z in\nupper case and a through z in lower case\n\n<digit> ::= any one of the ten digits 0 through 9\n\nNote that while upper and lower case letters are allowed in domain\nnames, no significance is attached to the case.  That is, two names with\nthe same spelling but different case are to be treated as if identical.\n\nThe labels must follow the rules for ARPANET host names.  They must\nstart with a letter, end with a letter or digit, and have as interior\ncharacters only letters, digits, and hyphen.  There are also some\nrestrictions on the length.  Labels must be 63 characters or less.\n\nFor example, the following strings identify hosts in the Internet:\n\nA.ISI.EDU XX.LCS.MIT.EDU SRI-NIC.ARPA",
+      "content_line_ranges": [
+        [
+          386,
+          386
+        ],
+        [
+          388,
+          390
+        ],
+        [
+          394,
+          394
+        ],
+        [
+          397,
+          397
+        ],
+        [
+          400,
+          403
+        ],
+        [
+          405,
+          408
+        ],
+        [
+          410,
+          410
+        ],
+        [
+          412,
+          412
+        ],
+        [
+          414,
+          414
+        ],
+        [
+          416,
+          416
+        ],
+        [
+          418,
+          418
+        ],
+        [
+          420,
+          420
+        ],
+        [
+          422,
+          422
+        ],
+        [
+          424,
+          424
+        ],
+        [
+          426,
+          427
+        ],
+        [
+          429,
+          429
+        ],
+        [
+          431,
+          433
+        ],
+        [
+          435,
+          438
+        ],
+        [
+          440,
+          440
+        ],
+        [
+          442,
+          442
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0010",
+      "section": "2.3.2. Data Transmission Order",
+      "line_start": 444,
+      "line_end": 484,
+      "text": "2.3.2. Data Transmission Order\n\nThe order of transmission of the header and data described in this\ndocument is resolved to the octet level.  Whenever a diagram shows a\n\nMockapetris                                                     [Page 8]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\ngroup of octets, the order of transmission of those octets is the normal\norder in which they are read in English.  For example, in the following\ndiagram, the octets are transmitted in the order they are numbered.\n\n     0                   1\n     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5\n    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n    |       1       |       2       |\n    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n    |       3       |       4       |\n    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n    |       5       |       6       |\n    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n\nWhenever an octet represents a numeric quantity, the left most bit in\nthe diagram is the high order or most significant bit.  That is, the bit\nlabeled 0 is the most significant bit.  For example, the following\ndiagram represents the value 170 (decimal).\n\n     0 1 2 3 4 5 6 7\n    +-+-+-+-+-+-+-+-+\n    |1 0 1 0 1 0 1 0|\n    +-+-+-+-+-+-+-+-+\n\nSimilarly, whenever a multi-octet field represents a numeric quantity\nthe left most bit of the whole field is the most significant bit.  When\na multi-octet quantity is transmitted the most significant octet is\ntransmitted first.",
+      "content_line_ranges": [
+        [
+          444,
+          444
+        ],
+        [
+          446,
+          447
+        ],
+        [
+          451,
+          451
+        ],
+        [
+          454,
+          454
+        ],
+        [
+          457,
+          459
+        ],
+        [
+          461,
+          469
+        ],
+        [
+          471,
+          474
+        ],
+        [
+          476,
+          479
+        ],
+        [
+          481,
+          484
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0011",
+      "section": "2.3.3. Character Case",
+      "line_start": 486,
+      "line_end": 524,
+      "text": "2.3.3. Character Case\n\nFor all parts of the DNS that are part of the official protocol, all\ncomparisons between character strings (e.g., labels, domain names, etc.)\nare done in a case-insensitive manner.  At present, this rule is in\nforce throughout the domain system without exception.  However, future\nadditions beyond current usage may need to use the full binary octet\ncapabilities in names, so attempts to store domain names in 7-bit ASCII\nor use of special bytes to terminate labels, etc., should be avoided.\n\nWhen data enters the domain system, its original case should be\npreserved whenever possible.  In certain circumstances this cannot be\ndone.  For example, if two RRs are stored in a database, one at x.y and\none at X.Y, they are actually stored at the same place in the database,\nand hence only one casing would be preserved.  The basic rule is that\ncase can be discarded only when data is used to define structure in a\ndatabase, and two names are identical when compared in a case\ninsensitive manner.\n\nMockapetris                                                     [Page 9]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nLoss of case sensitive data must be minimized.  Thus while data for x.y\nand X.Y may both be stored under a single location x.y or X.Y, data for\na.x and B.X would never be stored under A.x, A.X, b.x, or b.X.  In\ngeneral, this preserves the case of the first label of a domain name,\nbut forces standardization of interior node labels.\n\nSystems administrators who enter data into the domain database should\ntake care to represent the data they supply to the domain system in a\ncase-consistent manner if their system is case-sensitive.  The data\ndistribution system in the domain system will ensure that consistent\nrepresentations are preserved.",
+      "content_line_ranges": [
+        [
+          486,
+          486
+        ],
+        [
+          488,
+          494
+        ],
+        [
+          496,
+          503
+        ],
+        [
+          508,
+          508
+        ],
+        [
+          511,
+          511
+        ],
+        [
+          514,
+          518
+        ],
+        [
+          520,
+          524
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0012",
+      "section": "2.3.4. Size limits",
+      "line_start": 526,
+      "line_end": 538,
+      "text": "2.3.4. Size limits\n\nVarious objects and parameters in the DNS have size limits.  They are\nlisted below.  Some could be easily changed, others are more\nfundamental.\n\nlabels          63 octets or less\n\nnames           255 octets or less\n\nTTL             positive values of a signed 32 bit number.\n\nUDP messages    512 octets or less",
+      "content_line_ranges": [
+        [
+          526,
+          526
+        ],
+        [
+          528,
+          530
+        ],
+        [
+          532,
+          532
+        ],
+        [
+          534,
+          534
+        ],
+        [
+          536,
+          536
+        ],
+        [
+          538,
+          538
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0013",
+      "section": "3. DOMAIN NAME SPACE AND RR DEFINITIONS",
+      "line_start": 540,
+      "line_end": 540,
+      "text": "3. DOMAIN NAME SPACE AND RR DEFINITIONS",
+      "content_line_ranges": [
+        [
+          540,
+          540
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0014",
+      "section": "3.1. Name space definitions",
+      "line_start": 542,
+      "line_end": 568,
+      "text": "3.1. Name space definitions\n\nDomain names in messages are expressed in terms of a sequence of labels.\nEach label is represented as a one octet length field followed by that\nnumber of octets.  Since every domain name ends with the null label of\nthe root, a domain name is terminated by a length byte of zero.  The\nhigh order two bits of every length octet must be zero, and the\nremaining six bits of the length field limit the label to 63 octets or\nless.\n\nTo simplify implementations, the total length of a domain name (i.e.,\nlabel octets and label length octets) is restricted to 255 octets or\nless.\n\nAlthough labels can contain any 8 bit values in octets that make up a\nlabel, it is strongly recommended that labels follow the preferred\nsyntax described elsewhere in this memo, which is compatible with\nexisting host naming conventions.  Name servers and resolvers must\ncompare labels in a case-insensitive manner (i.e., A=a), assuming ASCII\nwith zero parity.  Non-alphabetic codes must match exactly.\n\nMockapetris                                                    [Page 10]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          542,
+          542
+        ],
+        [
+          544,
+          550
+        ],
+        [
+          552,
+          554
+        ],
+        [
+          556,
+          561
+        ],
+        [
+          565,
+          565
+        ],
+        [
+          568,
+          568
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0015",
+      "section": "3.2. RR definitions",
+      "line_start": 571,
+      "line_end": 571,
+      "text": "3.2. RR definitions",
+      "content_line_ranges": [
+        [
+          571,
+          571
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0016",
+      "section": "3.2.1. Format",
+      "line_start": 573,
+      "line_end": 630,
+      "text": "3.2.1. Format\n\nAll RRs have the same top level format shown below:\n\n                                    1  1  1  1  1  1\n      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                                               |\n    /                                               /\n    /                      NAME                     /\n    |                                               |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                      TYPE                     |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                     CLASS                     |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                      TTL                      |\n    |                                               |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                   RDLENGTH                    |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|\n    /                     RDATA                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nNAME            an owner name, i.e., the name of the node to which this\n                resource record pertains.\n\nTYPE            two octets containing one of the RR TYPE codes.\n\nCLASS           two octets containing one of the RR CLASS codes.\n\nTTL             a 32 bit signed integer that specifies the time interval\n                that the resource record may be cached before the source\n                of the information should again be consulted.  Zero\n                values are interpreted to mean that the RR can only be\n                used for the transaction in progress, and should not be\n                cached.  For example, SOA records are always distributed\n                with a zero TTL to prohibit caching.  Zero values can\n                also be used for extremely volatile data.\n\nRDLENGTH        an unsigned 16 bit integer that specifies the length in\n                octets of the RDATA field.\n\nMockapetris                                                    [Page 11]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nRDATA           a variable length string of octets that describes the\n                resource.  The format of this information varies\n                according to the TYPE and CLASS of the resource record.",
+      "content_line_ranges": [
+        [
+          573,
+          573
+        ],
+        [
+          575,
+          575
+        ],
+        [
+          577,
+          596
+        ],
+        [
+          599,
+          599
+        ],
+        [
+          601,
+          602
+        ],
+        [
+          604,
+          604
+        ],
+        [
+          606,
+          606
+        ],
+        [
+          608,
+          615
+        ],
+        [
+          617,
+          618
+        ],
+        [
+          622,
+          622
+        ],
+        [
+          625,
+          625
+        ],
+        [
+          628,
+          630
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0017",
+      "section": "3.2.2. TYPE values",
+      "line_start": 632,
+      "line_end": 669,
+      "text": "3.2.2. TYPE values\n\nTYPE fields are used in resource records.  Note that these types are a\nsubset of QTYPEs.\n\nTYPE            value and meaning\n\nA               1 a host address\n\nNS              2 an authoritative name server\n\nMD              3 a mail destination (Obsolete - use MX)\n\nMF              4 a mail forwarder (Obsolete - use MX)\n\nCNAME           5 the canonical name for an alias\n\nSOA             6 marks the start of a zone of authority\n\nMB              7 a mailbox domain name (EXPERIMENTAL)\n\nMG              8 a mail group member (EXPERIMENTAL)\n\nMR              9 a mail rename domain name (EXPERIMENTAL)\n\nNULL            10 a null RR (EXPERIMENTAL)\n\nWKS             11 a well known service description\n\nPTR             12 a domain name pointer\n\nHINFO           13 host information\n\nMINFO           14 mailbox or mail list information\n\nMX              15 mail exchange\n\nTXT             16 text strings",
+      "content_line_ranges": [
+        [
+          632,
+          632
+        ],
+        [
+          634,
+          635
+        ],
+        [
+          637,
+          637
+        ],
+        [
+          639,
+          639
+        ],
+        [
+          641,
+          641
+        ],
+        [
+          643,
+          643
+        ],
+        [
+          645,
+          645
+        ],
+        [
+          647,
+          647
+        ],
+        [
+          649,
+          649
+        ],
+        [
+          651,
+          651
+        ],
+        [
+          653,
+          653
+        ],
+        [
+          655,
+          655
+        ],
+        [
+          657,
+          657
+        ],
+        [
+          659,
+          659
+        ],
+        [
+          661,
+          661
+        ],
+        [
+          663,
+          663
+        ],
+        [
+          665,
+          665
+        ],
+        [
+          667,
+          667
+        ],
+        [
+          669,
+          669
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0018",
+      "section": "3.2.3. QTYPE values",
+      "line_start": 671,
+      "line_end": 691,
+      "text": "3.2.3. QTYPE values\n\nQTYPE fields appear in the question part of a query.  QTYPES are a\nsuperset of TYPEs, hence all TYPEs are valid QTYPEs.  In addition, the\nfollowing QTYPEs are defined:\n\nMockapetris                                                    [Page 12]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nAXFR            252 A request for a transfer of an entire zone\n\nMAILB           253 A request for mailbox-related records (MB, MG or MR)\n\nMAILA           254 A request for mail agent RRs (Obsolete - see MX)\n\n*               255 A request for all records",
+      "content_line_ranges": [
+        [
+          671,
+          671
+        ],
+        [
+          673,
+          675
+        ],
+        [
+          679,
+          679
+        ],
+        [
+          682,
+          682
+        ],
+        [
+          685,
+          685
+        ],
+        [
+          687,
+          687
+        ],
+        [
+          689,
+          689
+        ],
+        [
+          691,
+          691
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0019",
+      "section": "3.2.4. CLASS values",
+      "line_start": 693,
+      "line_end": 705,
+      "text": "3.2.4. CLASS values\n\nCLASS fields appear in resource records.  The following CLASS mnemonics\nand values are defined:\n\nIN              1 the Internet\n\nCS              2 the CSNET class (Obsolete - used only for examples in\n                some obsolete RFCs)\n\nCH              3 the CHAOS class\n\nHS              4 Hesiod [Dyer 87]",
+      "content_line_ranges": [
+        [
+          693,
+          693
+        ],
+        [
+          695,
+          696
+        ],
+        [
+          698,
+          698
+        ],
+        [
+          700,
+          701
+        ],
+        [
+          703,
+          703
+        ],
+        [
+          705,
+          705
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0020",
+      "section": "3.2.5. QCLASS values",
+      "line_start": 707,
+      "line_end": 713,
+      "text": "3.2.5. QCLASS values\n\nQCLASS fields appear in the question section of a query.  QCLASS values\nare a superset of CLASS values; every CLASS is a valid QCLASS.  In\naddition to CLASS values, the following QCLASSes are defined:\n\n*               255 any class",
+      "content_line_ranges": [
+        [
+          707,
+          707
+        ],
+        [
+          709,
+          711
+        ],
+        [
+          713,
+          713
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0021",
+      "section": "3.3. Standard RRs",
+      "line_start": 715,
+      "line_end": 739,
+      "text": "3.3. Standard RRs\n\nThe following RR definitions are expected to occur, at least\npotentially, in all classes.  In particular, NS, SOA, CNAME, and PTR\nwill be used in all classes, and have the same format in all classes.\nBecause their RDATA format is known, all domain names in the RDATA\nsection of these RRs may be compressed.\n\n<domain-name> is a domain name represented as a series of labels, and\nterminated by a label with zero length.  <character-string> is a single\nlength octet followed by that number of characters.  <character-string>\nis treated as binary information, and can be up to 256 characters in\nlength (including the length octet).\n\nMockapetris                                                    [Page 13]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          715,
+          715
+        ],
+        [
+          717,
+          721
+        ],
+        [
+          723,
+          727
+        ],
+        [
+          736,
+          736
+        ],
+        [
+          739,
+          739
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0022",
+      "section": "3.3.1. CNAME RDATA format",
+      "line_start": 742,
+      "line_end": 756,
+      "text": "3.3.1. CNAME RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                     CNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nCNAME           A <domain-name> which specifies the canonical or primary\n                name for the owner.  The owner name is an alias.\n\nCNAME RRs cause no additional section processing, but name servers may\nchoose to restart the query at the canonical name in certain cases.  See\nthe description of name server logic in [RFC-1034] for details.",
+      "content_line_ranges": [
+        [
+          742,
+          742
+        ],
+        [
+          744,
+          747
+        ],
+        [
+          749,
+          749
+        ],
+        [
+          751,
+          752
+        ],
+        [
+          754,
+          756
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0023",
+      "section": "3.3.2. HINFO RDATA format",
+      "line_start": 758,
+      "line_end": 777,
+      "text": "3.3.2. HINFO RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                      CPU                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                       OS                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nCPU             A <character-string> which specifies the CPU type.\n\nOS              A <character-string> which specifies the operating\n                system type.\n\nStandard values for CPU and OS can be found in [RFC-1010].\n\nHINFO records are used to acquire general information about a host.  The\nmain use is for protocols such as FTP that can use special procedures\nwhen talking between machines or operating systems of the same type.",
+      "content_line_ranges": [
+        [
+          758,
+          758
+        ],
+        [
+          760,
+          764
+        ],
+        [
+          766,
+          766
+        ],
+        [
+          768,
+          768
+        ],
+        [
+          770,
+          771
+        ],
+        [
+          773,
+          773
+        ],
+        [
+          775,
+          777
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0024",
+      "section": "3.3.3. MB RDATA format (EXPERIMENTAL)",
+      "line_start": 779,
+      "line_end": 800,
+      "text": "3.3.3. MB RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MADNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMADNAME         A <domain-name> which specifies a host which has the\n                specified mailbox.\n\nMockapetris                                                    [Page 14]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nMB records cause additional section processing which looks up an A type\nRRs corresponding to MADNAME.",
+      "content_line_ranges": [
+        [
+          779,
+          779
+        ],
+        [
+          781,
+          784
+        ],
+        [
+          786,
+          786
+        ],
+        [
+          788,
+          789
+        ],
+        [
+          793,
+          793
+        ],
+        [
+          796,
+          796
+        ],
+        [
+          799,
+          800
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0025",
+      "section": "3.3.4. MD RDATA format (Obsolete)",
+      "line_start": 802,
+      "line_end": 821,
+      "text": "3.3.4. MD RDATA format (Obsolete)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MADNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMADNAME         A <domain-name> which specifies a host which has a mail\n                agent for the domain which should be able to deliver\n                mail for the domain.\n\nMD records cause additional section processing which looks up an A type\nrecord corresponding to MADNAME.\n\nMD is obsolete.  See the definition of MX and [RFC-974] for details of\nthe new scheme.  The recommended policy for dealing with MD RRs found in\na master file is to reject them, or to convert them to MX RRs with a\npreference of 0.",
+      "content_line_ranges": [
+        [
+          802,
+          802
+        ],
+        [
+          804,
+          807
+        ],
+        [
+          809,
+          809
+        ],
+        [
+          811,
+          813
+        ],
+        [
+          815,
+          816
+        ],
+        [
+          818,
+          821
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0026",
+      "section": "3.3.5. MF RDATA format (Obsolete)",
+      "line_start": 823,
+      "line_end": 853,
+      "text": "3.3.5. MF RDATA format (Obsolete)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MADNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMADNAME         A <domain-name> which specifies a host which has a mail\n                agent for the domain which will accept mail for\n                forwarding to the domain.\n\nMF records cause additional section processing which looks up an A type\nrecord corresponding to MADNAME.\n\nMF is obsolete.  See the definition of MX and [RFC-974] for details ofw\nthe new scheme.  The recommended policy for dealing with MD RRs found in\na master file is to reject them, or to convert them to MX RRs with a\npreference of 10.\n\nMockapetris                                                    [Page 15]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          823,
+          823
+        ],
+        [
+          825,
+          828
+        ],
+        [
+          830,
+          830
+        ],
+        [
+          832,
+          834
+        ],
+        [
+          836,
+          837
+        ],
+        [
+          839,
+          842
+        ],
+        [
+          850,
+          850
+        ],
+        [
+          853,
+          853
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0027",
+      "section": "3.3.6. MG RDATA format (EXPERIMENTAL)",
+      "line_start": 856,
+      "line_end": 868,
+      "text": "3.3.6. MG RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MGMNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMGMNAME         A <domain-name> which specifies a mailbox which is a\n                member of the mail group specified by the domain name.\n\nMG records cause no additional section processing.",
+      "content_line_ranges": [
+        [
+          856,
+          856
+        ],
+        [
+          858,
+          861
+        ],
+        [
+          863,
+          863
+        ],
+        [
+          865,
+          866
+        ],
+        [
+          868,
+          868
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0028",
+      "section": "3.3.7. MINFO RDATA format (EXPERIMENTAL)",
+      "line_start": 870,
+      "line_end": 910,
+      "text": "3.3.7. MINFO RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                    RMAILBX                    /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                    EMAILBX                    /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nRMAILBX         A <domain-name> which specifies a mailbox which is\n                responsible for the mailing list or mailbox.  If this\n                domain name names the root, the owner of the MINFO RR is\n                responsible for itself.  Note that many existing mailing\n                lists use a mailbox X-request for the RMAILBX field of\n                mailing list X, e.g., Msgroup-request for Msgroup.  This\n                field provides a more general mechanism.\n\nEMAILBX         A <domain-name> which specifies a mailbox which is to\n                receive error messages related to the mailing list or\n                mailbox specified by the owner of the MINFO RR (similar\n                to the ERRORS-TO: field which has been proposed).  If\n                this domain name names the root, errors should be\n                returned to the sender of the message.\n\nMINFO records cause no additional section processing.  Although these\nrecords can be associated with a simple mailbox, they are usually used\nwith a mailing list.\n\nMockapetris                                                    [Page 16]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          870,
+          870
+        ],
+        [
+          872,
+          876
+        ],
+        [
+          878,
+          878
+        ],
+        [
+          880,
+          886
+        ],
+        [
+          889,
+          894
+        ],
+        [
+          896,
+          898
+        ],
+        [
+          907,
+          907
+        ],
+        [
+          910,
+          910
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0029",
+      "section": "3.3.8. MR RDATA format (EXPERIMENTAL)",
+      "line_start": 913,
+      "line_end": 927,
+      "text": "3.3.8. MR RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   NEWNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nNEWNAME         A <domain-name> which specifies a mailbox which is the\n                proper rename of the specified mailbox.\n\nMR records cause no additional section processing.  The main use for MR\nis as a forwarding entry for a user who has moved to a different\nmailbox.",
+      "content_line_ranges": [
+        [
+          913,
+          913
+        ],
+        [
+          915,
+          918
+        ],
+        [
+          920,
+          920
+        ],
+        [
+          922,
+          923
+        ],
+        [
+          925,
+          927
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0030",
+      "section": "3.3.9. MX RDATA format",
+      "line_start": 929,
+      "line_end": 949,
+      "text": "3.3.9. MX RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                  PREFERENCE                   |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   EXCHANGE                    /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nPREFERENCE      A 16 bit integer which specifies the preference given to\n                this RR among others at the same owner.  Lower values\n                are preferred.\n\nEXCHANGE        A <domain-name> which specifies a host willing to act as\n                a mail exchange for the owner name.\n\nMX records cause type A additional section processing for the host\nspecified by EXCHANGE.  The use of MX RRs is explained in detail in\n[RFC-974].",
+      "content_line_ranges": [
+        [
+          929,
+          929
+        ],
+        [
+          931,
+          936
+        ],
+        [
+          938,
+          938
+        ],
+        [
+          940,
+          942
+        ],
+        [
+          944,
+          945
+        ],
+        [
+          947,
+          949
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0031",
+      "section": "3.3.10. NULL RDATA format (EXPERIMENTAL)",
+      "line_start": 951,
+      "line_end": 972,
+      "text": "3.3.10. NULL RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                  <anything>                   /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nAnything at all may be in the RDATA field so long as it is 65535 octets\nor less.\n\nMockapetris                                                    [Page 17]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nNULL records cause no additional section processing.  NULL RRs are not\nallowed in master files.  NULLs are used as placeholders in some\nexperimental extensions of the DNS.",
+      "content_line_ranges": [
+        [
+          951,
+          951
+        ],
+        [
+          953,
+          956
+        ],
+        [
+          958,
+          959
+        ],
+        [
+          964,
+          964
+        ],
+        [
+          967,
+          967
+        ],
+        [
+          970,
+          972
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0032",
+      "section": "3.3.11. NS RDATA format",
+      "line_start": 974,
+      "line_end": 995,
+      "text": "3.3.11. NS RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   NSDNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nNSDNAME         A <domain-name> which specifies a host which should be\n                authoritative for the specified class and domain.\n\nNS records cause both the usual additional section processing to locate\na type A record, and, when used in a referral, a special search of the\nzone in which they reside for glue information.\n\nThe NS RR states that the named host should be expected to have a zone\nstarting at owner name of the specified class.  Note that the class may\nnot indicate the protocol family which should be used to communicate\nwith the host, although it is typically a strong hint.  For example,\nhosts which are name servers for either Internet (IN) or Hesiod (HS)\nclass information are normally queried using IN class protocols.",
+      "content_line_ranges": [
+        [
+          974,
+          974
+        ],
+        [
+          976,
+          979
+        ],
+        [
+          981,
+          981
+        ],
+        [
+          983,
+          984
+        ],
+        [
+          986,
+          988
+        ],
+        [
+          990,
+          995
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0033",
+      "section": "3.3.12. PTR RDATA format",
+      "line_start": 997,
+      "line_end": 1024,
+      "text": "3.3.12. PTR RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   PTRDNAME                    /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nPTRDNAME        A <domain-name> which points to some location in the\n                domain name space.\n\nPTR records cause no additional section processing.  These RRs are used\nin special domains to point to some other location in the domain space.\nThese records are simple data, and don't imply any special processing\nsimilar to that performed by CNAME, which identifies aliases.  See the\ndescription of the IN-ADDR.ARPA domain for an example.\n\nMockapetris                                                    [Page 18]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          997,
+          997
+        ],
+        [
+          999,
+          1001
+        ],
+        [
+          1003,
+          1003
+        ],
+        [
+          1005,
+          1006
+        ],
+        [
+          1008,
+          1012
+        ],
+        [
+          1021,
+          1021
+        ],
+        [
+          1024,
+          1024
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0034",
+      "section": "3.3.13. SOA RDATA format",
+      "line_start": 1027,
+      "line_end": 1100,
+      "text": "3.3.13. SOA RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                     MNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                     RNAME                     /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                    SERIAL                     |\n    |                                               |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                    REFRESH                    |\n    |                                               |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                     RETRY                     |\n    |                                               |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                    EXPIRE                     |\n    |                                               |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                    MINIMUM                    |\n    |                                               |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMNAME           The <domain-name> of the name server that was the\n                original or primary source of data for this zone.\n\nRNAME           A <domain-name> which specifies the mailbox of the\n                person responsible for this zone.\n\nSERIAL          The unsigned 32 bit version number of the original copy\n                of the zone.  Zone transfers preserve this value.  This\n                value wraps and should be compared using sequence space\n                arithmetic.\n\nREFRESH         A 32 bit time interval before the zone should be\n                refreshed.\n\nRETRY           A 32 bit time interval that should elapse before a\n                failed refresh should be retried.\n\nEXPIRE          A 32 bit time value that specifies the upper limit on\n                the time interval that can elapse before the zone is no\n                longer authoritative.\n\nMockapetris                                                    [Page 19]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nMINIMUM         The unsigned 32 bit minimum TTL field that should be\n                exported with any RR from this zone.\n\nSOA records cause no additional section processing.\n\nAll times are in units of seconds.\n\nMost of these fields are pertinent only for name server maintenance\noperations.  However, MINIMUM is used in all query operations that\nretrieve RRs from a zone.  Whenever a RR is sent in a response to a\nquery, the TTL field is set to the maximum of the TTL field from the RR\nand the MINIMUM field in the appropriate SOA.  Thus MINIMUM is a lower\nbound on the TTL field for all RRs in a zone.  Note that this use of\nMINIMUM should occur when the RRs are copied into the response and not\nwhen the zone is loaded from a master file or via a zone transfer.  The\nreason for this provison is to allow future dynamic update facilities to\nchange the SOA RR with known semantics.",
+      "content_line_ranges": [
+        [
+          1027,
+          1027
+        ],
+        [
+          1029,
+          1049
+        ],
+        [
+          1051,
+          1051
+        ],
+        [
+          1053,
+          1054
+        ],
+        [
+          1056,
+          1057
+        ],
+        [
+          1059,
+          1062
+        ],
+        [
+          1064,
+          1065
+        ],
+        [
+          1067,
+          1068
+        ],
+        [
+          1070,
+          1072
+        ],
+        [
+          1078,
+          1078
+        ],
+        [
+          1081,
+          1081
+        ],
+        [
+          1084,
+          1085
+        ],
+        [
+          1087,
+          1087
+        ],
+        [
+          1089,
+          1089
+        ],
+        [
+          1091,
+          1100
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0035",
+      "section": "3.3.14. TXT RDATA format",
+      "line_start": 1103,
+      "line_end": 1114,
+      "text": "3.3.14. TXT RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   TXT-DATA                    /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nTXT-DATA        One or more <character-string>s.\n\nTXT RRs are used to hold descriptive text.  The semantics of the text\ndepends on the domain where it is found.",
+      "content_line_ranges": [
+        [
+          1103,
+          1103
+        ],
+        [
+          1105,
+          1107
+        ],
+        [
+          1109,
+          1109
+        ],
+        [
+          1111,
+          1111
+        ],
+        [
+          1113,
+          1114
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0036",
+      "section": "3.4. Internet specific RRs",
+      "line_start": 1116,
+      "line_end": 1116,
+      "text": "3.4. Internet specific RRs",
+      "content_line_ranges": [
+        [
+          1116,
+          1116
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0037",
+      "section": "3.4.1. A RDATA format",
+      "line_start": 1118,
+      "line_end": 1144,
+      "text": "3.4.1. A RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                    ADDRESS                    |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nADDRESS         A 32 bit Internet address.\n\nHosts that have multiple Internet addresses will have multiple A\nrecords.\n\nMockapetris                                                    [Page 20]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nA records cause no additional section processing.  The RDATA section of\nan A line in a master file is an Internet address expressed as four\ndecimal numbers separated by dots without any imbedded spaces (e.g.,\n\"10.2.0.52\" or \"192.0.5.6\").",
+      "content_line_ranges": [
+        [
+          1118,
+          1118
+        ],
+        [
+          1120,
+          1122
+        ],
+        [
+          1124,
+          1124
+        ],
+        [
+          1126,
+          1126
+        ],
+        [
+          1128,
+          1129
+        ],
+        [
+          1135,
+          1135
+        ],
+        [
+          1138,
+          1138
+        ],
+        [
+          1141,
+          1144
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0038",
+      "section": "3.4.2. WKS RDATA format",
+      "line_start": 1146,
+      "line_end": 1195,
+      "text": "3.4.2. WKS RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                    ADDRESS                    |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |       PROTOCOL        |                       |\n    +--+--+--+--+--+--+--+--+                       |\n    |                                               |\n    /                   <BIT MAP>                   /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nADDRESS         An 32 bit Internet address\n\nPROTOCOL        An 8 bit IP protocol number\n\n<BIT MAP>       A variable length bit map.  The bit map must be a\n                multiple of 8 bits long.\n\nThe WKS record is used to describe the well known services supported by\na particular protocol on a particular internet address.  The PROTOCOL\nfield specifies an IP protocol number, and the bit map has one bit per\nport of the specified protocol.  The first bit corresponds to port 0,\nthe second to port 1, etc.  If the bit map does not include a bit for a\nprotocol of interest, that bit is assumed zero.  The appropriate values\nand mnemonics for ports and protocols are specified in [RFC-1010].\n\nFor example, if PROTOCOL=TCP (6), the 26th bit corresponds to TCP port\n25 (SMTP).  If this bit is set, a SMTP server should be listening on TCP\nport 25; if zero, SMTP service is not supported on the specified\naddress.\n\nThe purpose of WKS RRs is to provide availability information for\nservers for TCP and UDP.  If a server supports both TCP and UDP, or has\nmultiple Internet addresses, then multiple WKS RRs are used.\n\nWKS RRs cause no additional section processing.\n\nIn master files, both ports and protocols are expressed using mnemonics\nor decimal numbers.\n\nMockapetris                                                    [Page 21]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          1146,
+          1146
+        ],
+        [
+          1148,
+          1156
+        ],
+        [
+          1158,
+          1158
+        ],
+        [
+          1160,
+          1160
+        ],
+        [
+          1162,
+          1162
+        ],
+        [
+          1164,
+          1165
+        ],
+        [
+          1167,
+          1173
+        ],
+        [
+          1175,
+          1178
+        ],
+        [
+          1180,
+          1182
+        ],
+        [
+          1184,
+          1184
+        ],
+        [
+          1186,
+          1187
+        ],
+        [
+          1192,
+          1192
+        ],
+        [
+          1195,
+          1195
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0039",
+      "section": "3.5. IN-ADDR.ARPA domain",
+      "line_start": 1198,
+      "line_end": 1309,
+      "text": "3.5. IN-ADDR.ARPA domain\n\nThe Internet uses a special domain to support gateway location and\nInternet address to host mapping.  Other classes may employ a similar\nstrategy in other domains.  The intent of this domain is to provide a\nguaranteed method to perform host address to host name mapping, and to\nfacilitate queries to locate all gateways on a particular network in the\nInternet.\n\nNote that both of these services are similar to functions that could be\nperformed by inverse queries; the difference is that this part of the\ndomain name space is structured according to address, and hence can\nguarantee that the appropriate data can be located without an exhaustive\nsearch of the domain space.\n\nThe domain begins at IN-ADDR.ARPA and has a substructure which follows\nthe Internet addressing structure.\n\nDomain names in the IN-ADDR.ARPA domain are defined to have up to four\nlabels in addition to the IN-ADDR.ARPA suffix.  Each label represents\none octet of an Internet address, and is expressed as a character string\nfor a decimal value in the range 0-255 (with leading zeros omitted\nexcept in the case of a zero octet which is represented by a single\nzero).\n\nHost addresses are represented by domain names that have all four labels\nspecified.  Thus data for Internet address 10.2.0.52 is located at\ndomain name 52.0.2.10.IN-ADDR.ARPA.  The reversal, though awkward to\nread, allows zones to be delegated which are exactly one network of\naddress space.  For example, 10.IN-ADDR.ARPA can be a zone containing\ndata for the ARPANET, while 26.IN-ADDR.ARPA can be a separate zone for\nMILNET.  Address nodes are used to hold pointers to primary host names\nin the normal domain space.\n\nNetwork numbers correspond to some non-terminal nodes at various depths\nin the IN-ADDR.ARPA domain, since Internet network numbers are either 1,\n2, or 3 octets.  Network nodes are used to hold pointers to the primary\nhost names of gateways attached to that network.  Since a gateway is, by\ndefinition, on more than one network, it will typically have two or more\nnetwork nodes which point at it.  Gateways will also have host level\npointers at their fully qualified addresses.\n\nBoth the gateway pointers at network nodes and the normal host pointers\nat full address nodes use the PTR RR to point back to the primary domain\nnames of the corresponding hosts.\n\nFor example, the IN-ADDR.ARPA domain will contain information about the\nISI gateway between net 10 and 26, an MIT gateway from net 10 to MIT's\n\nMockapetris                                                    [Page 22]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nnet 18, and hosts A.ISI.EDU and MULTICS.MIT.EDU.  Assuming that ISI\ngateway has addresses 10.2.0.22 and 26.0.0.103, and a name MILNET-\nGW.ISI.EDU, and the MIT gateway has addresses 10.0.0.77 and 18.10.0.4\nand a name GW.LCS.MIT.EDU, the domain database would contain:\n\n    10.IN-ADDR.ARPA.           PTR MILNET-GW.ISI.EDU.\n    10.IN-ADDR.ARPA.           PTR GW.LCS.MIT.EDU.\n    18.IN-ADDR.ARPA.           PTR GW.LCS.MIT.EDU.\n    26.IN-ADDR.ARPA.           PTR MILNET-GW.ISI.EDU.\n    22.0.2.10.IN-ADDR.ARPA.    PTR MILNET-GW.ISI.EDU.\n    103.0.0.26.IN-ADDR.ARPA.   PTR MILNET-GW.ISI.EDU.\n    77.0.0.10.IN-ADDR.ARPA.    PTR GW.LCS.MIT.EDU.\n    4.0.10.18.IN-ADDR.ARPA.    PTR GW.LCS.MIT.EDU.\n    103.0.3.26.IN-ADDR.ARPA.   PTR A.ISI.EDU.\n    6.0.0.10.IN-ADDR.ARPA.     PTR MULTICS.MIT.EDU.\n\nThus a program which wanted to locate gateways on net 10 would originate\na query of the form QTYPE=PTR, QCLASS=IN, QNAME=10.IN-ADDR.ARPA.  It\nwould receive two RRs in response:\n\n    10.IN-ADDR.ARPA.           PTR MILNET-GW.ISI.EDU.\n    10.IN-ADDR.ARPA.           PTR GW.LCS.MIT.EDU.\n\nThe program could then originate QTYPE=A, QCLASS=IN queries for MILNET-\nGW.ISI.EDU. and GW.LCS.MIT.EDU. to discover the Internet addresses of\nthese gateways.\n\nA resolver which wanted to find the host name corresponding to Internet\nhost address 10.0.0.6 would pursue a query of the form QTYPE=PTR,\nQCLASS=IN, QNAME=6.0.0.10.IN-ADDR.ARPA, and would receive:\n\n    6.0.0.10.IN-ADDR.ARPA.     PTR MULTICS.MIT.EDU.\n\nSeveral cautions apply to the use of these services:\n   - Since the IN-ADDR.ARPA special domain and the normal domain\n     for a particular host or gateway will be in different zones,\n     the possibility exists that that the data may be inconsistent.\n\n   - Gateways will often have two names in separate domains, only\n     one of which can be primary.\n\n   - Systems that use the domain database to initialize their\n     routing tables must start with enough gateway information to\n     guarantee that they can access the appropriate name server.\n\n   - The gateway data only reflects the existence of a gateway in a\n     manner equivalent to the current HOSTS.TXT file.  It doesn't\n     replace the dynamic availability information from GGP or EGP.\n\nMockapetris                                                    [Page 23]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          1198,
+          1198
+        ],
+        [
+          1200,
+          1205
+        ],
+        [
+          1207,
+          1211
+        ],
+        [
+          1213,
+          1214
+        ],
+        [
+          1216,
+          1221
+        ],
+        [
+          1223,
+          1230
+        ],
+        [
+          1232,
+          1238
+        ],
+        [
+          1240,
+          1242
+        ],
+        [
+          1244,
+          1245
+        ],
+        [
+          1249,
+          1249
+        ],
+        [
+          1252,
+          1252
+        ],
+        [
+          1255,
+          1258
+        ],
+        [
+          1260,
+          1269
+        ],
+        [
+          1271,
+          1273
+        ],
+        [
+          1275,
+          1276
+        ],
+        [
+          1278,
+          1280
+        ],
+        [
+          1282,
+          1284
+        ],
+        [
+          1286,
+          1286
+        ],
+        [
+          1288,
+          1291
+        ],
+        [
+          1293,
+          1294
+        ],
+        [
+          1296,
+          1298
+        ],
+        [
+          1300,
+          1302
+        ],
+        [
+          1306,
+          1306
+        ],
+        [
+          1309,
+          1309
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0040",
+      "section": "3.6. Defining new types, classes, and special namespaces",
+      "line_start": 1312,
+      "line_end": 1371,
+      "text": "3.6. Defining new types, classes, and special namespaces\n\nThe previously defined types and classes are the ones in use as of the\ndate of this memo.  New definitions should be expected.  This section\nmakes some recommendations to designers considering additions to the\nexisting facilities.  The mailing list NAMEDROPPERS@SRI-NIC.ARPA is the\nforum where general discussion of design issues takes place.\n\nIn general, a new type is appropriate when new information is to be\nadded to the database about an existing object, or we need new data\nformats for some totally new object.  Designers should attempt to define\ntypes and their RDATA formats that are generally applicable to all\nclasses, and which avoid duplication of information.  New classes are\nappropriate when the DNS is to be used for a new protocol, etc which\nrequires new class-specific data formats, or when a copy of the existing\nname space is desired, but a separate management domain is necessary.\n\nNew types and classes need mnemonics for master files; the format of the\nmaster files requires that the mnemonics for type and class be disjoint.\n\nTYPE and CLASS values must be a proper subset of QTYPEs and QCLASSes\nrespectively.\n\nThe present system uses multiple RRs to represent multiple values of a\ntype rather than storing multiple values in the RDATA section of a\nsingle RR.  This is less efficient for most applications, but does keep\nRRs shorter.  The multiple RRs assumption is incorporated in some\nexperimental work on dynamic update methods.\n\nThe present system attempts to minimize the duplication of data in the\ndatabase in order to insure consistency.  Thus, in order to find the\naddress of the host for a mail exchange, you map the mail domain name to\na host name, then the host name to addresses, rather than a direct\nmapping to host address.  This approach is preferred because it avoids\nthe opportunity for inconsistency.\n\nIn defining a new type of data, multiple RR types should not be used to\ncreate an ordering between entries or express different formats for\nequivalent bindings, instead this information should be carried in the\nbody of the RR and a single type used.  This policy avoids problems with\ncaching multiple types and defining QTYPEs to match multiple types.\n\nFor example, the original form of mail exchange binding used two RR\ntypes one to represent a \"closer\" exchange (MD) and one to represent a\n\"less close\" exchange (MF).  The difficulty is that the presence of one\nRR type in a cache doesn't convey any information about the other\nbecause the query which acquired the cached information might have used\na QTYPE of MF, MD, or MAILA (which matched both).  The redesigned\n\nMockapetris                                                    [Page 24]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nservice used a single type (MX) with a \"preference\" value in the RDATA\nsection which can order different RRs.  However, if any MX RRs are found\nin the cache, then all should be there.",
+      "content_line_ranges": [
+        [
+          1312,
+          1312
+        ],
+        [
+          1314,
+          1318
+        ],
+        [
+          1320,
+          1327
+        ],
+        [
+          1329,
+          1330
+        ],
+        [
+          1332,
+          1333
+        ],
+        [
+          1335,
+          1339
+        ],
+        [
+          1341,
+          1346
+        ],
+        [
+          1348,
+          1352
+        ],
+        [
+          1354,
+          1359
+        ],
+        [
+          1363,
+          1363
+        ],
+        [
+          1366,
+          1366
+        ],
+        [
+          1369,
+          1371
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0041",
+      "section": "4. MESSAGES",
+      "line_start": 1373,
+      "line_end": 1373,
+      "text": "4. MESSAGES",
+      "content_line_ranges": [
+        [
+          1373,
+          1373
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0042",
+      "section": "4.1. Format",
+      "line_start": 1375,
+      "line_end": 1423,
+      "text": "4.1. Format\n\nAll communications inside of the domain protocol are carried in a single\nformat called a message.  The top level format of message is divided\ninto 5 sections (some of which are empty in certain cases) shown below:\n\n    +---------------------+\n    |        Header       |\n    +---------------------+\n    |       Question      | the question for the name server\n    +---------------------+\n    |        Answer       | RRs answering the question\n    +---------------------+\n    |      Authority      | RRs pointing toward an authority\n    +---------------------+\n    |      Additional     | RRs holding additional information\n    +---------------------+\n\nThe header section is always present.  The header includes fields that\nspecify which of the remaining sections are present, and also specify\nwhether the message is a query or a response, a standard query or some\nother opcode, etc.\n\nThe names of the sections after the header are derived from their use in\nstandard queries.  The question section contains fields that describe a\nquestion to a name server.  These fields are a query type (QTYPE), a\nquery class (QCLASS), and a query domain name (QNAME).  The last three\nsections have the same format: a possibly empty list of concatenated\nresource records (RRs).  The answer section contains RRs that answer the\nquestion; the authority section contains RRs that point toward an\nauthoritative name server; the additional records section contains RRs\nwhich relate to the query, but are not strictly answers for the\nquestion.\n\nMockapetris                                                    [Page 25]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          1375,
+          1375
+        ],
+        [
+          1377,
+          1379
+        ],
+        [
+          1381,
+          1391
+        ],
+        [
+          1393,
+          1396
+        ],
+        [
+          1398,
+          1407
+        ],
+        [
+          1420,
+          1420
+        ],
+        [
+          1423,
+          1423
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0043",
+      "section": "4.1.1. Header section format",
+      "line_start": 1426,
+      "line_end": 1555,
+      "text": "4.1.1. Header section format\n\nThe header contains the following fields:\n\n                                    1  1  1  1  1  1\n      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                      ID                       |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |QR|   Opcode  |AA|TC|RD|RA|   Z    |   RCODE   |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                    QDCOUNT                    |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                    ANCOUNT                    |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                    NSCOUNT                    |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                    ARCOUNT                    |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nID              A 16 bit identifier assigned by the program that\n                generates any kind of query.  This identifier is copied\n                the corresponding reply and can be used by the requester\n                to match up replies to outstanding queries.\n\nQR              A one bit field that specifies whether this message is a\n                query (0), or a response (1).\n\nOPCODE          A four bit field that specifies kind of query in this\n                message.  This value is set by the originator of a query\n                and copied into the response.  The values are:\n\n                0               a standard query (QUERY)\n\n                1               an inverse query (IQUERY)\n\n                2               a server status request (STATUS)\n\n                3-15            reserved for future use\n\nAA              Authoritative Answer - this bit is valid in responses,\n                and specifies that the responding name server is an\n                authority for the domain name in question section.\n\n                Note that the contents of the answer section may have\n                multiple owner names because of aliases.  The AA bit\n\nMockapetris                                                    [Page 26]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n                corresponds to the name which matches the query name, or\n                the first owner name in the answer section.\n\nTC              TrunCation - specifies that this message was truncated\n                due to length greater than that permitted on the\n                transmission channel.\n\nRD              Recursion Desired - this bit may be set in a query and\n                is copied into the response.  If RD is set, it directs\n                the name server to pursue the query recursively.\n                Recursive query support is optional.\n\nRA              Recursion Available - this be is set or cleared in a\n                response, and denotes whether recursive query support is\n                available in the name server.\n\nZ               Reserved for future use.  Must be zero in all queries\n                and responses.\n\nRCODE           Response code - this 4 bit field is set as part of\n                responses.  The values have the following\n                interpretation:\n\n                0               No error condition\n\n                1               Format error - The name server was\n                                unable to interpret the query.\n\n                2               Server failure - The name server was\n                                unable to process this query due to a\n                                problem with the name server.\n\n                3               Name Error - Meaningful only for\n                                responses from an authoritative name\n                                server, this code signifies that the\n                                domain name referenced in the query does\n                                not exist.\n\n                4               Not Implemented - The name server does\n                                not support the requested kind of query.\n\n                5               Refused - The name server refuses to\n                                perform the specified operation for\n                                policy reasons.  For example, a name\n                                server may not wish to provide the\n                                information to the particular requester,\n                                or a name server may not wish to perform\n                                a particular operation (e.g., zone\n\nMockapetris                                                    [Page 27]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n                                transfer) for particular data.\n\n                6-15            Reserved for future use.\n\nQDCOUNT         an unsigned 16 bit integer specifying the number of\n                entries in the question section.\n\nANCOUNT         an unsigned 16 bit integer specifying the number of\n                resource records in the answer section.\n\nNSCOUNT         an unsigned 16 bit integer specifying the number of name\n                server resource records in the authority records\n                section.\n\nARCOUNT         an unsigned 16 bit integer specifying the number of\n                resource records in the additional records section.",
+      "content_line_ranges": [
+        [
+          1426,
+          1426
+        ],
+        [
+          1428,
+          1428
+        ],
+        [
+          1430,
+          1444
+        ],
+        [
+          1446,
+          1446
+        ],
+        [
+          1448,
+          1451
+        ],
+        [
+          1453,
+          1454
+        ],
+        [
+          1456,
+          1458
+        ],
+        [
+          1460,
+          1460
+        ],
+        [
+          1462,
+          1462
+        ],
+        [
+          1464,
+          1464
+        ],
+        [
+          1466,
+          1466
+        ],
+        [
+          1468,
+          1470
+        ],
+        [
+          1472,
+          1473
+        ],
+        [
+          1477,
+          1477
+        ],
+        [
+          1480,
+          1480
+        ],
+        [
+          1483,
+          1484
+        ],
+        [
+          1486,
+          1488
+        ],
+        [
+          1490,
+          1493
+        ],
+        [
+          1495,
+          1497
+        ],
+        [
+          1499,
+          1500
+        ],
+        [
+          1502,
+          1504
+        ],
+        [
+          1506,
+          1506
+        ],
+        [
+          1508,
+          1509
+        ],
+        [
+          1511,
+          1513
+        ],
+        [
+          1515,
+          1519
+        ],
+        [
+          1521,
+          1522
+        ],
+        [
+          1524,
+          1530
+        ],
+        [
+          1534,
+          1534
+        ],
+        [
+          1537,
+          1537
+        ],
+        [
+          1540,
+          1540
+        ],
+        [
+          1542,
+          1542
+        ],
+        [
+          1544,
+          1545
+        ],
+        [
+          1547,
+          1548
+        ],
+        [
+          1550,
+          1552
+        ],
+        [
+          1554,
+          1555
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0044",
+      "section": "4.1.2. Question section format",
+      "line_start": 1557,
+      "line_end": 1598,
+      "text": "4.1.2. Question section format\n\nThe question section is used to carry the \"question\" in most queries,\ni.e., the parameters that define what is being asked.  The section\ncontains QDCOUNT (usually 1) entries, each of the following format:\n\n                                    1  1  1  1  1  1\n      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                                               |\n    /                     QNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                     QTYPE                     |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                     QCLASS                    |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nQNAME           a domain name represented as a sequence of labels, where\n                each label consists of a length octet followed by that\n                number of octets.  The domain name terminates with the\n                zero length octet for the null label of the root.  Note\n                that this field may be an odd number of octets; no\n                padding is used.\n\nQTYPE           a two octet code which specifies the type of the query.\n                The values for this field include all codes valid for a\n                TYPE field, together with some more general codes which\n                can match more than one type of RR.\n\nMockapetris                                                    [Page 28]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nQCLASS          a two octet code that specifies the class of the query.\n                For example, the QCLASS field is IN for the Internet.",
+      "content_line_ranges": [
+        [
+          1557,
+          1557
+        ],
+        [
+          1559,
+          1561
+        ],
+        [
+          1563,
+          1573
+        ],
+        [
+          1575,
+          1575
+        ],
+        [
+          1577,
+          1582
+        ],
+        [
+          1584,
+          1587
+        ],
+        [
+          1591,
+          1591
+        ],
+        [
+          1594,
+          1594
+        ],
+        [
+          1597,
+          1598
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0045",
+      "section": "4.1.3. Resource record format",
+      "line_start": 1600,
+      "line_end": 1661,
+      "text": "4.1.3. Resource record format\n\nThe answer, authority, and additional sections all share the same\nformat: a variable number of resource records, where the number of\nrecords is specified in the corresponding count field in the header.\nEach resource record has the following format:\n                                    1  1  1  1  1  1\n      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                                               |\n    /                                               /\n    /                      NAME                     /\n    |                                               |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                      TYPE                     |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                     CLASS                     |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                      TTL                      |\n    |                                               |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                   RDLENGTH                    |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|\n    /                     RDATA                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nNAME            a domain name to which this resource record pertains.\n\nTYPE            two octets containing one of the RR type codes.  This\n                field specifies the meaning of the data in the RDATA\n                field.\n\nCLASS           two octets which specify the class of the data in the\n                RDATA field.\n\nTTL             a 32 bit unsigned integer that specifies the time\n                interval (in seconds) that the resource record may be\n                cached before it should be discarded.  Zero values are\n                interpreted to mean that the RR can only be used for the\n                transaction in progress, and should not be cached.\n\nMockapetris                                                    [Page 29]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nRDLENGTH        an unsigned 16 bit integer that specifies the length in\n                octets of the RDATA field.\n\nRDATA           a variable length string of octets that describes the\n                resource.  The format of this information varies\n                according to the TYPE and CLASS of the resource record.\n                For example, the if the TYPE is A and the CLASS is IN,\n                the RDATA field is a 4 octet ARPA Internet address.",
+      "content_line_ranges": [
+        [
+          1600,
+          1600
+        ],
+        [
+          1602,
+          1625
+        ],
+        [
+          1627,
+          1627
+        ],
+        [
+          1629,
+          1629
+        ],
+        [
+          1631,
+          1633
+        ],
+        [
+          1635,
+          1636
+        ],
+        [
+          1638,
+          1642
+        ],
+        [
+          1648,
+          1648
+        ],
+        [
+          1651,
+          1651
+        ],
+        [
+          1654,
+          1655
+        ],
+        [
+          1657,
+          1661
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0046",
+      "section": "4.1.4. Message compression",
+      "line_start": 1663,
+      "line_end": 1769,
+      "text": "4.1.4. Message compression\n\nIn order to reduce the size of messages, the domain system utilizes a\ncompression scheme which eliminates the repetition of domain names in a\nmessage.  In this scheme, an entire domain name or a list of labels at\nthe end of a domain name is replaced with a pointer to a prior occurance\nof the same name.\n\nThe pointer takes the form of a two octet sequence:\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    | 1  1|                OFFSET                   |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nThe first two bits are ones.  This allows a pointer to be distinguished\nfrom a label, since the label must begin with two zero bits because\nlabels are restricted to 63 octets or less.  (The 10 and 01 combinations\nare reserved for future use.)  The OFFSET field specifies an offset from\nthe start of the message (i.e., the first octet of the ID field in the\ndomain header).  A zero offset specifies the first byte of the ID field,\netc.\n\nThe compression scheme allows a domain name in a message to be\nrepresented as either:\n\n   - a sequence of labels ending in a zero octet\n\n   - a pointer\n\n   - a sequence of labels ending with a pointer\n\nPointers can only be used for occurances of a domain name where the\nformat is not class specific.  If this were not the case, a name server\nor resolver would be required to know the format of all RRs it handled.\nAs yet, there are no such cases, but they may occur in future RDATA\nformats.\n\nIf a domain name is contained in a part of the message subject to a\nlength field (such as the RDATA section of an RR), and compression is\n\nMockapetris                                                    [Page 30]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nused, the length of the compressed name is used in the length\ncalculation, rather than the length of the expanded name.\n\nPrograms are free to avoid using pointers in messages they generate,\nalthough this will reduce datagram capacity, and may cause truncation.\nHowever all programs are required to understand arriving messages that\ncontain pointers.\n\nFor example, a datagram might need to use the domain names F.ISI.ARPA,\nFOO.F.ISI.ARPA, ARPA, and the root.  Ignoring the other fields of the\nmessage, these domain names might be represented as:\n\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    20 |           1           |           F           |\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    22 |           3           |           I           |\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    24 |           S           |           I           |\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    26 |           4           |           A           |\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    28 |           R           |           P           |\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    30 |           A           |           0           |\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    40 |           3           |           F           |\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    42 |           O           |           O           |\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    44 | 1  1|                20                       |\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    64 | 1  1|                26                       |\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    92 |           0           |                       |\n       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nThe domain name for F.ISI.ARPA is shown at offset 20.  The domain name\nFOO.F.ISI.ARPA is shown at offset 40; this definition uses a pointer to\nconcatenate a label for FOO to the previously defined F.ISI.ARPA.  The\ndomain name ARPA is defined at offset 64 using a pointer to the ARPA\ncomponent of the name F.ISI.ARPA at 20; note that this pointer relies on\nARPA being the last label in the string at 20.  The root domain name is\n\nMockapetris                                                    [Page 31]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\ndefined by a single octet of zeros at 92; the root domain name has no\nlabels.",
+      "content_line_ranges": [
+        [
+          1663,
+          1663
+        ],
+        [
+          1665,
+          1669
+        ],
+        [
+          1671,
+          1671
+        ],
+        [
+          1673,
+          1675
+        ],
+        [
+          1677,
+          1683
+        ],
+        [
+          1685,
+          1686
+        ],
+        [
+          1688,
+          1688
+        ],
+        [
+          1690,
+          1690
+        ],
+        [
+          1692,
+          1692
+        ],
+        [
+          1694,
+          1698
+        ],
+        [
+          1700,
+          1701
+        ],
+        [
+          1705,
+          1705
+        ],
+        [
+          1708,
+          1708
+        ],
+        [
+          1711,
+          1712
+        ],
+        [
+          1714,
+          1717
+        ],
+        [
+          1719,
+          1721
+        ],
+        [
+          1723,
+          1735
+        ],
+        [
+          1737,
+          1743
+        ],
+        [
+          1745,
+          1747
+        ],
+        [
+          1749,
+          1751
+        ],
+        [
+          1753,
+          1758
+        ],
+        [
+          1762,
+          1762
+        ],
+        [
+          1765,
+          1765
+        ],
+        [
+          1768,
+          1769
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0047",
+      "section": "4.2. Transport",
+      "line_start": 1771,
+      "line_end": 1781,
+      "text": "4.2. Transport\n\nThe DNS assumes that messages will be transmitted as datagrams or in a\nbyte stream carried by a virtual circuit.  While virtual circuits can be\nused for any DNS activity, datagrams are preferred for queries due to\ntheir lower overhead and better performance.  Zone refresh activities\nmust use virtual circuits because of the need for reliable transfer.\n\nThe Internet supports name server access using TCP [RFC-793] on server\nport 53 (decimal) as well as datagram access using UDP [RFC-768] on UDP\nport 53 (decimal).",
+      "content_line_ranges": [
+        [
+          1771,
+          1771
+        ],
+        [
+          1773,
+          1777
+        ],
+        [
+          1779,
+          1781
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0048",
+      "section": "4.2.1. UDP usage",
+      "line_start": 1783,
+      "line_end": 1810,
+      "text": "4.2.1. UDP usage\n\nMessages sent using UDP user server port 53 (decimal).\n\nMessages carried by UDP are restricted to 512 bytes (not counting the IP\nor UDP headers).  Longer messages are truncated and the TC bit is set in\nthe header.\n\nUDP is not acceptable for zone transfers, but is the recommended method\nfor standard queries in the Internet.  Queries sent using UDP may be\nlost, and hence a retransmission strategy is required.  Queries or their\nresponses may be reordered by the network, or by processing in name\nservers, so resolvers should not depend on them being returned in order.\n\nThe optimal UDP retransmission policy will vary with performance of the\nInternet and the needs of the client, but the following are recommended:\n\n   - The client should try other servers and server addresses\n     before repeating a query to a specific address of a server.\n\n   - The retransmission interval should be based on prior\n     statistics if possible.  Too aggressive retransmission can\n     easily slow responses for the community at large.  Depending\n     on how well connected the client is to its expected servers,\n     the minimum retransmission interval should be 2-5 seconds.\n\nMore suggestions on server selection and retransmission policy can be\nfound in the resolver section of this memo.",
+      "content_line_ranges": [
+        [
+          1783,
+          1783
+        ],
+        [
+          1785,
+          1785
+        ],
+        [
+          1787,
+          1789
+        ],
+        [
+          1791,
+          1795
+        ],
+        [
+          1797,
+          1798
+        ],
+        [
+          1800,
+          1801
+        ],
+        [
+          1803,
+          1807
+        ],
+        [
+          1809,
+          1810
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0049",
+      "section": "4.2.2. TCP usage",
+      "line_start": 1812,
+      "line_end": 1848,
+      "text": "4.2.2. TCP usage\n\nMessages sent over TCP connections use server port 53 (decimal).  The\nmessage is prefixed with a two byte length field which gives the message\n\nMockapetris                                                    [Page 32]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nlength, excluding the two byte length field.  This length field allows\nthe low-level processing to assemble a complete message before beginning\nto parse it.\n\nSeveral connection management policies are recommended:\n\n   - The server should not block other activities waiting for TCP\n     data.\n\n   - The server should support multiple connections.\n\n   - The server should assume that the client will initiate\n     connection closing, and should delay closing its end of the\n     connection until all outstanding client requests have been\n     satisfied.\n\n   - If the server needs to close a dormant connection to reclaim\n     resources, it should wait until the connection has been idle\n     for a period on the order of two minutes.  In particular, the\n     server should allow the SOA and AXFR request sequence (which\n     begins a refresh operation) to be made on a single connection.\n     Since the server would be unable to answer queries anyway, a\n     unilateral close or reset may be used instead of a graceful\n     close.",
+      "content_line_ranges": [
+        [
+          1812,
+          1812
+        ],
+        [
+          1814,
+          1815
+        ],
+        [
+          1819,
+          1819
+        ],
+        [
+          1822,
+          1822
+        ],
+        [
+          1825,
+          1827
+        ],
+        [
+          1829,
+          1829
+        ],
+        [
+          1831,
+          1832
+        ],
+        [
+          1834,
+          1834
+        ],
+        [
+          1836,
+          1839
+        ],
+        [
+          1841,
+          1848
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0050",
+      "section": "5. MASTER FILES",
+      "line_start": 1850,
+      "line_end": 1857,
+      "text": "5. MASTER FILES\n\nMaster files are text files that contain RRs in text form.  Since the\ncontents of a zone can be expressed in the form of a list of RRs a\nmaster file is most often used to define a zone, though it can be used\nto list a cache's contents.  Hence, this section first discusses the\nformat of RRs in a master file, and then the special considerations when\na master file is used to create a zone in some name server.",
+      "content_line_ranges": [
+        [
+          1850,
+          1850
+        ],
+        [
+          1852,
+          1857
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0051",
+      "section": "5.1. Format",
+      "line_start": 1859,
+      "line_end": 1966,
+      "text": "5.1. Format\n\nThe format of these files is a sequence of entries.  Entries are\npredominantly line-oriented, though parentheses can be used to continue\na list of items across a line boundary, and text literals can contain\nCRLF within the text.  Any combination of tabs and spaces act as a\ndelimiter between the separate items that make up an entry.  The end of\nany line in the master file can end with a comment.  The comment starts\nwith a \";\" (semicolon).\n\nThe following entries are defined:\n\n    <blank>[<comment>]\n\nMockapetris                                                    [Page 33]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n    $ORIGIN <domain-name> [<comment>]\n\n    $INCLUDE <file-name> [<domain-name>] [<comment>]\n\n    <domain-name><rr> [<comment>]\n\n    <blank><rr> [<comment>]\n\nBlank lines, with or without comments, are allowed anywhere in the file.\n\nTwo control entries are defined: $ORIGIN and $INCLUDE.  $ORIGIN is\nfollowed by a domain name, and resets the current origin for relative\ndomain names to the stated name.  $INCLUDE inserts the named file into\nthe current file, and may optionally specify a domain name that sets the\nrelative domain name origin for the included file.  $INCLUDE may also\nhave a comment.  Note that a $INCLUDE entry never changes the relative\norigin of the parent file, regardless of changes to the relative origin\nmade within the included file.\n\nThe last two forms represent RRs.  If an entry for an RR begins with a\nblank, then the RR is assumed to be owned by the last stated owner.  If\nan RR entry begins with a <domain-name>, then the owner name is reset.\n\n<rr> contents take one of the following forms:\n\n    [<TTL>] [<class>] <type> <RDATA>\n\n    [<class>] [<TTL>] <type> <RDATA>\n\nThe RR begins with optional TTL and class fields, followed by a type and\nRDATA field appropriate to the type and class.  Class and type use the\nstandard mnemonics, TTL is a decimal integer.  Omitted class and TTL\nvalues are default to the last explicitly stated values.  Since type and\nclass mnemonics are disjoint, the parse is unique.  (Note that this\norder is different from the order used in examples and the order used in\nthe actual RRs; the given order allows easier parsing and defaulting.)\n\n<domain-name>s make up a large share of the data in the master file.\nThe labels in the domain name are expressed as character strings and\nseparated by dots.  Quoting conventions allow arbitrary characters to be\nstored in domain names.  Domain names that end in a dot are called\nabsolute, and are taken as complete.  Domain names which do not end in a\ndot are called relative; the actual domain name is the concatenation of\nthe relative part with an origin specified in a $ORIGIN, $INCLUDE, or as\nan argument to the master file loading routine.  A relative name is an\nerror when no origin is available.\n\nMockapetris                                                    [Page 34]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n<character-string> is expressed in one or two ways: as a contiguous set\nof characters without interior spaces, or as a string beginning with a \"\nand ending with a \".  Inside a \" delimited string any character can\noccur, except for a \" itself, which must be quoted using \\ (back slash).\n\nBecause these files are text files several special encodings are\nnecessary to allow arbitrary data to be loaded.  In particular:\n\n                of the root.\n\n@               A free standing @ is used to denote the current origin.\n\n\\X              where X is any character other than a digit (0-9), is\n                used to quote that character so that its special meaning\n                does not apply.  For example, \"\\.\" can be used to place\n                a dot character in a label.\n\n\\DDD            where each D is a digit is the octet corresponding to\n                the decimal number described by DDD.  The resulting\n                octet is assumed to be text and is not checked for\n                special meaning.\n\n( )             Parentheses are used to group data that crosses a line\n                boundary.  In effect, line terminations are not\n                recognized within parentheses.\n\n;               Semicolon is used to start a comment; the remainder of\n                the line is ignored.",
+      "content_line_ranges": [
+        [
+          1859,
+          1859
+        ],
+        [
+          1861,
+          1867
+        ],
+        [
+          1869,
+          1869
+        ],
+        [
+          1871,
+          1871
+        ],
+        [
+          1876,
+          1876
+        ],
+        [
+          1879,
+          1879
+        ],
+        [
+          1882,
+          1882
+        ],
+        [
+          1884,
+          1884
+        ],
+        [
+          1886,
+          1886
+        ],
+        [
+          1888,
+          1888
+        ],
+        [
+          1890,
+          1890
+        ],
+        [
+          1892,
+          1899
+        ],
+        [
+          1901,
+          1903
+        ],
+        [
+          1905,
+          1905
+        ],
+        [
+          1907,
+          1907
+        ],
+        [
+          1909,
+          1909
+        ],
+        [
+          1911,
+          1917
+        ],
+        [
+          1919,
+          1927
+        ],
+        [
+          1933,
+          1933
+        ],
+        [
+          1936,
+          1936
+        ],
+        [
+          1939,
+          1942
+        ],
+        [
+          1944,
+          1945
+        ],
+        [
+          1947,
+          1947
+        ],
+        [
+          1949,
+          1949
+        ],
+        [
+          1951,
+          1954
+        ],
+        [
+          1956,
+          1959
+        ],
+        [
+          1961,
+          1963
+        ],
+        [
+          1965,
+          1966
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0052",
+      "section": "5.2. Use of master files to define zones",
+      "line_start": 1968,
+      "line_end": 1998,
+      "text": "5.2. Use of master files to define zones\n\nWhen a master file is used to load a zone, the operation should be\nsuppressed if any errors are encountered in the master file.  The\nrationale for this is that a single error can have widespread\nconsequences.  For example, suppose that the RRs defining a delegation\nhave syntax errors; then the server will return authoritative name\nerrors for all names in the subzone (except in the case where the\nsubzone is also present on the server).\n\nSeveral other validity checks that should be performed in addition to\ninsuring that the file is syntactically correct:\n\n   1. All RRs in the file should have the same class.\n\n   2. Exactly one SOA RR should be present at the top of the zone.\n\n   3. If delegations are present and glue information is required,\n      it should be present.\n\nMockapetris                                                    [Page 35]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n   4. Information present outside of the authoritative nodes in the\n      zone should be glue information, rather than the result of an\n      origin or similar error.",
+      "content_line_ranges": [
+        [
+          1968,
+          1968
+        ],
+        [
+          1970,
+          1976
+        ],
+        [
+          1978,
+          1979
+        ],
+        [
+          1981,
+          1981
+        ],
+        [
+          1983,
+          1983
+        ],
+        [
+          1985,
+          1986
+        ],
+        [
+          1990,
+          1990
+        ],
+        [
+          1993,
+          1993
+        ],
+        [
+          1996,
+          1998
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0053",
+      "section": "5.3. Master file example",
+      "line_start": 2000,
+      "line_end": 2050,
+      "text": "5.3. Master file example\n\nThe following is an example file which might be used to define the\nISI.EDU zone.and is loaded with an origin of ISI.EDU:\n\n@   IN  SOA     VENERA      Action\\.domains (\n                                 20     ; SERIAL\n                                 7200   ; REFRESH\n                                 600    ; RETRY\n                                 3600000; EXPIRE\n                                 60)    ; MINIMUM\n\n        NS      A.ISI.EDU.\n        NS      VENERA\n        NS      VAXA\n        MX      10      VENERA\n        MX      20      VAXA\n\nA       A       26.3.0.103\n\nVENERA  A       10.1.0.52\n        A       128.9.0.32\n\nVAXA    A       10.2.0.27\n        A       128.9.0.33\n\n$INCLUDE <SUBSYS>ISI-MAILBOXES.TXT\n\nWhere the file <SUBSYS>ISI-MAILBOXES.TXT is:\n\n    MOE     MB      A.ISI.EDU.\n    LARRY   MB      A.ISI.EDU.\n    CURLEY  MB      A.ISI.EDU.\n    STOOGES MG      MOE\n            MG      LARRY\n            MG      CURLEY\n\nNote the use of the \\ character in the SOA RR to specify the responsible\nperson mailbox \"Action.domains@E.ISI.EDU\".\n\nMockapetris                                                    [Page 36]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          2000,
+          2000
+        ],
+        [
+          2002,
+          2003
+        ],
+        [
+          2005,
+          2010
+        ],
+        [
+          2012,
+          2016
+        ],
+        [
+          2018,
+          2018
+        ],
+        [
+          2020,
+          2021
+        ],
+        [
+          2023,
+          2024
+        ],
+        [
+          2027,
+          2027
+        ],
+        [
+          2029,
+          2029
+        ],
+        [
+          2031,
+          2036
+        ],
+        [
+          2038,
+          2039
+        ],
+        [
+          2047,
+          2047
+        ],
+        [
+          2050,
+          2050
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0054",
+      "section": "6. NAME SERVER IMPLEMENTATION",
+      "line_start": 2053,
+      "line_end": 2053,
+      "text": "6. NAME SERVER IMPLEMENTATION",
+      "content_line_ranges": [
+        [
+          2053,
+          2053
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0055",
+      "section": "6.1. Architecture",
+      "line_start": 2055,
+      "line_end": 2062,
+      "text": "6.1. Architecture\n\nThe optimal structure for the name server will depend on the host\noperating system and whether the name server is integrated with resolver\noperations, either by supporting recursive service, or by sharing its\ndatabase with a resolver.  This section discusses implementation\nconsiderations for a name server which shares a database with a\nresolver, but most of these concerns are present in any name server.",
+      "content_line_ranges": [
+        [
+          2055,
+          2055
+        ],
+        [
+          2057,
+          2062
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0056",
+      "section": "6.1.1. Control",
+      "line_start": 2064,
+      "line_end": 2076,
+      "text": "6.1.1. Control\n\nA name server must employ multiple concurrent activities, whether they\nare implemented as separate tasks in the host's OS or multiplexing\ninside a single name server program.  It is simply not acceptable for a\nname server to block the service of UDP requests while it waits for TCP\ndata for refreshing or query activities.  Similarly, a name server\nshould not attempt to provide recursive service without processing such\nrequests in parallel, though it may choose to serialize requests from a\nsingle client, or to regard identical requests from the same client as\nduplicates.  A name server should not substantially delay requests while\nit reloads a zone from master files or while it incorporates a newly\nrefreshed zone into its database.",
+      "content_line_ranges": [
+        [
+          2064,
+          2064
+        ],
+        [
+          2066,
+          2076
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0057",
+      "section": "6.1.2. Database",
+      "line_start": 2078,
+      "line_end": 2168,
+      "text": "6.1.2. Database\n\nWhile name server implementations are free to use any internal data\nstructures they choose, the suggested structure consists of three major\nparts:\n\n   - A \"catalog\" data structure which lists the zones available to\n     this server, and a \"pointer\" to the zone data structure.  The\n     main purpose of this structure is to find the nearest ancestor\n     zone, if any, for arriving standard queries.\n\n   - Separate data structures for each of the zones held by the\n     name server.\n\n   - A data structure for cached data. (or perhaps separate caches\n     for different classes)\n\nAll of these data structures can be implemented an identical tree\nstructure format, with different data chained off the nodes in different\nparts: in the catalog the data is pointers to zones, while in the zone\nand cache data structures, the data will be RRs.  In designing the tree\nframework the designer should recognize that query processing will need\nto traverse the tree using case-insensitive label comparisons; and that\n\nMockapetris                                                    [Page 37]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nin real data, a few nodes have a very high branching factor (100-1000 or\nmore), but the vast majority have a very low branching factor (0-1).\n\nOne way to solve the case problem is to store the labels for each node\nin two pieces: a standardized-case representation of the label where all\nASCII characters are in a single case, together with a bit mask that\ndenotes which characters are actually of a different case.  The\nbranching factor diversity can be handled using a simple linked list for\na node until the branching factor exceeds some threshold, and\ntransitioning to a hash structure after the threshold is exceeded.  In\nany case, hash structures used to store tree sections must insure that\nhash functions and procedures preserve the casing conventions of the\nDNS.\n\nThe use of separate structures for the different parts of the database\nis motivated by several factors:\n\n   - The catalog structure can be an almost static structure that\n     need change only when the system administrator changes the\n     zones supported by the server.  This structure can also be\n     used to store parameters used to control refreshing\n     activities.\n\n   - The individual data structures for zones allow a zone to be\n     replaced simply by changing a pointer in the catalog.  Zone\n     refresh operations can build a new structure and, when\n     complete, splice it into the database via a simple pointer\n     replacement.  It is very important that when a zone is\n     refreshed, queries should not use old and new data\n     simultaneously.\n\n   - With the proper search procedures, authoritative data in zones\n     will always \"hide\", and hence take precedence over, cached\n     data.\n\n   - Errors in zone definitions that cause overlapping zones, etc.,\n     may cause erroneous responses to queries, but problem\n     determination is simplified, and the contents of one \"bad\"\n     zone can't corrupt another.\n\n   - Since the cache is most frequently updated, it is most\n     vulnerable to corruption during system restarts.  It can also\n     become full of expired RR data.  In either case, it can easily\n     be discarded without disturbing zone data.\n\nA major aspect of database design is selecting a structure which allows\nthe name server to deal with crashes of the name server's host.  State\ninformation which a name server should save across system crashes\n\nMockapetris                                                    [Page 38]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nincludes the catalog structure (including the state of refreshing for\neach zone) and the zone data itself.",
+      "content_line_ranges": [
+        [
+          2078,
+          2078
+        ],
+        [
+          2080,
+          2082
+        ],
+        [
+          2084,
+          2087
+        ],
+        [
+          2089,
+          2090
+        ],
+        [
+          2092,
+          2093
+        ],
+        [
+          2095,
+          2100
+        ],
+        [
+          2104,
+          2104
+        ],
+        [
+          2107,
+          2107
+        ],
+        [
+          2110,
+          2111
+        ],
+        [
+          2113,
+          2122
+        ],
+        [
+          2124,
+          2125
+        ],
+        [
+          2127,
+          2131
+        ],
+        [
+          2133,
+          2139
+        ],
+        [
+          2141,
+          2143
+        ],
+        [
+          2145,
+          2148
+        ],
+        [
+          2150,
+          2153
+        ],
+        [
+          2155,
+          2157
+        ],
+        [
+          2161,
+          2161
+        ],
+        [
+          2164,
+          2164
+        ],
+        [
+          2167,
+          2168
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0058",
+      "section": "6.1.3. Time",
+      "line_start": 2170,
+      "line_end": 2184,
+      "text": "6.1.3. Time\n\nBoth the TTL data for RRs and the timing data for refreshing activities\ndepends on 32 bit timers in units of seconds.  Inside the database,\nrefresh timers and TTLs for cached data conceptually \"count down\", while\ndata in the zone stays with constant TTLs.\n\nA recommended implementation strategy is to store time in two ways:  as\na relative increment and as an absolute time.  One way to do this is to\nuse positive 32 bit numbers for one type and negative numbers for the\nother.  The RRs in zones use relative times; the refresh timers and\ncache data use absolute times.  Absolute numbers are taken with respect\nto some known origin and converted to relative values when placed in the\nresponse to a query.  When an absolute TTL is negative after conversion\nto relative, then the data is expired and should be ignored.",
+      "content_line_ranges": [
+        [
+          2170,
+          2170
+        ],
+        [
+          2172,
+          2175
+        ],
+        [
+          2177,
+          2184
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0059",
+      "section": "6.2. Standard query processing",
+      "line_start": 2186,
+      "line_end": 2208,
+      "text": "6.2. Standard query processing\n\nThe major algorithm for standard query processing is presented in\n[RFC-1034].\n\nWhen processing queries with QCLASS=*, or some other QCLASS which\nmatches multiple classes, the response should never be authoritative\nunless the server can guarantee that the response covers all classes.\n\nWhen composing a response, RRs which are to be inserted in the\nadditional section, but duplicate RRs in the answer or authority\nsections, may be omitted from the additional section.\n\nWhen a response is so long that truncation is required, the truncation\nshould start at the end of the response and work forward in the\ndatagram.  Thus if there is any data for the authority section, the\nanswer section is guaranteed to be unique.\n\nThe MINIMUM value in the SOA should be used to set a floor on the TTL of\ndata distributed from a zone.  This floor function should be done when\nthe data is copied into a response.  This will allow future dynamic\nupdate protocols to change the SOA MINIMUM field without ambiguous\nsemantics.",
+      "content_line_ranges": [
+        [
+          2186,
+          2186
+        ],
+        [
+          2188,
+          2189
+        ],
+        [
+          2191,
+          2193
+        ],
+        [
+          2195,
+          2197
+        ],
+        [
+          2199,
+          2202
+        ],
+        [
+          2204,
+          2208
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0060",
+      "section": "6.3. Zone refresh and reload processing",
+      "line_start": 2210,
+      "line_end": 2230,
+      "text": "6.3. Zone refresh and reload processing\n\nIn spite of a server's best efforts, it may be unable to load zone data\nfrom a master file due to syntax errors, etc., or be unable to refresh a\nzone within the its expiration parameter.  In this case, the name server\n\nMockapetris                                                    [Page 39]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nshould answer queries as if it were not supposed to possess the zone.\n\nIf a master is sending a zone out via AXFR, and a new version is created\nduring the transfer, the master should continue to send the old version\nif possible.  In any case, it should never send part of one version and\npart of another.  If completion is not possible, the master should reset\nthe connection on which the zone transfer is taking place.",
+      "content_line_ranges": [
+        [
+          2210,
+          2210
+        ],
+        [
+          2212,
+          2214
+        ],
+        [
+          2218,
+          2218
+        ],
+        [
+          2221,
+          2221
+        ],
+        [
+          2224,
+          2224
+        ],
+        [
+          2226,
+          2230
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0061",
+      "section": "6.4. Inverse queries (Optional)",
+      "line_start": 2232,
+      "line_end": 2239,
+      "text": "6.4. Inverse queries (Optional)\n\nInverse queries are an optional part of the DNS.  Name servers are not\nrequired to support any form of inverse queries.  If a name server\nreceives an inverse query that it does not support, it returns an error\nresponse with the \"Not Implemented\" error set in the header.  While\ninverse query support is optional, all name servers must be at least\nable to return the error response.",
+      "content_line_ranges": [
+        [
+          2232,
+          2232
+        ],
+        [
+          2234,
+          2239
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0062",
+      "section": "6.4.1. The contents of inverse queries and responses          Inverse",
+      "line_start": 2241,
+      "line_end": 2294,
+      "text": "6.4.1. The contents of inverse queries and responses          Inverse\n\nqueries reverse the mappings performed by standard query operations;\nwhile a standard query maps a domain name to a resource, an inverse\nquery maps a resource to a domain name.  For example, a standard query\nmight bind a domain name to a host address; the corresponding inverse\nquery binds the host address to a domain name.\n\nInverse queries take the form of a single RR in the answer section of\nthe message, with an empty question section.  The owner name of the\nquery RR and its TTL are not significant.  The response carries\nquestions in the question section which identify all names possessing\nthe query RR WHICH THE NAME SERVER KNOWS.  Since no name server knows\nabout all of the domain name space, the response can never be assumed to\nbe complete.  Thus inverse queries are primarily useful for database\nmanagement and debugging activities.  Inverse queries are NOT an\nacceptable method of mapping host addresses to host names; use the IN-\nADDR.ARPA domain instead.\n\nWhere possible, name servers should provide case-insensitive comparisons\nfor inverse queries.  Thus an inverse query asking for an MX RR of\n\"Venera.isi.edu\" should get the same response as a query for\n\"VENERA.ISI.EDU\"; an inverse query for HINFO RR \"IBM-PC UNIX\" should\nproduce the same result as an inverse query for \"IBM-pc unix\".  However,\nthis cannot be guaranteed because name servers may possess RRs that\ncontain character strings but the name server does not know that the\ndata is character.\n\nWhen a name server processes an inverse query, it either returns:\n\n   1. zero, one, or multiple domain names for the specified\n      resource as QNAMEs in the question section\n\nMockapetris                                                    [Page 40]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n   2. an error code indicating that the name server doesn't support\n      inverse mapping of the specified resource type.\n\nWhen the response to an inverse query contains one or more QNAMEs, the\nowner name and TTL of the RR in the answer section which defines the\ninverse query is modified to exactly match an RR found at the first\nQNAME.\n\nRRs returned in the inverse queries cannot be cached using the same\nmechanism as is used for the replies to standard queries.  One reason\nfor this is that a name might have multiple RRs of the same type, and\nonly one would appear.  For example, an inverse query for a single\naddress of a multiply homed host might create the impression that only\none address existed.",
+      "content_line_ranges": [
+        [
+          2241,
+          2241
+        ],
+        [
+          2242,
+          2246
+        ],
+        [
+          2248,
+          2257
+        ],
+        [
+          2259,
+          2266
+        ],
+        [
+          2268,
+          2268
+        ],
+        [
+          2270,
+          2271
+        ],
+        [
+          2275,
+          2275
+        ],
+        [
+          2278,
+          2278
+        ],
+        [
+          2281,
+          2282
+        ],
+        [
+          2284,
+          2287
+        ],
+        [
+          2289,
+          2294
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0063",
+      "section": "6.4.2. Inverse query and response example          The overall structure",
+      "line_start": 2296,
+      "line_end": 2355,
+      "text": "6.4.2. Inverse query and response example          The overall structure\n\nof an inverse query for retrieving the domain name that corresponds to\nInternet address 10.1.0.52 is shown below:\n\n                         +-----------------------------------------+\n           Header        |          OPCODE=IQUERY, ID=997          |\n                         +-----------------------------------------+\n          Question       |                 <empty>                 |\n                         +-----------------------------------------+\n           Answer        |        <anyname> A IN 10.1.0.52         |\n                         +-----------------------------------------+\n          Authority      |                 <empty>                 |\n                         +-----------------------------------------+\n         Additional      |                 <empty>                 |\n                         +-----------------------------------------+\n\nThis query asks for a question whose answer is the Internet style\naddress 10.1.0.52.  Since the owner name is not known, any domain name\ncan be used as a placeholder (and is ignored).  A single octet of zero,\nsignifying the root, is usually used because it minimizes the length of\nthe message.  The TTL of the RR is not significant.  The response to\nthis query might be:\n\nMockapetris                                                    [Page 41]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n                         +-----------------------------------------+\n           Header        |         OPCODE=RESPONSE, ID=997         |\n                         +-----------------------------------------+\n          Question       |QTYPE=A, QCLASS=IN, QNAME=VENERA.ISI.EDU |\n                         +-----------------------------------------+\n           Answer        |  VENERA.ISI.EDU  A IN 10.1.0.52         |\n                         +-----------------------------------------+\n          Authority      |                 <empty>                 |\n                         +-----------------------------------------+\n         Additional      |                 <empty>                 |\n                         +-----------------------------------------+\n\nNote that the QTYPE in a response to an inverse query is the same as the\nTYPE field in the answer section of the inverse query.  Responses to\ninverse queries may contain multiple questions when the inverse is not\nunique.  If the question section in the response is not empty, then the\nRR in the answer section is modified to correspond to be an exact copy\nof an RR at the first QNAME.",
+      "content_line_ranges": [
+        [
+          2296,
+          2296
+        ],
+        [
+          2297,
+          2298
+        ],
+        [
+          2300,
+          2310
+        ],
+        [
+          2312,
+          2317
+        ],
+        [
+          2332,
+          2332
+        ],
+        [
+          2335,
+          2335
+        ],
+        [
+          2338,
+          2348
+        ],
+        [
+          2350,
+          2355
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0064",
+      "section": "6.4.3. Inverse query processing",
+      "line_start": 2357,
+      "line_end": 2370,
+      "text": "6.4.3. Inverse query processing\n\nName servers that support inverse queries can support these operations\nthrough exhaustive searches of their databases, but this becomes\nimpractical as the size of the database increases.  An alternative\napproach is to invert the database according to the search key.\n\nFor name servers that support multiple zones and a large amount of data,\nthe recommended approach is separate inversions for each zone.  When a\nparticular zone is changed during a refresh, only its inversions need to\nbe redone.\n\nSupport for transfer of this type of inversion may be included in future\nversions of the domain system, but is not supported in this version.",
+      "content_line_ranges": [
+        [
+          2357,
+          2357
+        ],
+        [
+          2359,
+          2362
+        ],
+        [
+          2364,
+          2367
+        ],
+        [
+          2369,
+          2370
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0065",
+      "section": "6.5. Completion queries and responses",
+      "line_start": 2372,
+      "line_end": 2392,
+      "text": "6.5. Completion queries and responses\n\nThe optional completion services described in RFC-882 and RFC-883 have\nbeen deleted.  Redesigned services may become available in the future.\n\nMockapetris                                                    [Page 42]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          2372,
+          2372
+        ],
+        [
+          2374,
+          2375
+        ],
+        [
+          2389,
+          2389
+        ],
+        [
+          2392,
+          2392
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0066",
+      "section": "7. RESOLVER IMPLEMENTATION",
+      "line_start": 2395,
+      "line_end": 2400,
+      "text": "7. RESOLVER IMPLEMENTATION\n\nThe top levels of the recommended resolver algorithm are discussed in\n[RFC-1034].  This section discusses implementation details assuming the\ndatabase structure suggested in the name server implementation section\nof this memo.",
+      "content_line_ranges": [
+        [
+          2395,
+          2395
+        ],
+        [
+          2397,
+          2400
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0067",
+      "section": "7.1. Transforming a user request into a query",
+      "line_start": 2402,
+      "line_end": 2473,
+      "text": "7.1. Transforming a user request into a query\n\nThe first step a resolver takes is to transform the client's request,\nstated in a format suitable to the local OS, into a search specification\nfor RRs at a specific name which match a specific QTYPE and QCLASS.\nWhere possible, the QTYPE and QCLASS should correspond to a single type\nand a single class, because this makes the use of cached data much\nsimpler.  The reason for this is that the presence of data of one type\nin a cache doesn't confirm the existence or non-existence of data of\nother types, hence the only way to be sure is to consult an\nauthoritative source.  If QCLASS=* is used, then authoritative answers\nwon't be available.\n\nSince a resolver must be able to multiplex multiple requests if it is to\nperform its function efficiently, each pending request is usually\nrepresented in some block of state information.  This state block will\ntypically contain:\n\n   - A timestamp indicating the time the request began.\n     The timestamp is used to decide whether RRs in the database\n     can be used or are out of date.  This timestamp uses the\n     absolute time format previously discussed for RR storage in\n     zones and caches.  Note that when an RRs TTL indicates a\n     relative time, the RR must be timely, since it is part of a\n     zone.  When the RR has an absolute time, it is part of a\n     cache, and the TTL of the RR is compared against the timestamp\n     for the start of the request.\n\n     Note that using the timestamp is superior to using a current\n     time, since it allows RRs with TTLs of zero to be entered in\n     the cache in the usual manner, but still used by the current\n     request, even after intervals of many seconds due to system\n     load, query retransmission timeouts, etc.\n\n   - Some sort of parameters to limit the amount of work which will\n     be performed for this request.\n\n     The amount of work which a resolver will do in response to a\n     client request must be limited to guard against errors in the\n     database, such as circular CNAME references, and operational\n     problems, such as network partition which prevents the\n\nMockapetris                                                    [Page 43]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n     resolver from accessing the name servers it needs.  While\n     local limits on the number of times a resolver will retransmit\n     a particular query to a particular name server address are\n     essential, the resolver should have a global per-request\n     counter to limit work on a single request.  The counter should\n     be set to some initial value and decremented whenever the\n     resolver performs any action (retransmission timeout,\n     retransmission, etc.)  If the counter passes zero, the request\n     is terminated with a temporary error.\n\n     Note that if the resolver structure allows one request to\n     start others in parallel, such as when the need to access a\n     name server for one request causes a parallel resolve for the\n     name server's addresses, the spawned request should be started\n     with a lower counter.  This prevents circular references in\n     the database from starting a chain reaction of resolver\n     activity.\n\n   - The SLIST data structure discussed in [RFC-1034].\n\n     This structure keeps track of the state of a request if it\n     must wait for answers from foreign name servers.",
+      "content_line_ranges": [
+        [
+          2402,
+          2402
+        ],
+        [
+          2404,
+          2413
+        ],
+        [
+          2415,
+          2418
+        ],
+        [
+          2420,
+          2428
+        ],
+        [
+          2430,
+          2434
+        ],
+        [
+          2436,
+          2437
+        ],
+        [
+          2439,
+          2442
+        ],
+        [
+          2446,
+          2446
+        ],
+        [
+          2449,
+          2449
+        ],
+        [
+          2452,
+          2460
+        ],
+        [
+          2462,
+          2468
+        ],
+        [
+          2470,
+          2470
+        ],
+        [
+          2472,
+          2473
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0068",
+      "section": "7.2. Sending the queries",
+      "line_start": 2475,
+      "line_end": 2569,
+      "text": "7.2. Sending the queries\n\nAs described in [RFC-1034], the basic task of the resolver is to\nformulate a query which will answer the client's request and direct that\nquery to name servers which can provide the information.  The resolver\nwill usually only have very strong hints about which servers to ask, in\nthe form of NS RRs, and may have to revise the query, in response to\nCNAMEs, or revise the set of name servers the resolver is asking, in\nresponse to delegation responses which point the resolver to name\nservers closer to the desired information.  In addition to the\ninformation requested by the client, the resolver may have to call upon\nits own services to determine the address of name servers it wishes to\ncontact.\n\nIn any case, the model used in this memo assumes that the resolver is\nmultiplexing attention between multiple requests, some from the client,\nand some internally generated.  Each request is represented by some\nstate information, and the desired behavior is that the resolver\ntransmit queries to name servers in a way that maximizes the probability\nthat the request is answered, minimizes the time that the request takes,\nand avoids excessive transmissions.  The key algorithm uses the state\ninformation of the request to select the next name server address to\nquery, and also computes a timeout which will cause the next action\nshould a response not arrive.  The next action will usually be a\ntransmission to some other server, but may be a temporary error to the\n\nMockapetris                                                    [Page 44]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nclient.\n\nThe resolver always starts with a list of server names to query (SLIST).\nThis list will be all NS RRs which correspond to the nearest ancestor\nzone that the resolver knows about.  To avoid startup problems, the\nresolver should have a set of default servers which it will ask should\nit have no current NS RRs which are appropriate.  The resolver then adds\nto SLIST all of the known addresses for the name servers, and may start\nparallel requests to acquire the addresses of the servers when the\nresolver has the name, but no addresses, for the name servers.\n\nTo complete initialization of SLIST, the resolver attaches whatever\nhistory information it has to the each address in SLIST.  This will\nusually consist of some sort of weighted averages for the response time\nof the address, and the batting average of the address (i.e., how often\nthe address responded at all to the request).  Note that this\ninformation should be kept on a per address basis, rather than on a per\nname server basis, because the response time and batting average of a\nparticular server may vary considerably from address to address.  Note\nalso that this information is actually specific to a resolver address /\nserver address pair, so a resolver with multiple addresses may wish to\nkeep separate histories for each of its addresses.  Part of this step\nmust deal with addresses which have no such history; in this case an\nexpected round trip time of 5-10 seconds should be the worst case, with\nlower estimates for the same local network, etc.\n\nNote that whenever a delegation is followed, the resolver algorithm\nreinitializes SLIST.\n\nThe information establishes a partial ranking of the available name\nserver addresses.  Each time an address is chosen and the state should\nbe altered to prevent its selection again until all other addresses have\nbeen tried.  The timeout for each transmission should be 50-100% greater\nthan the average predicted value to allow for variance in response.\n\nSome fine points:\n\n   - The resolver may encounter a situation where no addresses are\n     available for any of the name servers named in SLIST, and\n     where the servers in the list are precisely those which would\n     normally be used to look up their own addresses.  This\n     situation typically occurs when the glue address RRs have a\n     smaller TTL than the NS RRs marking delegation, or when the\n     resolver caches the result of a NS search.  The resolver\n     should detect this condition and restart the search at the\n     next ancestor zone, or alternatively at the root.\n\nMockapetris                                                    [Page 45]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n   - If a resolver gets a server error or other bizarre response\n     from a name server, it should remove it from SLIST, and may\n     wish to schedule an immediate transmission to the next\n     candidate server address.",
+      "content_line_ranges": [
+        [
+          2475,
+          2475
+        ],
+        [
+          2477,
+          2487
+        ],
+        [
+          2489,
+          2499
+        ],
+        [
+          2503,
+          2503
+        ],
+        [
+          2506,
+          2506
+        ],
+        [
+          2509,
+          2509
+        ],
+        [
+          2511,
+          2518
+        ],
+        [
+          2520,
+          2533
+        ],
+        [
+          2535,
+          2536
+        ],
+        [
+          2538,
+          2542
+        ],
+        [
+          2544,
+          2544
+        ],
+        [
+          2546,
+          2554
+        ],
+        [
+          2560,
+          2560
+        ],
+        [
+          2563,
+          2563
+        ],
+        [
+          2566,
+          2569
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0069",
+      "section": "7.3. Processing responses",
+      "line_start": 2571,
+      "line_end": 2620,
+      "text": "7.3. Processing responses\n\nThe first step in processing arriving response datagrams is to parse the\nresponse.  This procedure should include:\n\n   - Check the header for reasonableness.  Discard datagrams which\n     are queries when responses are expected.\n\n   - Parse the sections of the message, and insure that all RRs are\n     correctly formatted.\n\n   - As an optional step, check the TTLs of arriving data looking\n     for RRs with excessively long TTLs.  If a RR has an\n     excessively long TTL, say greater than 1 week, either discard\n     the whole response, or limit all TTLs in the response to 1\n     week.\n\nThe next step is to match the response to a current resolver request.\nThe recommended strategy is to do a preliminary matching using the ID\nfield in the domain header, and then to verify that the question section\ncorresponds to the information currently desired.  This requires that\nthe transmission algorithm devote several bits of the domain ID field to\na request identifier of some sort.  This step has several fine points:\n\n   - Some name servers send their responses from different\n     addresses than the one used to receive the query.  That is, a\n     resolver cannot rely that a response will come from the same\n     address which it sent the corresponding query to.  This name\n     server bug is typically encountered in UNIX systems.\n\n   - If the resolver retransmits a particular request to a name\n     server it should be able to use a response from any of the\n     transmissions.  However, if it is using the response to sample\n     the round trip time to access the name server, it must be able\n     to determine which transmission matches the response (and keep\n     transmission times for each outgoing message), or only\n     calculate round trip times based on initial transmissions.\n\n   - A name server will occasionally not have a current copy of a\n     zone which it should have according to some NS RRs.  The\n     resolver should simply remove the name server from the current\n     SLIST, and continue.\n\nMockapetris                                                    [Page 46]\n\nRFC 1035        Domain Implementation and Specification    November 1987",
+      "content_line_ranges": [
+        [
+          2571,
+          2571
+        ],
+        [
+          2573,
+          2574
+        ],
+        [
+          2576,
+          2577
+        ],
+        [
+          2579,
+          2580
+        ],
+        [
+          2582,
+          2586
+        ],
+        [
+          2588,
+          2593
+        ],
+        [
+          2595,
+          2599
+        ],
+        [
+          2601,
+          2607
+        ],
+        [
+          2609,
+          2612
+        ],
+        [
+          2617,
+          2617
+        ],
+        [
+          2620,
+          2620
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0070",
+      "section": "7.4. Using the cache",
+      "line_start": 2623,
+      "line_end": 2658,
+      "text": "7.4. Using the cache\n\nIn general, we expect a resolver to cache all data which it receives in\nresponses since it may be useful in answering future client requests.\nHowever, there are several types of data which should not be cached:\n\n   - When several RRs of the same type are available for a\n     particular owner name, the resolver should either cache them\n     all or none at all.  When a response is truncated, and a\n     resolver doesn't know whether it has a complete set, it should\n     not cache a possibly partial set of RRs.\n\n   - Cached data should never be used in preference to\n     authoritative data, so if caching would cause this to happen\n     the data should not be cached.\n\n   - The results of an inverse query should not be cached.\n\n   - The results of standard queries where the QNAME contains \"*\"\n     labels if the data might be used to construct wildcards.  The\n     reason is that the cache does not necessarily contain existing\n     RRs or zone boundary information which is necessary to\n     restrict the application of the wildcard RRs.\n\n   - RR data in responses of dubious reliability.  When a resolver\n     receives unsolicited responses or RR data other than that\n     requested, it should discard it without caching it.  The basic\n     implication is that all sanity checks on a packet should be\n     performed before any of it is cached.\n\nIn a similar vein, when a resolver has a set of RRs for some name in a\nresponse, and wants to cache the RRs, it should check its cache for\nalready existing RRs.  Depending on the circumstances, either the data\nin the response or the cache is preferred, but the two should never be\ncombined.  If the data in the response is from authoritative data in the\nanswer section, it is always preferred.",
+      "content_line_ranges": [
+        [
+          2623,
+          2623
+        ],
+        [
+          2625,
+          2627
+        ],
+        [
+          2629,
+          2633
+        ],
+        [
+          2635,
+          2637
+        ],
+        [
+          2639,
+          2639
+        ],
+        [
+          2641,
+          2645
+        ],
+        [
+          2647,
+          2651
+        ],
+        [
+          2653,
+          2658
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0071",
+      "section": "8. MAIL SUPPORT",
+      "line_start": 2660,
+      "line_end": 2694,
+      "text": "8. MAIL SUPPORT\n\nThe domain system defines a standard for mapping mailboxes into domain\nnames, and two methods for using the mailbox information to derive mail\nrouting information.  The first method is called mail exchange binding\nand the other method is mailbox binding.  The mailbox encoding standard\nand mail exchange binding are part of the DNS official protocol, and are\nthe recommended method for mail routing in the Internet.  Mailbox\nbinding is an experimental feature which is still under development and\nsubject to change.\n\nMockapetris                                                    [Page 47]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nThe mailbox encoding standard assumes a mailbox name of the form\n\"<local-part>@<mail-domain>\".  While the syntax allowed in each of these\nsections varies substantially between the various mail internets, the\npreferred syntax for the ARPA Internet is given in [RFC-822].\n\nThe DNS encodes the <local-part> as a single label, and encodes the\n<mail-domain> as a domain name.  The single label from the <local-part>\nis prefaced to the domain name from <mail-domain> to form the domain\nname corresponding to the mailbox.  Thus the mailbox HOSTMASTER@SRI-\nNIC.ARPA is mapped into the domain name HOSTMASTER.SRI-NIC.ARPA.  If the\n<local-part> contains dots or other special characters, its\nrepresentation in a master file will require the use of backslash\nquoting to ensure that the domain name is properly encoded.  For\nexample, the mailbox Action.domains@ISI.EDU would be represented as\nAction\\.domains.ISI.EDU.",
+      "content_line_ranges": [
+        [
+          2660,
+          2660
+        ],
+        [
+          2662,
+          2669
+        ],
+        [
+          2674,
+          2674
+        ],
+        [
+          2677,
+          2677
+        ],
+        [
+          2680,
+          2683
+        ],
+        [
+          2685,
+          2694
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0072",
+      "section": "8.1. Mail exchange binding",
+      "line_start": 2696,
+      "line_end": 2719,
+      "text": "8.1. Mail exchange binding\n\nMail exchange binding uses the <mail-domain> part of a mailbox\nspecification to determine where mail should be sent.  The <local-part>\nis not even consulted.  [RFC-974] specifies this method in detail, and\nshould be consulted before attempting to use mail exchange support.\n\nOne of the advantages of this method is that it decouples mail\ndestination naming from the hosts used to support mail service, at the\ncost of another layer of indirection in the lookup function.  However,\nthe addition layer should eliminate the need for complicated \"%\", \"!\",\netc encodings in <local-part>.\n\nThe essence of the method is that the <mail-domain> is used as a domain\nname to locate type MX RRs which list hosts willing to accept mail for\n<mail-domain>, together with preference values which rank the hosts\naccording to an order specified by the administrators for <mail-domain>.\n\nIn this memo, the <mail-domain> ISI.EDU is used in examples, together\nwith the hosts VENERA.ISI.EDU and VAXA.ISI.EDU as mail exchanges for\nISI.EDU.  If a mailer had a message for Mockapetris@ISI.EDU, it would\nroute it by looking up MX RRs for ISI.EDU.  The MX RRs at ISI.EDU name\nVENERA.ISI.EDU and VAXA.ISI.EDU, and type A queries can find the host\naddresses.",
+      "content_line_ranges": [
+        [
+          2696,
+          2696
+        ],
+        [
+          2698,
+          2701
+        ],
+        [
+          2703,
+          2707
+        ],
+        [
+          2709,
+          2712
+        ],
+        [
+          2714,
+          2719
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0073",
+      "section": "8.2. Mailbox binding (Experimental)",
+      "line_start": 2721,
+      "line_end": 2794,
+      "text": "8.2. Mailbox binding (Experimental)\n\nIn mailbox binding, the mailer uses the entire mail destination\nspecification to construct a domain name.  The encoded domain name for\nthe mailbox is used as the QNAME field in a QTYPE=MAILB query.\n\nSeveral outcomes are possible for this query:\n\nMockapetris                                                    [Page 48]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n   1. The query can return a name error indicating that the mailbox\n      does not exist as a domain name.\n\n      In the long term, this would indicate that the specified\n      mailbox doesn't exist.  However, until the use of mailbox\n      binding is universal, this error condition should be\n      interpreted to mean that the organization identified by the\n      global part does not support mailbox binding.  The\n      appropriate procedure is to revert to exchange binding at\n      this point.\n\n   2. The query can return a Mail Rename (MR) RR.\n\n      The MR RR carries new mailbox specification in its RDATA\n      field.  The mailer should replace the old mailbox with the\n      new one and retry the operation.\n\n   3. The query can return a MB RR.\n\n      The MB RR carries a domain name for a host in its RDATA\n      field.  The mailer should deliver the message to that host\n      via whatever protocol is applicable, e.g., b,SMTP.\n\n   4. The query can return one or more Mail Group (MG) RRs.\n\n      This condition means that the mailbox was actually a mailing\n      list or mail group, rather than a single mailbox.  Each MG RR\n      has a RDATA field that identifies a mailbox that is a member\n      of the group.  The mailer should deliver a copy of the\n      message to each member.\n\n   5. The query can return a MB RR as well as one or more MG RRs.\n\n      This condition means the the mailbox was actually a mailing\n      list.  The mailer can either deliver the message to the host\n      specified by the MB RR, which will in turn do the delivery to\n      all members, or the mailer can use the MG RRs to do the\n      expansion itself.\n\nIn any of these cases, the response may include a Mail Information\n(MINFO) RR.  This RR is usually associated with a mail group, but is\nlegal with a MB.  The MINFO RR identifies two mailboxes.  One of these\nidentifies a responsible person for the original mailbox name.  This\nmailbox should be used for requests to be added to a mail group, etc.\nThe second mailbox name in the MINFO RR identifies a mailbox that should\nreceive error messages for mail failures.  This is particularly\nappropriate for mailing lists when errors in member names should be\nreported to a person other than the one who sends a message to the list.\n\nMockapetris                                                    [Page 49]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nNew fields may be added to this RR in the future.",
+      "content_line_ranges": [
+        [
+          2721,
+          2721
+        ],
+        [
+          2723,
+          2725
+        ],
+        [
+          2727,
+          2727
+        ],
+        [
+          2731,
+          2731
+        ],
+        [
+          2734,
+          2734
+        ],
+        [
+          2737,
+          2738
+        ],
+        [
+          2740,
+          2746
+        ],
+        [
+          2748,
+          2748
+        ],
+        [
+          2750,
+          2752
+        ],
+        [
+          2754,
+          2754
+        ],
+        [
+          2756,
+          2758
+        ],
+        [
+          2760,
+          2760
+        ],
+        [
+          2762,
+          2766
+        ],
+        [
+          2768,
+          2768
+        ],
+        [
+          2770,
+          2774
+        ],
+        [
+          2776,
+          2784
+        ],
+        [
+          2788,
+          2788
+        ],
+        [
+          2791,
+          2791
+        ],
+        [
+          2794,
+          2794
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0074",
+      "section": "9. REFERENCES and BIBLIOGRAPHY",
+      "line_start": 2797,
+      "line_end": 2952,
+      "text": "9. REFERENCES and BIBLIOGRAPHY\n\n[Dyer 87]       S. Dyer, F. Hsu, \"Hesiod\", Project Athena\n                Technical Plan - Name Service, April 1987, version 1.9.\n\n                Describes the fundamentals of the Hesiod name service.\n\n[IEN-116]       J. Postel, \"Internet Name Server\", IEN-116,\n                USC/Information Sciences Institute, August 1979.\n\n                A name service obsoleted by the Domain Name System, but\n                still in use.\n\n[Quarterman 86] J. Quarterman, and J. Hoskins, \"Notable Computer Networks\",\n                Communications of the ACM, October 1986, volume 29, number\n                10.\n\n[RFC-742]       K. Harrenstien, \"NAME/FINGER\", RFC-742, Network\n                Information Center, SRI International, December 1977.\n\n[RFC-768]       J. Postel, \"User Datagram Protocol\", RFC-768,\n                USC/Information Sciences Institute, August 1980.\n\n[RFC-793]       J. Postel, \"Transmission Control Protocol\", RFC-793,\n                USC/Information Sciences Institute, September 1981.\n\n[RFC-799]       D. Mills, \"Internet Name Domains\", RFC-799, COMSAT,\n                September 1981.\n\n                Suggests introduction of a hierarchy in place of a flat\n                name space for the Internet.\n\n[RFC-805]       J. Postel, \"Computer Mail Meeting Notes\", RFC-805,\n                USC/Information Sciences Institute, February 1982.\n\n[RFC-810]       E. Feinler, K. Harrenstien, Z. Su, and V. White, \"DOD\n                Internet Host Table Specification\", RFC-810, Network\n                Information Center, SRI International, March 1982.\n\n                Obsolete.  See RFC-952.\n\n[RFC-811]       K. Harrenstien, V. White, and E. Feinler, \"Hostnames\n                Server\", RFC-811, Network Information Center, SRI\n                International, March 1982.\n\nMockapetris                                                    [Page 50]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n                Obsolete.  See RFC-953.\n\n[RFC-812]       K. Harrenstien, and V. White, \"NICNAME/WHOIS\", RFC-812,\n                Network Information Center, SRI International, March\n                1982.\n\n[RFC-819]       Z. Su, and J. Postel, \"The Domain Naming Convention for\n                Internet User Applications\", RFC-819, Network\n                Information Center, SRI International, August 1982.\n\n                Early thoughts on the design of the domain system.\n                Current implementation is completely different.\n\n[RFC-821]       J. Postel, \"Simple Mail Transfer Protocol\", RFC-821,\n                USC/Information Sciences Institute, August 1980.\n\n[RFC-830]       Z. Su, \"A Distributed System for Internet Name Service\",\n                RFC-830, Network Information Center, SRI International,\n                October 1982.\n\n                Early thoughts on the design of the domain system.\n                Current implementation is completely different.\n\n[RFC-882]       P. Mockapetris, \"Domain names - Concepts and\n                Facilities,\" RFC-882, USC/Information Sciences\n                Institute, November 1983.\n\n                Superceeded by this memo.\n\n[RFC-883]       P. Mockapetris, \"Domain names - Implementation and\n                Specification,\" RFC-883, USC/Information Sciences\n                Institute, November 1983.\n\n                Superceeded by this memo.\n\n[RFC-920]       J. Postel and J. Reynolds, \"Domain Requirements\",\n                RFC-920, USC/Information Sciences Institute,\n                October 1984.\n\n                Explains the naming scheme for top level domains.\n\n[RFC-952]       K. Harrenstien, M. Stahl, E. Feinler, \"DoD Internet Host\n                Table Specification\", RFC-952, SRI, October 1985.\n\n                Specifies the format of HOSTS.TXT, the host/address\n                table replaced by the DNS.\n\nMockapetris                                                    [Page 51]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n[RFC-953]       K. Harrenstien, M. Stahl, E. Feinler, \"HOSTNAME Server\",\n                RFC-953, SRI, October 1985.\n\n                This RFC contains the official specification of the\n                hostname server protocol, which is obsoleted by the DNS.\n                This TCP based protocol accesses information stored in\n                the RFC-952 format, and is used to obtain copies of the\n                host table.\n\n[RFC-973]       P. Mockapetris, \"Domain System Changes and\n                Observations\", RFC-973, USC/Information Sciences\n                Institute, January 1986.\n\n                Describes changes to RFC-882 and RFC-883 and reasons for\n                them.\n\n[RFC-974]       C. Partridge, \"Mail routing and the domain system\",\n                RFC-974, CSNET CIC BBN Labs, January 1986.\n\n                Describes the transition from HOSTS.TXT based mail\n                addressing to the more powerful MX system used with the\n                domain system.\n\n[RFC-1001]      NetBIOS Working Group, \"Protocol standard for a NetBIOS\n                service on a TCP/UDP transport: Concepts and Methods\",\n                RFC-1001, March 1987.\n\n                This RFC and RFC-1002 are a preliminary design for\n                NETBIOS on top of TCP/IP which proposes to base NetBIOS\n                name service on top of the DNS.\n\n[RFC-1002]      NetBIOS Working Group, \"Protocol standard for a NetBIOS\n                service on a TCP/UDP transport: Detailed\n                Specifications\", RFC-1002, March 1987.\n\n[RFC-1010]      J. Reynolds, and J. Postel, \"Assigned Numbers\", RFC-1010,\n                USC/Information Sciences Institute, May 1987.\n\n                Contains socket numbers and mnemonics for host names,\n                operating systems, etc.\n\n[RFC-1031]      W. Lazear, \"MILNET Name Domain Transition\", RFC-1031,\n                November 1987.\n\n                Describes a plan for converting the MILNET to the DNS.",
+      "content_line_ranges": [
+        [
+          2797,
+          2797
+        ],
+        [
+          2799,
+          2800
+        ],
+        [
+          2802,
+          2802
+        ],
+        [
+          2804,
+          2805
+        ],
+        [
+          2807,
+          2808
+        ],
+        [
+          2810,
+          2812
+        ],
+        [
+          2814,
+          2815
+        ],
+        [
+          2817,
+          2818
+        ],
+        [
+          2820,
+          2821
+        ],
+        [
+          2823,
+          2824
+        ],
+        [
+          2826,
+          2827
+        ],
+        [
+          2829,
+          2830
+        ],
+        [
+          2832,
+          2834
+        ],
+        [
+          2836,
+          2836
+        ],
+        [
+          2838,
+          2840
+        ],
+        [
+          2845,
+          2845
+        ],
+        [
+          2848,
+          2848
+        ],
+        [
+          2851,
+          2851
+        ],
+        [
+          2853,
+          2855
+        ],
+        [
+          2857,
+          2859
+        ],
+        [
+          2861,
+          2862
+        ],
+        [
+          2864,
+          2865
+        ],
+        [
+          2867,
+          2869
+        ],
+        [
+          2871,
+          2872
+        ],
+        [
+          2874,
+          2876
+        ],
+        [
+          2878,
+          2878
+        ],
+        [
+          2880,
+          2882
+        ],
+        [
+          2884,
+          2884
+        ],
+        [
+          2886,
+          2888
+        ],
+        [
+          2890,
+          2890
+        ],
+        [
+          2892,
+          2893
+        ],
+        [
+          2895,
+          2896
+        ],
+        [
+          2902,
+          2902
+        ],
+        [
+          2905,
+          2905
+        ],
+        [
+          2908,
+          2909
+        ],
+        [
+          2911,
+          2915
+        ],
+        [
+          2917,
+          2919
+        ],
+        [
+          2921,
+          2922
+        ],
+        [
+          2924,
+          2925
+        ],
+        [
+          2927,
+          2929
+        ],
+        [
+          2931,
+          2933
+        ],
+        [
+          2935,
+          2937
+        ],
+        [
+          2939,
+          2941
+        ],
+        [
+          2943,
+          2944
+        ],
+        [
+          2946,
+          2947
+        ],
+        [
+          2949,
+          2950
+        ],
+        [
+          2952,
+          2952
+        ]
+      ],
+      "overlap_line_ranges": []
+    },
+    {
+      "chunk_id": "chunk-0075",
+      "section": "9. REFERENCES and BIBLIOGRAPHY",
+      "line_start": 2952,
+      "line_end": 3130,
+      "text": "                Describes a plan for converting the MILNET to the DNS.\n\n[RFC-1032]      M. Stahl, \"Establishing a Domain - Guidelines for\n                Administrators\", RFC-1032, November 1987.\n\nMockapetris                                                    [Page 52]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n                Describes the registration policies used by the NIC to\n                administer the top level domains and delegate subzones.\n\n[RFC-1033]      M. Lottor, \"Domain Administrators Operations Guide\",\n                RFC-1033, November 1987.\n\n                A cookbook for domain administrators.\n\n[Solomon 82]    M. Solomon, L. Landweber, and D. Neuhengen, \"The CSNET\n                Name Server\", Computer Networks, vol 6, nr 3, July 1982.\n\n                Describes a name service for CSNET which is independent\n                from the DNS and DNS use in the CSNET.\n\nMockapetris                                                    [Page 53]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\nIndex\n\n          *   13\n\n          ;   33, 35\n\n          <character-string>   35\n          <domain-name>   34\n\n          @   35\n\n          \\   35\n\n          A   12\n\n          Byte order   8\n\n          CH   13\n          Character case   9\n          CLASS   11\n          CNAME   12\n          Completion   42\n          CS   13\n\n          Hesiod   13\n          HINFO   12\n          HS   13\n\n          IN   13\n          IN-ADDR.ARPA domain   22\n          Inverse queries   40\n\n          Mailbox names   47\n          MB   12\n          MD   12\n          MF   12\n          MG   12\n          MINFO   12\n          MINIMUM   20\n          MR   12\n          MX   12\n\n          NS   12\n          NULL   12\n\n          Port numbers   32\n          Primary server   5\n          PTR   12, 18\n\nMockapetris                                                    [Page 54]\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n          QCLASS   13\n          QTYPE   12\n\n          RDATA   12\n          RDLENGTH  11\n\n          Secondary server   5\n          SOA   12\n          Stub resolvers   7\n\n          TCP   32\n          TXT   12\n          TYPE   11\n\n          UDP   32\n\n          WKS   12\n\nMockapetris                                                    [Page 55]",
+      "content_line_ranges": [
+        [
+          2954,
+          2955
+        ],
+        [
+          2959,
+          2959
+        ],
+        [
+          2962,
+          2962
+        ],
+        [
+          2965,
+          2966
+        ],
+        [
+          2968,
+          2969
+        ],
+        [
+          2971,
+          2971
+        ],
+        [
+          2973,
+          2974
+        ],
+        [
+          2976,
+          2977
+        ],
+        [
+          3016,
+          3016
+        ],
+        [
+          3019,
+          3019
+        ],
+        [
+          3022,
+          3022
+        ],
+        [
+          3024,
+          3024
+        ],
+        [
+          3026,
+          3026
+        ],
+        [
+          3028,
+          3029
+        ],
+        [
+          3031,
+          3031
+        ],
+        [
+          3033,
+          3033
+        ],
+        [
+          3035,
+          3035
+        ],
+        [
+          3037,
+          3037
+        ],
+        [
+          3039,
+          3044
+        ],
+        [
+          3046,
+          3048
+        ],
+        [
+          3050,
+          3052
+        ],
+        [
+          3054,
+          3062
+        ],
+        [
+          3064,
+          3065
+        ],
+        [
+          3067,
+          3069
+        ],
+        [
+          3073,
+          3073
+        ],
+        [
+          3076,
+          3076
+        ],
+        [
+          3079,
+          3080
+        ],
+        [
+          3082,
+          3083
+        ],
+        [
+          3085,
+          3087
+        ],
+        [
+          3089,
+          3091
+        ],
+        [
+          3093,
+          3093
+        ],
+        [
+          3095,
+          3095
+        ],
+        [
+          3130,
+          3130
+        ]
+      ],
+      "overlap_line_ranges": [
+        [
+          2952,
+          2952
+        ]
+      ]
+    }
+  ]
+}

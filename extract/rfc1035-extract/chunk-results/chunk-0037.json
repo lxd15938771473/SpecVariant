@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0037",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "ADDRESS         A 32 bit Internet address.",
+      "line_start": 1126,
+      "line_end": 1126,
+      "condition": "Encoding the ADDRESS field of A-record RDATA.",
+      "required_behavior": "Encode ADDRESS as a 32-bit Internet address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The ADDRESS field width and Internet-address encoding can be inspected in the RDATA serializer and parser.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Hosts that have multiple Internet addresses will have multiple A\nrecords.",
+      "line_start": 1128,
+      "line_end": 1129,
+      "condition": "A host has multiple Internet addresses.",
+      "required_behavior": "Represent the host's multiple Internet addresses with multiple A records.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A host with multiple configured Internet addresses can be checked for representation by multiple A records.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A records cause no additional section processing.",
+      "line_start": 1141,
+      "line_end": 1141,
+      "condition": "Processing an A record.",
+      "required_behavior": "",
+      "forbidden_behavior": "Perform additional-section processing as a consequence of the A record.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The A-record processing path can be checked for whether it triggers additional-section processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The RDATA section of\nan A line in a master file is an Internet address expressed as four\ndecimal numbers separated by dots without any imbedded spaces (e.g.,\n\"10.2.0.52\" or \"192.0.5.6\").",
+      "line_start": 1141,
+      "line_end": 1144,
+      "condition": "Representing the RDATA of an A line in a master file.",
+      "required_behavior": "Express the Internet address as exactly four numbers.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The master-file A-record address representation has a directly countable number of components.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The RDATA section of\nan A line in a master file is an Internet address expressed as four\ndecimal numbers separated by dots without any imbedded spaces (e.g.,\n\"10.2.0.52\" or \"192.0.5.6\").",
+      "line_start": 1141,
+      "line_end": 1144,
+      "condition": "Representing the RDATA of an A line in a master file.",
+      "required_behavior": "Express each of the four Internet-address numbers in decimal.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The numeric base used for each master-file A-record address component can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The RDATA section of\nan A line in a master file is an Internet address expressed as four\ndecimal numbers separated by dots without any imbedded spaces (e.g.,\n\"10.2.0.52\" or \"192.0.5.6\").",
+      "line_start": 1141,
+      "line_end": 1144,
+      "condition": "Representing the RDATA of an A line in a master file.",
+      "required_behavior": "Separate the four Internet-address numbers with dots.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The master-file A-record address delimiters can be inspected and compared with the required dot characters.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The RDATA section of\nan A line in a master file is an Internet address expressed as four\ndecimal numbers separated by dots without any imbedded spaces (e.g.,\n\"10.2.0.52\" or \"192.0.5.6\").",
+      "line_start": 1141,
+      "line_end": 1144,
+      "condition": "Representing the RDATA of an A line in a master file.",
+      "required_behavior": "",
+      "forbidden_behavior": "Include embedded spaces within the Internet-address representation.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The master-file A-record address representation can be checked for internal space characters.",
+      "eligibility": "eligible"
+    }
+  ]
+}

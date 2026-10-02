@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0157",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A sender SHOULD send a DATA_BLOCKED frame (type=0x14) when it wishes\n   to send data but is unable to do so due to connection-level flow\n   control; see Section 4.  DATA_BLOCKED frames can be used as input to\n   tuning of flow control algorithms; see Section 4.2.",
+      "line_start": 6400,
+      "line_end": 6403,
+      "condition": "The sender wishes to send data but connection-level flow control prevents it from doing so.",
+      "required_behavior": "The sender should send a DATA_BLOCKED frame with type 0x14.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can place the sender in a connection-level flow-control-blocked state while data is pending and observe whether it emits a DATA_BLOCKED frame of the specified type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   DATA_BLOCKED Frame {\n     Type (i) = 0x14,\n     Maximum Data (i),\n   }",
+      "line_start": 6407,
+      "line_end": 6410,
+      "condition": "A DATA_BLOCKED frame is encoded or parsed.",
+      "required_behavior": "The frame must contain a Type field followed by a Maximum Data field.",
+      "forbidden_behavior": "The implementation must not encode or accept a DATA_BLOCKED frame whose defined fields are absent or reversed.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded frame can be inspected, or parser inputs generated, to verify the presence and ordering of the two fields shown in the frame format.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   DATA_BLOCKED Frame {\n     Type (i) = 0x14,\n     Maximum Data (i),\n   }",
+      "line_start": 6407,
+      "line_end": 6410,
+      "condition": "A DATA_BLOCKED frame is encoded or identified.",
+      "required_behavior": "The Type field must be a variable-length integer with value 0x14.",
+      "forbidden_behavior": "A frame with another Type value must not be treated as a DATA_BLOCKED frame.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The wire encoding and frame dispatch logic can be tested against the fixed type value 0x14 and its variable-length integer representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Maximum Data:  A variable-length integer indicating the connection-\n      level limit at which blocking occurred.",
+      "line_start": 6416,
+      "line_end": 6417,
+      "condition": "A DATA_BLOCKED frame is encoded or parsed.",
+      "required_behavior": "Maximum Data must be encoded as a variable-length integer.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field's wire representation can be checked against the implementation's variable-length integer encoder and parser.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Maximum Data:  A variable-length integer indicating the connection-\n      level limit at which blocking occurred.",
+      "line_start": 6416,
+      "line_end": 6417,
+      "condition": "A sender reports connection-level flow-control blocking in a DATA_BLOCKED frame.",
+      "required_behavior": "Maximum Data must indicate the connection-level limit at which the blocking occurred.",
+      "forbidden_behavior": "The sender must not populate Maximum Data with a value that does not represent the connection-level limit that caused the blocking.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can establish a known connection-level flow-control limit, cause blocking at that limit, and compare it with the Maximum Data value sent in the frame.",
+      "eligibility": "eligible"
+    }
+  ]
+}

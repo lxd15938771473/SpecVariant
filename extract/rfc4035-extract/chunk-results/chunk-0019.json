@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0019",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If the zone contains RRsets matching <SNAME, SCLASS> but contains no\n   RRset matching <SNAME, SCLASS, STYPE>, then the name server MUST\n   include the NSEC RR for <SNAME, SCLASS> along with its associated\n   RRSIG RR(s) in the Authority section of the response (see Section\n   3.1.1).",
+      "line_start": 636,
+      "line_end": 640,
+      "condition": "The zone contains RRsets matching <SNAME, SCLASS> but no RRset matching <SNAME, SCLASS, STYPE>.",
+      "required_behavior": "The name server MUST include the NSEC RR for <SNAME, SCLASS> in the Authority section of the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A query for an absent RR type at an existing name exposes whether the Authority section contains the NSEC RR for that name and class.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone contains RRsets matching <SNAME, SCLASS> but contains no\n   RRset matching <SNAME, SCLASS, STYPE>, then the name server MUST\n   include the NSEC RR for <SNAME, SCLASS> along with its associated\n   RRSIG RR(s) in the Authority section of the response (see Section\n   3.1.1).",
+      "line_start": 636,
+      "line_end": 640,
+      "condition": "The zone contains RRsets matching <SNAME, SCLASS> but no RRset matching <SNAME, SCLASS, STYPE>.",
+      "required_behavior": "The name server MUST include the RRSIG RR(s) associated with that NSEC RR in the Authority section of the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The returned Authority section can be inspected for the RRSIG RR(s) associated with the included NSEC RR.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone contains RRsets matching <SNAME, SCLASS> but contains no\n   RRset matching <SNAME, SCLASS, STYPE>, then the name server MUST\n   include the NSEC RR for <SNAME, SCLASS> along with its associated\n   RRSIG RR(s) in the Authority section of the response (see Section\n   3.1.1).  If space does not permit inclusion of the NSEC RR or its\n   associated RRSIG RR(s), the name server MUST set the TC bit (see\n   Section 3.1.1).",
+      "line_start": 636,
+      "line_end": 642,
+      "condition": "The zone contains RRsets matching <SNAME, SCLASS> but no RRset matching <SNAME, SCLASS, STYPE>. Response space does not permit inclusion of the NSEC RR or its associated RRSIG RR(s).",
+      "required_behavior": "The name server MUST set the TC bit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Constrained response space can exercise omission of the NSEC RR or its signatures and the resulting TC header bit can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Since the search name exists, wildcard name expansion does not apply\n   to this query, and a single signed NSEC RR suffices to prove that the\n   requested RR type does not exist.",
+      "line_start": 644,
+      "line_end": 646,
+      "condition": "The search name exists for this no-data query.",
+      "required_behavior": "",
+      "forbidden_behavior": "Apply wildcard name expansion to this query.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A query at an existing name that lacks the requested RR type can verify that wildcard expansion is not applied.",
+      "eligibility": "eligible"
+    }
+  ]
+}

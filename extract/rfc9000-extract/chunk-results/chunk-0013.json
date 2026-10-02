@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0013",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Unidirectional streams use either the sending or receiving state\n   machine, depending on the stream type and endpoint role.",
+      "line_start": 652,
+      "line_end": 653,
+      "condition": "For a unidirectional stream, according to its type and the endpoint's role.",
+      "required_behavior": "Use the applicable sending or receiving stream state-machine behavior.",
+      "forbidden_behavior": "Do not apply both sending and receiving state machines to the same endpoint's unidirectional stream.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can determine the stream direction and endpoint role, then verify that only the applicable send or receive behavior is exposed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Bidirectional streams use both state machines at both endpoints.  For",
+      "line_start": 654,
+      "line_end": 654,
+      "condition": "For a bidirectional stream at either endpoint.",
+      "required_behavior": "Apply both the sending and receiving state-machine behavior.",
+      "forbidden_behavior": "Do not model a bidirectional stream at an endpoint with only one of the sending or receiving components.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation test can verify that each endpoint supports both sending-side and receiving-side behavior for a bidirectional stream.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   opening a stream are slightly more complex for a bidirectional stream\n   because the opening of either the send or receive side causes the\n   stream to open in both directions.",
+      "line_start": 657,
+      "line_end": 659,
+      "condition": "When either the send side or receive side of a bidirectional stream opens.",
+      "required_behavior": "Treat the bidirectional stream as open in both directions.",
+      "forbidden_behavior": "Do not leave the opposite direction unopened after either side opens.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can trigger opening through either side independently and observe whether both directions become open.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   implementation can define a different state machine as long as its\n   behavior is consistent with an implementation that implements these\n   states.",
+      "line_start": 667,
+      "line_end": 669,
+      "condition": "When an implementation defines a stream state machine different from the one described in this document.",
+      "required_behavior": "Ensure its externally observable behavior is consistent with an implementation of the described states.",
+      "forbidden_behavior": "Do not use a different state machine whose behavior is inconsistent with the described state-machine behavior.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Conformance tests can compare the alternative machine's observable frame-sending and frame-reception reactions against those required by the described states.",
+      "eligibility": "eligible"
+    }
+  ]
+}

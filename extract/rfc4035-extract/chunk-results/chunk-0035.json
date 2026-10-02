@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0035",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A security-aware resolver MUST support the signature verification\n   mechanisms described in Section 5",
+      "line_start": 1066,
+      "line_end": 1067,
+      "condition": "The implementation is a security-aware resolver.",
+      "required_behavior": "The resolver MUST support the signature verification mechanisms described in Section 5.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The support obligation is explicit, but Section 5 and the mechanisms needed to determine conformance are absent from this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "A security-aware resolver MUST support the signature verification\n   mechanisms described in Section 5 and SHOULD apply them to every\n   received response, except when:\n\n   o  the security-aware resolver is part of a security-aware recursive\n      name server, and the response is the result of recursion on behalf\n      of a query received with the CD bit set;\n\n   o  the response is the result of a query generated directly via some\n      form of application interface that instructed the security-aware\n      resolver not to perform validation for this query; or\n\n   o  validation for this query has been disabled by local policy.",
+      "line_start": 1066,
+      "line_end": 1078,
+      "condition": "A security-aware resolver receives a response, except when (1) it is part of a security-aware recursive name server and the response results from recursion for a query received with CD set, (2) an application interface generated the query with instructions not to validate it, or (3) local policy disabled validation for the query.",
+      "required_behavior": "The resolver SHOULD apply the signature verification mechanisms to every such received response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Validation invocation can be checked for received responses while independently varying the three stated exceptions; this is a SHOULD recommendation, and the exceptions do not themselves prohibit validation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware resolver's support for signature verification MUST\n   include support for verification of wildcard owner names.",
+      "line_start": 1090,
+      "line_end": 1091,
+      "condition": "The implementation is a security-aware resolver supporting signature verification.",
+      "required_behavior": "Its signature verification support MUST include verification of wildcard owner names.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Wildcard-owner signature verification support is a distinct capability that can be inspected and exercised.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Security-aware resolvers MAY query for missing security RRs in an\n   attempt to perform validation;",
+      "line_start": 1093,
+      "line_end": 1094,
+      "condition": "A security-aware resolver lacks security RRs needed in an attempt to perform validation.",
+      "required_behavior": "The resolver MAY query for the missing security RRs to attempt validation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A missing-security-RR branch can be inspected or exercised to identify the permitted follow-up queries; issuing them is optional and success is not promised.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Security-aware resolvers MAY query for missing security RRs in an\n   attempt to perform validation; implementations that choose to do so\n   must be aware that the answers received may not be sufficient to\n   validate the original response.  For example, a zone update may have\n   changed (or deleted) the desired information between the original and\n   follow-up queries.",
+      "line_start": 1093,
+      "line_end": 1098,
+      "condition": "A security-aware resolver chooses to query for missing security RRs in an attempt to perform validation.",
+      "required_behavior": "The implementation must be aware that the follow-up answers may be insufficient to validate the original response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The text states a limitation and awareness obligation but specifies no concrete handling of an insufficient answer; the zone-update example does not supply such behavior.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "When attempting to retrieve missing NSEC RRs that reside on the\n   parental side at a zone cut, a security-aware iterative-mode resolver\n   MUST query the name servers for the parent zone, not the child zone.",
+      "line_start": 1100,
+      "line_end": 1102,
+      "condition": "A security-aware iterative-mode resolver attempts to retrieve missing NSEC RRs residing on the parental side of a zone cut.",
+      "required_behavior": "The resolver MUST query the name servers for the parent zone.",
+      "forbidden_behavior": "Query the child zone name servers to retrieve these parental-side NSEC RRs.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The destination authority of an NSEC retrieval query can be checked at a parent-child zone cut.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When attempting to retrieve a missing DS, a security-aware\n   iterative-mode resolver MUST query the name servers for the parent\n   zone, not the child zone.",
+      "line_start": 1104,
+      "line_end": 1106,
+      "condition": "A security-aware iterative-mode resolver attempts to retrieve a missing DS.",
+      "required_behavior": "The resolver MUST query the name servers for the parent zone.",
+      "forbidden_behavior": "Query the child zone name servers to retrieve the missing DS.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The destination authority of a missing-DS retrieval query can be checked at a delegation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As explained in Section 3.1.4.1,\n   security-aware name servers need to apply special processing rules to\n   handle the DS RR",
+      "line_start": 1106,
+      "line_end": 1108,
+      "condition": "A security-aware name server handles a DS RR.",
+      "required_behavior": "The name server needs to apply the special DS processing rules referenced in Section 3.1.4.1.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The chunk refers to special processing rules without defining them, so their constrained behavior cannot be determined from the assigned evidence.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "When attempting to retrieve a missing DS, a security-aware\n   iterative-mode resolver MUST query the name servers for the parent\n   zone, not the child zone.  As explained in Section 3.1.4.1,\n   security-aware name servers need to apply special processing rules to\n   handle the DS RR, and in some situations the resolver may also need\n   to apply special rules to locate the name servers for the parent zone\n   if the resolver does not already have the parent's NS RRset.  To\n   locate the parent NS RRset, the resolver can start with the\n   delegation name, strip off the leftmost label, and query for an NS\n   RRset by that name.  If no NS RRset is present at that name, the\n   resolver then strips off the leftmost remaining label and retries the\n   query for that name, repeating this process of walking up the tree\n   until it either finds the NS RRset or runs out of labels.",
+      "line_start": 1104,
+      "line_end": 1116,
+      "condition": "While retrieving a missing DS, a security-aware iterative-mode resolver lacks the parent NS RRset and chooses the described optional procedure for locating it.",
+      "required_behavior": "The resolver can begin the optional search by removing the leftmost label from the delegation name and querying for an NS RRset at the resulting name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "For an implementation adopting this optional search, the first NS query name can be compared with the delegation name after removing its leftmost label; the procedure is not mandatory.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When attempting to retrieve a missing DS, a security-aware\n   iterative-mode resolver MUST query the name servers for the parent\n   zone, not the child zone.  As explained in Section 3.1.4.1,\n   security-aware name servers need to apply special processing rules to\n   handle the DS RR, and in some situations the resolver may also need\n   to apply special rules to locate the name servers for the parent zone\n   if the resolver does not already have the parent's NS RRset.  To\n   locate the parent NS RRset, the resolver can start with the\n   delegation name, strip off the leftmost label, and query for an NS\n   RRset by that name.  If no NS RRset is present at that name, the\n   resolver then strips off the leftmost remaining label and retries the\n   query for that name, repeating this process of walking up the tree\n   until it either finds the NS RRset or runs out of labels.",
+      "line_start": 1104,
+      "line_end": 1116,
+      "condition": "A security-aware iterative-mode resolver lacking the parent NS RRset adopts the optional parent-NS search while retrieving a missing DS, finds no NS RRset at the current queried name, and still has labels to remove.",
+      "required_behavior": "Under this optional procedure, remove the leftmost remaining label and retry the NS RRset query for the resulting name, repeating the upward search as needed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Successive unsuccessful NS lookups can be used to verify that each retry removes one leftmost label and queries the resulting ancestor name.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When attempting to retrieve a missing DS, a security-aware\n   iterative-mode resolver MUST query the name servers for the parent\n   zone, not the child zone.  As explained in Section 3.1.4.1,\n   security-aware name servers need to apply special processing rules to\n   handle the DS RR, and in some situations the resolver may also need\n   to apply special rules to locate the name servers for the parent zone\n   if the resolver does not already have the parent's NS RRset.  To\n   locate the parent NS RRset, the resolver can start with the\n   delegation name, strip off the leftmost label, and query for an NS\n   RRset by that name.  If no NS RRset is present at that name, the\n   resolver then strips off the leftmost remaining label and retries the\n   query for that name, repeating this process of walking up the tree\n   until it either finds the NS RRset or runs out of labels.",
+      "line_start": 1104,
+      "line_end": 1116,
+      "condition": "A security-aware iterative-mode resolver adopts the optional parent-NS search while retrieving a missing DS and finds the parent NS RRset.",
+      "required_behavior": "Under this optional procedure, stop walking up the tree when the NS RRset is found.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A successful NS RRset lookup provides an observable termination condition for the described optional search.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When attempting to retrieve a missing DS, a security-aware\n   iterative-mode resolver MUST query the name servers for the parent\n   zone, not the child zone.  As explained in Section 3.1.4.1,\n   security-aware name servers need to apply special processing rules to\n   handle the DS RR, and in some situations the resolver may also need\n   to apply special rules to locate the name servers for the parent zone\n   if the resolver does not already have the parent's NS RRset.  To\n   locate the parent NS RRset, the resolver can start with the\n   delegation name, strip off the leftmost label, and query for an NS\n   RRset by that name.  If no NS RRset is present at that name, the\n   resolver then strips off the leftmost remaining label and retries the\n   query for that name, repeating this process of walking up the tree\n   until it either finds the NS RRset or runs out of labels.",
+      "line_start": 1104,
+      "line_end": 1116,
+      "condition": "A security-aware iterative-mode resolver adopts the optional parent-NS search while retrieving a missing DS and runs out of labels without finding the parent NS RRset.",
+      "required_behavior": "Under this optional procedure, stop walking up the tree when there are no labels remaining.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An unsuccessful search with exhausted labels provides a second observable termination condition; the text specifies no resulting error or rejection.",
+      "eligibility": "eligible"
+    }
+  ]
+}

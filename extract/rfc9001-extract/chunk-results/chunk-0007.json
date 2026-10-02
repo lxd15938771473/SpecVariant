@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0007",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "*  Sending and receiving handshake messages",
+      "line_start": 386,
+      "line_end": 386,
+      "condition": "When QUIC needs to send a TLS handshake message.",
+      "required_behavior": "Provide a QUIC-to-TLS interface function for sending handshake messages.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The interface definition and handshake send path can be inspected for this function.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  Sending and receiving handshake messages",
+      "line_start": 386,
+      "line_end": 386,
+      "condition": "When QUIC receives a TLS handshake message.",
+      "required_behavior": "Provide a QUIC-to-TLS interface function for receiving handshake messages.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The interface definition and handshake receive path can be inspected for this function.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  Processing stored transport and application state from a resumed\n      session and determining if it is valid to generate or accept 0-RTT\n      data",
+      "line_start": 388,
+      "line_end": 390,
+      "condition": "When handling a resumed session with stored transport state.",
+      "required_behavior": "Provide a QUIC-to-TLS interface function that processes the stored transport state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A resumed-session test can verify that stored transport state is supplied to and processed through the interface.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  Processing stored transport and application state from a resumed\n      session and determining if it is valid to generate or accept 0-RTT\n      data",
+      "line_start": 388,
+      "line_end": 390,
+      "condition": "When handling a resumed session with stored application state.",
+      "required_behavior": "Provide a QUIC-to-TLS interface function that processes the stored application state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A resumed-session test can verify that stored application state is supplied to and processed through the interface.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  Processing stored transport and application state from a resumed\n      session and determining if it is valid to generate or accept 0-RTT\n      data",
+      "line_start": 388,
+      "line_end": 390,
+      "condition": "Before generating 0-RTT data for a resumed session.",
+      "required_behavior": "Determine whether generating 0-RTT data is valid using the resumed-session state.",
+      "forbidden_behavior": "Generating 0-RTT data without determining that generation is valid.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Instrumentation can verify that a validity decision precedes every resumed-session 0-RTT generation path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  Processing stored transport and application state from a resumed\n      session and determining if it is valid to generate or accept 0-RTT\n      data",
+      "line_start": 388,
+      "line_end": 390,
+      "condition": "Before accepting 0-RTT data for a resumed session.",
+      "required_behavior": "Determine whether accepting 0-RTT data is valid using the resumed-session state.",
+      "forbidden_behavior": "Accepting 0-RTT data without determining that acceptance is valid.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Instrumentation can verify that a validity decision precedes every resumed-session 0-RTT acceptance path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  Rekeying (both transmit and receive)",
+      "line_start": 392,
+      "line_end": 392,
+      "condition": "When QUIC updates transmit keys.",
+      "required_behavior": "Provide a QUIC-to-TLS interface function for transmit rekeying.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The interface definition and transmit-key update path can be inspected for rekeying support.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  Rekeying (both transmit and receive)",
+      "line_start": 392,
+      "line_end": 392,
+      "condition": "When QUIC updates receive keys.",
+      "required_behavior": "Provide a QUIC-to-TLS interface function for receive rekeying.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The interface definition and receive-key update path can be inspected for rekeying support.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  Updating handshake state",
+      "line_start": 394,
+      "line_end": 394,
+      "condition": "When TLS handshake progress changes QUIC handshake state.",
+      "required_behavior": "Provide a QUIC-to-TLS interface function for updating handshake state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The interface and handshake state-transition paths can be inspected for an update function.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In\n   particular, QUIC and TLS need to agree on which is responsible for\n   validation of peer credentials, such as certificate validation\n   [RFC5280].",
+      "line_start": 396,
+      "line_end": 399,
+      "condition": "When configuring peer-credential validation for a QUIC connection using TLS.",
+      "required_behavior": "Establish a consistent allocation between QUIC and TLS of responsibility for validating peer credentials.",
+      "forbidden_behavior": "Configuring QUIC and TLS with inconsistent or unassigned responsibility for peer-credential validation.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Configuration and validation call paths can be inspected to confirm that exactly one agreed component owns peer-credential validation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

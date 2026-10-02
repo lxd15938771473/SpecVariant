@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0150",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A STOP_SENDING frame can be sent for streams in the \"Recv\" or \"Size\n   Known\" states; see Section 3.2.  Receiving a STOP_SENDING frame for a",
+      "line_start": 6105,
+      "line_end": 6106,
+      "condition": "When an endpoint sends a STOP_SENDING frame for a stream.",
+      "required_behavior": "The stream is in the \"Recv\" or \"Size Known\" state.",
+      "forbidden_behavior": "Sending the frame for a stream in any other state.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can inspect the stream state at the point a STOP_SENDING frame is emitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   locally initiated stream that has not yet been created MUST be\n   treated as a connection error of type STREAM_STATE_ERROR.  An",
+      "line_start": 6107,
+      "line_end": 6108,
+      "condition": "When a STOP_SENDING frame is received for a locally initiated stream that has not yet been created.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Treat receipt as a connection error of type STREAM_STATE_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can deliver the frame for an uncreated locally initiated stream and verify the connection error type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   endpoint that receives a STOP_SENDING frame for a receive-only stream\n   MUST terminate the connection with error STREAM_STATE_ERROR.",
+      "line_start": 6109,
+      "line_end": 6110,
+      "condition": "When an endpoint receives a STOP_SENDING frame for a receive-only stream.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Terminate the connection with error STREAM_STATE_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can deliver the frame for a receive-only stream and observe connection termination and its error code.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   STOP_SENDING Frame {\n     Type (i) = 0x05,\n     Stream ID (i),\n     Application Protocol Error Code (i),\n   }",
+      "line_start": 6114,
+      "line_end": 6118,
+      "condition": "When encoding or decoding a STOP_SENDING frame.",
+      "required_behavior": "Encode and recognize the frame Type as a variable-length integer with value 0x05.",
+      "forbidden_behavior": "Treating a frame with another Type value as a STOP_SENDING frame.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Encoded frames can be inspected and decoder dispatch can be tested against the fixed type value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   STOP_SENDING Frame {\n     Type (i) = 0x05,\n     Stream ID (i),\n     Application Protocol Error Code (i),\n   }",
+      "line_start": 6114,
+      "line_end": 6118,
+      "condition": "When encoding or decoding a STOP_SENDING frame.",
+      "required_behavior": "Include the fields in this order: Type, Stream ID, Application Protocol Error Code.",
+      "forbidden_behavior": "Omitting, duplicating, or reordering these fields in the STOP_SENDING frame format.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serialized field sequence can be compared directly with the specified frame layout.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Stream ID:  A variable-length integer carrying the stream ID of the\n      stream being ignored.",
+      "line_start": 6124,
+      "line_end": 6125,
+      "condition": "When encoding or decoding the Stream ID field of a STOP_SENDING frame.",
+      "required_behavior": "Represent it as a variable-length integer that identifies the stream being ignored.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A codec test can verify both the integer encoding and correspondence to the targeted stream.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Application Protocol Error Code:  A variable-length integer\n      containing the application-specified reason the sender is ignoring\n      the stream; see Section 20.2.",
+      "line_start": 6127,
+      "line_end": 6129,
+      "condition": "When encoding or decoding the Application Protocol Error Code field of a STOP_SENDING frame.",
+      "required_behavior": "Represent it as a variable-length integer containing the application-specified reason for ignoring the stream.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A codec test can verify the field's variable-length integer representation and its preservation of the supplied application error code.",
+      "eligibility": "eligible"
+    }
+  ]
+}

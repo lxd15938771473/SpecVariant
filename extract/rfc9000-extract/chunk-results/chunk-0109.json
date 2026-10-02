@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0109",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   endpoint does not implement ECN support or does not have access to\n   received ECN fields, it does not report ECN counts for packets it\n   receives.",
+      "line_start": 4463,
+      "line_end": 4465,
+      "condition": "The endpoint does not implement ECN support or cannot access received ECN fields.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not report ECN counts for packets it receives.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "An implementation can be configured without ECN support or received-ECN-field access and checked for absence of reported ECN counts.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Even if an endpoint does not set an ECT field in packets it sends,\n   the endpoint MUST provide feedback about ECN markings it receives, if\n   these are accessible.  Failing to report the ECN counts will cause\n   the sender to disable the use of ECN for this connection.",
+      "line_start": 4467,
+      "line_end": 4470,
+      "condition": "Received ECN markings are accessible, including when the endpoint does not set an ECT field in packets it sends.",
+      "required_behavior": "The endpoint must provide feedback about the ECN markings it receives.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can deliver packets with accessible ECN markings and verify that the endpoint reports corresponding feedback regardless of its outgoing ECT behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Even if an endpoint does not set an ECT field in packets it sends,\n   the endpoint MUST provide feedback about ECN markings it receives, if\n   these are accessible.  Failing to report the ECN counts will cause\n   the sender to disable the use of ECN for this connection.",
+      "line_start": 4467,
+      "line_end": 4470,
+      "condition": "The peer fails to report ECN counts.",
+      "required_behavior": "The sender disables ECN use for the connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can suppress ECN-count feedback and observe whether the sender transitions to ECN-disabled operation for that connection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   On receiving an IP packet with an ECT(0), ECT(1), or ECN-CE\n   codepoint, an ECN-enabled endpoint accesses the ECN field and\n   increases the corresponding ECT(0), ECT(1), or ECN-CE count.  These\n   ECN counts are included in subsequent ACK frames; see Sections 13.2\n   and 19.3.",
+      "line_start": 4472,
+      "line_end": 4476,
+      "condition": "An ECN-enabled endpoint receives an IP packet marked ECT(0), ECT(1), or ECN-CE.",
+      "required_behavior": "The endpoint accesses the ECN field and increments the count corresponding to the received codepoint.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can inject each ECN codepoint and verify that exactly the corresponding counter increases.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   On receiving an IP packet with an ECT(0), ECT(1), or ECN-CE\n   codepoint, an ECN-enabled endpoint accesses the ECN field and\n   increases the corresponding ECT(0), ECT(1), or ECN-CE count.  These\n   ECN counts are included in subsequent ACK frames; see Sections 13.2\n   and 19.3.",
+      "line_start": 4472,
+      "line_end": 4476,
+      "condition": "An ECN-enabled endpoint has accumulated ECN counts after processing marked packets.",
+      "required_behavior": "The endpoint includes the ECN counts in subsequent ACK frames.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Generated ACK frames can be decoded and checked for inclusion of the accumulated ECN counts.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Each packet number space maintains separate acknowledgment state and\n   separate ECN counts.  Coalesced QUIC packets (see Section 12.2) share\n   the same IP header so the ECN counts are incremented once for each\n   coalesced QUIC packet.",
+      "line_start": 4478,
+      "line_end": 4481,
+      "condition": "The endpoint maintains multiple packet number spaces.",
+      "required_behavior": "The endpoint maintains separate acknowledgment state for each packet number space.",
+      "forbidden_behavior": "Acknowledgment state must not be shared across packet number spaces.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet processing across multiple number spaces can be inspected to verify that acknowledgment state changes remain isolated to the applicable space.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Each packet number space maintains separate acknowledgment state and\n   separate ECN counts.  Coalesced QUIC packets (see Section 12.2) share\n   the same IP header so the ECN counts are incremented once for each\n   coalesced QUIC packet.",
+      "line_start": 4478,
+      "line_end": 4481,
+      "condition": "The endpoint maintains multiple packet number spaces.",
+      "required_behavior": "The endpoint maintains separate ECN counts for each packet number space.",
+      "forbidden_behavior": "ECN counts must not be shared across packet number spaces.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Marked packets can be delivered in different packet number spaces and the independently reported counters compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Each packet number space maintains separate acknowledgment state and\n   separate ECN counts.  Coalesced QUIC packets (see Section 12.2) share\n   the same IP header so the ECN counts are incremented once for each\n   coalesced QUIC packet.",
+      "line_start": 4478,
+      "line_end": 4481,
+      "condition": "Multiple QUIC packets are coalesced under the same IP header and processed.",
+      "required_behavior": "The applicable ECN count is incremented once for each coalesced QUIC packet.",
+      "forbidden_behavior": "The endpoint must not increment the ECN count only once for the shared IP header when multiple coalesced QUIC packets are processed.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A datagram containing a known number of coalesced packets can be processed and the resulting per-space ECN counter increments measured.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   For example, if one each of an Initial, Handshake, and 1-RTT QUIC\n   packet are coalesced into a single UDP datagram, the ECN counts for\n   all three packet number spaces will be incremented by one each, based\n   on the ECN field of the single IP header.",
+      "line_start": 4483,
+      "line_end": 4486,
+      "condition": "One Initial, one Handshake, and one 1-RTT packet are coalesced into a single UDP datagram.",
+      "required_behavior": "The ECN count in each of the three corresponding packet number spaces increases by one using the ECN field of the single IP header.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A concrete three-packet coalesced datagram provides directly measurable expected counter changes in all three packet number spaces.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ECN counts are only incremented when QUIC packets from the received\n   IP packet are processed.  As such, duplicate QUIC packets are not\n   processed and do not increase ECN counts; see Section 21.10 for\n   relevant security concerns.",
+      "line_start": 4488,
+      "line_end": 4491,
+      "condition": "A QUIC packet from a received IP packet is not processed.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not increment ECN counts for that QUIC packet.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can cause a received QUIC packet to remain unprocessed and verify that ECN counters do not change.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ECN counts are only incremented when QUIC packets from the received\n   IP packet are processed.  As such, duplicate QUIC packets are not\n   processed and do not increase ECN counts; see Section 21.10 for\n   relevant security concerns.",
+      "line_start": 4488,
+      "line_end": 4491,
+      "condition": "A received QUIC packet is a duplicate.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not process the duplicate packet.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A previously received packet can be replayed and implementation processing hooks or resulting protocol state checked for absence of duplicate processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ECN counts are only incremented when QUIC packets from the received\n   IP packet are processed.  As such, duplicate QUIC packets are not\n   processed and do not increase ECN counts; see Section 21.10 for\n   relevant security concerns.",
+      "line_start": 4488,
+      "line_end": 4491,
+      "condition": "A received QUIC packet is a duplicate.",
+      "required_behavior": "",
+      "forbidden_behavior": "The duplicate packet must not increase ECN counts.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A marked packet can be replayed and ECN counters checked to ensure the duplicate produces no additional increment.",
+      "eligibility": "eligible"
+    }
+  ]
+}

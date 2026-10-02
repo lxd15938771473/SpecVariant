@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0057",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Header protection is applied after the packet\n   protection AEAD",
+      "line_start": 2069,
+      "line_end": 2070,
+      "condition": "When constructing a packet with header protection.",
+      "required_behavior": "Apply the packet-protection AEAD before header protection.",
+      "forbidden_behavior": "Applying header protection before packet protection.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The order of cryptographic operations can be instrumented in the packet-construction path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "sampling a set of bytes (\"sample\") from the AEAD\n   output",
+      "line_start": 2070,
+      "line_end": 2071,
+      "condition": "When selecting the input sample for header protection.",
+      "required_behavior": "Take the sample bytes from the packet-protection AEAD output.",
+      "forbidden_behavior": "Sampling plaintext or bytes outside the AEAD output.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The sample buffer can be compared byte-for-byte with the AEAD ciphertext output.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "protected_field = field XOR PRF(hp_key, sample)",
+      "line_start": 2074,
+      "line_end": 2074,
+      "condition": "When protecting a packet-header field.",
+      "required_behavior": "Compute the protected field by XORing the unprotected field with PRF(hp_key, sample).",
+      "forbidden_behavior": "Using another combining operation or different PRF inputs.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known field, hp_key, and sample values can verify the formula exactly.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The header protection variants in this document use a pseudorandom\n   permutation (PRP) in place of a generic PRF.",
+      "line_start": 2076,
+      "line_end": 2077,
+      "condition": "When implementing a header-protection variant defined in this document.",
+      "required_behavior": "Use its specified pseudorandom permutation as the PRF construction.",
+      "forbidden_behavior": "Substituting an unrelated non-PRP function.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The selected header-protection primitive can be inspected for the required PRP construction.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As \"hp_key\" is distinct from the packet protection key",
+      "line_start": 2081,
+      "line_end": 2081,
+      "condition": "When deriving or installing header-protection and packet-protection keys.",
+      "required_behavior": "Use a header-protection key distinct from the packet-protection key.",
+      "forbidden_behavior": "Reusing the packet-protection key as hp_key.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Installed key material and derivation labels can be compared for separation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Future header protection variants based on this construction MUST use\n   a PRF to ensure equivalent security guarantees.",
+      "line_start": 2084,
+      "line_end": 2085,
+      "condition": "When defining or implementing a future header-protection variant based on this construction.",
+      "required_behavior": "Use a pseudorandom function for header protection.",
+      "forbidden_behavior": "Using a function that is not a PRF.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The variant's specified primitive can be evaluated against the PRF requirement.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To prevent an attacker from modifying packet headers, the header is\n   transitively authenticated using packet protection; the entire packet\n   header is part of the authenticated additional data.",
+      "line_start": 2095,
+      "line_end": 2097,
+      "condition": "When applying packet protection.",
+      "required_behavior": "Include the entire packet header in the authenticated additional data.",
+      "forbidden_behavior": "Omitting any packet-header portion from authenticated additional data.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The AEAD additional-data input can be compared with the complete serialized packet header.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Protected\n   fields that are falsified or modified can only be detected once the\n   packet protection is removed.",
+      "line_start": 2097,
+      "line_end": 2099,
+      "condition": "When validating protected header fields for falsification or modification.",
+      "required_behavior": "Perform authoritative modification detection through packet-protection removal and authentication.",
+      "forbidden_behavior": "Treating a protected header field as authenticated before packet protection is removed.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A tampered protected field can verify that authenticity is decided at AEAD removal rather than from the protected header alone.",
+      "eligibility": "eligible"
+    }
+  ]
+}

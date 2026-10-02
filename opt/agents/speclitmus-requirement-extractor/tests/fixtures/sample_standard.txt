@@ -1,0 +1,16 @@
+# Sample Transport Protocol
+
+This document defines a compact test protocol.
+
+## 1. Negotiation
+
+When the offered version is unsupported, the server MUST reject the
+offer and return a version error unless fallback mode is enabled.
+
+The client SHOULD NOT send a second offer on the same connection.
+
+## 2. Tokens
+
+The client MUST generate a fresh token and MUST NOT reuse that token.
+
+A token MAY be omitted when anonymous mode is negotiated.

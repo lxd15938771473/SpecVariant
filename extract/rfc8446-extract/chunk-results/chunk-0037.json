@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0037",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Servers MUST NOT send a post-handshake CertificateRequest to clients\n   which do not offer this extension.",
+      "line_start": 2581,
+      "line_end": 2582,
+      "condition": "a client did not offer post_handshake_auth",
+      "required_behavior": "",
+      "forbidden_behavior": "send the client a post-handshake CertificateRequest",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The client's extension offer and subsequent server messages can be observed in one connection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Servers MUST NOT send this\n   extension.",
+      "line_start": 2582,
+      "line_end": 2583,
+      "condition": "a server constructs a TLS extension block",
+      "required_behavior": "",
+      "forbidden_behavior": "send the post_handshake_auth extension",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Server extension blocks can be inspected for the prohibited extension.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The \"extension_data\" field of the \"post_handshake_auth\" extension is\n   zero length.",
+      "line_start": 2587,
+      "line_end": 2588,
+      "condition": "a client encodes or an endpoint parses post_handshake_auth",
+      "required_behavior": "encode extension_data with zero length",
+      "forbidden_behavior": "include any extension_data bytes",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The extension length field and payload are directly observable.",
+      "eligibility": "eligible"
+    }
+  ]
+}

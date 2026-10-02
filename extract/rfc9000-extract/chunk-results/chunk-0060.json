@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0060",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An endpoint MAY probe for peer reachability from a new local address using path validation (Section 8.2) prior to migrating the connection to the new local address.",
+      "line_start": 2687,
+      "line_end": 2689,
+      "condition": "Before migrating a connection to a new local address.",
+      "required_behavior": "The endpoint is permitted to probe peer reachability from the new local address using path validation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation can be checked to ensure that it permits and correctly supports path validation before local-address migration without requiring migration first.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Failure of path validation simply means that the new path is not usable for this connection.",
+      "line_start": 2689,
+      "line_end": 2691,
+      "condition": "Path validation for a new path fails.",
+      "required_behavior": "The endpoint treats the new path as unusable for the connection.",
+      "forbidden_behavior": "The endpoint must not treat the failed path as usable for the connection.",
+      "error_behavior": "Mark or otherwise handle the new path as unusable for this connection.",
+      "check_type": "error_handling",
+      "why_checkable": "A focused test can force path-validation failure and verify that traffic is not migrated onto or continued over the failed path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Failure to validate a path does not cause the connection to end unless there are no valid alternative paths available.",
+      "line_start": 2690,
+      "line_end": 2692,
+      "condition": "Validation of a path fails while at least one valid alternative path is available.",
+      "required_behavior": "The endpoint keeps the connection active using a valid alternative path.",
+      "forbidden_behavior": "The endpoint must not end the connection solely because the path failed validation.",
+      "error_behavior": "",
+      "check_type": "error_handling",
+      "why_checkable": "A runtime test can fail validation on one path while preserving another valid path and observe whether the connection remains active.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Failure to validate a path does not cause the connection to end unless there are no valid alternative paths available.",
+      "line_start": 2690,
+      "line_end": 2692,
+      "condition": "Validation of a path fails and no valid alternative paths are available.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The connection is permitted to end.",
+      "check_type": "error_handling",
+      "why_checkable": "A runtime test can remove all valid alternative paths, force validation failure, and verify that connection termination is allowed in this condition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "PATH_CHALLENGE, PATH_RESPONSE, NEW_CONNECTION_ID, and PADDING frames are \"probing frames\"",
+      "line_start": 2694,
+      "line_end": 2695,
+      "condition": "A frame has type PATH_CHALLENGE, PATH_RESPONSE, NEW_CONNECTION_ID, or PADDING.",
+      "required_behavior": "Classify the frame as a probing frame.",
+      "forbidden_behavior": "Do not classify such a frame as a non-probing frame.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Frame classification can be tested directly for each of the four enumerated frame types.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "and all other frames are \"non-probing frames\".",
+      "line_start": 2695,
+      "line_end": 2695,
+      "condition": "A frame has any type other than PATH_CHALLENGE, PATH_RESPONSE, NEW_CONNECTION_ID, or PADDING.",
+      "required_behavior": "Classify the frame as a non-probing frame.",
+      "forbidden_behavior": "Do not classify the frame as a probing frame.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation's classification table or runtime behavior can be checked for every other supported frame type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A packet containing only probing frames is a \"probing packet\"",
+      "line_start": 2696,
+      "line_end": 2696,
+      "condition": "Every frame contained in a packet is a probing frame.",
+      "required_behavior": "Classify the packet as a probing packet.",
+      "forbidden_behavior": "Do not classify the packet as a non-probing packet.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packets composed exclusively of the enumerated probing frame types can be constructed and their classification observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "and a packet containing any other frame is a \"non-probing packet\".",
+      "line_start": 2696,
+      "line_end": 2697,
+      "condition": "A packet contains at least one non-probing frame.",
+      "required_behavior": "Classify the packet as a non-probing packet.",
+      "forbidden_behavior": "Do not classify the packet as a probing packet, even if it also contains probing frames.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A mixed-frame packet can be constructed and checked to ensure that the presence of any non-probing frame determines the packet classification.",
+      "eligibility": "eligible"
+    }
+  ]
+}

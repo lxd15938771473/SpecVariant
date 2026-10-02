@@ -1,0 +1,1227 @@
+﻿MQTT V3 Protocol Specification
+
+Abstract
+
+The MQ Telemetry Transport (MQTT) is a lightweight publish/subscribe protocol flowing over TCP/IP for remote sensors and control devices through low bandwidth communications.
+
+MQTT was formerly known as MQIsdp, and before that, as SCADA protocol.
+
+Status of this document
+
+The MQTT V3 protocol itself is finalized. This document, specifying the details of the protocol, is still in draft.
+
+Table of Contents
+
+1. Introduction 2. Message format 2.1. Fixed header 2.2. Variable header 2.3. Payload 2.4. Message identifiers 2.5. MQTT and UTF-8 3. Command messages 3.1. CONNECT 3.2. CONNACK 3.3. PUBLISH 3.4. PUBACK 3.5. PUBREC 3.6. PUBREL 3.7. PUBCOMP 3.8. SUBSCRIBE 3.9. SUBACK 3.10. UNSUBSCRIBE 3.11. UNSUBACK 3.12. PINGREQ 3.13. PINGRESP 3.14. DISCONNECT 4. Flows 4.1. Quality of Service levels and flows
+
+2. Message format 2.1. Fixed header 2.2. Variable header 2.3. Payload 2.4. Message identifiers 2.5. MQTT and UTF-8
+
+2.1. Fixed header
+
+2.2. Variable header
+
+2.3. Payload
+
+2.4. Message identifiers
+
+2.5. MQTT and UTF-8
+
+3. Command messages 3.1. CONNECT 3.2. CONNACK 3.3. PUBLISH 3.4. PUBACK 3.5. PUBREC 3.6. PUBREL 3.7. PUBCOMP 3.8. SUBSCRIBE 3.9. SUBACK 3.10. UNSUBSCRIBE 3.11. UNSUBACK 3.12. PINGREQ 3.13. PINGRESP 3.14. DISCONNECT
+
+3.1. CONNECT
+
+3.2. CONNACK
+
+3.3. PUBLISH
+
+3.4. PUBACK
+
+3.5. PUBREC
+
+3.6. PUBREL
+
+3.7. PUBCOMP
+
+3.8. SUBSCRIBE
+
+3.9. SUBACK
+
+3.10. UNSUBSCRIBE
+
+3.11. UNSUBACK
+
+3.12. PINGREQ
+
+3.13. PINGRESP
+
+3.14. DISCONNECT
+
+4. Flows 4.1. Quality of Service levels and flows
+
+4.1. Quality of Service levels and flows
+
+1. Introduction
+
+The MQ Telemetry Transport (MQTT) is a lightweight publish/subscribe protocol flowing over TCP/IP for remote sensors and control devices through low bandwidth communications. MQTT is used by specialized applications on small footprint devices that require a low bandwidth communication, typically for remote data acquisition and process control.
+
+A typical system might comprise several hundred client devices communicating with a single broker, where each client is identified by a unique ID.
+
+2. Message format
+
+The message header for each MQTT command message contains a fixed header. Some messages also require a variable header and a payload. The format for each part of the message header is described in the following sections 2.1. Fixed header The message header for each MQTT command message contains a fixed header. The table below shows the fixed header format. bit 7 6 5 4 3 2 1 0 byte 1 Message Type DUP flag QoS level RETAIN byte 2 Remaining Length Byte 1 Contains the Message Type and Flags (Dup, QoS level, and RETAIN) fields. Byte 2 (At least one byte) contains the Remaining Length field. The fields are described in the following sections. All data values are in big-endian order: higher order bytes precede lower order bytes. A 16-bit word is presented on the wire as Most Significant Byte (MSB), followed by Least Significant Byte (LSB). Message Type Position: byte 1, bits 7-4. Represented as a 4-bit unsigned value. The enumerations for this version of the protocol are shown in the table below. Mnemonic Enumeration Description Reserved 0 Reserved CONNECT 1 Client request to connect to Broker CONNACK 2 Connect Acknowledgment PUBLISH 3 Publish message PUBACK 4 Publish Acknowledgment PUBREC 5 Publish Received (assured delivery part 1) PUBREL 6 Publish Release (assured delivery part 2) PUBCOMP 7 Publish Complete (assured delivery part 3) SUBSCRIBE 8 Client Subscribe request SUBACK 9 Subscribe Acknowledgment UNSUBSCRIBE 10 Client Unsubscribe request UNSUBACK 11 Unsubscribe Acknowledgment PINGREQ 12 PING Request PINGRESP 13 PING Response DISCONNECT 14 Client is Disconnecting Reserved 15 Reserved Flags The remaining bits of byte 1 contain the fields DUP, QoS, and RETAIN. The bit positions are encoded to represent the flags as shown in the table below. Bit position Name Description 3 DUP Duplicate delivery 2-1 QoS Quality of Service 0 RETAIN RETAIN flag DUP Position: byte 1, bit 3. This flag is set when the client or broker attempts to re-deliver a PUBLISH message. This applies to messages where the value of QoS is greater than zero (0), and an acknowledgment is required. When the DUP bit is set, the variable header includes a Message ID. QoS Position: byte 1, bits 2-1. This flag indicates the level of assurance for delivery of a PUBLISH message. The QoS levels are shown in the table below. QoS value bit 2 bit 1 Description 0 0 0 At most once Fire and Forget <=1 1 0 1 At least once Acknowledged delivery >=1 2 1 0 Exactly once Assured delivery =1 3 1 1 Reserved RETAIN Position: byte 1, bit 0. When set, the Retain flag indicates that the broker holds the message, and sends it as an initial message to new subscribers to this topic. This means that a new client connecting to the broker can quickly establish the current number of topics. This is useful where publishers send messages on a "report by exception" basis, and it might be some time before a new subscriber receives data on a particular topic. The data has a value of retained or Last Known Good (LKG). After sending a SUBSCRIBE message to one or more topics, a subscriber receives a SUBACK message, followed by one message for each newly subscribed topic that has a retained value. The retained value is published from the broker to the subscriber with the Retain flag set and with the same QoS with which it was originally published, and is therefore subject to the usual QoS delivery assurances. The Retain flag is set in the message to the subscribers, to distinguish it from "live" data so that it is handled appropriately by the subscriber. Because a broker might no longer hold a previously Retained PUBLISH message, there is no guarantee that the subscriber will receive an initial Retained PUBLISH message on a topic. Remaining Length Position: byte 2. Represents the number of bytes remaining within the current message, including data in the variable header and the payload. The variable length encoding scheme uses a single byte for messages up to 127 bytes long. Longer messages are handled as follows. Seven bits of each byte encode the Remaining Length data, and the eighth bit indicates any following bytes in the representation. Each byte encodes 128 values and a "continuation bit". For example, the number 64 decimal is encoded as a single byte, decimal value 64, hex 0x40. The number 321 decimal (=128x2 + 65) is encoded as two bytes, least significant first. The first byte is 2+128 = 130. Note that the top bit is set to indicate at least one following byte. The second byte is 65. The protocol limits the number of bytes in the representation to a maximum of four. This allows applications to send messages of up to 268 435 455 (256 MB). The representation of this number on the wire is: 0xFF, 0xFF, 0xFF, 0x7F. The table below shows the Remaining Length values represented by increasing numbers of bytes. Digits From To 1 0 (0x00) 127 (0x7F) 2 128 (0x80, 0x01) 16 383 (0xFF, 0x7F) 3 16 384 (0x80, 0x80, 0x01) 2 097 151 (0xFF, 0xFF, 0x7F) 4 2 097 152 (0x80, 0x80, 0x80, 0x01) 268 435 455 (0xFF, 0xFF, 0xFF, 0x7F) The algorithm for encoding a decimal number (X) into the variable length encoding scheme is as follows: do digit = X MOD 128 X = X DIV 128 // if there are more digits to encode, set the top bit of this digit if ( X > 0 ) digit = digit OR 0x80 endif 'output' digit while ( X> 0 ) where MOD is the modulo operator ( % in C), DIV is integer division ( / in C), and OR is bit-wise or ( | in C). The algorithm for decoding the Remaining Length field is as follows: multiplier = 1 value = 0 do digit = 'next digit from stream' value += (digit AND 127) * multiplier; multiplier *= 128; while ((digit AND 128) != 0); where AND is the bit-wise and operator ( & in C). When this algorithm terminates, value contains the Remaining Length in bytes. Remaining Length encoding is not part of the variable header. The number of bytes used to encode the Remaining Length does not contribute to the value of the Remaining Length. The variable length "extension bytes" are part of the fixed header, not the variable header. 2.2. Variable header The message header for some types of MQTT command message contains a variable header. It resides between the fixed header and the payload. The format of the variable header fields are described in the following topics, in the order in which they must appear in the header: The variable length Remaining Length field is not part of the variable header. The bytes of the Remaining Length field do not contribute to the byte count of the Remaining Length value. This value only takes account of the variable header and the payload. See Fixed header for more information. Protocol name The protocol name is present in the variable header of a MQTT CONNECT message. This field is a UTF-encoded string that represents the protocol name MQIsdp, capitalized as shown. Protocol version The protocol version is present in the variable header of a CONNECT message. The field is an 8-bit unsigned value that represents the revision level of the protocol used by the client. The value of the Protocol version field for the current version of the protocol, 3 (0x03), is shown in the table below. bit 7 6 5 4 3 2 1 0 Protocol Version 0 0 0 0 0 0 1 1 Connect flags The Clean start, Will, Will QoS, and Retain flags are present in the variable header of a CONNECT message. Clean start flag Position: bit 1 of the Connect flags byte. Returns the client to a known, "clean" state with the broker. If the flag is set, the broker discards any outstanding messages, deletes all subscriptions for the client, and resets the Message ID to 1. The client proceeds without the risk of any data from previous connections interfering with the current connection. The format of the Clean start flag is shown in the table below. bit 7 6 5 4 3 2 1 0 Reserved Reserved Will Retain Will QoS Will Flag Clean Start Reserved x x x x x x x Bits 7, 6, and 0 of this byte are not used in the current version of the protocol. They are reserved for future use. Will flag Position: bit 2 of the Connect flags byte. The Will message defines that a message is published on behalf of the client by the broker when either an I/O error is encountered by the broker during communication with the client, or the client fails to communicate within the Keep Alive timer schedule. Sending a Will message is not triggered by the broker receiving a DISCONNECT message from the client. If the Will flag is set, the Will QoS and Will Retain fields must be present in the Connect flags byte, and the Will Topic and Will Message fields must be present in the payload. The format of the Will flag is shown in the table below. bit 7 6 5 4 3 2 1 0 Reserved Reserved Will Retain Will QoS Will Flag Clean Start Reserved x x x x x x x Bits 7, 6, and 0 of this byte are not used in the current version of the protocol. They are reserved for future use. Will QoS Position: bits 4 and 3 of the Connect flags byte. A connecting client specifies the QoS level in the Will QoS field for a Will message that is sent in the event that the client is disconnected involuntarily. The Will message is defined in the payload of a CONNECT message. If the Will flag is set, the Will QoS field is mandatory, otherwise its value is disregarded. The value of Will QoS is 0 (0x00), 1 (0x01), or 2 (0x02). The Will QoS flag is shown in the table below. bit 7 6 5 4 3 2 1 0 Reserved Reserved Will Retain Will QoS Will Flag Clean Start Reserved x x x 1 x x Bits 7, 6, and 0 of this byte are not used in the current version of the protocol. They are reserved for future use. Will Retain flag Position: bit 5 of the Connect flags byte. The Will Retain flag indicates whether or not broker should retain the Will message which is published by the broker on behalf of the client in the event that the client is disconnected unexpectedly. The Will Retain flag is mandatory if the Will flag is set, otherwise, it is disregarded. The format of the Will Retain flag is shown in the table below. bit 7 6 5 4 3 2 1 0 Reserved Reserved Will Retain Will QoS Will Flag Clean Start Reserved x x x x 1 x x Bits 7, 6, and 0 of this byte are not used in the current version of the protocol. They are reserved for future use. Keep Alive timer The Keep Alive timer is present in the variable header of a MQTT CONNECT message. The Keep Alive timer, measured in seconds, defines the maximum time interval between messages received from a client. It enables the broker to detect that the network connection to a client has dropped, without having to wait for the long TCP/IP timeout. The client has a responsibility to send a message within each Keep Alive time period. In the absence of a data-related message during the time period, the client sends a PINGREQ message, which the broker acknowledges with a PINGRESP message. If the broker does not receive a message from the client within one and a half times the Keep Alive time period (the client is allowed "grace" of half a time period), it disconnects the client as if the client had sent a DISCONNECT message. This action does not impact any of the client's subscriptions. See DISCONNECT for more details. The Keep Alive timer is a 16-bit value that represents the number of seconds for the time period. The actual value is application-specific, but a typical value is a few minutes. The maximum value is approximately 18 hours. A value of zero (0) means the client is not disconnected. The format of the Keep Alive timer is shown in the table below. The ordering of the 2 bytes of the Keep Alive Timer is MSB, then LSB (big-endian). bit 7 6 5 4 3 2 1 0 Keep Alive MSB Keep Alive LSB Connect return code The connect return code is resent in the variable header of a MQTT CONNACK message. This field defines a one byte unsigned return code. The meanings of the values, shown in the tables below, are specific to the message type. A return code of zero (0) usually indicates success. Enumeration HEX Meaning 0 0x00 Connection Accepted 1 0x01 Connection Refused: unacceptable protocol version 2 0x02 Connection Refused: identifier rejected 3 0x03 Connection Refused: broker unavailable 4-255 Reserved for future use bit 7 6 5 4 3 2 1 0 Return Code Topic name The topic name is present in the variable header of an MQTT PUBLISH message. The topic name is the key that identifies the information channel to which payload data is published. Subscribers use the key to identify the information channels on which they want to receive published information. The topic name is a UTF-encoded string. See MQTT and UTF-8 for more information. Topic name has an upper length limit of 32,767 characters. 2.3. Payload The following types of MQTT command message have a payload: CONNECT The payload contains one or three UTF-8 encoded strings. The first string uniquely identifies the client to the broker. The second string is the Will topic, and the third string is the Will message. The second and third strings are present only if the Will flag is set in the CONNECT Flags byte. SUBSCRIBE The payload contains a list of topic names to which the client can subscribe, and the QoS level. These strings are UTF-encoded. SUBACK The payload contains a list of granted QoS levels. These are the QoS levels at which the administrators for the broker have permitted the client to subscribe to a particular Topic Name. Granted QoS levels are listed in the same order as the topic names in the corresponding SUBSCRIBE message. The payload part of a PUBLISH message contains application-specific data only. No assumptions are made about the nature or content of the data, and this part of the message is treated as a BLOB. If you want an application to apply compression to the payload data, you need to define in the application the appropriate payload flag fields to handle the compression details. You cannot define application-specific flags in the fixed or variable headers. 2.4. Message identifiers The message identifier is present in the variable header of the following MQTT messages: PUBLISH, PUBACK, PUBREC, PUBREL, PUBCOMP, SUBSCRIBE, SUBACK, UNSUBSCRIBE, UNSUBACK. The Message Identifier (Message ID) field is only present in messages where the QoS bits in the fixed header indicate QoS levels 1 or 2. See Quality of Service levels and flows for more information. The Message ID is a 16-bit unsigned integer. It typically increases by exactly one from one message to the next, but is not required to do so. This assumes that there are never more than 65,535 messages "in flight" between one particular client-broker pair at any time. The ordering of the two bytes of the Message Identifier is MSB, then LSB (big-endian). Do not use Message ID 0. It is reserved as an invalid Message ID. bit 7 6 5 4 3 2 1 0 Message Identifier MSB Message Identifier LSB 2.5. MQTT and UTF-8 UTF-8 is an efficient encoding of Unicode character-strings that optimizes the encoding of ASCII characters in support of text-based communications. The MQTT protocol uses a subset of UTF-8. Only single byte (non-extended) characters are supported. The UTF string format is shown in the table below. bit 7 6 5 4 3 2 1 0 byte 1 Message Length MSB byte 2 Message Length LSB bytes 3 ... Encoded Character Data Message Length is the number of bytes of encoded string characters, not the number of characters. For ASCII strings, however, these are the same. The format of encoded characters for ASCII codes 0x01 to 0x7F are shown in the table below. bit 7 6 5 4 3 2 1 0 0 ASCII code of character For example, the ASCII text string OTWP is encoded in UTF-8 as shown in the table below. bit 7 6 5 4 3 2 1 0 byte 1 Message Length MSB (0x00) 0 0 0 0 0 0 0 0 byte 2 Message Length LSB (0x04) 0 0 0 0 0 1 0 0 byte 3 'O' (0x4F) 0 1 0 0 1 1 1 1 byte 4 'T' (0x54) 0 1 0 1 0 1 0 0 byte 5 'W' (0x57) 0 1 0 1 0 1 1 1 byte 6 'P' (0x50) 0 1 0 1 0 0 0 0 The Java writeUTF() and readUTF() data stream methods use this format. 3. Command messages CONNECT CONNACK PUBLISH PUBACK PUBREC PUBREL PUBCOMP SUBSCRIBE SUBACK UNSUBSCRIBE UNSUBACK PINGREQ PINGRESP DISCONNECT 3.1. CONNECT - Client requests a connection to a broker When a TCP/IP socket connection is established between the client and the broker, a protocol level session is required. It is assumed that the direction of connection is client to broker, and that the client supports broker listener functionality. Fixed header The fixed header format is shown in the table below. bit 7 6 5 4 3 2 1 0 byte 1 Message Type (1) DUP flag QoS level RETAIN 0 0 0 1 x x x x byte 2 Remaining Length The DUP, QoS, and RETAIN flags are not used in the CONNECT message. Remaining Length is the length of the variable header (12 bytes) and the length of the Payload. This can be a multibyte field. Variable header An example of the format of the variable header is shown in the table below. Description 7 6 5 4 3 2 1 0 Protocol Name byte 1 Length MSB (0) 0 0 0 0 0 0 0 0 byte 2 Length LSB (6) 0 0 0 0 0 1 1 0 byte 3 'M' 0 1 0 0 1 1 0 1 byte 4 'Q' 0 1 0 1 0 0 0 1 byte 5 'I' 0 1 0 0 1 0 0 1 byte 6 's' 0 1 1 1 0 0 1 1 byte 7 'd' 0 1 1 0 0 1 0 0 byte 8 'p' 0 1 1 1 0 0 0 0 Protocol Version Number byte 9 Version (3) 0 0 0 0 0 0 1 1 Connect Flags byte 10 Will RETAIN (0) Will QoS (01) Will flag (1) Clean Start (1) x x 0 0 1 1 1 x Keep Alive timer byte 11 Keep Alive MSB (0) 0 0 0 0 0 0 0 0 byte 12 Keep Alive LSB (10) 0 0 0 0 1 0 1 0 Clean Start flag Set (1). Keep Alive timer Set to 10 seconds (0x000A). Will message Will flag is set (1) Will QoS field is 1 Will RETAIN flag is clear (0) Payload The payload of the CONNECT message contains one or three UTF-encoded strings. If the Will flag is set in the Connect flags byte in the variable header, the payload must contain all three UTF-encoded strings: Client Identifier The first UTF-encoded string. The Client Identifier (Client ID) is between 1 and 23 characters long, and uniquely identifies the client to the broker. It must be unique across all clients connecting to a single broker, and is the key in handling Message IDs messages with QoS levels 1 and 2. If the Client ID contains more than 23 characters, the broker responds to the CONNECT message with a CONNACK return code 2: Identifier Rejected. Will Topic The second UTF-encoded string. The Will Message is published to the Will Topic. The QoS level is defined by the Will QoS field, and the RETAIN status is defined by the Will RETAIN flag in the variable header. Will Message The third UTF-encoded string. The Will Message defines the content of the message that is published to the Will Topic if the client is unexpectedly disconnected. Although the Will Message is UTF-encoded in the CONNECT message, when it is published to the Will Topic only the bytes of the message are sent, not the first two length bytes. The message sent when the broker executes the Will Message is raw ASCII, not UTF-encoded. Response The broker sends a CONNACK message in response to a CONNECT message from a client. If the client does not receive a CONNACK message from the broker within a "reasonable" amount of time, the client closes the TCP/IP socket connection, and restarts the session by opening a socket to the broker and issuing a CONNECT message. A "reasonable" amount of time depends on the type of application and the communications infrastructure. 3.2. CONNACK - Acknowledge connection request The CONNACK message is the message sent by the broker in response to a CONNECT request from a client. Fixed header The fixed header format is shown in the table below. bit 7 6 5 4 3 2 1 0 byte 1 Message type (2) DUP flag QoS flags RETAIN 0 0 1 0 x x x x byte 2 Remaining Length (2) 0 0 0 0 0 0 1 0 The DUP, QoS and RETAIN flags are not used in the CONNACK message. Variable header The variable header format is shown in the table below. Description 7 6 5 4 3 2 1 0 Topic Name Compression Response byte 1 Reserved values. Not used. x x x x x x x x Connect Return Code byte 2 Return Code The values for the one byte unsigned Connect return code field are shown in the table below. Enumeration HEX Meaning 0 0x00 Connection Accepted 1 0x01 Connection Refused: unacceptable protocol version 2 0x02 Connection Refused: identifier rejected 3 0x03 Connection Refused: broker unavailable 4-255 Reserved for future use Return code 2 (identifier rejected) is sent if the unique client identifier is not between 1 and 23 characters in length. Payload There is no payload. 3.3. PUBLISH - Publish message A PUBLISH message is sent by a client to a broker for distribution to interested subscribers. Each PUBLISH message is associated with a topic name (also known as the Subject or Channel). This is a hierarchical name space that defines a taxonomy of information sources for which subscribers can register an interest. A message that is published to a specific topic name is delivered to connected subscribers for that topic. To maintain symmetry, if a client subscribes to one or more topics, any message published to those topics are sent by the broker to the client as a PUBLISH message. Fixed header The table below shows the fixed header format. bit 7 6 5 4 3 2 1 0 byte 1 Message type (3) DUP flag QoS level RETAIN 0 0 1 1 0 0 1 0 byte 2 Remaining Length QoS level Set to 1. DUP flag Set to zero (0). This means that the message is being sent for the first time. For messages with QoS level 1 or level 2 that are being re-sent because a failure has been detected, the DUP bit is set to 1. This indicates to the broker that the message might duplicate a message that has already been received. The significance of this information to the broker depends upon the QoS level. The DUP bit is not used for messages with QoS level 0. RETAIN flag Set to zero. This means do not retain. Remaining Length field The length of the variable header plus the length of the payload. It can be a multibyte field. Variable header The variable header contains the following fields: Topic name A UTF-encoded string. Message ID Present for messages with QoS level 1 and QoS level 2. Typically, the protocol library is responsible for generating the Message ID and passing it back to the publishing application, possibly as a return handle. This approach avoids the risk of multiple applications, or publishing threads, running on a single client generating duplicate Message IDs. A Message ID must not be used in the variable header for messages with QoS level 0. The Message ID is a 16-bit unsigned integer, which typically increases by exactly one from one message to the next, but is not required to do so. The ordering of the 2 bytes of the Message Identifier is MSB, then LSB (big-endian). Message ID 0 (that is, 0x0000) is reserved as an invalid Message ID, and must not be used. The table below shows an example variable header for a PUBLISH message. Field Value Topic Name: "a/b" QoS level 1 Message ID: 10 The format of the variable header in this case is shown in the table below. Description 7 6 5 4 3 2 1 0 Topic Name byte 1 Length MSB (0) 0 0 0 0 0 0 0 0 byte 2 Length LSB (3) 0 0 0 0 0 0 1 1 byte 3 'a' (0x61) 0 1 1 0 0 0 0 1 byte 4 '/' (0x2F) 0 0 1 0 1 1 1 1 byte 5 'b' (0x62) 0 1 1 0 0 0 1 0 Message Identifier byte 6 Message ID MSB (0) 0 0 0 0 0 0 0 0 byte 7 Message ID LSB (10) 0 0 0 0 1 0 1 0 Payload Contains the data for publishing. The content and format of the data is application specific. The Remaining Length field in the fixed header includes both the variable header length and the payload length. Response The response to a PUBLISH message depends on the QoS level. The table below shows the expected responses. QoS Level Expected response QoS 0 None QoS 1 PUBACK QoS 2 PUBREC Actions PUBLISH messages can be sent either from a publisher to the broker, or from the broker to a subscriber. The action of the recipient when it receives a message depends on the QoS level of the message: QoS 0 Make the message available to any interested parties. QoS 1 Log the message to persistent storage, make it available to any interested parties, and return a PUBACK message to the sender. QoS 2 Log the message to persistent storage, do not make it available to interested parties yet, and return a PUBREC message to the sender. If the broker receives the message, interested parties means subscribers to the topic of the PUBLISH message. If a subscriber receives the message, interested parties means the application on the client which has subscribed to one or more topics, and is waiting for a message from the broker. 3.4. PUBACK - Publish acknowledgment A PUBACK message is the response to a PUBLISH message with QoS level 1. A PUBACK message is sent by a broker in response to a PUBLISH message from a publishing client, and by a subscriber in response to a PUBLISH message from the broker. Fixed header The table below shows the format of the fixed header. bit 7 6 5 4 3 2 1 0 byte 1 Message Type (4) DUP flag QoS level RETAIN 0 1 0 0 x x x x byte 2 Remaining Length (2) 0 0 0 0 0 0 1 0 QoS level Not used. DUP flag Not used. RETAIN flag Not used. Remaining Length field This is the length of the variable header (2 bytes). It can be a multibyte field. Variable header Contains the Message Identifier (Message ID) for the PUBLISH message that is being acknowledged. The table below shows the format of the variable header. bit 7 6 5 4 3 2 1 0 byte 1 Message ID MSB byte 2 Message ID LSB Payload There is no payload. Actions When the client receives the PUBACK message, it discards the original message, because it is also received (and logged) by the broker. 3.5. PUBREC - Assured publish received (part 1) A PUBREC message is the response to a PUBLISH message with QoS level 2. It is the second message of the QoS level 2 protocol flow. A PUBREC message is sent by the broker in response to a PUBLISH message from a publishing client, or by a subscriber in response to a PUBLISH message from the broker. Fixed header The table below shows the fixed header format. bit 7 6 5 4 3 2 1 0 byte 1 Message Type (5) DUP flag QoS level RETAIN 0 1 0 1 x x x x byte 2 Remaining Length (2) 0 0 0 0 0 0 1 0 QoS level Not used. DUP flag Not used. RETAIN flag Not used. Remaining Length field The length of the variable header (2 bytes). It can be a multibyte field. Variable header The variable header contains the Message ID for the acknowledged PUBLISH . The table below shows the format of the variable header. bit 7 6 5 4 3 2 1 0 byte 1 Message ID MSB byte 2 Message ID LSB Payload There is no payload. Actions When it receives a PUBREC message, the recipient sends a PUBREL message to the sender with the same Message ID as the PUBREC message. 3.6. PUBREL - Assured Publish Release (part 2) A PUBREL message is the response either from a publisher to a PUBREC message from the broker, or from the broker to a PUBREC message from a subscriber. It is the third message in the QoS 2 protocol flow. Fixed header The table below shows the fixed header format. bit 7 6 5 4 3 2 1 0 byte 1 Message Type (6) DUP flag QoS level RETAIN 0 1 1 0 x x x x byte 2 Remaining Length (2) 0 0 0 0 0 0 1 0 QoS level Not used. DUP flag Not used. RETAIN flag Not used. Remaining Length field The length of the variable header (2 bytes). It can be a multibyte field. Variable header The variable header contains the same Message ID as the PUBREC message that is being acknowledged. The table below shows the format of the variable header. bit 7 6 5 4 3 2 1 0 byte 1 Message ID MSB byte 2 Message ID LSB Payload There is no payload. Actions When the broker receives a PUBREL message from a publisher, the broker makes the original message available to interested subscribers, and sends a PUBCOMP message with the same Message ID to the publisher. When a subscriber receives a PUBREL message from the broker, the subscriber makes the message available to the subscribing application and sends a PUBCOMP message to the broker. 3.7. PUBCOMP - Assured publish complete (part 3) This message is either the response from the broker to a PUBREL message from a publisher, or the response from a subscriber to a PUBREL message from the broker. It is the fourth and last message in the QoS 2 protocol flow. Fixed header The table below shows the fixed header format. bit 7 6 5 4 3 2 1 0 byte 1 Message Type (7) DUP flag QoS level RETAIN 0 1 1 1 x x x x byte 2 Remaining Length (2) 0 0 0 0 0 0 1 0 QoS level Not used. DUP flag Not used. RETAIN flag Not used. Remaining Length field The length of the variable header (2 bytes). It can be a multibyte field. Variable header The variable header contains the same Message ID as the acknowledged PUBREL message. bit 7 6 5 4 3 2 1 0 byte 1 Message ID MSB byte 2 Message ID LSB Payload There is no payload. Actions When the client receives a PUBCOMP message, it discards the original message because it has been delivered, exactly once, to the broker. 3.8. SUBSCRIBE - Subscribe to named topics The SUBSCRIBE message allows a client to register an interest in one or more topic names with the broker. Messages published to these topics are delivered from the broker to the client as PUBLISH messages. The SUBSCRIBE message also specifies the QoS level at which the subscriber wants to receive published messages. Fixed header The table below shows the fixed header format. bit 7 6 5 4 3 2 1 0 byte 1 Message Type (8) DUP flag QoS level RETAIN 1 0 0 0 0 0 1 x byte 2 Remaining Length QoS level SUBSCRIBE messages use QoS level 1 to acknowledge multiple subscription requests. The corresponding SUBACK message is identified by matching the Message ID. This also handles SUBSCRIBE messages retries in the same way as PUBLISH messages. DUP flag In this example the DUP flag is set to zero (0) to indicate that the message is being sent for the first time. If this message is being re-sent because a SUBACK message has not arrived after a specified timeout period, the DUP bit is set to indicate to the broker that it might be a duplicate of a message already received. RETAIN flag Not used. Remaining Length field The length of the payload. It can be a multibyte field. Variable header The variable header contains a Message ID because a SUBSCRIBE message has a QoS level of 1. Typically, the protocol library generates the Message ID, and passes it back to the publishing application, for example as a return handle. This prevents multiple applications, or multiple publishing threads, running on a single client from generating duplicate Message IDs. Message ID 0 (0x0000) is reserved as an invalid Message ID, and must not be used. The Message ID is a 16-bit unsigned integer, which typically increases by exactly one from one message to the next, but is not required to do so. The two bytes of the Message ID are ordered as MSB, followed by LSB (big-endian). The table below shows an example format for the variable header with a Message ID of 10. Description 7 6 5 4 3 2 1 0 Message Identifier byte 1 Message ID MSB (0) 0 0 0 0 0 0 0 0 byte 2 Message ID LSB (10) 0 0 0 0 1 0 1 0 Payload The payload of a SUBSCRIBE message contains a list of topic names to which the client wants to subscribe, and the QoS level at which the client wants to receive the messages. The strings are UTF-encoded, and the QoS level occupies 2 bits of a single byte. These topic/QoS pairs are packed contiguously as shown in the example payload in the table below. Topic name "a/b" Requested QoS 1 Topic name "c/d" Requested QoS 2 Topic names in a SUBSCRIBE message are not compressed. The format of the example payload is shown in the table below. Description 7 6 5 4 3 2 1 0 Topic name byte 1 Length MSB (0) 0 0 0 0 0 0 0 0 byte 2 Length LSB (3) 0 0 0 0 0 0 1 1 byte 3 'a' (0x61) 0 1 1 0 0 0 0 1 byte 4 '/' (0x2F) 0 0 1 0 1 1 1 1 byte 5 'b' (0x62) 0 1 1 0 0 0 1 0 Requested QoS byte 6 Requested QoS (1) x x x x x x 0 1 Topic Name byte 7 Length MSB (0) 0 0 0 0 0 0 0 0 byte 8 Length LSB (3) 0 0 0 0 0 0 1 1 byte 9 'c' (0x63) 0 1 1 0 0 0 1 1 byte 10 '/' (0x2F) 0 0 1 0 1 1 1 1 byte 11 'd' (0x64) 0 1 1 0 0 1 0 0 Requested QoS byte 12 Requested QoS (2) x x x x x x 1 0 Assuming that the requested QoS level is granted, the client receives PUBLISH messages at less than or equal to this level, depending on the QoS level of the original message from the publisher. For example, if a client has a QoS level 1 subscription to a particular topic, then a QoS level 0 PUBLISH message to that topic is delivered to the client at QoS level 0. A QoS level 2 PUBLISH message to the same topic is downgraded to QoS level 1 for delivery to the client. A corollary to this is that subscribing to a topic at QoS level 2 is equivalent to saying "I would like to receive messages on this topic at the QoS at which they are published". The Requested QoS field is encoded in the byte following each UTF-encoded topic name as shown in the table below. bit 7 6 5 4 3 2 1 0 Reserved Reserved Reserved Reserved Reserved Reserved QoS level x x x x x x The upper 6 bits of this byte are not used in the current version of the protocol. They are reserved for future use. Response When it receives a SUBSCRIBE message from a client, the broker responds with a SUBACK message. 3.9. SUBACK - Subscription acknowledgement A SUBACK message is sent by the broker to the client to confirm receipt of a SUBSCRIBE message. A SUBACK message contains a list of granted QoS levels. These are the levels at which the administrators for the broker permit the client to subscribe to a specific topic name. In the current version of the protocol, the broker always grants the QoS level requested by the subscriber. The order of granted QoS levels in the SUBACK message matches the order of the topic names in the corresponding SUBSCRIBE message. Fixed header The table below shows the fixed header format. bit 7 6 5 4 3 2 1 0 byte 1 Message Type (9) DUP flag QoS level RETAIN 1 0 0 1 x x x x byte 2 Remaining Length QoS level Not used. DUP flag Not used. RETAIN flag Not used. Remaining Length field The length of the payload. It can be a multibyte field. Variable header The variable header contains the Message ID for the SUBSCRIBE message that is being acknowledged. The table below shows the format of the variable header. 7 6 5 4 3 2 1 0 byte 1 Message ID MSB byte 2 Message ID LSB Payload The payload contains a vector of granted QoS levels. Each level corresponds to a topic name in the corresponding SUBSCRIBE message. The order of QoS levels in the SUBACK message matches the order of topic name and Requested QoS pairs in the SUBSCRIBE message. The Message ID in the variable header enables you to match SUBACK messages with the corresponding SUBSCRIBE messages. The table below shows the Granted QoS field encoded in a byte. bit 7 6 5 4 3 2 1 0 Reserved Reserved Reserved Reserved Reserved Reserved QoS level x x x x x x The upper 6 bits of this byte are not used in the current version of the protocol. They are reserved for future use. The table below shows an example payload. Granted QoS 0 Granted QoS 2 The table below shows the format of this payload. Description 7 6 5 4 3 2 1 0 byte 1 Granted QoS (0) x x x x x x 0 0 byte 1 Granted QoS (2) x x x x x x 1 0 3.10. UNSUBSCRIBE - Unsubscribe from named topics An UNSUBSCRIBE message is sent by the client to the broker to unsubscribe from named topics. Fixed header The table below shows an example fixed header format. bit 7 6 5 4 3 2 1 0 byte 1 Message Type (10) DUP flag QoS level RETAIN 1 0 1 0 0 0 1 x byte 2 Remaining Length QoS level The level of QoS is 1 to acknowledge multiple unsubscribe requests. The corresponding UNSUBACK message is identified by the Message ID. Retries are handled in the same way as PUBLISH messages. DUP flag In this example the DUP flag is set to zero (0) to indicate that the message is being sent for the first time. If this message is being re-sent because a SUBACK message has not arrived after a specified timeout period, the DUP bit is set to indicate to the broker that it might be a duplicate of a message already received. RETAIN flag Not used. Remaining Length This is the length of the Payload. It can be a multibyte field. Variable header The variable header contains a Message ID because an UNSUBSCRIBE message has a QoS level of 1. Typically, the protocol library generates the Message ID, and passes it back to the publishing application, for example as a return handle. This prevents multiple applications, or multiple publishing threads, running on a single client from generating duplicate Message IDs. Message ID 0 (0x0000) is reserved as an invalid Message ID, and must not be used. The Message ID is a 16-bit unsigned integer, which typically increases by exactly one from one message to the next, but is not required to do so. The two bytes of the Message ID are ordered as MSB, followed by LSB (big-endian). The table below shows an example format for the variable header with a Message ID of 10. Description 7 6 5 4 3 2 1 0 Message Identifier byte 1 Message ID MSB (0) 0 0 0 0 0 0 0 0 byte 2 Message ID LSB (10) 0 0 0 0 1 0 1 0 Payload The client unsubscribes from the list of topics named in the payload. The strings are UTF-encoded and are packed contiguously. Topic names in a UNSUBSCRIBE message are not compressed. The table below shows an example payload. Topic Name "a/b" Topic Name "c/d" The table below shows the format of this payload. Description 7 6 5 4 3 2 1 0 Topic Name byte 1 Length MSB (0) 0 0 0 0 0 0 0 0 byte 2 Length LSB (3) 0 0 0 0 0 0 1 1 byte 3 'a' (0x61) 0 1 1 0 0 0 0 1 byte 4 '/' (0x2F) 0 0 1 0 1 1 1 1 byte 5 'b' (0x62) 0 1 1 0 0 0 1 0 Topic Name byte 6 Length MSB (0) 0 0 0 0 0 0 0 0 byte 7 Length LSB (3) 0 0 0 0 0 0 1 1 byte 8 'c' (0x63) 0 1 1 0 0 0 1 1 byte 9 '/' (0x2F) 0 0 1 0 1 1 1 1 byte 10 'd' (0x64) 0 1 1 0 0 1 0 0 Response The broker sends an UNSUBACK to a client in response to an UNSUBSCRIBE message. 3.11. UNSUBACK - Unsubscribe acknowledgment The UNSUBACK message is sent by the broker to the client to confirm receipt of an UNSUBSCRIBE message. Fixed header The table below shows the fixed header format. bit 7 6 5 4 3 2 1 0 byte 1 Message Type (11) DUP flag QoS level RETAIN 1 0 1 1 x x x x byte 2 Remaining length (2) 0 0 0 0 0 0 1 0 QoS level Not used. DUP flag Not used. RETAIN flag Not used. Remaining Length The length of the Variable Header (2 bytes). Variable header The variable header contains the Message ID for the UNSUBSCRIBE message that is being acknowledged. The table below shows the format of the variable header. bit 7 6 5 4 3 2 1 0 byte 1 Message ID MSB byte 2 Message ID LSB Payload There is no payload. 3.12. PINGREQ - PING request The PINGREQ message is an "are you alive" message that is sent from or received by a connected client. Fixed header The table below shows the fixed header format. bit 7 6 5 4 3 2 1 0 byte 1 Message Type (12) DUP flag QoS level RETAIN 1 1 0 0 x x x x byte 2 Remaining Length (0) 0 0 0 0 0 0 0 0 The DUP, QoS, and RETAIN flags are not used. Variable header There is no variable header. Payload There is no payload. Response The response to a PINGREQ message is a PINGRESP message. 3.13. PINGRESP - PING response A PINGRESP message is the response to a PINGREQ message and means "yes I am alive". Keep Alive messages flow in either direction, sent either by a connected client or the broker. Fixed header The table below shows the fixed header format: bit 7 6 5 4 3 2 1 0 byte 1 Message Type (13) DUP flag QoS level RETAIN 1 1 0 1 x x x x byte 2 Remaining Length (0) 0 0 0 0 0 0 0 0 The DUP, QoS, and RETAIN flags are not used. Payload There is no payload. Variable header There is no variable header. 3.14. DISCONNECT - Disconnect notification The DISCONNECT message is sent from the client to the broker to indicate that it is about to close its TCP/IP connection. This allows for a clean disconnection, rather than just dropping the line. Sending the DISCONNECT message does not affect existing subscriptions. They are persistent until they either explicitly unsubscribed, or if there is a clean start. The broker retains QoS 1 and QoS 1 messages for topics to which the client is unsubscribed until the client reconnects. QoS 0 messages are not retained, since they are delivered on a best efforts basis. Fixed header The fixed header format is shown in the table below. bit 7 6 5 4 3 2 1 0 byte 1 Message Type (14) DUP flag QoS level RETAIN 1 1 1 0 x x x x byte 2 Remaining Length (0) 0 0 0 0 0 0 0 0 The DUP, QoS, and RETAIN flags are not used in the DISCONNECT message. Payload There is no payload. Variable header There is no variable header. 4. Flows 4.1. Quality of Service levels and flows MQTT delivers messages according to the levels defined in a Quality of Service (QoS). The levels are described below: QoS level 0: At most once delivery The message is delivered according to the best efforts of the underlying TCP/IP network. A response is not expected and no retry semantics are defined in the protocol. The message arrives at the broker either once or not at all. The table below shows the QoS level 0 protocol flow. Client Message and direction Broker QoS = 0 PUBLISH ----------> Action: Publish message to subscribers QoS level 1: At least once delivery The receipt of a message by the broker is acknowledged by a PUBACK message. If there is an identified failure of either the communications link or the sending device, or the acknowledgement message is not received after a specified period of time, the sender resends the message with the DUP bit set in the message header. The message arrives at the broker at least once. Both SUBSCRIBE and UNSUBSCRIBE messages use QoS level 1. A message with QoS level 1 has a Message ID in the message header. The table below shows the QoS level 1 protocol flow. Client Message and direction Broker QoS = 1 DUP = 0 Message ID = x PUBLISH ----------> Actions: Store message in database Publish message to subscribers Action: Discard message PUBACK <---------- If the client does not receive a PUBACK message (either within a time period defined in the application, or if a failure is detected and the communications session is restarted), the client resends the PUBLISH message with the DUP flag set. When it receives a duplicate message from the client, the broker republishes the message to the subscribers, and sends another PUBACK message. QoS level 2: Exactly once delivery Additional protocol flows above QoS level 1 ensure that duplicate messages are not delivered to the receiving application. This is the highest level of delivery, for use when duplicate messages are not acceptable. There is an increase in network traffic, but it is usually acceptable because of the importance of the message content. A message with QoS level 2 has a Message ID in the message header. The table below shows the QoS level 2 protocol flow. Client Message and direction Broker QoS = 2 DUP = 0 Message ID = x PUBLISH ----------> Action: Store message in database PUBREC <---------- Message ID = x Message ID = x PUBREL ----------> Actions: Update database Publish message to subscribers Action: Discard message PUBCOMP <---------- Message ID = x If a failure is detected, or after a defined time period, each part of the protocol flow is retried with the DUP bit set. The additional protocol flows ensure that the message is delivered to subscribers once only. Because QoS1 and QoS2 indicate that messages must be delivered, the broker stores messages in a database. If the broker has problems accessing this data, messages might be lost. Assumptions for QoS levels 1 and 2 In any network, it is possible for devices or communication links to fail. If this happens, one end of the link might not know what is happening at the other end; these are known as in doubt windows. In these scenarios assumptions have to be made about the reliability of the devices and networks involved in message delivery. MQTT assumes that the client and broker are generally reliable, and that the communications channel is more likely to be unreliable. If the client device fails, it is typically a catastrophic failure, rather than a transient one. The possibility of recovering data from the device is low. Some devices have non-volatile storage, for example flash ROM. The provision of more persistent storage on the client device protects the most critical data from some modes of failure. Beyond the basic failure of the communications link, the failure mode matrix becomes complex, resulting in more scenarios than the specification for MQTT can handle. The time delay (retry interval) before resending a message that has not been acknowledged is specific to the application, and is not defined by the protocol specification.
+
+2.1. Fixed header
+
+The message header for each MQTT command message contains a fixed header. The table below shows the fixed header format.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type	DUP flag	QoS level	RETAIN
+
+byte 2	Remaining Length
+
+Contains the Message Type and Flags (Dup, QoS level, and RETAIN) fields.
+
+(At least one byte) contains the Remaining Length field.
+
+The fields are described in the following sections. All data values are in big-endian order: higher order bytes precede lower order bytes. A 16-bit word is presented on the wire as Most Significant Byte (MSB), followed by Least Significant Byte (LSB).
+
+Message Type
+
+Represented as a 4-bit unsigned value. The enumerations for this version of the protocol are shown in the table below.
+
+Mnemonic	Enumeration	Description
+
+Reserved	0	Reserved
+
+CONNECT	1	Client request to connect to Broker
+
+CONNACK	2	Connect Acknowledgment
+
+PUBLISH	3	Publish message
+
+PUBACK	4	Publish Acknowledgment
+
+PUBREC	5	Publish Received (assured delivery part 1)
+
+PUBREL	6	Publish Release (assured delivery part 2)
+
+PUBCOMP	7	Publish Complete (assured delivery part 3)
+
+SUBSCRIBE	8	Client Subscribe request
+
+SUBACK	9	Subscribe Acknowledgment
+
+UNSUBSCRIBE	10	Client Unsubscribe request
+
+UNSUBACK	11	Unsubscribe Acknowledgment
+
+PINGREQ	12	PING Request
+
+PINGRESP	13	PING Response
+
+DISCONNECT	14	Client is Disconnecting
+
+Reserved	15	Reserved
+
+Flags
+
+The remaining bits of byte 1 contain the fields DUP, QoS, and RETAIN. The bit positions are encoded to represent the flags as shown in the table below.
+
+Bit position	Name	Description
+
+3	DUP	Duplicate delivery
+
+2-1	QoS	Quality of Service
+
+0	RETAIN	RETAIN flag
+
+Position: byte 1, bit 3.
+
+This flag is set when the client or broker attempts to re-deliver a PUBLISH message. This applies to messages where the value of QoS is greater than zero (0), and an acknowledgment is required. When the DUP bit is set, the variable header includes a Message ID.
+
+Position: byte 1, bits 2-1.
+
+This flag indicates the level of assurance for delivery of a PUBLISH message. The QoS levels are shown in the table below.
+
+QoS value	bit 2	bit 1	Description
+
+0	0	0	At most once	Fire and Forget	<=1
+
+1	0	1	At least once	Acknowledged delivery	>=1
+
+2	1	0	Exactly once	Assured delivery	=1
+
+3	1	1	Reserved
+
+Position: byte 1, bit 0.
+
+When set, the Retain flag indicates that the broker holds the message, and sends it as an initial message to new subscribers to this topic. This means that a new client connecting to the broker can quickly establish the current number of topics. This is useful where publishers send messages on a "report by exception" basis, and it might be some time before a new subscriber receives data on a particular topic. The data has a value of retained or Last Known Good (LKG).
+
+After sending a SUBSCRIBE message to one or more topics, a subscriber receives a SUBACK message, followed by one message for each newly subscribed topic that has a retained value. The retained value is published from the broker to the subscriber with the Retain flag set and with the same QoS with which it was originally published, and is therefore subject to the usual QoS delivery assurances. The Retain flag is set in the message to the subscribers, to distinguish it from "live" data so that it is handled appropriately by the subscriber.
+
+Because a broker might no longer hold a previously Retained PUBLISH message, there is no guarantee that the subscriber will receive an initial Retained PUBLISH message on a topic.
+
+Remaining Length
+
+Position: byte 2.
+
+Represents the number of bytes remaining within the current message, including data in the variable header and the payload.
+
+The variable length encoding scheme uses a single byte for messages up to 127 bytes long. Longer messages are handled as follows. Seven bits of each byte encode the Remaining Length data, and the eighth bit indicates any following bytes in the representation. Each byte encodes 128 values and a "continuation bit". For example, the number 64 decimal is encoded as a single byte, decimal value 64, hex 0x40. The number 321 decimal (=128x2 + 65) is encoded as two bytes, least significant first. The first byte is 2+128 = 130. Note that the top bit is set to indicate at least one following byte. The second byte is 65.
+
+The protocol limits the number of bytes in the representation to a maximum of four. This allows applications to send messages of up to 268 435 455 (256 MB). The representation of this number on the wire is: 0xFF, 0xFF, 0xFF, 0x7F.
+
+The table below shows the Remaining Length values represented by increasing numbers of bytes.
+
+Digits	From	To
+
+1	0 (0x00)	127 (0x7F)
+
+2	128 (0x80, 0x01)	16 383 (0xFF, 0x7F)
+
+3	16 384 (0x80, 0x80, 0x01)	2 097 151 (0xFF, 0xFF, 0x7F)
+
+4	2 097 152 (0x80, 0x80, 0x80, 0x01)	268 435 455 (0xFF, 0xFF, 0xFF, 0x7F)
+
+The algorithm for encoding a decimal number (X) into the variable length encoding scheme is as follows:
+
+where MOD is the modulo operator ( % in C), DIV is integer division ( / in C), and OR is bit-wise or ( | in C).
+
+The algorithm for decoding the Remaining Length field is as follows:
+
+where AND is the bit-wise and operator ( & in C).
+
+When this algorithm terminates, value contains the Remaining Length in bytes.
+
+Remaining Length encoding is not part of the variable header. The number of bytes used to encode the Remaining Length does not contribute to the value of the Remaining Length. The variable length "extension bytes" are part of the fixed header, not the variable header.
+
+2.2. Variable header
+
+The message header for some types of MQTT command message contains a variable header. It resides between the fixed header and the payload.
+
+The format of the variable header fields are described in the following topics, in the order in which they must appear in the header:
+
+The variable length Remaining Length field is not part of the variable header. The bytes of the Remaining Length field do not contribute to the byte count of the Remaining Length value. This value only takes account of the variable header and the payload. See Fixed header for more information.
+
+Protocol name
+
+The protocol name is present in the variable header of a MQTT CONNECT message. This field is a UTF-encoded string that represents the protocol name MQIsdp, capitalized as shown.
+
+Protocol version
+
+The protocol version is present in the variable header of a CONNECT message.
+
+The field is an 8-bit unsigned value that represents the revision level of the protocol used by the client. The value of the Protocol version field for the current version of the protocol, 3 (0x03), is shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+Protocol Version
+
+0	0	0	0	0	0	1	1
+
+Connect flags
+
+The Clean start, Will, Will QoS, and Retain flags are present in the variable header of a CONNECT message.
+
+Clean start flag
+
+Position: bit 1 of the Connect flags byte.
+
+Returns the client to a known, "clean" state with the broker. If the flag is set, the broker discards any outstanding messages, deletes all subscriptions for the client, and resets the Message ID to 1. The client proceeds without the risk of any data from previous connections interfering with the current connection. The format of the Clean start flag is shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+Reserved	Reserved	Will Retain	Will QoS	Will Flag	Clean Start	Reserved
+
+x	x	x	x	x	x	x
+
+Bits 7, 6, and 0 of this byte are not used in the current version of the protocol. They are reserved for future use.
+
+Will flag
+
+Position: bit 2 of the Connect flags byte.
+
+The Will message defines that a message is published on behalf of the client by the broker when either an I/O error is encountered by the broker during communication with the client, or the client fails to communicate within the Keep Alive timer schedule. Sending a Will message is not triggered by the broker receiving a DISCONNECT message from the client.
+
+If the Will flag is set, the Will QoS and Will Retain fields must be present in the Connect flags byte, and the Will Topic and Will Message fields must be present in the payload.
+
+The format of the Will flag is shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+Reserved	Reserved	Will Retain	Will QoS	Will Flag	Clean Start	Reserved
+
+x	x	x	x	x	x	x
+
+Bits 7, 6, and 0 of this byte are not used in the current version of the protocol. They are reserved for future use.
+
+Will QoS
+
+Position: bits 4 and 3 of the Connect flags byte.
+
+A connecting client specifies the QoS level in the Will QoS field for a Will message that is sent in the event that the client is disconnected involuntarily. The Will message is defined in the payload of a CONNECT message.
+
+If the Will flag is set, the Will QoS field is mandatory, otherwise its value is disregarded.
+
+The value of Will QoS is 0 (0x00), 1 (0x01), or 2 (0x02). The Will QoS flag is shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+Reserved	Reserved	Will Retain	Will QoS	Will Flag	Clean Start	Reserved
+
+x	x	x	1	x	x
+
+Bits 7, 6, and 0 of this byte are not used in the current version of the protocol. They are reserved for future use.
+
+Will Retain flag
+
+Position: bit 5 of the Connect flags byte.
+
+The Will Retain flag indicates whether or not broker should retain the Will message which is published by the broker on behalf of the client in the event that the client is disconnected unexpectedly.
+
+The Will Retain flag is mandatory if the Will flag is set, otherwise, it is disregarded. The format of the Will Retain flag is shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+Reserved	Reserved	Will Retain	Will QoS	Will Flag	Clean Start	Reserved
+
+x	x	x	x	1	x	x
+
+Bits 7, 6, and 0 of this byte are not used in the current version of the protocol. They are reserved for future use.
+
+Keep Alive timer
+
+The Keep Alive timer is present in the variable header of a MQTT CONNECT message.
+
+The Keep Alive timer, measured in seconds, defines the maximum time interval between messages received from a client. It enables the broker to detect that the network connection to a client has dropped, without having to wait for the long TCP/IP timeout. The client has a responsibility to send a message within each Keep Alive time period. In the absence of a data-related message during the time period, the client sends a PINGREQ message, which the broker acknowledges with a PINGRESP message.
+
+If the broker does not receive a message from the client within one and a half times the Keep Alive time period (the client is allowed "grace" of half a time period), it disconnects the client as if the client had sent a DISCONNECT message. This action does not impact any of the client's subscriptions. See DISCONNECT for more details.
+
+The Keep Alive timer is a 16-bit value that represents the number of seconds for the time period. The actual value is application-specific, but a typical value is a few minutes. The maximum value is approximately 18 hours. A value of zero (0) means the client is not disconnected.
+
+The format of the Keep Alive timer is shown in the table below. The ordering of the 2 bytes of the Keep Alive Timer is MSB, then LSB (big-endian).
+
+bit	7	6	5	4	3	2	1	0
+
+Keep Alive MSB
+
+Keep Alive LSB
+
+Connect return code
+
+The connect return code is resent in the variable header of a MQTT CONNACK message.
+
+This field defines a one byte unsigned return code. The meanings of the values, shown in the tables below, are specific to the message type. A return code of zero (0) usually indicates success.
+
+Enumeration	HEX	Meaning
+
+0	0x00	Connection Accepted
+
+1	0x01	Connection Refused: unacceptable protocol version
+
+2	0x02	Connection Refused: identifier rejected
+
+3	0x03	Connection Refused: broker unavailable
+
+4-255	Reserved for future use
+
+bit	7	6	5	4	3	2	1	0
+
+Return Code
+
+Topic name
+
+The topic name is present in the variable header of an MQTT PUBLISH message.
+
+The topic name is the key that identifies the information channel to which payload data is published. Subscribers use the key to identify the information channels on which they want to receive published information.
+
+The topic name is a UTF-encoded string. See MQTT and UTF-8 for more information. Topic name has an upper length limit of 32,767 characters.
+
+2.3. Payload
+
+The following types of MQTT command message have a payload:
+
+The payload part of a PUBLISH message contains application-specific data only. No assumptions are made about the nature or content of the data, and this part of the message is treated as a BLOB.
+
+If you want an application to apply compression to the payload data, you need to define in the application the appropriate payload flag fields to handle the compression details. You cannot define application-specific flags in the fixed or variable headers.
+
+2.4. Message identifiers
+
+The message identifier is present in the variable header of the following MQTT messages: PUBLISH, PUBACK, PUBREC, PUBREL, PUBCOMP, SUBSCRIBE, SUBACK, UNSUBSCRIBE, UNSUBACK.
+
+The Message Identifier (Message ID) field is only present in messages where the QoS bits in the fixed header indicate QoS levels 1 or 2. See Quality of Service levels and flows for more information.
+
+The Message ID is a 16-bit unsigned integer. It typically increases by exactly one from one message to the next, but is not required to do so. This assumes that there are never more than 65,535 messages "in flight" between one particular client-broker pair at any time.
+
+The ordering of the two bytes of the Message Identifier is MSB, then LSB (big-endian).
+
+Do not use Message ID 0. It is reserved as an invalid Message ID.
+
+bit	7	6	5	4	3	2	1	0
+
+Message Identifier MSB
+
+Message Identifier LSB
+
+2.5. MQTT and UTF-8
+
+UTF-8 is an efficient encoding of Unicode character-strings that optimizes the encoding of ASCII characters in support of text-based communications.
+
+The MQTT protocol uses a subset of UTF-8. Only single byte (non-extended) characters are supported.
+
+The UTF string format is shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Length MSB
+
+byte 2	Message Length LSB
+
+bytes 3 ...	Encoded Character Data
+
+Message Length is the number of bytes of encoded string characters, not the number of characters. For ASCII strings, however, these are the same. The format of encoded characters for ASCII codes 0x01 to 0x7F are shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+0	ASCII code of character
+
+For example, the ASCII text string OTWP is encoded in UTF-8 as shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Length MSB (0x00)
+
+0	0	0	0	0	0	0	0
+
+byte 2	Message Length LSB (0x04)
+
+0	0	0	0	0	1	0	0
+
+byte 3	'O' (0x4F)
+
+0	1	0	0	1	1	1	1
+
+byte 4	'T' (0x54)
+
+0	1	0	1	0	1	0	0
+
+byte 5	'W' (0x57)
+
+0	1	0	1	0	1	1	1
+
+byte 6	'P' (0x50)
+
+0	1	0	1	0	0	0	0
+
+The Java writeUTF() and readUTF() data stream methods use this format.
+
+3. Command messages
+
+CONNECT
+
+CONNACK
+
+PUBLISH
+
+PUBACK
+
+PUBREC
+
+PUBREL
+
+PUBCOMP
+
+SUBSCRIBE
+
+SUBACK
+
+UNSUBSCRIBE
+
+UNSUBACK
+
+PINGREQ
+
+PINGRESP
+
+DISCONNECT
+
+3.1. CONNECT - Client requests a connection to a broker
+
+When a TCP/IP socket connection is established between the client and the broker, a protocol level session is required. It is assumed that the direction of connection is client to broker, and that the client supports broker listener functionality.
+
+Fixed header
+
+The fixed header format is shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (1)	DUP flag	QoS level	RETAIN
+
+0	0	0	1	x	x	x	x
+
+byte 2	Remaining Length
+
+The DUP, QoS, and RETAIN flags are not used in the CONNECT message.
+
+Remaining Length is the length of the variable header (12 bytes) and the length of the Payload. This can be a multibyte field.
+
+Variable header
+
+An example of the format of the variable header is shown in the table below.
+
+Description	7	6	5	4	3	2	1	0
+
+Protocol Name
+
+byte 1	Length MSB (0)	0	0	0	0	0	0	0	0
+
+byte 2	Length LSB (6)	0	0	0	0	0	1	1	0
+
+byte 3	'M'	0	1	0	0	1	1	0	1
+
+byte 4	'Q'	0	1	0	1	0	0	0	1
+
+byte 5	'I'	0	1	0	0	1	0	0	1
+
+byte 6	's'	0	1	1	1	0	0	1	1
+
+byte 7	'd'	0	1	1	0	0	1	0	0
+
+byte 8	'p'	0	1	1	1	0	0	0	0
+
+Protocol Version Number
+
+byte 9	Version (3)	0	0	0	0	0	0	1	1
+
+Connect Flags
+
+byte 10	Will RETAIN (0) Will QoS (01) Will flag (1) Clean Start (1)	x	x	0	0	1	1	1	x
+
+Keep Alive timer
+
+byte 11	Keep Alive MSB (0)	0	0	0	0	0	0	0	0
+
+byte 12	Keep Alive LSB (10)	0	0	0	0	1	0	1	0
+
+Will flag is set (1)
+
+Will QoS field is 1
+
+Will RETAIN flag is clear (0)
+
+Payload
+
+The first UTF-encoded string. The Client Identifier (Client ID) is between 1 and 23 characters long, and uniquely identifies the client to the broker. It must be unique across all clients connecting to a single broker, and is the key in handling Message IDs messages with QoS levels 1 and 2. If the Client ID contains more than 23 characters, the broker responds to the CONNECT message with a CONNACK return code 2: Identifier Rejected.
+
+The second UTF-encoded string. The Will Message is published to the Will Topic. The QoS level is defined by the Will QoS field, and the RETAIN status is defined by the Will RETAIN flag in the variable header.
+
+The third UTF-encoded string. The Will Message defines the content of the message that is published to the Will Topic if the client is unexpectedly disconnected.
+
+Although the Will Message is UTF-encoded in the CONNECT message, when it is published to the Will Topic only the bytes of the message are sent, not the first two length bytes. The message sent when the broker executes the Will Message is raw ASCII, not UTF-encoded.
+
+Response
+
+The broker sends a CONNACK message in response to a CONNECT message from a client.
+
+If the client does not receive a CONNACK message from the broker within a "reasonable" amount of time, the client closes the TCP/IP socket connection, and restarts the session by opening a socket to the broker and issuing a CONNECT message. A "reasonable" amount of time depends on the type of application and the communications infrastructure.
+
+3.2. CONNACK - Acknowledge connection request
+
+The CONNACK message is the message sent by the broker in response to a CONNECT request from a client.
+
+Fixed header
+
+The fixed header format is shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message type (2)	DUP flag	QoS flags	RETAIN
+
+0	0	1	0	x	x	x	x
+
+byte 2	Remaining Length (2)
+
+0	0	0	0	0	0	1	0
+
+The DUP, QoS and RETAIN flags are not used in the CONNACK message.
+
+Variable header
+
+The variable header format is shown in the table below.
+
+Description	7	6	5	4	3	2	1	0
+
+Topic Name Compression Response
+
+byte 1	Reserved values. Not used.	x	x	x	x	x	x	x	x
+
+Connect Return Code
+
+byte 2	Return Code
+
+The values for the one byte unsigned Connect return code field are shown in the table below.
+
+Enumeration	HEX	Meaning
+
+0	0x00	Connection Accepted
+
+1	0x01	Connection Refused: unacceptable protocol version
+
+2	0x02	Connection Refused: identifier rejected
+
+3	0x03	Connection Refused: broker unavailable
+
+4-255	Reserved for future use
+
+Return code 2 (identifier rejected) is sent if the unique client identifier is not between 1 and 23 characters in length.
+
+Payload
+
+There is no payload.
+
+3.3. PUBLISH - Publish message
+
+A PUBLISH message is sent by a client to a broker for distribution to interested subscribers. Each PUBLISH message is associated with a topic name (also known as the Subject or Channel). This is a hierarchical name space that defines a taxonomy of information sources for which subscribers can register an interest. A message that is published to a specific topic name is delivered to connected subscribers for that topic.
+
+To maintain symmetry, if a client subscribes to one or more topics, any message published to those topics are sent by the broker to the client as a PUBLISH message.
+
+Fixed header
+
+The table below shows the fixed header format.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message type (3)	DUP flag	QoS level	RETAIN
+
+0	0	1	1	0	0	1	0
+
+byte 2	Remaining Length
+
+For messages with QoS level 1 or level 2 that are being re-sent because a failure has been detected, the DUP bit is set to 1. This indicates to the broker that the message might duplicate a message that has already been received. The significance of this information to the broker depends upon the QoS level. The DUP bit is not used for messages with QoS level 0.
+
+Variable header
+
+The variable header contains the following fields:
+
+Typically, the protocol library is responsible for generating the Message ID and passing it back to the publishing application, possibly as a return handle. This approach avoids the risk of multiple applications, or publishing threads, running on a single client generating duplicate Message IDs.
+
+A Message ID must not be used in the variable header for messages with QoS level 0.
+
+The Message ID is a 16-bit unsigned integer, which typically increases by exactly one from one message to the next, but is not required to do so. The ordering of the 2 bytes of the Message Identifier is MSB, then LSB (big-endian).
+
+Message ID 0 (that is, 0x0000) is reserved as an invalid Message ID, and must not be used.
+
+The table below shows an example variable header for a PUBLISH message.
+
+Field	Value
+
+Topic Name:	"a/b"
+
+QoS level	1
+
+Message ID:	10
+
+The format of the variable header in this case is shown in the table below.
+
+Description	7	6	5	4	3	2	1	0
+
+Topic Name
+
+byte 1	Length MSB (0)	0	0	0	0	0	0	0	0
+
+byte 2	Length LSB (3)	0	0	0	0	0	0	1	1
+
+byte 3	'a' (0x61)	0	1	1	0	0	0	0	1
+
+byte 4	'/' (0x2F)	0	0	1	0	1	1	1	1
+
+byte 5	'b' (0x62)	0	1	1	0	0	0	1	0
+
+Message Identifier
+
+byte 6	Message ID MSB (0)	0	0	0	0	0	0	0	0
+
+byte 7	Message ID LSB (10)	0	0	0	0	1	0	1	0
+
+Payload
+
+Contains the data for publishing. The content and format of the data is application specific. The Remaining Length field in the fixed header includes both the variable header length and the payload length.
+
+Response
+
+The response to a PUBLISH message depends on the QoS level. The table below shows the expected responses.
+
+QoS Level	Expected response
+
+QoS 0	None
+
+QoS 1	PUBACK
+
+QoS 2	PUBREC
+
+Actions
+
+PUBLISH messages can be sent either from a publisher to the broker, or from the broker to a subscriber. The action of the recipient when it receives a message depends on the QoS level of the message:
+
+If the broker receives the message, interested parties means subscribers to the topic of the PUBLISH message. If a subscriber receives the message, interested parties means the application on the client which has subscribed to one or more topics, and is waiting for a message from the broker.
+
+3.4. PUBACK - Publish acknowledgment
+
+A PUBACK message is the response to a PUBLISH message with QoS level 1. A PUBACK message is sent by a broker in response to a PUBLISH message from a publishing client, and by a subscriber in response to a PUBLISH message from the broker.
+
+Fixed header
+
+The table below shows the format of the fixed header.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (4)	DUP flag	QoS level	RETAIN
+
+0	1	0	0	x	x	x	x
+
+byte 2	Remaining Length (2)
+
+0	0	0	0	0	0	1	0
+
+Variable header
+
+Contains the Message Identifier (Message ID) for the PUBLISH message that is being acknowledged. The table below shows the format of the variable header.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message ID MSB
+
+byte 2	Message ID LSB
+
+Payload
+
+There is no payload.
+
+Actions
+
+When the client receives the PUBACK message, it discards the original message, because it is also received (and logged) by the broker.
+
+3.5. PUBREC - Assured publish received (part 1)
+
+A PUBREC message is the response to a PUBLISH message with QoS level 2. It is the second message of the QoS level 2 protocol flow. A PUBREC message is sent by the broker in response to a PUBLISH message from a publishing client, or by a subscriber in response to a PUBLISH message from the broker.
+
+Fixed header
+
+The table below shows the fixed header format.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (5)	DUP flag	QoS level	RETAIN
+
+0	1	0	1	x	x	x	x
+
+byte 2	Remaining Length (2)
+
+0	0	0	0	0	0	1	0
+
+Variable header
+
+The variable header contains the Message ID for the acknowledged PUBLISH . The table below shows the format of the variable header.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message ID MSB
+
+byte 2	Message ID LSB
+
+Payload
+
+There is no payload.
+
+Actions
+
+When it receives a PUBREC message, the recipient sends a PUBREL message to the sender with the same Message ID as the PUBREC message.
+
+3.6. PUBREL - Assured Publish Release (part 2)
+
+A PUBREL message is the response either from a publisher to a PUBREC message from the broker, or from the broker to a PUBREC message from a subscriber. It is the third message in the QoS 2 protocol flow.
+
+Fixed header
+
+The table below shows the fixed header format.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (6)	DUP flag	QoS level	RETAIN
+
+0	1	1	0	x	x	x	x
+
+byte 2	Remaining Length (2)
+
+0	0	0	0	0	0	1	0
+
+Variable header
+
+The variable header contains the same Message ID as the PUBREC message that is being acknowledged. The table below shows the format of the variable header.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message ID MSB
+
+byte 2	Message ID LSB
+
+Payload
+
+There is no payload.
+
+Actions
+
+When the broker receives a PUBREL message from a publisher, the broker makes the original message available to interested subscribers, and sends a PUBCOMP message with the same Message ID to the publisher. When a subscriber receives a PUBREL message from the broker, the subscriber makes the message available to the subscribing application and sends a PUBCOMP message to the broker.
+
+3.7. PUBCOMP - Assured publish complete (part 3)
+
+This message is either the response from the broker to a PUBREL message from a publisher, or the response from a subscriber to a PUBREL message from the broker. It is the fourth and last message in the QoS 2 protocol flow.
+
+Fixed header
+
+The table below shows the fixed header format.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (7)	DUP flag	QoS level	RETAIN
+
+0	1	1	1	x	x	x	x
+
+byte 2	Remaining Length (2)
+
+0	0	0	0	0	0	1	0
+
+Variable header
+
+The variable header contains the same Message ID as the acknowledged PUBREL message.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message ID MSB
+
+byte 2	Message ID LSB
+
+Payload
+
+There is no payload.
+
+Actions
+
+When the client receives a PUBCOMP message, it discards the original message because it has been delivered, exactly once, to the broker.
+
+3.8. SUBSCRIBE - Subscribe to named topics
+
+The SUBSCRIBE message allows a client to register an interest in one or more topic names with the broker. Messages published to these topics are delivered from the broker to the client as PUBLISH messages. The SUBSCRIBE message also specifies the QoS level at which the subscriber wants to receive published messages.
+
+Fixed header
+
+The table below shows the fixed header format.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (8)	DUP flag	QoS level	RETAIN
+
+1	0	0	0	0	0	1	x
+
+byte 2	Remaining Length
+
+Variable header
+
+The variable header contains a Message ID because a SUBSCRIBE message has a QoS level of 1.
+
+Typically, the protocol library generates the Message ID, and passes it back to the publishing application, for example as a return handle. This prevents multiple applications, or multiple publishing threads, running on a single client from generating duplicate Message IDs.
+
+Message ID 0 (0x0000) is reserved as an invalid Message ID, and must not be used. The Message ID is a 16-bit unsigned integer, which typically increases by exactly one from one message to the next, but is not required to do so. The two bytes of the Message ID are ordered as MSB, followed by LSB (big-endian).
+
+The table below shows an example format for the variable header with a Message ID of 10.
+
+Description	7	6	5	4	3	2	1	0
+
+Message Identifier
+
+byte 1	Message ID MSB (0)	0	0	0	0	0	0	0	0
+
+byte 2	Message ID LSB (10)	0	0	0	0	1	0	1	0
+
+Payload
+
+The payload of a SUBSCRIBE message contains a list of topic names to which the client wants to subscribe, and the QoS level at which the client wants to receive the messages. The strings are UTF-encoded, and the QoS level occupies 2 bits of a single byte. These topic/QoS pairs are packed contiguously as shown in the example payload in the table below.
+
+Topic name	"a/b"
+
+Requested QoS	1
+
+Topic name	"c/d"
+
+Requested QoS	2
+
+Topic names in a SUBSCRIBE message are not compressed.
+
+The format of the example payload is shown in the table below.
+
+Description	7	6	5	4	3	2	1	0
+
+Topic name
+
+byte 1	Length MSB (0)	0	0	0	0	0	0	0	0
+
+byte 2	Length LSB (3)	0	0	0	0	0	0	1	1
+
+byte 3	'a' (0x61)	0	1	1	0	0	0	0	1
+
+byte 4	'/' (0x2F)	0	0	1	0	1	1	1	1
+
+byte 5	'b' (0x62)	0	1	1	0	0	0	1	0
+
+Requested QoS
+
+byte 6	Requested QoS (1)	x	x	x	x	x	x	0	1
+
+Topic Name
+
+byte 7	Length MSB (0)	0	0	0	0	0	0	0	0
+
+byte 8	Length LSB (3)	0	0	0	0	0	0	1	1
+
+byte 9	'c' (0x63)	0	1	1	0	0	0	1	1
+
+byte 10	'/' (0x2F)	0	0	1	0	1	1	1	1
+
+byte 11	'd' (0x64)	0	1	1	0	0	1	0	0
+
+Requested QoS
+
+byte 12	Requested QoS (2)	x	x	x	x	x	x	1	0
+
+Assuming that the requested QoS level is granted, the client receives PUBLISH messages at less than or equal to this level, depending on the QoS level of the original message from the publisher. For example, if a client has a QoS level 1 subscription to a particular topic, then a QoS level 0 PUBLISH message to that topic is delivered to the client at QoS level 0. A QoS level 2 PUBLISH message to the same topic is downgraded to QoS level 1 for delivery to the client.
+
+A corollary to this is that subscribing to a topic at QoS level 2 is equivalent to saying "I would like to receive messages on this topic at the QoS at which they are published".
+
+The Requested QoS field is encoded in the byte following each UTF-encoded topic name as shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+Reserved	Reserved	Reserved	Reserved	Reserved	Reserved	QoS level
+
+x	x	x	x	x	x
+
+The upper 6 bits of this byte are not used in the current version of the protocol. They are reserved for future use.
+
+Response
+
+When it receives a SUBSCRIBE message from a client, the broker responds with a SUBACK message.
+
+3.9. SUBACK - Subscription acknowledgement
+
+A SUBACK message is sent by the broker to the client to confirm receipt of a SUBSCRIBE message.
+
+A SUBACK message contains a list of granted QoS levels. These are the levels at which the administrators for the broker permit the client to subscribe to a specific topic name. In the current version of the protocol, the broker always grants the QoS level requested by the subscriber. The order of granted QoS levels in the SUBACK message matches the order of the topic names in the corresponding SUBSCRIBE message.
+
+Fixed header
+
+The table below shows the fixed header format.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (9)	DUP flag	QoS level	RETAIN
+
+1	0	0	1	x	x	x	x
+
+byte 2	Remaining Length
+
+Variable header
+
+7	6	5	4	3	2	1	0
+
+byte 1	Message ID MSB
+
+byte 2	Message ID LSB
+
+Payload
+
+The payload contains a vector of granted QoS levels. Each level corresponds to a topic name in the corresponding SUBSCRIBE message. The order of QoS levels in the SUBACK message matches the order of topic name and Requested QoS pairs in the SUBSCRIBE message. The Message ID in the variable header enables you to match SUBACK messages with the corresponding SUBSCRIBE messages.
+
+The table below shows the Granted QoS field encoded in a byte.
+
+bit	7	6	5	4	3	2	1	0
+
+Reserved	Reserved	Reserved	Reserved	Reserved	Reserved	QoS level
+
+x	x	x	x	x	x
+
+The upper 6 bits of this byte are not used in the current version of the protocol. They are reserved for future use.
+
+The table below shows an example payload.
+
+Granted QoS	0
+
+Granted QoS	2
+
+The table below shows the format of this payload.
+
+Description	7	6	5	4	3	2	1	0
+
+byte 1	Granted QoS (0)	x	x	x	x	x	x	0	0
+
+byte 1	Granted QoS (2)	x	x	x	x	x	x	1	0
+
+3.10. UNSUBSCRIBE - Unsubscribe from named topics
+
+An UNSUBSCRIBE message is sent by the client to the broker to unsubscribe from named topics.
+
+Fixed header
+
+The table below shows an example fixed header format.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (10)	DUP flag	QoS level	RETAIN
+
+1	0	1	0	0	0	1	x
+
+byte 2	Remaining Length
+
+If this message is being re-sent because a SUBACK message has not arrived after a specified timeout period, the DUP bit is set to indicate to the broker that it might be a duplicate of a message already received.
+
+Variable header
+
+The variable header contains a Message ID because an UNSUBSCRIBE message has a QoS level of 1.
+
+Typically, the protocol library generates the Message ID, and passes it back to the publishing application, for example as a return handle. This prevents multiple applications, or multiple publishing threads, running on a single client from generating duplicate Message IDs.
+
+Message ID 0 (0x0000) is reserved as an invalid Message ID, and must not be used. The Message ID is a 16-bit unsigned integer, which typically increases by exactly one from one message to the next, but is not required to do so. The two bytes of the Message ID are ordered as MSB, followed by LSB (big-endian).
+
+The table below shows an example format for the variable header with a Message ID of 10.
+
+Description	7	6	5	4	3	2	1	0
+
+Message Identifier
+
+byte 1	Message ID MSB (0)	0	0	0	0	0	0	0	0
+
+byte 2	Message ID LSB (10)	0	0	0	0	1	0	1	0
+
+Payload
+
+The client unsubscribes from the list of topics named in the payload. The strings are UTF-encoded and are packed contiguously. Topic names in a UNSUBSCRIBE message are not compressed. The table below shows an example payload.
+
+Topic Name	"a/b"
+
+Topic Name	"c/d"
+
+The table below shows the format of this payload.
+
+Description	7	6	5	4	3	2	1	0
+
+Topic Name
+
+byte 1	Length MSB (0)	0	0	0	0	0	0	0	0
+
+byte 2	Length LSB (3)	0	0	0	0	0	0	1	1
+
+byte 3	'a' (0x61)	0	1	1	0	0	0	0	1
+
+byte 4	'/' (0x2F)	0	0	1	0	1	1	1	1
+
+byte 5	'b' (0x62)	0	1	1	0	0	0	1	0
+
+Topic Name
+
+byte 6	Length MSB (0)	0	0	0	0	0	0	0	0
+
+byte 7	Length LSB (3)	0	0	0	0	0	0	1	1
+
+byte 8	'c' (0x63)	0	1	1	0	0	0	1	1
+
+byte 9	'/' (0x2F)	0	0	1	0	1	1	1	1
+
+byte 10	'd' (0x64)	0	1	1	0	0	1	0	0
+
+Response
+
+The broker sends an UNSUBACK to a client in response to an UNSUBSCRIBE message.
+
+3.11. UNSUBACK - Unsubscribe acknowledgment
+
+The UNSUBACK message is sent by the broker to the client to confirm receipt of an UNSUBSCRIBE message.
+
+Fixed header
+
+The table below shows the fixed header format.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (11)	DUP flag	QoS level	RETAIN
+
+1	0	1	1	x	x	x	x
+
+byte 2	Remaining length (2)
+
+0	0	0	0	0	0	1	0
+
+Variable header
+
+The variable header contains the Message ID for the UNSUBSCRIBE message that is being acknowledged. The table below shows the format of the variable header.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message ID MSB
+
+byte 2	Message ID LSB
+
+Payload
+
+There is no payload.
+
+3.12. PINGREQ - PING request
+
+The PINGREQ message is an "are you alive" message that is sent from or received by a connected client.
+
+Fixed header
+
+The table below shows the fixed header format.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (12)	DUP flag	QoS level	RETAIN
+
+1	1	0	0	x	x	x	x
+
+byte 2	Remaining Length (0)
+
+0	0	0	0	0	0	0	0
+
+The DUP, QoS, and RETAIN flags are not used.
+
+Variable header
+
+There is no variable header.
+
+Payload
+
+There is no payload.
+
+Response
+
+The response to a PINGREQ message is a PINGRESP message.
+
+3.13. PINGRESP - PING response
+
+A PINGRESP message is the response to a PINGREQ message and means "yes I am alive". Keep Alive messages flow in either direction, sent either by a connected client or the broker.
+
+Fixed header
+
+The table below shows the fixed header format:
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (13)	DUP flag	QoS level	RETAIN
+
+1	1	0	1	x	x	x	x
+
+byte 2	Remaining Length (0)
+
+0	0	0	0	0	0	0	0
+
+The DUP, QoS, and RETAIN flags are not used.
+
+Payload
+
+There is no payload.
+
+Variable header
+
+There is no variable header.
+
+3.14. DISCONNECT - Disconnect notification
+
+The DISCONNECT message is sent from the client to the broker to indicate that it is about to close its TCP/IP connection. This allows for a clean disconnection, rather than just dropping the line.
+
+Sending the DISCONNECT message does not affect existing subscriptions. They are persistent until they either explicitly unsubscribed, or if there is a clean start. The broker retains QoS 1 and QoS 1 messages for topics to which the client is unsubscribed until the client reconnects. QoS 0 messages are not retained, since they are delivered on a best efforts basis.
+
+Fixed header
+
+The fixed header format is shown in the table below.
+
+bit	7	6	5	4	3	2	1	0
+
+byte 1	Message Type (14)	DUP flag	QoS level	RETAIN
+
+1	1	1	0	x	x	x	x
+
+byte 2	Remaining Length (0)
+
+0	0	0	0	0	0	0	0
+
+The DUP, QoS, and RETAIN flags are not used in the DISCONNECT message.
+
+Payload
+
+There is no payload.
+
+Variable header
+
+There is no variable header.
+
+4. Flows
+
+4.1. Quality of Service levels and flows
+
+MQTT delivers messages according to the levels defined in a Quality of Service (QoS). The levels are described below:
+
+The table below shows the QoS level 0 protocol flow.
+
+Client	Message and direction	Broker
+
+QoS = 0	PUBLISH ---------->	Action: Publish message to subscribers
+
+A message with QoS level 1 has a Message ID in the message header.
+
+The table below shows the QoS level 1 protocol flow.
+
+Client	Message and direction	Broker
+
+QoS = 1 DUP = 0 Message ID = x	PUBLISH ---------->	Actions: Store message in database Publish message to subscribers
+
+Store message in database
+
+Publish message to subscribers
+
+Action: Discard message	PUBACK <----------
+
+If the client does not receive a PUBACK message (either within a time period defined in the application, or if a failure is detected and the communications session is restarted), the client resends the PUBLISH message with the DUP flag set.
+
+When it receives a duplicate message from the client, the broker republishes the message to the subscribers, and sends another PUBACK message.
+
+A message with QoS level 2 has a Message ID in the message header.
+
+The table below shows the QoS level 2 protocol flow.
+
+Client	Message and direction	Broker
+
+QoS = 2 DUP = 0 Message ID = x	PUBLISH ---------->	Action: Store message in database
+
+PUBREC <----------	Message ID = x
+
+Message ID = x	PUBREL ---------->	Actions: Update database Publish message to subscribers
+
+Update database
+
+Publish message to subscribers
+
+Action: Discard message	PUBCOMP <----------	Message ID = x
+
+If a failure is detected, or after a defined time period, each part of the protocol flow is retried with the DUP bit set. The additional protocol flows ensure that the message is delivered to subscribers once only.
+
+Because QoS1 and QoS2 indicate that messages must be delivered, the broker stores messages in a database. If the broker has problems accessing this data, messages might be lost.
+
+Assumptions for QoS levels 1 and 2
+
+In any network, it is possible for devices or communication links to fail. If this happens, one end of the link might not know what is happening at the other end; these are known as in doubt windows. In these scenarios assumptions have to be made about the reliability of the devices and networks involved in message delivery.
+
+MQTT assumes that the client and broker are generally reliable, and that the communications channel is more likely to be unreliable. If the client device fails, it is typically a catastrophic failure, rather than a transient one. The possibility of recovering data from the device is low. Some devices have non-volatile storage, for example flash ROM. The provision of more persistent storage on the client device protects the most critical data from some modes of failure.
+
+Beyond the basic failure of the communications link, the failure mode matrix becomes complex, resulting in more scenarios than the specification for MQTT can handle.
+
+The time delay (retry interval) before resending a message that has not been acknowledged is specific to the application, and is not defined by the protocol specification.

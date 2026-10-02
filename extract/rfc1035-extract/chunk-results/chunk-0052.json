@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0052",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "When a master file is used to load a zone, the operation should be\nsuppressed if any errors are encountered in the master file.",
+      "line_start": 1970,
+      "line_end": 1971,
+      "condition": "When a master file is used to load a zone and any errors are encountered in that file.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The zone-loading operation should be suppressed.",
+      "check_type": "error_handling",
+      "why_checkable": "A master file with an error can be supplied to the loader to observe whether loading is suppressed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Several other validity checks that should be performed in addition to\ninsuring that the file is syntactically correct:",
+      "line_start": 1978,
+      "line_end": 1979,
+      "condition": "When validating a master file used to load a zone.",
+      "required_behavior": "The loader should verify that the master file is syntactically correct.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The master-file validation path can be inspected or exercised with syntax errors to check that syntax is validated.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "1. All RRs in the file should have the same class.",
+      "line_start": 1981,
+      "line_end": 1981,
+      "condition": "When validating a master file used to load a zone.",
+      "required_behavior": "The loader should check that all resource records in the file have the same class.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The classes of parsed records can be compared, and mixed-class master files can exercise the consistency check.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "2. Exactly one SOA RR should be present at the top of the zone.",
+      "line_start": 1983,
+      "line_end": 1983,
+      "condition": "When validating a master file used to load a zone.",
+      "required_behavior": "The loader should check that exactly one SOA resource record is present for the zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Master files with zero, one, or multiple SOA records can exercise the SOA cardinality check.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "2. Exactly one SOA RR should be present at the top of the zone.",
+      "line_start": 1983,
+      "line_end": 1983,
+      "condition": "When validating a master file used to load a zone.",
+      "required_behavior": "The loader should check that the SOA resource record is at the top of the zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The SOA owner name can be compared with the zone apex to check its placement.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3. If delegations are present and glue information is required,\n      it should be present.",
+      "line_start": 1985,
+      "line_end": 1986,
+      "condition": "When a master file used to load a zone contains delegations and glue information is required.",
+      "required_behavior": "The loader should check that the required glue information is present.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The validity-check logic can be inspected for checks of glue presence for delegations requiring glue.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "4. Information present outside of the authoritative nodes in the\n      zone should be glue information, rather than the result of an\n      origin or similar error.",
+      "line_start": 1996,
+      "line_end": 1998,
+      "condition": "When information in a master file is outside the authoritative nodes in the zone.",
+      "required_behavior": "The loader should check that this information is glue information rather than information introduced by an origin or similar error.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Records outside the authoritative nodes can be inspected to determine whether validation checks that they serve as glue.",
+      "eligibility": "eligible"
+    }
+  ]
+}

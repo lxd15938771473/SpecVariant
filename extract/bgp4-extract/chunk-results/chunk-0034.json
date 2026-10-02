@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0034",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Any error detected by the BGP Finite State Machine (e.g., receipt of\n   an unexpected event) is indicated by sending the NOTIFICATION message\n   with the Error Code Finite State Machine Error.",
+      "line_start": 1907,
+      "line_end": 1909,
+      "condition": "Any error is detected by the BGP Finite State Machine, including receipt of an unexpected event.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Send a NOTIFICATION message with Error Code Finite State Machine Error.",
+      "check_type": "error_handling",
+      "why_checkable": "The FSM error path can be inspected and exercised to verify that it sends a NOTIFICATION carrying the specified Error Code.",
+      "eligibility": "eligible"
+    }
+  ]
+}

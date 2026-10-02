@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0043",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An endpoint never sends packets that are protected with old keys.\n   Only the current keys are used.",
+      "line_start": 1718,
+      "line_end": 1719,
+      "condition": "When an endpoint protects a newly sent packet",
+      "required_behavior": "Protect the packet using the endpoint's current packet-protection keys.",
+      "forbidden_behavior": "Protect and send the packet using old packet-protection keys.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packets emitted after a key switch can be tested against current and old keys to verify that only the current key generation protects them.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Packets with higher packet numbers MUST be protected with either the\n   same or newer packet protection keys than packets with lower packet\n   numbers.",
+      "line_start": 1722,
+      "line_end": 1724,
+      "condition": "For any two protected packets where one packet number is higher than the other",
+      "required_behavior": "Protect the higher-numbered packet with the same key generation or a newer key generation than the lower-numbered packet.",
+      "forbidden_behavior": "Protect the higher-numbered packet with an older key generation than the lower-numbered packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A packet trace can order packets by packet number and compare the protection-key generation used for every ordered pair.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint that successfully removes protection with old\n   keys when newer keys were used for packets with lower packet numbers\n   MUST treat this as a connection error of type KEY_UPDATE_ERROR.",
+      "line_start": 1724,
+      "line_end": 1726,
+      "condition": "When an endpoint successfully unprotects a packet with old keys after newer keys were used for a lower-numbered packet",
+      "required_behavior": "Treat the detected key-generation regression as a connection error.",
+      "forbidden_behavior": "Accept or continue processing the regressing packet as valid connection traffic.",
+      "error_behavior": "Terminate the connection with error type KEY_UPDATE_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A peer can send a lower-numbered packet with newer keys followed by a higher-numbered packet decryptable with old keys, and the resulting connection error code can be observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

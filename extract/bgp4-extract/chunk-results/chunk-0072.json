@@ -1,0 +1,19 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0072",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "The parameter MinASOriginationIntervalTimer determines the minimum\n   amount of time that must elapse between successive advertisements of\n   UPDATE messages that report changes within the advertising BGP\n   speaker\u0027s own autonomous systems.",
+                             "line_start":  4748,
+                             "line_end":  4751,
+                             "condition":  "Successive advertisements of UPDATE messages report changes within the advertising BGP speaker\u0027s own autonomous systems.",
+                             "required_behavior":  "Ensure that at least the minimum time determined by MinASOriginationIntervalTimer elapses between successive advertisements.",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "The interval between qualifying UPDATE advertisements can be compared with MinASOriginationIntervalTimer.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

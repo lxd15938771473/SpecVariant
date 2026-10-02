@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0009",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   6.  An endpoint can choose to disable its own flow control, but an\n       endpoint cannot ignore flow-control signals from its peer.",
+      "line_start": 1010,
+      "line_end": 1011,
+      "condition": "When an endpoint receives flow-control signals from its peer, including when the endpoint has disabled its own flow control.",
+      "required_behavior": "Honor the peer's flow-control signals.",
+      "forbidden_behavior": "Ignore the peer's flow-control signals.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can disable the endpoint's own flow control, send peer flow-control signals, and verify that the endpoint still observes them.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Deployments that do not require this capability can advertise a flow-\n   control window of the maximum size (2^31-1) and can maintain this\n   window by sending a WINDOW_UPDATE frame when any data is received.\n   This effectively disables flow control for that receiver.",
+      "line_start": 1034,
+      "line_end": 1037,
+      "condition": "When a deployment chooses the described method to disable flow control for a receiver.",
+      "required_behavior": "Advertise a flow-control window of 2^31-1.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The advertised flow-control window can be inspected and compared with the specified maximum value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Deployments that do not require this capability can advertise a flow-\n   control window of the maximum size (2^31-1) and can maintain this\n   window by sending a WINDOW_UPDATE frame when any data is received.\n   This effectively disables flow control for that receiver.",
+      "line_start": 1034,
+      "line_end": 1037,
+      "condition": "When a deployment chooses the described method to disable flow control for a receiver and receives data.",
+      "required_behavior": "Send a WINDOW_UPDATE frame to maintain the maximum-sized flow-control window when any data is received.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can deliver data and verify that WINDOW_UPDATE frames maintain the advertised window at 2^31-1.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Conversely, a sender is always subject to the flow-control window\n   advertised by the receiver.",
+      "line_start": 1038,
+      "line_end": 1039,
+      "condition": "Whenever an endpoint sends flow-controlled data.",
+      "required_behavior": "Keep transmission subject to the flow-control window advertised by the receiver.",
+      "forbidden_behavior": "Send flow-controlled data beyond the receiver's advertised flow-control window.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The sender's transmitted flow-controlled bytes can be compared with the receiver's currently advertised window.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Even with full awareness of the current bandwidth * delay product,\n   implementation of flow control can be difficult.  Endpoints MUST read\n   and process HTTP/2 frames from the TCP receive buffer as soon as data\n   is available.  Failure to read promptly could lead to a deadlock when\n   critical frames, such as WINDOW_UPDATE, are not read and acted upon.",
+      "line_start": 1047,
+      "line_end": 1051,
+      "condition": "When HTTP/2 frame data is available in the TCP receive buffer.",
+      "required_behavior": "Read HTTP/2 frames from the TCP receive buffer as soon as the data is available.",
+      "forbidden_behavior": "Delay reading available HTTP/2 frame data.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A runtime test can make frame data available and observe whether the endpoint promptly reads it instead of leaving it buffered.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Even with full awareness of the current bandwidth * delay product,\n   implementation of flow control can be difficult.  Endpoints MUST read\n   and process HTTP/2 frames from the TCP receive buffer as soon as data\n   is available.  Failure to read promptly could lead to a deadlock when\n   critical frames, such as WINDOW_UPDATE, are not read and acted upon.",
+      "line_start": 1047,
+      "line_end": 1051,
+      "condition": "When HTTP/2 frame data is available in the TCP receive buffer.",
+      "required_behavior": "Process HTTP/2 frames from the TCP receive buffer as soon as the data is available, including acting upon critical frames such as WINDOW_UPDATE.",
+      "forbidden_behavior": "Leave available HTTP/2 frames unprocessed or fail to act upon critical frames.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A runtime test can supply frames, including WINDOW_UPDATE, and verify prompt parsing and corresponding state changes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Signaling priority information is necessary to attain good\n   performance in many cases.  Where signaling priority information is\n   important, endpoints are encouraged to use an alternative scheme,\n   such as the scheme described in [HTTP-PRIORITY].",
+      "line_start": 1114,
+      "line_end": 1117,
+      "condition": "Where signaling priority information is important.",
+      "required_behavior": "Use an alternative priority-signaling scheme, such as the scheme described in HTTP-PRIORITY.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The passage recommends an implementation choice, but neither when priority signaling is important nor a uniquely required alternative scheme is defined precisely enough for a conformance check.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   Though the priority signaling from RFC 7540 was not widely adopted,\n   the information it provides can still be useful in the absence of\n   better information.  Endpoints that receive priority signals in\n   HEADERS or PRIORITY frames can benefit from applying that\n   information.  In particular, implementations that consume these\n   signals would not benefit from discarding these priority signals in\n   the absence of alternatives.",
+      "line_start": 1119,
+      "line_end": 1125,
+      "condition": "When an endpoint receives RFC 7540 priority signals in HEADERS or PRIORITY frames and lacks better information or alternatives.",
+      "required_behavior": "Apply the received priority information.",
+      "forbidden_behavior": "Discard the received priority signals.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Signal consumption and prioritization decisions are observable, but the passage only describes a potential benefit and does not impose a definite behavioral requirement.",
+      "eligibility": "exclude"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0116",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   An endpoint MUST ignore an ICMP message that claims the PMTU has\n   decreased below QUIC's smallest allowed maximum datagram size.",
+      "line_start": 4718,
+      "line_end": 4719,
+      "condition": "An ICMP message claims that the PMTU has decreased below QUIC's smallest allowed maximum datagram size.",
+      "required_behavior": "The endpoint ignores the ICMP message.",
+      "forbidden_behavior": "The endpoint must not use the message to reduce the PMTU below QUIC's smallest allowed maximum datagram size.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can inject an ICMP message advertising a PMTU below the protocol minimum and verify that the endpoint ignores it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   QUIC endpoints using PMTUD SHOULD validate ICMP messages to protect\n   from packet injection as specified in [RFC8201] and Section 5.2 of\n   [RFC8085].  This validation SHOULD use the quoted packet supplied in\n   the payload of an ICMP message to associate the message with a\n   corresponding transport connection (see Section 4.6.1 of [DPLPMTUD]).",
+      "line_start": 4727,
+      "line_end": 4731,
+      "condition": "A QUIC endpoint uses PMTUD and receives an ICMP message.",
+      "required_behavior": "The endpoint validates the ICMP message to protect against packet injection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests or static inspection can verify that a PMTUD implementation performs ICMP-message validation before acting on received messages.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   [RFC8085].  This validation SHOULD use the quoted packet supplied in\n   the payload of an ICMP message to associate the message with a\n   corresponding transport connection (see Section 4.6.1 of [DPLPMTUD]).",
+      "line_start": 4729,
+      "line_end": 4731,
+      "condition": "A QUIC endpoint validates an ICMP message.",
+      "required_behavior": "The validation uses the packet quoted in the ICMP payload to associate the message with a corresponding transport connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can supply quoted packet data and verify that it is used to identify the affected transport connection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ICMP message validation MUST include matching IP addresses and UDP\n   ports [RFC8085] and, when possible, connection IDs to an active QUIC\n   session.  The endpoint SHOULD ignore all ICMP messages that fail\n   validation.",
+      "line_start": 4732,
+      "line_end": 4735,
+      "condition": "A QUIC endpoint validates an ICMP message.",
+      "required_behavior": "The validation matches the IP addresses in the ICMP quoted packet against the corresponding QUIC connection.",
+      "forbidden_behavior": "The endpoint must not treat validation as successful when the IP addresses do not match.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can vary quoted source or destination IP addresses and verify that mismatches cause validation failure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ICMP message validation MUST include matching IP addresses and UDP\n   ports [RFC8085] and, when possible, connection IDs to an active QUIC\n   session.  The endpoint SHOULD ignore all ICMP messages that fail\n   validation.",
+      "line_start": 4732,
+      "line_end": 4735,
+      "condition": "A QUIC endpoint validates an ICMP message.",
+      "required_behavior": "The validation matches the UDP ports in the ICMP quoted packet against the corresponding QUIC connection.",
+      "forbidden_behavior": "The endpoint must not treat validation as successful when the UDP ports do not match.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can vary quoted source or destination UDP ports and verify that mismatches cause validation failure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ICMP message validation MUST include matching IP addresses and UDP\n   ports [RFC8085] and, when possible, connection IDs to an active QUIC\n   session.  The endpoint SHOULD ignore all ICMP messages that fail\n   validation.",
+      "line_start": 4732,
+      "line_end": 4735,
+      "condition": "An ICMP message contains a connection ID that can be checked against an active QUIC session.",
+      "required_behavior": "ICMP validation matches the connection ID to an active QUIC session.",
+      "forbidden_behavior": "The endpoint must not treat the connection-ID check as successful when the connection ID does not match an active QUIC session.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can provide matching and nonmatching connection IDs when such IDs are available and observe the validation result.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ICMP message validation MUST include matching IP addresses and UDP\n   ports [RFC8085] and, when possible, connection IDs to an active QUIC\n   session.  The endpoint SHOULD ignore all ICMP messages that fail\n   validation.",
+      "line_start": 4732,
+      "line_end": 4735,
+      "condition": "An ICMP message fails validation.",
+      "required_behavior": "The endpoint ignores the ICMP message.",
+      "forbidden_behavior": "",
+      "error_behavior": "The failed-validation message is discarded without changing PMTUD state based on that message.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can inject an ICMP message with validation mismatches and verify that the endpoint does not act on it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MUST NOT increase the PMTU based on ICMP messages; see\n   Item 6 in Section 3 of [DPLPMTUD].  Any reduction in QUIC's maximum\n   datagram size in response to ICMP messages MAY be provisional until\n   QUIC's loss detection algorithm determines that the quoted packet has\n   actually been lost.",
+      "line_start": 4737,
+      "line_end": 4741,
+      "condition": "An endpoint processes an ICMP message related to path MTU.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not increase the PMTU based on the ICMP message.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can deliver ICMP messages and verify that none causes an increase in the endpoint's PMTU state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MUST NOT increase the PMTU based on ICMP messages; see\n   Item 6 in Section 3 of [DPLPMTUD].  Any reduction in QUIC's maximum\n   datagram size in response to ICMP messages MAY be provisional until\n   QUIC's loss detection algorithm determines that the quoted packet has\n   actually been lost.",
+      "line_start": 4737,
+      "line_end": 4741,
+      "condition": "An endpoint reduces QUIC's maximum datagram size in response to an ICMP message, and loss detection has not yet determined that the quoted packet was actually lost.",
+      "required_behavior": "The endpoint may treat the reduction as provisional until loss detection determines that the quoted packet was actually lost.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "State inspection can verify whether an ICMP-triggered reduction remains provisional pending confirmation of quoted-packet loss.",
+      "eligibility": "eligible"
+    }
+  ]
+}

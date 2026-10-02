@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0139",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   The extension_data field of the quic_transport_parameters extension\n   defined in [QUIC-TLS] contains the QUIC transport parameters.  They\n   are encoded as a sequence of transport parameters, as shown in\n   Figure 20:",
+      "line_start": 5609,
+      "line_end": 5612,
+      "condition": "When encoding the extension_data field of the quic_transport_parameters extension",
+      "required_behavior": "Encode its contents as a sequence of QUIC transport parameters.",
+      "forbidden_behavior": "Do not encode non-transport-parameter content in place of the transport-parameter sequence.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation's extension_data encoder can be inspected or tested to verify that it emits a sequence of transport parameters.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Each transport parameter is encoded as an (identifier, length, value)\n   tuple, as shown in Figure 21:",
+      "line_start": 5620,
+      "line_end": 5621,
+      "condition": "When encoding any transport parameter",
+      "required_behavior": "Encode it as an identifier, length, value tuple in that order.",
+      "forbidden_behavior": "Do not omit, reorder, or add components of the transport parameter tuple.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Serialized transport parameters can be parsed to verify the presence and ordering of the identifier, length, and value components.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The Transport Parameter Length field contains the length of the\n   Transport Parameter Value field in bytes.",
+      "line_start": 5631,
+      "line_end": 5632,
+      "condition": "When encoding a transport parameter",
+      "required_behavior": "Set the Transport Parameter Length field equal to the byte length of the Transport Parameter Value field.",
+      "forbidden_behavior": "Do not encode a Transport Parameter Length that differs from the value field's byte length.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can compare the encoded length field with the actual number of bytes occupied by the corresponding value field.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   QUIC encodes transport parameters into a sequence of bytes, which is\n   then included in the cryptographic handshake.",
+      "line_start": 5634,
+      "line_end": 5635,
+      "condition": "When transmitting QUIC transport parameters during connection establishment",
+      "required_behavior": "Encode the transport parameters as a byte sequence and include that sequence in the cryptographic handshake.",
+      "forbidden_behavior": "Do not transmit the transport parameters outside the cryptographic handshake in place of including their encoded byte sequence in it.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Handshake construction and emitted handshake messages can be inspected to verify inclusion of the encoded transport-parameter byte sequence.",
+      "eligibility": "eligible"
+    }
+  ]
+}

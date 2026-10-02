@@ -1,0 +1,20 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "document_id": "mqtt-v3.1.1",
+  "chunk_id": "chunk-0026",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "1. The format of all Control Packets that the Server sends matches the format described in Chapter 2 and Chapter 3.",
+      "line_start": 1800,
+      "line_end": 1800,
+      "condition": "Whenever the Server sends an MQTT Control Packet",
+      "required_behavior": "Encode the packet in the format described by Chapters 2 and 3.",
+      "forbidden_behavior": "Do not send a packet whose format conflicts with those chapters.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "This is an aggregate cross-reference rather than an atomic format rule; the referenced field layouts and packet-specific checks are not present in this chunk, so it cannot define a standalone atomic test here.",
+      "eligibility": "exclude"
+    }
+  ]
+}

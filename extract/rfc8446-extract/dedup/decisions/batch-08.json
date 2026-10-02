@@ -1,0 +1,402 @@
+{
+  "schema": "speclitmus.dedup-decisions.v1",
+  "batch_id": "batch-08",
+  "decisions": [
+    {
+      "pair_id": "pair-1f13b0e5918a4f10",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints apply to different OfferedPsks fields and have different minimum lengths: identities starts at 7 octets, while binders starts at 33."
+    },
+    {
+      "pair_id": "pair-3f86e12a974d8d9a",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-9b470ebc0309ac86aa51",
+      "reason": "Both require a Certificate sent in response to CertificateRequest to copy that request's certificate_request_context exactly; the canonical evidence states the Certificate field value directly."
+    },
+    {
+      "pair_id": "pair-e144bda243f6d497",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The maximum-value constraints apply to different enum types and different encoded widths: ExtensionType versus KeyUpdateRequest."
+    },
+    {
+      "pair_id": "pair-0fd98bf6702870ef",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake dispatch checks use different msg_type values and body types: finished/Finished versus key_update/KeyUpdate."
+    },
+    {
+      "pair_id": "pair-7b89356b55737282",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The missing_extension outcomes match, but the invalid ClientHello conditions are different: missing signature_algorithms without PSK versus key_share without supported_groups."
+    },
+    {
+      "pair_id": "pair-0b915a895685b532",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-981cb53828604a31e14c",
+      "reason": "Both impose the same 0-to-32-octet constraint on ClientHello.legacy_session_id; the canonical requirement uses the direct primary-body field definition."
+    },
+    {
+      "pair_id": "pair-e64bce482a82a936",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake dispatch checks use different msg_type values and body types: client_hello/ClientHello versus certificate_request/CertificateRequest."
+    },
+    {
+      "pair_id": "pair-05dd899cd996ef0b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The missing_extension outcomes match, but the invalid ClientHello conditions are different: missing signature_algorithms without PSK versus supported_groups without key_share."
+    },
+    {
+      "pair_id": "pair-23dab3991a0b7ed5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One prohibits sending an SSL 2.0-compatible CLIENT-HELLO, while the other recommends rejecting one received for older-version negotiation; direction and normative behavior differ."
+    },
+    {
+      "pair_id": "pair-e0fa197a37bb2653",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "A secret value and a purpose value are separate required inputs to traffic-keying-material generation."
+    },
+    {
+      "pair_id": "pair-bff05d0b7b7b9c66",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints target different enum types with different maxima: HandshakeType at 255 and SignatureScheme at 0xFFFF."
+    },
+    {
+      "pair_id": "pair-4dcbac2494c54a07",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake dispatch checks use different msg_type values and body types: server_hello/ServerHello versus certificate_request/CertificateRequest."
+    },
+    {
+      "pair_id": "pair-a9fb3d8e8616be34",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints target different enum types with different maxima: ContentType at 255 and NamedGroup at 0xFFFF."
+    },
+    {
+      "pair_id": "pair-61564c7947097335",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The SignatureScheme obsolete_RESERVED entries cover different numeric ranges, 0x0000..0x0200 and 0x0204..0x0400."
+    },
+    {
+      "pair_id": "pair-9a8521b3b2a1cef6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One is a receive-side termination and unexpected_message outcome; the other is the send-side prohibition on zero-length Handshake content."
+    },
+    {
+      "pair_id": "pair-310c2d9d93a9bd28",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting secp256r1 key exchange and implementing the signature_algorithms extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-af5d11788e0cdab1",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The preferences test different cipher-suite properties, AEAD and forward secrecy, each of which can be satisfied independently."
+    },
+    {
+      "pair_id": "pair-75656fb256726900",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The transitions start from different conditions: the no-0-RTT path switches directly after the server flight, while the 0-RTT path switches upon EndOfEarlyData in WAIT_EOED."
+    },
+    {
+      "pair_id": "pair-af40a0d831a366cf",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake dispatch checks use different msg_type values and body types: client_hello/ClientHello versus key_update/KeyUpdate."
+    },
+    {
+      "pair_id": "pair-54726116ef2fa31e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to different extensions, padding and psk_key_exchange_modes, despite sharing the ClientHello-only location."
+    },
+    {
+      "pair_id": "pair-760b55193fdc5c40",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and allowed message sets: key_share permits CH, SH, or HRR, while pre_shared_key permits only CH or SH."
+    },
+    {
+      "pair_id": "pair-9bf757084d377c80",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-09ed43717428653f22fb",
+      "reason": "Both require the same compatibility-mode dummy change_cipher_spec immediately before the non-early-data client's second flight; the canonical requirement states that atomic timing rule directly."
+    },
+    {
+      "pair_id": "pair-afc82e95020ae1da",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical placement set applies to different extensions, use_srtp and heartbeat."
+    },
+    {
+      "pair_id": "pair-6e6cb716941ac2b8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "PSK identity and KDF hash algorithm are separate values that must each be provisioned with an out-of-band PSK."
+    },
+    {
+      "pair_id": "pair-89efc69f6e2c3539",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks concern different RSASSA-PSS scheme families and properties: the RSAE scheme's MGF digest choice versus the PSS scheme's use of MGF1."
+    },
+    {
+      "pair_id": "pair-2e78f0dd74f487bc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints target different enum types with different maxima: AlertDescription at 255 and NamedGroup at 0xFFFF."
+    },
+    {
+      "pair_id": "pair-ef6815e66ed2331c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints target different enum types with different maxima: ContentType at 255 and SignatureScheme at 0xFFFF."
+    },
+    {
+      "pair_id": "pair-532bd93d4d43d99d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The failure cleanup checks target different retained material: secret values, with a stated ticket-PSK exception, versus established keys."
+    },
+    {
+      "pair_id": "pair-59b3327301711aa0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake dispatch checks use different msg_type values and body types: server_hello/ServerHello versus key_update/KeyUpdate."
+    },
+    {
+      "pair_id": "pair-d33fc7108240378c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints target different enum types with different maxima: AlertDescription at 255 and SignatureScheme at 0xFFFF."
+    },
+    {
+      "pair_id": "pair-27ecc8ce378020ab",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The CertificateVerify requirements apply to different peers and authentication flights: requested client authentication versus server certificate authentication."
+    },
+    {
+      "pair_id": "pair-a265ba6c472228c3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and allowed message sets: server_name permits CH or EE, while padding permits only CH."
+    },
+    {
+      "pair_id": "pair-2c970247a059831f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake dispatch checks use different msg_type values and body types: certificate_verify/CertificateVerify versus finished/Finished."
+    },
+    {
+      "pair_id": "pair-70a9a913bd579869",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One defines dispatch for an RSASSA-PKCS1-v1_5 SignatureScheme, while the other prohibits that encoding specifically for RSA CertificateVerify signatures."
+    },
+    {
+      "pair_id": "pair-6042bcbcde1c5522",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical placement set applies to different extensions, use_srtp and client_certificate_type."
+    },
+    {
+      "pair_id": "pair-ffd22c9427d019ee",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The traffic-key inputs apply to different record epochs: client_early_traffic_secret for 0-RTT versus sender handshake traffic secrets for Handshake records."
+    },
+    {
+      "pair_id": "pair-b0cf0fb6fe851d8b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are different HandshakeType enum members with different numeric values, hello_request_RESERVED(0) and hello_verify_request_RESERVED(3)."
+    },
+    {
+      "pair_id": "pair-1e23be3c4136a20d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The WAIT_FINISHED transitions belong to different roles and actions: the client sends its final flight and switches both keys, while the server switches its receiving key after client Finished."
+    },
+    {
+      "pair_id": "pair-311289412921dfb6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical placement set applies to different extensions, heartbeat and client_certificate_type."
+    },
+    {
+      "pair_id": "pair-291e4b5d92b55fee",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are opposite authentication conditions with different required actions: omit Certificate when not certificate-authenticating versus send it when certificate-authenticating."
+    },
+    {
+      "pair_id": "pair-14bce0fc3fa5787a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requires performing the all-zero shared-secret check after computation; the other requires aborting when that check detects an all-zero value."
+    },
+    {
+      "pair_id": "pair-aad4b66178401cbc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The HKDF-Extract operations derive different secrets from different Salt and IKM inputs: Early Secret from PSK versus Handshake Secret from derived secret and (EC)DHE."
+    },
+    {
+      "pair_id": "pair-f8c44c739c9c4f40",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting X25519 key exchange and implementing the signature_algorithms_cert extension are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-8e6eaf2b7322ac83",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake dispatch checks use different msg_type values and body types: server_hello/ServerHello versus certificate_verify/CertificateVerify."
+    },
+    {
+      "pair_id": "pair-21152d7db26415bc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "TLS version and symmetric cipher suite are separate 0-RTT parameters that must each match the PSK association."
+    },
+    {
+      "pair_id": "pair-dde90b69bff2d208",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The heartbeat name belongs to different enum types and numeric values: ContentType 24 versus ExtensionType 15."
+    },
+    {
+      "pair_id": "pair-f0b2108deba761f0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints target different enum types with different maxima: NamedGroup at 0xFFFF and CertificateType at 255."
+    },
+    {
+      "pair_id": "pair-654b3f93a2fbaf8d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake dispatch checks use different msg_type values and body types: client_hello/ClientHello versus certificate_verify/CertificateVerify."
+    },
+    {
+      "pair_id": "pair-91a0a04aa7d2a8ce",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and allowed message sets: padding permits only CH, while key_share permits CH, SH, or HRR."
+    },
+    {
+      "pair_id": "pair-5d31419255104703",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations produce different client secrets using different base secrets, labels, and transcript boundaries: handshake traffic versus application traffic."
+    },
+    {
+      "pair_id": "pair-0f739d4e771ed031",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations produce different server secrets using different base secrets, labels, and transcript boundaries: handshake traffic versus application traffic."
+    },
+    {
+      "pair_id": "pair-14f8e993f8307746",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical vector-length range constrains different fields and element types: OIDFilterExtension.filters and KeyShareClientHello.client_shares."
+    },
+    {
+      "pair_id": "pair-630cdb4345073c2c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints target different NewSessionTicket fields and bounds: ticket requires 1..2^16-1 octets, while extensions permits 0..2^16-2."
+    },
+    {
+      "pair_id": "pair-10790b2ea87124b3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The unknown-extension handling applies in different messages, CertificateRequest and NewSessionTicket, with different surrounding processing effects."
+    },
+    {
+      "pair_id": "pair-d6e1df7c7e276014",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints target different enum types with different maxima: SignatureScheme at 0xFFFF and CertificateType at 255."
+    },
+    {
+      "pair_id": "pair-f123628672bea360",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The traffic-key inputs apply to different record epochs: sender handshake traffic secrets for Handshake records versus generation-specific application traffic secrets for Application Data."
+    },
+    {
+      "pair_id": "pair-85c42d56d3a97f4a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical placement set applies to different extensions, certificate_authorities and signature_algorithms_cert."
+    },
+    {
+      "pair_id": "pair-3f8e62455996be68",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical placement set applies to different extensions, use_srtp and server_certificate_type."
+    },
+    {
+      "pair_id": "pair-3ee6bf5ae6302747",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting rsa_pkcs1_sha256 for certificates and implementing supported_versions are separate implementation capabilities."
+    },
+    {
+      "pair_id": "pair-12d4e78c4081c72c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and allowed message sets: supported_groups permits CH or EE, while padding permits only CH."
+    },
+    {
+      "pair_id": "pair-297006d74f230f70",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical placement set applies to different extensions, heartbeat and server_certificate_type."
+    },
+    {
+      "pair_id": "pair-944ead915c44ec76",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The SignatureScheme obsolete_RESERVED entries cover different numeric ranges, 0x0204..0x0400 and 0x0604..0x06FF."
+    },
+    {
+      "pair_id": "pair-6a69ea15d382f162",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints target different enum types with different maxima: AlertLevel at 255 and NamedGroup at 0xFFFF."
+    },
+    {
+      "pair_id": "pair-1db895fcd1c47811",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requires terminating for an omitted required server_name and reports the alert outcome; the other only selects missing_extension once such a termination is already occurring."
+    },
+    {
+      "pair_id": "pair-65ce1b9e5f49aac7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The SignatureScheme obsolete_RESERVED entries cover different numeric ranges, 0x0404..0x0500 and 0x0604..0x06FF."
+    },
+    {
+      "pair_id": "pair-579abc5545eeae4e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One recommends signaling end-of-data after receiving close_notify generally; the other mandates waiting for close_notify under a specific application-protocol condition."
+    }
+  ]
+}

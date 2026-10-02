@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0003",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The key words \"MUST\", \"MUST NOT\", \"REQUIRED\", \"SHALL\", \"SHALL NOT\",\n   \"SHOULD\", \"SHOULD NOT\", \"RECOMMENDED\", \"NOT RECOMMENDED\", \"MAY\", and\n   \"OPTIONAL\" in this document are to be interpreted as described in BCP\n   14 [RFC2119] [RFC8174] when, and only when, they appear in all\n   capitals, as shown here.",
+      "line_start": 145,
+      "line_end": 149,
+      "condition": "When interpreting capitalized requirement keywords in this document.",
+      "required_behavior": "Interpret the listed all-capital keywords according to BCP 14.",
+      "forbidden_behavior": "Do not apply this keyword convention to occurrences that are not in all capitals.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "This is a document interpretation convention rather than a constraint on an RFC 9001 implementation's observable behavior or data structures.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "This document uses the terminology established in [QUIC-TRANSPORT].",
+      "line_start": 151,
+      "line_end": 151,
+      "condition": "When interpreting terminology used by this document.",
+      "required_behavior": "Use the terminology established in QUIC-TRANSPORT.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "This is an editorial terminology convention and specifies no implementation behavior that can be tested independently.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "For brevity, the acronym TLS is used to refer to TLS 1.3, though a\n   newer version could be used; see Section 4.2.",
+      "line_start": 153,
+      "line_end": 154,
+      "condition": "When reading the acronym TLS in this document.",
+      "required_behavior": "Interpret TLS as referring to TLS 1.3, while allowing that a newer version could be used subject to Section 4.2.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The sentence defines document shorthand and points elsewhere for the actual conditions on newer TLS versions; by itself it does not provide a complete implementation-checkable constraint.",
+      "eligibility": "exclude"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0061",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Inverse queries are an optional part of the DNS.  Name servers are not\nrequired to support any form of inverse queries.",
+      "line_start": 2234,
+      "line_end": 2235,
+      "condition": "A name server chooses whether to implement inverse queries.",
+      "required_behavior": "The name server may omit support for all forms of inverse query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation can be inspected to determine whether inverse-query processing is supported; omission is explicitly permitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a name server\nreceives an inverse query that it does not support, it returns an error\nresponse with the \"Not Implemented\" error set in the header.",
+      "line_start": 2235,
+      "line_end": 2237,
+      "condition": "A name server receives an inverse query that it does not support.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Return an error response with the \"Not Implemented\" error set in its header.",
+      "check_type": "error_handling",
+      "why_checkable": "An unsupported inverse query can be submitted and the returned response header inspected for the specified error.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a name server\nreceives an inverse query that it does not support, it returns an error\nresponse with the \"Not Implemented\" error set in the header.  While\ninverse query support is optional, all name servers must be at least\nable to return the error response.",
+      "line_start": 2235,
+      "line_end": 2239,
+      "condition": "Any name server, including one that omits inverse-query support.",
+      "required_behavior": "Provide the capability to return an inverse-query error response with the \"Not Implemented\" error set in its header.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The error-response path can be inspected to verify that it remains available even when inverse-query support is absent.",
+      "eligibility": "eligible"
+    }
+  ]
+}

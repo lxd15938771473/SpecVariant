@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0067",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "sample = 5e5cd55c41f69080575d7999c25a5bfb",
+      "line_start": 2546,
+      "line_end": 2546,
+      "condition": "When reproducing this Appendix A packet-protection sample vector",
+      "required_behavior": "Produce the 16-byte header-protection sample 5e5cd55c41f69080575d7999c25a5bfb.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The implementation's sampled bytes can be compared byte-for-byte with the stated hexadecimal value and checked for a 16-byte length.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "mask   = aefefe7d03",
+      "line_start": 2547,
+      "line_end": 2547,
+      "condition": "When reproducing this Appendix A header-protection sample vector",
+      "required_behavior": "Produce the 5-byte header-protection mask aefefe7d03.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The generated mask can be compared byte-for-byte with the stated hexadecimal value and checked for a 5-byte length.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "header = 4cfe4189",
+      "line_start": 2548,
+      "line_end": 2548,
+      "condition": "When reproducing this Appendix A protected-header sample vector",
+      "required_behavior": "Produce the 4-byte protected header 4cfe4189.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The protected header can be compared byte-for-byte with the stated hexadecimal value and checked for a 4-byte length.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The protected packet is the smallest possible packet size of 21\n   bytes.",
+      "line_start": 2550,
+      "line_end": 2551,
+      "condition": "For the minimal protected packet represented by this Appendix A sample vector",
+      "required_behavior": "Produce a protected packet of exactly 21 bytes, the minimum possible packet size for this vector.",
+      "forbidden_behavior": "Represent this minimal vector with a protected packet shorter than 21 bytes.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serialized protected packet length is directly measurable and can be compared with the stated 21-byte minimum.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "packet = 4cfe4189655e5cd55c41f69080575d7999c25a5bfb",
+      "line_start": 2553,
+      "line_end": 2553,
+      "condition": "When reproducing the final protected packet in this Appendix A sample vector",
+      "required_behavior": "Produce the packet bytes 4cfe4189655e5cd55c41f69080575d7999c25a5bfb.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The complete serialized output can be compared byte-for-byte with the 21-byte hexadecimal packet vector.",
+      "eligibility": "eligible"
+    }
+  ]
+}

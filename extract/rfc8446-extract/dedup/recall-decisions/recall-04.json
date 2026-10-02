@@ -1,0 +1,396 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "recall-04",
+  "decisions": [
+    {
+      "pair_id": "pair-58e55afe9cbe0b42",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different RSA-PSS schemes to different code points, 0x0804 and 0x0809."
+    },
+    {
+      "pair_id": "pair-b62c646207cb9504",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requires CertificateVerify merely to precede Finished for a client, while the other requires immediate adjacency for either endpoint."
+    },
+    {
+      "pair_id": "pair-45d098e703eae618",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different CertificateType values: X509 to 0 and RawPublicKey to 2."
+    },
+    {
+      "pair_id": "pair-94b7f03658211e60",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different alert descriptions to different numeric values."
+    },
+    {
+      "pair_id": "pair-9a621d6214eed8a0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-4b2b291d49d4b1b6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The first applies generally when TLSPlaintext is processed; the second is limited to servers receiving TLS 1.x legacy version values."
+    },
+    {
+      "pair_id": "pair-686b09d0e05e5feb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-6d6c8973b5a0f201",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requires key_share for DHE or ECDHE agreement; the other requires pre_shared_key for PSK agreement."
+    },
+    {
+      "pair_id": "pair-63dd62dfefbe65cd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The vector bounds constrain different fields with different maximum lengths."
+    },
+    {
+      "pair_id": "pair-57eff57247554568",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different RSA-PSS SHA-384 schemes to different code points."
+    },
+    {
+      "pair_id": "pair-bcfb9d64a82843e8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different ContentType values, invalid and handshake, to different code points."
+    },
+    {
+      "pair_id": "pair-08a2f0014fec0ce2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-f1135a92dc297d10",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-d787d5d9611f8ef85c28",
+      "reason": "Both map rsa_pss_rsae_sha512 to SignatureScheme code point 0x0806; the canonical evidence is the direct primary-body enum definition."
+    },
+    {
+      "pair_id": "pair-ea7b13d555ffbb70",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One re-derives traffic keys from the next secret; the other deletes the previous secret and keys after derivation."
+    },
+    {
+      "pair_id": "pair-2b0a17c040539111",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-52ae1ac401656af30629",
+      "reason": "Both map rsa_pss_pss_sha384 to SignatureScheme code point 0x080a; the canonical evidence is the direct primary-body enum definition."
+    },
+    {
+      "pair_id": "pair-20a8ca851c786b3a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to different extensions, despite both allowing ClientHello."
+    },
+    {
+      "pair_id": "pair-360be23fe19ab464",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks apply to different client protocol versions, downgrade cases, and sentinel sets."
+    },
+    {
+      "pair_id": "pair-f5f3b29b5b384afc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One only orders CertificateVerify before Finished; the other constrains the complete Certificate, CertificateVerify, and Finished sequence in a specific handshake."
+    },
+    {
+      "pair_id": "pair-4acb280bad6e4007",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different HandshakeType values, client_hello and certificate, to different code points."
+    },
+    {
+      "pair_id": "pair-5393954d44460f8a",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-c0041a5b2a844ba230b0",
+      "reason": "Both map rsa_pss_pss_sha256 to SignatureScheme code point 0x0809; the canonical evidence is the direct primary-body enum definition."
+    },
+    {
+      "pair_id": "pair-88dfbf0860141bde",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "These are different server responses to early_data: continue with a regular 1-RTT response versus send HelloRetryRequest."
+    },
+    {
+      "pair_id": "pair-fa0a82e403a94633",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The conditions concern ServerHello versus HelloRetryRequest, and only the ServerHello check requires an illegal_parameter alert."
+    },
+    {
+      "pair_id": "pair-b9a06451d65c1fe5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to heartbeat and key_share with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-d079ac7cccb97a41",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to supported_groups and certificate_authorities, not the same extension."
+    },
+    {
+      "pair_id": "pair-176dc2c9a0566513",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The dependent-length checks constrain fields in different record structures: TLSPlaintext.fragment and TLSInnerPlaintext.content."
+    },
+    {
+      "pair_id": "pair-6bc949b0e5343d22",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different cipher suites to different two-byte values."
+    },
+    {
+      "pair_id": "pair-004b3113f52e554f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The vector bounds apply to different message fields and have different minimum lengths."
+    },
+    {
+      "pair_id": "pair-dce509bd8dfc604b",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-2c9bf6ece6ab668643a6",
+      "reason": "Both map rsa_pss_rsae_sha384 to SignatureScheme code point 0x0805; the canonical evidence is the direct primary-body enum definition."
+    },
+    {
+      "pair_id": "pair-2cecab5a426bdb7b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The conditions differ on certificate availability, and the required client-authentication messages differ."
+    },
+    {
+      "pair_id": "pair-f9cd6601b9e07724",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different reserved HandshakeType values to different code points."
+    },
+    {
+      "pair_id": "pair-a1234f508f4e8030",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One applies when the client has a certificate and sends CertificateVerify; the other applies when no suitable certificate exists and requires an empty Certificate."
+    },
+    {
+      "pair_id": "pair-992969555d58c247",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One concerns cipher-suite implementation; the other concerns support for a certificate signature scheme."
+    },
+    {
+      "pair_id": "pair-e71f7a30066ed241",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-bbcd19f6d5a808a5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to signature_algorithms and use_srtp with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-2438f443de04e0d7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The key transitions have opposite directions and actors: client receive after receiving ServerHello versus server send after sending it."
+    },
+    {
+      "pair_id": "pair-57ffa052076befad",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to server_certificate_type and key_share with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-fe4b71bef317a65a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requires the broader IEEE 1363 ECKAS-DH1 key-generation construction; the other specifically requires the identity-map KDF."
+    },
+    {
+      "pair_id": "pair-5d282e1a67fc0629",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-3698479122a57aa0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The first also constrains encrypted_record field position and representation; the second only constrains agreement between the declared length and body byte count."
+    },
+    {
+      "pair_id": "pair-1f3f758ee66603e9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to use_srtp and key_share with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-1cd8c9df20644f67",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to signature_algorithms and heartbeat with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-8f5d7aab88fae83b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to status_request and pre_shared_key with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-2a3fa505896a908d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The vector bounds constrain different fields and have different minimum lengths."
+    },
+    {
+      "pair_id": "pair-3991988dfb255bb9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different alert descriptions to different numeric values."
+    },
+    {
+      "pair_id": "pair-afb381cfb5acdd9f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One concerns cipher-suite implementation; the other concerns CertificateVerify signature support."
+    },
+    {
+      "pair_id": "pair-bd9e4ac679e45404",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to server_name and signature_algorithms_cert with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-03306b649ecf344a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One constrains the wire type of TLSCiphertext.length; the other constrains encrypted_record to contain that many octets."
+    },
+    {
+      "pair_id": "pair-12d1fa2c3371c9dc",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-e4494dddec05c7f4c4cc",
+      "reason": "Both impose the 7 through 2^16-1 encoded-octet bounds on OfferedPsks.identities; the canonical evidence is the direct primary-body structure definition."
+    },
+    {
+      "pair_id": "pair-53b8fb757ace5006",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical placement set constrains different extensions, max_fragment_length and application_layer_protocol_negotiation."
+    },
+    {
+      "pair_id": "pair-369a98a62499471c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to key_share and certificate_authorities with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-a358e5e03c5b9338",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Preserving all negotiated parameters is broader than preserving cryptographic parameters, so the checks are not exactly equivalent."
+    },
+    {
+      "pair_id": "pair-36cf5a3e8f9a9ccb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same numeric vector bounds apply to different fields in EncryptedExtensions and CertificateEntry."
+    },
+    {
+      "pair_id": "pair-be4feb105e5252c9",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to client_certificate_type and key_share with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-b2592cdf689edbc7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The actors and messages differ: a client parsing CertificateRequest versus a server parsing ClientHello."
+    },
+    {
+      "pair_id": "pair-481e4cd594b54c63",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One always requires a Certificate response to CertificateRequest; the other is limited to clients with a certificate and also requires CertificateVerify ordering."
+    },
+    {
+      "pair_id": "pair-d617b84643a1ef16",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One protects CertificateRequest with handshake keys; the other requires EncryptedExtensions to be the first message under those keys."
+    },
+    {
+      "pair_id": "pair-06379bfc0bdb9718",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The protection checks apply to messages in different handshake figures and therefore different message and state contexts."
+    },
+    {
+      "pair_id": "pair-f3c0f8f12a6e8ee0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to max_fragment_length and pre_shared_key with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-41252bd3e2d75e4d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One checks mandatory presence of EncryptedExtensions; the other separately checks its immediate adjacency after ServerHello."
+    },
+    {
+      "pair_id": "pair-93423909a060f38c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The vector bounds constrain different message fields and have different minimum lengths."
+    },
+    {
+      "pair_id": "pair-5088f0cdecec3cae",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to signed_certificate_timestamp and server_certificate_type with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-6421cb603c4a74c5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different HandshakeType values, certificate and certificate_url_RESERVED, to different code points."
+    },
+    {
+      "pair_id": "pair-3f5889cb4d643ca4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One concerns cipher-suite implementation; the other concerns digital-signature support."
+    },
+    {
+      "pair_id": "pair-60f6b048efd39b2f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to max_fragment_length and early_data with different allowed message sets."
+    },
+    {
+      "pair_id": "pair-221488565f8baaf5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to heartbeat and supported_versions with different allowed message sets."
+    }
+  ]
+}

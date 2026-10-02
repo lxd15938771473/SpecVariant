@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0044",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The question section is used to carry the \"question\" in most queries,\ni.e., the parameters that define what is being asked.  The section\ncontains QDCOUNT (usually 1) entries, each of the following format:",
+      "line_start": 1559,
+      "line_end": 1561,
+      "condition": "For the question section of a DNS message.",
+      "required_behavior": "The question section contains exactly QDCOUNT question entries.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The number of serialized or parsed question entries can be compared with QDCOUNT.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "contains QDCOUNT (usually 1) entries, each of the following format:\n\n                                    1  1  1  1  1  1\n      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                                               |\n    /                     QNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                     QTYPE                     |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                     QCLASS                    |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+",
+      "line_start": 1561,
+      "line_end": 1573,
+      "condition": "For each question entry.",
+      "required_behavior": "Place QNAME first, followed by QTYPE, followed by QCLASS.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The three fields and their order can be checked in an encoded question entry.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QNAME           a domain name represented as a sequence of labels, where\n                each label consists of a length octet followed by that\n                number of octets.  The domain name terminates with the",
+      "line_start": 1577,
+      "line_end": 1579,
+      "condition": "For the sequence-of-labels representation of QNAME.",
+      "required_behavior": "Encode each label as one length octet followed by exactly the indicated number of label octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Each label boundary can be checked against its length octet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QNAME           a domain name represented as a sequence of labels, where\n                each label consists of a length octet followed by that\n                number of octets.  The domain name terminates with the\n                zero length octet for the null label of the root.  Note",
+      "line_start": 1577,
+      "line_end": 1580,
+      "condition": "For the sequence-of-labels representation of QNAME.",
+      "required_behavior": "Terminate the domain name with a zero-length octet representing the root null label.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The terminating octet and its interpretation can be checked when encoding and decoding QNAME.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QNAME           a domain name represented as a sequence of labels, where\n                each label consists of a length octet followed by that\n                number of octets.  The domain name terminates with the\n                zero length octet for the null label of the root.  Note\n                that this field may be an odd number of octets; no\n                padding is used.",
+      "line_start": 1577,
+      "line_end": 1582,
+      "condition": "For a QNAME field whose encoded length is odd.",
+      "required_behavior": "Permit QNAME to occupy an odd number of octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An odd-length encoded QNAME can be processed without requiring even-length alignment.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QNAME           a domain name represented as a sequence of labels, where\n                each label consists of a length octet followed by that\n                number of octets.  The domain name terminates with the\n                zero length octet for the null label of the root.  Note\n                that this field may be an odd number of octets; no\n                padding is used.",
+      "line_start": 1577,
+      "line_end": 1582,
+      "condition": "When encoding or locating the end of a QNAME field.",
+      "required_behavior": "",
+      "forbidden_behavior": "Insert or expect padding in the QNAME field.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The QTYPE offset can be checked to follow the QNAME terminator without padding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QTYPE           a two octet code which specifies the type of the query.",
+      "line_start": 1584,
+      "line_end": 1584,
+      "condition": "For the QTYPE field of a question entry.",
+      "required_behavior": "Encode QTYPE as exactly two octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field width can be checked directly in the wire representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QTYPE           a two octet code which specifies the type of the query.",
+      "line_start": 1584,
+      "line_end": 1584,
+      "condition": "When encoding or interpreting a question entry.",
+      "required_behavior": "Use QTYPE to specify the type of the query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The query-type value can be traced between the question field and query processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QTYPE           a two octet code which specifies the type of the query.\n                The values for this field include all codes valid for a\n                TYPE field, together with some more general codes which\n                can match more than one type of RR.",
+      "line_start": 1584,
+      "line_end": 1587,
+      "condition": "For selecting legal QTYPE values.",
+      "required_behavior": "Include every code valid for the TYPE field among the codes valid for QTYPE.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The QTYPE validity set can be compared against the TYPE validity set.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QTYPE           a two octet code which specifies the type of the query.\n                The values for this field include all codes valid for a\n                TYPE field, together with some more general codes which\n                can match more than one type of RR.",
+      "line_start": 1584,
+      "line_end": 1587,
+      "condition": "For general QTYPE codes that can match multiple RR types.",
+      "required_behavior": "Include additional general query codes capable of matching more than one RR type.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The chunk states that general codes exist, but does not identify those codes or define their matching sets; a concrete code-specific check is not fully supported here.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "QCLASS          a two octet code that specifies the class of the query.",
+      "line_start": 1597,
+      "line_end": 1597,
+      "condition": "For the QCLASS field of a question entry.",
+      "required_behavior": "Encode QCLASS as exactly two octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field width can be checked directly in the wire representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QCLASS          a two octet code that specifies the class of the query.",
+      "line_start": 1597,
+      "line_end": 1597,
+      "condition": "When encoding or interpreting a question entry.",
+      "required_behavior": "Use QCLASS to specify the class of the query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The query-class value can be traced between the question field and query processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QCLASS          a two octet code that specifies the class of the query.\n                For example, the QCLASS field is IN for the Internet.",
+      "line_start": 1597,
+      "line_end": 1598,
+      "condition": "For an Internet-class query.",
+      "required_behavior": "Set QCLASS to IN.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The stated IN-to-Internet class mapping can be checked in question construction and interpretation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

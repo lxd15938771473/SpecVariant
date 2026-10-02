@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0154",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   MAX_DATA Frame {\n     Type (i) = 0x10,\n     Maximum Data (i),\n   }",
+      "line_start": 6288,
+      "line_end": 6291,
+      "condition": "When encoding or parsing a MAX_DATA frame.",
+      "required_behavior": "The frame consists of a Type field followed by a Maximum Data field, both encoded as variable-length integers.",
+      "forbidden_behavior": "The implementation must not reverse the specified field order or omit either field.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A serialized MAX_DATA frame can be parsed to verify the presence, encoding class, and order of its two fields.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "     Type (i) = 0x10,",
+      "line_start": 6289,
+      "line_end": 6289,
+      "condition": "When encoding or recognizing a MAX_DATA frame.",
+      "required_behavior": "Set or recognize the variable-length Type field as 0x10.",
+      "forbidden_behavior": "A frame with a Type value other than 0x10 must not be treated as a MAX_DATA frame.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The decoded frame type is directly comparable with the fixed value 0x10.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Maximum Data:  A variable-length integer indicating the maximum\n      amount of data that can be sent on the entire connection, in units\n      of bytes.",
+      "line_start": 6297,
+      "line_end": 6299,
+      "condition": "When encoding, parsing, or applying the Maximum Data field of a MAX_DATA frame.",
+      "required_behavior": "Encode and decode Maximum Data as a variable-length integer representing the connection-wide data limit in bytes.",
+      "forbidden_behavior": "The field must not be interpreted as a per-stream limit or in units other than bytes.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Tests can inspect the field encoding and verify that its decoded value is applied as a byte-denominated connection-wide limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   All data sent in STREAM frames counts toward this limit.  The sum of",
+      "line_start": 6301,
+      "line_end": 6301,
+      "condition": "When accounting for use of the connection-wide maximum data limit.",
+      "required_behavior": "Count all data sent in STREAM frames toward the limit.",
+      "forbidden_behavior": "The implementation must not exclude STREAM-frame data from connection-level flow-control accounting.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Flow-control accounting can be observed while STREAM frames carrying data are processed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   All data sent in STREAM frames counts toward this limit.  The sum of\n   the final sizes on all streams -- including streams in terminal\n   states -- MUST NOT exceed the value advertised by a receiver.  An",
+      "line_start": 6301,
+      "line_end": 6303,
+      "condition": "When determining whether the sender remains within the receiver's advertised connection-wide limit.",
+      "required_behavior": "Keep the sum of the final sizes of every stream, including streams in terminal states, at or below the receiver-advertised value.",
+      "forbidden_behavior": "The sum of stream final sizes must not exceed the receiver-advertised value, and terminal-state streams must not be omitted from the sum.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation's stream final sizes and advertised limit can be inspected and summed, including completed or otherwise terminal streams.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   endpoint MUST terminate a connection with an error of type\n   FLOW_CONTROL_ERROR if it receives more data than the maximum data\n   value that it has sent.  This includes violations of remembered\n   limits in Early Data; see Section 7.4.1.",
+      "line_start": 6304,
+      "line_end": 6307,
+      "condition": "If an endpoint receives more data than the maximum data value it has sent, including a violation of a remembered limit during Early Data.",
+      "required_behavior": "Terminate the connection.",
+      "forbidden_behavior": "The endpoint must not continue the connection after detecting this flow-control violation.",
+      "error_behavior": "Terminate with an error of type FLOW_CONTROL_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A runtime test can send data beyond the endpoint's advertised or remembered maximum and verify connection termination with FLOW_CONTROL_ERROR.",
+      "eligibility": "eligible"
+    }
+  ]
+}

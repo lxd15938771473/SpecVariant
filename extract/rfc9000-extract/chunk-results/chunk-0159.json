@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0159",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A sender SHOULD send a STREAMS_BLOCKED frame (type=0x16 or 0x17) when\n   it wishes to open a stream but is unable to do so due to the maximum\n   stream limit set by its peer; see Section 19.11.  A STREAMS_BLOCKED",
+      "line_start": 6448,
+      "line_end": 6450,
+      "condition": "The sender wishes to open a stream but cannot because of the maximum stream limit set by its peer.",
+      "required_behavior": "The sender should send a STREAMS_BLOCKED frame with type 0x16 or 0x17.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can place the sender at the peer-established stream limit, attempt to open another stream, and observe whether a STREAMS_BLOCKED frame is emitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   frame of type 0x16 is used to indicate reaching the bidirectional\n   stream limit, and a STREAMS_BLOCKED frame of type 0x17 is used to\n   indicate reaching the unidirectional stream limit.",
+      "line_start": 6451,
+      "line_end": 6453,
+      "condition": "A STREAMS_BLOCKED frame indicates that the bidirectional stream limit has been reached.",
+      "required_behavior": "The frame type is 0x16.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded frame type can be compared with the directionality of the reached stream limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   frame of type 0x16 is used to indicate reaching the bidirectional\n   stream limit, and a STREAMS_BLOCKED frame of type 0x17 is used to\n   indicate reaching the unidirectional stream limit.",
+      "line_start": 6451,
+      "line_end": 6453,
+      "condition": "A STREAMS_BLOCKED frame indicates that the unidirectional stream limit has been reached.",
+      "required_behavior": "The frame type is 0x17.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded frame type can be compared with the directionality of the reached stream limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A STREAMS_BLOCKED frame does not open the stream, but informs the\n   peer that a new stream was needed and the stream limit prevented the\n   creation of the stream.",
+      "line_start": 6455,
+      "line_end": 6457,
+      "condition": "A STREAMS_BLOCKED frame is sent or received.",
+      "required_behavior": "It informs the peer that a new stream was needed and that the stream limit prevented its creation.",
+      "forbidden_behavior": "Processing the frame as opening a stream.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-machine test can verify that sending or receiving this frame does not create or open a stream and that the frame conveys blocked-stream status.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   STREAMS_BLOCKED Frame {\n     Type (i) = 0x16..0x17,\n     Maximum Streams (i),\n   }",
+      "line_start": 6461,
+      "line_end": 6464,
+      "condition": "A STREAMS_BLOCKED frame is encoded or decoded.",
+      "required_behavior": "The frame contains, in order, a variable-length integer Type field with value 0x16 or 0x17 followed by a variable-length integer Maximum Streams field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The frame wire representation can be parsed to verify field order, integer encoding, and the fixed allowed type range.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Maximum Streams:  A variable-length integer indicating the maximum\n      number of streams allowed at the time the frame was sent.  This",
+      "line_start": 6470,
+      "line_end": 6471,
+      "condition": "A STREAMS_BLOCKED frame is encoded.",
+      "required_behavior": "Maximum Streams is encoded as a variable-length integer containing the maximum number of streams allowed at the time the frame is sent.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can compare the encoded Maximum Streams value and encoding form with the sender's active stream limit at transmission time.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "      value cannot exceed 2^60, as it is not possible to encode stream\n      IDs larger than 2^62-1.  Receipt of a frame that encodes a larger\n      stream ID MUST be treated as a connection error of type\n      STREAM_LIMIT_ERROR or FRAME_ENCODING_ERROR.",
+      "line_start": 6472,
+      "line_end": 6475,
+      "condition": "A STREAMS_BLOCKED frame is encoded.",
+      "required_behavior": "The encoded value is at most 2^60.",
+      "forbidden_behavior": "Encoding a value greater than 2^60.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The Maximum Streams integer can be decoded and checked against the inclusive upper bound 2^60.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "      value cannot exceed 2^60, as it is not possible to encode stream\n      IDs larger than 2^62-1.  Receipt of a frame that encodes a larger\n      stream ID MUST be treated as a connection error of type\n      STREAM_LIMIT_ERROR or FRAME_ENCODING_ERROR.",
+      "line_start": 6472,
+      "line_end": 6475,
+      "condition": "A frame encoding a value larger than the permitted limit is received.",
+      "required_behavior": "",
+      "forbidden_behavior": "Accepting or continuing normal processing of the invalid frame without the required connection error.",
+      "error_behavior": "Treat receipt as a connection error of type STREAM_LIMIT_ERROR or FRAME_ENCODING_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A decoder can be given an over-limit encoded value and the resulting connection error type can be observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

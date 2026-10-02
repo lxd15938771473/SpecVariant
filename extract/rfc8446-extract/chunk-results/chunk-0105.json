@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0105",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Although TLS 1.3 uses the same cipher suite space as previous\n   versions of TLS, TLS 1.3 cipher suites are defined differently, only\n   specifying the symmetric ciphers, and cannot be used for TLS 1.2.\n   Similarly, cipher suites for TLS 1.2 and lower cannot be used with",
+      "line_start": 7455,
+      "line_end": 7458,
+      "condition": "TLS 1.2 is negotiated",
+      "required_behavior": "select a cipher suite defined for TLS 1.2",
+      "forbidden_behavior": "use a TLS 1.3 cipher suite",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Although TLS 1.3 uses the same cipher suite space as previous\n   versions of TLS, TLS 1.3 cipher suites are defined differently, only\n   specifying the symmetric ciphers, and cannot be used for TLS 1.2.\n   Similarly, cipher suites for TLS 1.2 and lower cannot be used with\n   TLS 1.3.",
+      "line_start": 7455,
+      "line_end": 7459,
+      "condition": "TLS 1.3 is negotiated",
+      "required_behavior": "select a cipher suite defined for TLS 1.3",
+      "forbidden_behavior": "use a cipher suite defined only for TLS 1.2 or lower",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+      "eligibility": "eligible"
+    }
+  ]
+}

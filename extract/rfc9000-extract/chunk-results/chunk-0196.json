@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0196",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   attack.  Therefore, QUIC endpoints ignore the ECN field in an IP\n   packet unless at least one QUIC packet in that IP packet is\n   successfully processed; see Section 13.4.",
+      "line_start": 7628,
+      "line_end": 7630,
+      "condition": "No QUIC packet in the IP packet is successfully processed.",
+      "required_behavior": "The QUIC endpoint ignores the ECN field in that IP packet.",
+      "forbidden_behavior": "The QUIC endpoint must not use the ECN field from an IP packet when none of its QUIC packets was successfully processed.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can supply an IP packet whose contained QUIC packets all fail processing and verify that its ECN field does not affect endpoint behavior.",
+      "eligibility": "eligible"
+    }
+  ]
+}

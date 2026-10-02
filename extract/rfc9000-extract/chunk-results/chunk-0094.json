@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0094",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   F:   The contents of frames with this marking are flow controlled;\n        see Section 4.",
+      "line_start": 3974,
+      "line_end": 3975,
+      "condition": "A frame has the \"F\" marking.",
+      "required_behavior": "The contents of the frame are subject to flow control.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Frame handling can be inspected or tested to determine whether content of every F-marked frame is accounted for by flow control.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MUST treat the receipt of a frame of unknown type as a\n   connection error of type FRAME_ENCODING_ERROR.",
+      "line_start": 3980,
+      "line_end": 3981,
+      "condition": "An endpoint receives a frame whose type is unknown.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "Treat the receipt as a connection error of type FRAME_ENCODING_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can send an unknown frame type and verify that the endpoint raises the specified connection error.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   All frames are idempotent in this version of QUIC.  That is, a valid\n   frame does not cause undesirable side effects or errors when received\n   more than once.",
+      "line_start": 3983,
+      "line_end": 3985,
+      "condition": "A valid frame is received more than once.",
+      "required_behavior": "Process repeated receipt idempotently, without undesirable side effects or errors caused by the repetition.",
+      "forbidden_behavior": "Cause undesirable side effects or errors merely because the valid frame was received more than once.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation can be tested by delivering the same valid frame repeatedly and comparing resulting state, side effects, and errors.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The Frame Type field uses a variable-length integer encoding (see\n   Section 16), with one exception.  To ensure simple and efficient\n   implementations of frame parsing, a frame type MUST use the shortest\n   possible encoding.",
+      "line_start": 3987,
+      "line_end": 3990,
+      "condition": "A frame type is encoded in a Frame Type field.",
+      "required_behavior": "Encode the frame type using the shortest possible variable-length integer encoding.",
+      "forbidden_behavior": "Use a longer variable-length integer encoding when a shorter encoding can represent the frame type.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The encoded width can be compared with the minimum variable-length integer width capable of representing the frame type value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   possible encoding.  For frame types defined in this document, this\n   means a single-byte encoding, even though it is possible to encode\n   these values as a two-, four-, or eight-byte variable-length integer.",
+      "line_start": 3990,
+      "line_end": 3992,
+      "condition": "A frame type defined in this document is encoded.",
+      "required_behavior": "Use a single-byte encoding for the frame type.",
+      "forbidden_behavior": "Encode the frame type as a two-, four-, or eight-byte variable-length integer.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serialized Frame Type field for each frame type defined in the document can be checked for an encoded length of exactly one byte.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   For instance, though 0x4001 is a legitimate two-byte encoding for a\n   variable-length integer with a value of 1, PING frames are always\n   encoded as a single byte with the value 0x01.",
+      "line_start": 3993,
+      "line_end": 3995,
+      "condition": "A PING frame is encoded.",
+      "required_behavior": "Encode its Frame Type as the single byte 0x01.",
+      "forbidden_behavior": "Use the two-byte encoding 0x4001 or any other non-single-byte encoding for the PING frame type.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The first encoded field of a serialized PING frame can be checked for the exact one-byte value 0x01.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   encoded as a single byte with the value 0x01.  This rule applies to\n   all current and future QUIC frame types.",
+      "line_start": 3995,
+      "line_end": 3996,
+      "condition": "Any current or future QUIC frame type is encoded.",
+      "required_behavior": "Apply the rule that the frame type uses its shortest possible encoding.",
+      "forbidden_behavior": "Exempt a current or future QUIC frame type from the shortest-possible-encoding rule.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "For any implemented QUIC frame type, its encoded width can be checked against the shortest width capable of representing its value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   all current and future QUIC frame types.  An endpoint MAY treat the\n   receipt of a frame type that uses a longer encoding than necessary as\n   a connection error of type PROTOCOL_VIOLATION.",
+      "line_start": 3996,
+      "line_end": 3998,
+      "condition": "An endpoint receives a frame type encoded using more bytes than necessary.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The endpoint is permitted to treat the receipt as a connection error of type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can send a non-minimally encoded frame type and accept the specified PROTOCOL_VIOLATION connection error as permitted behavior.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0042",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A security-aware stub resolver MUST support the DNSSEC RR types, at\n   least to the extent of not mishandling responses just because they\n   contain DNSSEC RRs.",
+      "line_start": 1301,
+      "line_end": 1303,
+      "condition": "The implementation is a security-aware stub resolver.",
+      "required_behavior": "MUST support DNSSEC RR types at least to the extent of not mishandling responses solely because they contain DNSSEC RRs.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The response-processing path can be inspected and exercised with responses containing DNSSEC RRs to check whether their presence alone causes mishandling.",
+      "eligibility": "eligible"
+    }
+  ]
+}

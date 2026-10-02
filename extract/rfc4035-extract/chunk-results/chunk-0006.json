@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0006",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "DNSSEC introduces the concept of signed zones.  A signed zone\n   includes DNS Public Key (DNSKEY), Resource Record Signature (RRSIG),\n   Next Secure (NSEC), and (optionally) Delegation Signer (DS) records\n   according to the rules specified in Sections 2.1, 2.2, 2.3, and 2.4,\n   respectively.  A zone that does not include these records according\n   to the rules in this section is an unsigned zone.",
+      "line_start": 204,
+      "line_end": 209,
+      "condition": "A zone is a signed zone.",
+      "required_behavior": "Include DNS Public Key (DNSKEY) records according to the rules referenced in Section 2.1.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Record-type presence is a necessary property of a signed zone and can be inspected; this item does not specify the placement details referenced in Section 2.1.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "DNSSEC introduces the concept of signed zones.  A signed zone\n   includes DNS Public Key (DNSKEY), Resource Record Signature (RRSIG),\n   Next Secure (NSEC), and (optionally) Delegation Signer (DS) records\n   according to the rules specified in Sections 2.1, 2.2, 2.3, and 2.4,\n   respectively.  A zone that does not include these records according\n   to the rules in this section is an unsigned zone.",
+      "line_start": 204,
+      "line_end": 209,
+      "condition": "A zone is a signed zone.",
+      "required_behavior": "Include Resource Record Signature (RRSIG) records according to the rules referenced in Section 2.2.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Record-type presence is a necessary property of a signed zone and can be inspected; this item does not specify the coverage details referenced in Section 2.2.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "DNSSEC introduces the concept of signed zones.  A signed zone\n   includes DNS Public Key (DNSKEY), Resource Record Signature (RRSIG),\n   Next Secure (NSEC), and (optionally) Delegation Signer (DS) records\n   according to the rules specified in Sections 2.1, 2.2, 2.3, and 2.4,\n   respectively.  A zone that does not include these records according\n   to the rules in this section is an unsigned zone.",
+      "line_start": 204,
+      "line_end": 209,
+      "condition": "A zone is a signed zone.",
+      "required_behavior": "Include Next Secure (NSEC) records according to the rules referenced in Section 2.3.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Record-type presence is a necessary property of a signed zone and can be inspected; this item does not specify the arrangement details referenced in Section 2.3.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "DNSSEC introduces the concept of signed zones.  A signed zone\n   includes DNS Public Key (DNSKEY), Resource Record Signature (RRSIG),\n   Next Secure (NSEC), and (optionally) Delegation Signer (DS) records\n   according to the rules specified in Sections 2.1, 2.2, 2.3, and 2.4,\n   respectively.  A zone that does not include these records according\n   to the rules in this section is an unsigned zone.",
+      "line_start": 204,
+      "line_end": 209,
+      "condition": "A zone is a signed zone; DS inclusion is governed by the referenced Section 2.4.",
+      "required_behavior": "May include Delegation Signer (DS) records as specified by Section 2.4.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "DS is explicitly optional in this overview, but the referenced inclusion rules and their applicability are absent, so this is not a standalone rule permitting omission in every signed zone.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "DNSSEC introduces the concept of signed zones.  A signed zone\n   includes DNS Public Key (DNSKEY), Resource Record Signature (RRSIG),\n   Next Secure (NSEC), and (optionally) Delegation Signer (DS) records\n   according to the rules specified in Sections 2.1, 2.2, 2.3, and 2.4,\n   respectively.  A zone that does not include these records according\n   to the rules in this section is an unsigned zone.",
+      "line_start": 204,
+      "line_end": 209,
+      "condition": "A zone does not include the identified records according to the rules in this section.",
+      "required_behavior": "Treat the zone as an unsigned zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Zone classification is checkable in principle, but the referenced record-inclusion rules needed to evaluate its predicate are absent from this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "DNSSEC requires a change to the definition of the CNAME resource\n   record ([RFC1035]).  Section 2.5 changes the CNAME RR to allow RRSIG\n   and NSEC RRs to appear at the same owner name as does a CNAME RR.",
+      "line_start": 211,
+      "line_end": 213,
+      "condition": "Under DNSSEC, a CNAME RR is present at an owner name.",
+      "required_behavior": "Permit RRSIG RRs to appear at that same owner name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Zone-data validation can be checked for allowing coexistence of CNAME and RRSIG at one owner name.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "DNSSEC requires a change to the definition of the CNAME resource\n   record ([RFC1035]).  Section 2.5 changes the CNAME RR to allow RRSIG\n   and NSEC RRs to appear at the same owner name as does a CNAME RR.",
+      "line_start": 211,
+      "line_end": 213,
+      "condition": "Under DNSSEC, a CNAME RR is present at an owner name.",
+      "required_behavior": "Permit NSEC RRs to appear at that same owner name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Zone-data validation can be checked for allowing coexistence of CNAME and NSEC at one owner name.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "DNSSEC specifies the placement of two new RR types, NSEC and DS,\n   which can be placed at the parental side of a zone cut (that is, at a\n   delegation point).  This is an exception to the general prohibition\n   against putting data in the parent zone at a zone cut.  Section 2.6\n   describes this change.",
+      "line_start": 215,
+      "line_end": 219,
+      "condition": "Under DNSSEC, an NSEC RR is placed at the parental side of a zone cut, that is, at a delegation point.",
+      "required_behavior": "Allow this placement of an NSEC RR as an exception to the general prohibition against parent-zone data at a zone cut.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Zone-cut placement validation can be inspected for the explicit NSEC exception; this permission does not require an NSEC RR at every delegation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "DNSSEC specifies the placement of two new RR types, NSEC and DS,\n   which can be placed at the parental side of a zone cut (that is, at a\n   delegation point).  This is an exception to the general prohibition\n   against putting data in the parent zone at a zone cut.  Section 2.6\n   describes this change.",
+      "line_start": 215,
+      "line_end": 219,
+      "condition": "Under DNSSEC, a DS RR is placed at the parental side of a zone cut, that is, at a delegation point.",
+      "required_behavior": "Allow this placement of a DS RR as an exception to the general prohibition against parent-zone data at a zone cut.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Zone-cut placement validation can be inspected for the explicit DS exception; this permission does not require a DS RR at every delegation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

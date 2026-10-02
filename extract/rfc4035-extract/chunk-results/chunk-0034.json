@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0034",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A security-aware resolver MUST include an EDNS ([RFC2671]) OPT\n   pseudo-RR with the DO ([RFC3225]) bit set when sending queries.",
+      "line_start": 1052,
+      "line_end": 1053,
+      "condition": "When a security-aware resolver sends a query.",
+      "required_behavior": "The security-aware resolver MUST include an EDNS OPT pseudo-RR in the query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An outgoing query can be inspected for the presence of an EDNS OPT pseudo-RR.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware resolver MUST include an EDNS ([RFC2671]) OPT\n   pseudo-RR with the DO ([RFC3225]) bit set when sending queries.",
+      "line_start": 1052,
+      "line_end": 1053,
+      "condition": "When a security-aware resolver sends a query.",
+      "required_behavior": "The security-aware resolver MUST set the DO bit in the query's EDNS OPT pseudo-RR.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The DO flag in an outgoing query's EDNS OPT pseudo-RR has an observable value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware resolver MUST support a message size of at least\n   1220 octets, SHOULD support a message size of 4000 octets, and MUST\n   use the \"sender's UDP payload size\" field in the EDNS OPT pseudo-RR\n   to advertise the message size that it is willing to accept.",
+      "line_start": 1055,
+      "line_end": 1058,
+      "condition": "For a security-aware resolver.",
+      "required_behavior": "The security-aware resolver MUST support a message size of at least 1220 octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The supported message-size boundary can be inspected and exercised with messages of 1220 octets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware resolver MUST support a message size of at least\n   1220 octets, SHOULD support a message size of 4000 octets, and MUST\n   use the \"sender's UDP payload size\" field in the EDNS OPT pseudo-RR\n   to advertise the message size that it is willing to accept.",
+      "line_start": 1055,
+      "line_end": 1058,
+      "condition": "For a security-aware resolver.",
+      "required_behavior": "The security-aware resolver SHOULD support a message size of 4000 octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Support for 4000-octet messages can be inspected and exercised while retaining the advisory SHOULD modality.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware resolver MUST support a message size of at least\n   1220 octets, SHOULD support a message size of 4000 octets, and MUST\n   use the \"sender's UDP payload size\" field in the EDNS OPT pseudo-RR\n   to advertise the message size that it is willing to accept.",
+      "line_start": 1055,
+      "line_end": 1058,
+      "condition": "For a security-aware resolver advertising the message size it is willing to accept.",
+      "required_behavior": "The security-aware resolver MUST advertise the message size it is willing to accept in the \"sender's UDP payload size\" field of the EDNS OPT pseudo-RR.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The EDNS OPT field can be compared with the resolver's configured or implemented accepted message size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A\n   security-aware resolver's IP layer MUST handle fragmented UDP packets\n   correctly regardless of whether any such fragmented packets were\n   received via IPv4 or IPv6.",
+      "line_start": 1058,
+      "line_end": 1061,
+      "condition": "When fragmented UDP packets are received via IPv4 by a security-aware resolver.",
+      "required_behavior": "The security-aware resolver's IP layer MUST handle the fragmented UDP packets correctly.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Delivery and handling of a UDP datagram fragmented over IPv4 can be exercised at the resolver's IP layer.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A\n   security-aware resolver's IP layer MUST handle fragmented UDP packets\n   correctly regardless of whether any such fragmented packets were\n   received via IPv4 or IPv6.",
+      "line_start": 1058,
+      "line_end": 1061,
+      "condition": "When fragmented UDP packets are received via IPv6 by a security-aware resolver.",
+      "required_behavior": "The security-aware resolver's IP layer MUST handle the fragmented UDP packets correctly.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Delivery and handling of a UDP datagram fragmented over IPv6 can be exercised at the resolver's IP layer.",
+      "eligibility": "eligible"
+    }
+  ]
+}

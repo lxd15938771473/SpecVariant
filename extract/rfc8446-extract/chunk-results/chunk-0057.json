@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0057",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The certificate type MUST be X.509v3 [RFC5280], unless explicitly\nnegotiated otherwise (e.g., [RFC7250]).",
+      "line_start": 3757,
+      "line_end": 3758,
+      "condition": "the client and server did not explicitly negotiate another certificate type",
+      "required_behavior": "send an X.509v3 client certificate",
+      "forbidden_behavior": "send another certificate type",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Negotiation state and the encoded client certificate type can be compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the \"certificate_authorities\" extension in the\nCertificateRequest message was present, at least one of the\ncertificates in the certificate chain SHOULD be issued by one of\nthe listed CAs.",
+      "line_start": 3760,
+      "line_end": 3763,
+      "condition": "CertificateRequest contains certificate_authorities",
+      "required_behavior": "select a chain with at least one certificate issued by a listed CA",
+      "forbidden_behavior": "select a chain with no listed-CA relationship without a reason to depart from the recommendation",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Certificate issuers can be compared with the requested authority list.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The certificates MUST be signed using an acceptable signature\nalgorithm, as described in Section 4.3.2.",
+      "line_start": 3765,
+      "line_end": 3766,
+      "condition": "the client selects a certificate chain in response to CertificateRequest",
+      "required_behavior": "use certificates signed with acceptable signature algorithms",
+      "forbidden_behavior": "send a certificate requiring an unacceptable certificate-signature algorithm",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Each certificate signature algorithm can be checked against the request's accepted algorithms.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the CertificateRequest message contained a non-empty\n\"oid_filters\" extension, the end-entity certificate MUST match the\nextension OIDs that are recognized by the client, as described in\nSection 4.2.5.",
+      "line_start": 3770,
+      "line_end": 3773,
+      "condition": "CertificateRequest contains a non-empty oid_filters extension",
+      "required_behavior": "select an end-entity certificate matching every filter OID recognized by the client",
+      "forbidden_behavior": "send an end-entity certificate that fails a recognized OID filter",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Recognized filters can be evaluated against parsed end-entity certificate extensions.",
+      "eligibility": "eligible"
+    }
+  ]
+}

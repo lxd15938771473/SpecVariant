@@ -1,0 +1,25 @@
+{
+  "profile_id": "generic",
+  "description": "Protocol-neutral capabilities for dry-run scheduling of SpecLitmus IR.",
+  "capabilities": [
+    "send",
+    "observe",
+    "wait",
+    "drop",
+    "duplicate",
+    "replay",
+    "reordering",
+    "fragmentation",
+    "network_scheduler",
+    "fault_injection",
+    "multi_connection",
+    "replay_buffer",
+    "timer_control"
+  ],
+  "oracle_modes": [
+    "setup_check",
+    "normative_check",
+    "security_observation",
+    "differential_observation"
+  ]
+}

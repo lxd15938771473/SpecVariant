@@ -1,0 +1,139 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0003",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "   Ack-eliciting frames:  All frames other than ACK, PADDING, and\n      CONNECTION_CLOSE are considered ack-eliciting.",
+                             "line_start":  142,
+                             "line_end":  143,
+                             "condition":  "A frame is an ACK, PADDING, or CONNECTION_CLOSE frame.",
+                             "required_behavior":  "Classify the frame as not ack-eliciting.",
+                             "forbidden_behavior":  "Do not classify an ACK, PADDING, or CONNECTION_CLOSE frame as ack-eliciting.",
+                             "error_behavior":  "",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "A test can supply each enumerated frame type and inspect the implementation\u0027s ack-eliciting classification.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   Ack-eliciting frames:  All frames other than ACK, PADDING, and\n      CONNECTION_CLOSE are considered ack-eliciting.",
+                             "line_start":  142,
+                             "line_end":  143,
+                             "condition":  "A frame has a type other than ACK, PADDING, or CONNECTION_CLOSE.",
+                             "required_behavior":  "Classify the frame as ack-eliciting.",
+                             "forbidden_behavior":  "Do not classify any other frame type as non-ack-eliciting.",
+                             "error_behavior":  "",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "A test can supply any non-exempt frame type and inspect the resulting ack-eliciting classification.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   Ack-eliciting packets:  Packets that contain ack-eliciting frames\n      elicit an ACK from the receiver within the maximum acknowledgment\n      delay and are called ack-eliciting packets.",
+                             "line_start":  145,
+                             "line_end":  147,
+                             "condition":  "A packet contains at least one ack-eliciting frame.",
+                             "required_behavior":  "Classify the packet as an ack-eliciting packet.",
+                             "forbidden_behavior":  "Do not classify such a packet as non-ack-eliciting.",
+                             "error_behavior":  "",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A test can construct a packet containing an ack-eliciting frame and inspect the packet classification.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   Ack-eliciting packets:  Packets that contain ack-eliciting frames\n      elicit an ACK from the receiver within the maximum acknowledgment\n      delay and are called ack-eliciting packets.",
+                             "line_start":  145,
+                             "line_end":  147,
+                             "condition":  "The receiver receives a packet containing at least one ack-eliciting frame.",
+                             "required_behavior":  "Cause an ACK to be sent no later than the maximum acknowledgment delay.",
+                             "forbidden_behavior":  "Do not leave the packet unacknowledged beyond the maximum acknowledgment delay.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A timed runtime test can deliver an ack-eliciting packet and verify that an ACK is emitted within the configured maximum acknowledgment delay.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   Ack-eliciting packets:  Packets that contain ack-eliciting frames\n      elicit an ACK from the receiver within the maximum acknowledgment\n      delay and are called ack-eliciting packets.",
+                             "line_start":  145,
+                             "line_end":  147,
+                             "condition":  "A packet contains no ack-eliciting frame.",
+                             "required_behavior":  "Classify the packet as not ack-eliciting.",
+                             "forbidden_behavior":  "Do not classify a packet without any ack-eliciting frame as an ack-eliciting packet.",
+                             "error_behavior":  "",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "The definition makes containment of an ack-eliciting frame the packet-classification criterion, so a test can construct an ACK/PADDING/CONNECTION_CLOSE-only packet and inspect the classification.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   In-flight packets:  Packets are considered in flight when they are\n      ack-eliciting or contain a PADDING frame, and they have been sent\n      but are not acknowledged, declared lost, or discarded along with\n      old keys.",
+                             "line_start":  149,
+                             "line_end":  152,
+                             "condition":  "A packet is ack-eliciting or contains a PADDING frame, has been sent, and has not been acknowledged, declared lost, or discarded along with old keys.",
+                             "required_behavior":  "Classify the packet as in flight.",
+                             "forbidden_behavior":  "Do not exclude the packet from the in-flight set while all of these conditions hold.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A stateful test can send a qualifying packet, withhold every listed terminal event, and inspect whether it remains in flight.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   In-flight packets:  Packets are considered in flight when they are\n      ack-eliciting or contain a PADDING frame, and they have been sent\n      but are not acknowledged, declared lost, or discarded along with\n      old keys.",
+                             "line_start":  149,
+                             "line_end":  152,
+                             "condition":  "A packet is neither ack-eliciting nor contains a PADDING frame.",
+                             "required_behavior":  "Classify the packet as not in flight.",
+                             "forbidden_behavior":  "Do not count a packet as in flight solely because it has been sent and has no terminal disposition.",
+                             "error_behavior":  "",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "The definition restricts in-flight status to ack-eliciting packets or packets containing PADDING, which can be tested with an ACK-only or CONNECTION_CLOSE-only packet.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   In-flight packets:  Packets are considered in flight when they are\n      ack-eliciting or contain a PADDING frame, and they have been sent\n      but are not acknowledged, declared lost, or discarded along with\n      old keys.",
+                             "line_start":  149,
+                             "line_end":  152,
+                             "condition":  "A qualifying ack-eliciting or PADDING-containing packet has not yet been sent.",
+                             "required_behavior":  "Classify the packet as not in flight.",
+                             "forbidden_behavior":  "Do not count an unsent packet as in flight.",
+                             "error_behavior":  "",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A test can create but not send a qualifying packet and inspect congestion-control or recovery state for in-flight accounting.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   In-flight packets:  Packets are considered in flight when they are\n      ack-eliciting or contain a PADDING frame, and they have been sent\n      but are not acknowledged, declared lost, or discarded along with\n      old keys.",
+                             "line_start":  149,
+                             "line_end":  152,
+                             "condition":  "A sent packet that was in flight is acknowledged.",
+                             "required_behavior":  "Remove the packet from in-flight classification.",
+                             "forbidden_behavior":  "Do not continue to consider the acknowledged packet in flight.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A stateful test can acknowledge a tracked in-flight packet and verify that in-flight accounting no longer includes it.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   In-flight packets:  Packets are considered in flight when they are\n      ack-eliciting or contain a PADDING frame, and they have been sent\n      but are not acknowledged, declared lost, or discarded along with\n      old keys.",
+                             "line_start":  149,
+                             "line_end":  152,
+                             "condition":  "A sent packet that was in flight is declared lost.",
+                             "required_behavior":  "Remove the packet from in-flight classification.",
+                             "forbidden_behavior":  "Do not continue to consider the lost packet in flight.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A stateful test can trigger loss declaration for a tracked packet and verify that in-flight accounting no longer includes it.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   In-flight packets:  Packets are considered in flight when they are\n      ack-eliciting or contain a PADDING frame, and they have been sent\n      but are not acknowledged, declared lost, or discarded along with\n      old keys.",
+                             "line_start":  149,
+                             "line_end":  152,
+                             "condition":  "A sent packet that was in flight is discarded along with old keys.",
+                             "required_behavior":  "Remove the packet from in-flight classification.",
+                             "forbidden_behavior":  "Do not continue to consider the discarded packet in flight.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A stateful test can discard old keys and the associated tracked packet, then verify that in-flight accounting no longer includes that packet.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

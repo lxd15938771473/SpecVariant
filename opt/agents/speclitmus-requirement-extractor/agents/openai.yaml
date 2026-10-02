@@ -1,0 +1,4 @@
+interface:
+  display_name: "Requirement Extractor"
+  short_description: "Extract atomic checkable constraints with verified evidence"
+  default_prompt: "Use $speclitmus-requirement-extractor to chunk the standard first, then have agents extract atomic, implementation-checkable protocol constraints with source evidence."

@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0018",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "QTYPE fields appear in the question part of a query.",
+      "line_start": 673,
+      "line_end": 673,
+      "condition": "When encoding or parsing the QTYPE field of a query.",
+      "required_behavior": "Locate the QTYPE field in the question part of the query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The query serializer and parser expose the section containing the QTYPE field.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QTYPES are a\nsuperset of TYPEs, hence all TYPEs are valid QTYPEs.",
+      "line_start": 673,
+      "line_end": 674,
+      "condition": "When determining whether a QTYPE value is valid.",
+      "required_behavior": "Treat every valid TYPE value as a valid QTYPE value.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The accepted QTYPE value set can be checked to contain every valid TYPE value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "AXFR            252 A request for a transfer of an entire zone",
+      "line_start": 685,
+      "line_end": 685,
+      "condition": "When encoding or interpreting the AXFR QTYPE.",
+      "required_behavior": "Map QTYPE value 252 to a request for transfer of an entire zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The AXFR encoding and QTYPE dispatch mapping can be checked for value 252 and entire-zone transfer semantics.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "MAILB           253 A request for mailbox-related records (MB, MG or MR)",
+      "line_start": 687,
+      "line_end": 687,
+      "condition": "When encoding or interpreting the MAILB QTYPE.",
+      "required_behavior": "Map QTYPE value 253 to a request for mailbox-related records MB, MG, or MR.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The MAILB QTYPE mapping and its selected record types can be inspected or exercised.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "MAILA           254 A request for mail agent RRs (Obsolete - see MX)",
+      "line_start": 689,
+      "line_end": 689,
+      "condition": "When encoding or interpreting the obsolete MAILA QTYPE.",
+      "required_behavior": "Map the obsolete MAILA QTYPE value 254 to a request for mail agent resource records.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation that handles obsolete MAILA can be checked for its QTYPE value and request interpretation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*               255 A request for all records",
+      "line_start": 691,
+      "line_end": 691,
+      "condition": "When encoding or interpreting the wildcard (*) QTYPE.",
+      "required_behavior": "Map QTYPE value 255 to a request for all records.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The wildcard QTYPE encoding and request interpretation can be checked against value 255.",
+      "eligibility": "eligible"
+    }
+  ]
+}

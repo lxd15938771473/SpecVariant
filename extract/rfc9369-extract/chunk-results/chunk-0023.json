@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0023",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "One byte is\n   skipped to produce the sample for header protection.",
+      "line_start": 628,
+      "line_end": 629,
+      "condition": "when producing the header-protection sample from the resulting ciphertext in this packet-protection example",
+      "required_behavior": "skip one byte before taking the header-protection sample",
+      "forbidden_behavior": "take the header-protection sample without skipping the specified byte",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The offset used to select the header-protection sample can be inspected and tested for the one-byte skip.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "sample = e7b6b932bc27d786f4bc2bb20f2162ba",
+      "line_start": 631,
+      "line_end": 631,
+      "condition": "for the sample packet-protection computation represented by this vector",
+      "required_behavior": "produce the header-protection sample e7b6b932bc27d786f4bc2bb20f2162ba",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A computed header-protection sample can be compared byte-for-byte with the literal vector, but the generating inputs are not present in this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "mask   = 97580e32bf",
+      "line_start": 632,
+      "line_end": 632,
+      "condition": "for the sample packet-protection computation represented by this vector",
+      "required_behavior": "produce the header-protection mask 97580e32bf",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A computed header-protection mask can be compared byte-for-byte with the literal vector, but the generating inputs are not present in this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "header = 5558b1c6",
+      "line_start": 633,
+      "line_end": 633,
+      "condition": "for the sample packet-protection computation represented by this vector",
+      "required_behavior": "produce the protected header 5558b1c6",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A computed protected header can be compared byte-for-byte with the literal vector, but the generating inputs are not present in this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "The protected packet is the smallest possible packet size of 21\n   bytes.",
+      "line_start": 635,
+      "line_end": 636,
+      "condition": "for the protected packet in this sample packet-protection example",
+      "required_behavior": "produce a protected packet of 21 bytes, the smallest possible packet size",
+      "forbidden_behavior": "produce a packet smaller than 21 bytes for this example",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serialized protected packet can be measured directly and checked for the specified 21-byte length.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "packet = 5558b1c60ae7b6b932bc27d786f4bc2bb20f2162ba",
+      "line_start": 638,
+      "line_end": 638,
+      "condition": "for the sample packet-protection computation represented by this vector",
+      "required_behavior": "produce the protected packet 5558b1c60ae7b6b932bc27d786f4bc2bb20f2162ba",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A computed protected packet can be compared byte-for-byte with the literal vector, but the generating inputs are not present in this chunk.",
+      "eligibility": "exclude"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0077",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "The TLS handshake establishes one or more input secrets which are\n   combined to create the actual working keying material, as detailed\n   below.  The key derivation process incorporates both the input\n   secrets and the handshake transcript.  Note that because the",
+                             "line_start":  5020,
+                             "line_end":  5023,
+                             "condition":  "deriving actual TLS working keying material",
+                             "required_behavior":  "combine the handshake input secrets into the derivation",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "The key-schedule dataflow can be inspected for every established input secret.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The TLS handshake establishes one or more input secrets which are\n   combined to create the actual working keying material, as detailed\n   below.  The key derivation process incorporates both the input\n   secrets and the handshake transcript.  Note that because the",
+                             "line_start":  5020,
+                             "line_end":  5023,
+                             "condition":  "deriving actual TLS working keying material",
+                             "required_behavior":  "incorporate the handshake transcript into the derivation",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "Transcript input to the key schedule can be inspected and varied in tests.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "secrets and the handshake transcript.  Note that because the\n   handshake transcript includes the random values from the Hello\n   messages, any given handshake will have different traffic secrets,",
+                             "line_start":  5023,
+                             "line_end":  5025,
+                             "condition":  "constructing the handshake transcript used by key derivation",
+                             "required_behavior":  "include the random values from the Hello messages",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "Hello random changes can be traced into the transcript hash.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "secrets and the handshake transcript.  Note that because the\n   handshake transcript includes the random values from the Hello\n   messages, any given handshake will have different traffic secrets,\n   even if the same input secrets are used, as is the case when the same\n   PSK is used for multiple connections.",
+                             "line_start":  5023,
+                             "line_end":  5027,
+                             "condition":  "two handshakes use the same input secrets or the same PSK but different Hello random values",
+                             "required_behavior":  "derive different traffic secrets for the handshakes",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "Running the derivation with distinct Hello randoms provides a direct output inequality check.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0011",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "BGP messages are sent over TCP connections.",
+      "line_start": 588,
+      "line_end": 588,
+      "condition": "when sending BGP messages",
+      "required_behavior": "Send BGP messages over TCP connections.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The transport used to carry BGP messages is directly inspectable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A message is processed\n   only after it is entirely received.",
+      "line_start": 588,
+      "line_end": 589,
+      "condition": "when receiving a BGP message",
+      "required_behavior": "Process the message only after the entire message has been received.",
+      "forbidden_behavior": "Process an incompletely received message.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Fragmented TCP input can establish whether message processing waits for complete reception.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The maximum message size is 4096\n   octets.",
+      "line_start": 589,
+      "line_end": 590,
+      "condition": "for any BGP message",
+      "required_behavior": "Limit the total message size to 4096 octets.",
+      "forbidden_behavior": "Use a BGP message larger than 4096 octets.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Message length bounds are concrete encoding and parsing checks.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "All implementations are required to support this maximum\n   message size.",
+      "line_start": 590,
+      "line_end": 591,
+      "condition": "for a BGP message of the specified maximum size, 4096 octets",
+      "required_behavior": "Support BGP messages of 4096 octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A valid message at the maximum size tests implementation capacity.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The smallest message that may be sent consists of a\n   BGP header without a data portion (19 octets).",
+      "line_start": 591,
+      "line_end": 592,
+      "condition": "when sending a BGP message",
+      "required_behavior": "Use a minimum total message size of 19 octets.",
+      "forbidden_behavior": "Send a message shorter than 19 octets.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The minimum encoded message length is measurable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The smallest message that may be sent consists of a\n   BGP header without a data portion (19 octets).",
+      "line_start": 591,
+      "line_end": 592,
+      "condition": "for the smallest BGP message",
+      "required_behavior": "Permit a message consisting solely of a BGP header, with no data portion.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Header-only message support can be checked independently of the length lower bound.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "All multi-octet fields are in network byte order.",
+      "line_start": 594,
+      "line_end": 594,
+      "condition": "for every multi-octet BGP field",
+      "required_behavior": "Encode and decode multi-octet fields in network byte order.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Field byte order can be checked with known wire values.",
+      "eligibility": "eligible"
+    }
+  ]
+}

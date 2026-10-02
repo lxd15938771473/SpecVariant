@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0037",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "BGP speakers MAY negotiate the version of the protocol by making\n   multiple attempts at opening a BGP connection, starting with the\n   highest version number each BGP speaker supports.  If an open attempt",
+      "line_start": 1996,
+      "line_end": 1998,
+      "condition": "A BGP speaker chooses to negotiate the protocol version.",
+      "required_behavior": "MAY negotiate the protocol version through multiple attempts to open a BGP connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Connection establishment can be checked for support of repeated version-negotiation attempts; this is permitted behavior, not mandatory support.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "BGP speakers MAY negotiate the version of the protocol by making\n   multiple attempts at opening a BGP connection, starting with the\n   highest version number each BGP speaker supports.  If an open attempt",
+      "line_start": 1996,
+      "line_end": 1998,
+      "condition": "A BGP speaker uses the described optional repeated-open version negotiation procedure.",
+      "required_behavior": "Start with the highest version number that the BGP speaker supports.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The version selected for the initial negotiation attempt can be compared with the locally supported versions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the highest common version.  In order to support BGP version\n   negotiation, future versions of BGP MUST retain the format of the\n   OPEN and NOTIFICATION messages.",
+      "line_start": 2005,
+      "line_end": 2007,
+      "condition": "A future BGP version supports BGP version negotiation.",
+      "required_behavior": "MUST retain the format of OPEN messages.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The OPEN encoding of a future version can be checked for retention of the existing format.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the highest common version.  In order to support BGP version\n   negotiation, future versions of BGP MUST retain the format of the\n   OPEN and NOTIFICATION messages.",
+      "line_start": 2005,
+      "line_end": 2007,
+      "condition": "A future BGP version supports BGP version negotiation.",
+      "required_behavior": "MUST retain the format of NOTIFICATION messages.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The NOTIFICATION encoding of a future version can be checked for retention of the existing format.",
+      "eligibility": "eligible"
+    }
+  ]
+}

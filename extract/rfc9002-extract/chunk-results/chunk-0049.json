@@ -1,0 +1,55 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0049",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "A sender can detect suppression of reports by marking occasional\n   packets that it sends with an ECN-CE marking.",
+                             "line_start":  1277,
+                             "line_end":  1278,
+                             "condition":  "When a sender attempts to detect suppression of ECN reports",
+                             "required_behavior":  "The sender can mark occasional outgoing packets with ECN-CE and compare the acknowledgement reporting for those packets.",
+                             "forbidden_behavior":  "None stated.",
+                             "error_behavior":  "None stated.",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "Packet markings and acknowledgement reports are observable, but the text only describes an optional detection technique using \u0027can\u0027 and imposes no implementation obligation.",
+                             "eligibility":  "exclude"
+                         },
+                         {
+                             "quote":  "If a packet sent with\n   an ECN-CE marking is not reported as having been CE marked when the\n   packet is acknowledged, then the sender can disable ECN for that path\n   by not setting ECN-Capable Transport (ECT) codepoints in subsequent\n   packets sent on that path [RFC3168].",
+                             "line_start":  1278,
+                             "line_end":  1282,
+                             "condition":  "A deliberately ECN-CE-marked packet is acknowledged without being reported as CE-marked",
+                             "required_behavior":  "The sender can disable ECN on that path by omitting ECT codepoints from subsequent packets on the path.",
+                             "forbidden_behavior":  "None stated.",
+                             "error_behavior":  "None stated.",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "Subsequent packet codepoints can be inspected after the mismatch, but \u0027can disable\u0027 grants an option rather than requiring the behavior.",
+                             "eligibility":  "exclude"
+                         },
+                         {
+                             "quote":  "Congestion\n   controllers respond to reports of ECN-CE by reducing their rate, but\n   the response may vary.",
+                             "line_start":  1289,
+                             "line_end":  1291,
+                             "condition":  "A congestion controller receives a report of ECN-CE markings",
+                             "required_behavior":  "The congestion controller reduces its sending rate; the precise reduction response may vary by controller.",
+                             "forbidden_behavior":  "The congestion controller must not treat the ECN-CE report as permitting an unchanged or increased sending rate.",
+                             "error_behavior":  "None stated.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can inject an ECN-CE report and compare the controller\u0027s effective sending rate before and after the report.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Markings can be treated as equivalent to loss\n   [RFC3168], but other responses can be specified, such as [RFC8511] or\n   [RFC8311].",
+                             "line_start":  1291,
+                             "line_end":  1293,
+                             "condition":  "When selecting how a congestion controller responds to ECN-CE markings",
+                             "required_behavior":  "The implementation can treat ECN-CE markings as equivalent to loss or use another specified response.",
+                             "forbidden_behavior":  "None stated.",
+                             "error_behavior":  "None stated.",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "The selected response can be observed, but the passage explicitly allows multiple alternatives and does not impose a single independently testable obligation.",
+                             "eligibility":  "exclude"
+                         }
+                     ]
+}

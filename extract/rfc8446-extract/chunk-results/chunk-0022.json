@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0022",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "enum {\n          client_hello(1),\n          server_hello(2),\n          new_session_ticket(4),\n          end_of_early_data(5),\n          encrypted_extensions(8),\n          certificate(11),\n          certificate_request(13),\n          certificate_verify(15),\n          finished(20),\n          key_update(24),\n          message_hash(254),\n          (255)\n      } HandshakeType;",
+      "line_start": 1345,
+      "line_end": 1358,
+      "condition": "when encoding or interpreting a HandshakeType",
+      "required_behavior": "use the declared numeric assignments: client_hello 1, server_hello 2, new_session_ticket 4, end_of_early_data 5, encrypted_extensions 8, certificate 11, certificate_request 13, certificate_verify 15, finished 20, key_update 24, and message_hash 254",
+      "forbidden_behavior": "assign a different numeric value to a declared HandshakeType",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoder and decoder's HandshakeType lookup table can be compared with the declared assignments.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "HandshakeType msg_type;    /* handshake type */",
+      "line_start": 1361,
+      "line_end": 1361,
+      "condition": "when encoding or parsing a Handshake message",
+      "required_behavior": "encode and interpret the first message field as a HandshakeType named msg_type",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The handshake header field type and position are directly inspectable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "uint24 length;             /* remaining bytes in message */",
+      "line_start": 1362,
+      "line_end": 1362,
+      "condition": "when encoding or parsing a Handshake message",
+      "required_behavior": "encode length as a uint24 equal to the number of remaining bytes in the message",
+      "forbidden_behavior": "use a length value that does not delimit exactly the remaining message bytes",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Tests can compare the 24-bit header length with the actual encoded payload size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "select (Handshake.msg_type) {\n              case client_hello:          ClientHello;\n              case server_hello:          ServerHello;\n              case end_of_early_data:     EndOfEarlyData;\n              case encrypted_extensions:  EncryptedExtensions;\n              case certificate_request:   CertificateRequest;\n              case certificate:           Certificate;\n              case certificate_verify:    CertificateVerify;\n              case finished:              Finished;\n              case new_session_ticket:    NewSessionTicket;\n              case key_update:            KeyUpdate;\n          };",
+      "line_start": 1363,
+      "line_end": 1374,
+      "condition": "when encoding or parsing the body of a Handshake message",
+      "required_behavior": "select the body structure from msg_type using the declared ClientHello, ServerHello, EndOfEarlyData, EncryptedExtensions, CertificateRequest, Certificate, CertificateVerify, Finished, NewSessionTicket, and KeyUpdate mappings",
+      "forbidden_behavior": "interpret a declared handshake message type using a different body structure",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Each declared message type has a concrete payload-dispatch mapping in the handshake codec.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Protocol messages MUST be sent in the order defined in Section 4.4.1\n   and shown in the diagrams in Section 2.",
+      "line_start": 1377,
+      "line_end": 1378,
+      "condition": "during a TLS handshake",
+      "required_behavior": "send protocol messages only in the handshake order defined by Section 4.4.1 and the Section 2 diagrams",
+      "forbidden_behavior": "send a protocol message out of the defined handshake order",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The handshake state machine's permitted outbound transitions can be compared with the defined message sequence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A peer which receives a\n   handshake message in an unexpected order MUST abort the handshake\n   with an \"unexpected_message\" alert.",
+      "line_start": 1378,
+      "line_end": 1380,
+      "condition": "a peer receives a handshake message in an unexpected order",
+      "required_behavior": "abort the handshake",
+      "forbidden_behavior": "continue processing the handshake",
+      "error_behavior": "send an unexpected_message alert",
+      "check_type": "error_handling",
+      "why_checkable": "An out-of-order message can be injected and the resulting alert and termination observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

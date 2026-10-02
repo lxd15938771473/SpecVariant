@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0034",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "When AEAD_CHACHA20_POLY1305 is in use, header protection uses the raw\n   ChaCha20 function as defined in Section 2.4 of [CHACHA].",
+      "line_start": 1340,
+      "line_end": 1341,
+      "condition": "When AEAD_CHACHA20_POLY1305 is the active packet-protection algorithm.",
+      "required_behavior": "Use the raw ChaCha20 function for header protection.",
+      "forbidden_behavior": "Do not use the ChaCha20-Poly1305 AEAD operation or another cipher as the header-protection primitive.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known header-protection vectors can distinguish raw ChaCha20 output from AEAD or other cipher operations.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This uses a\n   256-bit key and 16 bytes sampled from the packet protection output.",
+      "line_start": 1341,
+      "line_end": 1342,
+      "condition": "When invoking ChaCha20 for QUIC header protection.",
+      "required_behavior": "Use a 256-bit header-protection key.",
+      "forbidden_behavior": "Do not use a key with a different bit length.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The key length supplied to the ChaCha20 primitive can be inspected or rejected with a non-256-bit test key.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This uses a\n   256-bit key and 16 bytes sampled from the packet protection output.",
+      "line_start": 1341,
+      "line_end": 1342,
+      "condition": "When constructing the sample for ChaCha20-based header protection.",
+      "required_behavior": "Use exactly 16 sample bytes.",
+      "forbidden_behavior": "Do not use a sample of another length.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The sample passed into the header-protection function can be inspected for an exact 16-byte length.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This uses a\n   256-bit key and 16 bytes sampled from the packet protection output.",
+      "line_start": 1341,
+      "line_end": 1342,
+      "condition": "When constructing the sample for ChaCha20-based header protection.",
+      "required_behavior": "Take the sample bytes from the packet-protection output.",
+      "forbidden_behavior": "Do not source the sample from unprotected plaintext or unrelated data.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The sample can be compared byte-for-byte with the corresponding region of packet-protection output.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The first 4 bytes of the sampled ciphertext are the block counter.",
+      "line_start": 1344,
+      "line_end": 1344,
+      "condition": "When deriving the ChaCha20 block counter from the 16-byte sample.",
+      "required_behavior": "Use sample bytes 0 through 3 as the block counter.",
+      "forbidden_behavior": "Do not take the block counter from another part of the sample.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A chosen sample with distinct byte regions can verify which four bytes are supplied as the counter.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A\n   ChaCha20 implementation could take a 32-bit integer in place of a\n   byte sequence, in which case, the byte sequence is interpreted as a\n   little-endian value.",
+      "line_start": 1344,
+      "line_end": 1347,
+      "condition": "When the ChaCha20 interface accepts the block counter as a 32-bit integer rather than four bytes.",
+      "required_behavior": "Interpret the four counter bytes as a little-endian 32-bit value.",
+      "forbidden_behavior": "Do not interpret the counter bytes as big-endian or host-endian without conversion.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A non-palindromic four-byte counter sample produces a deterministic integer that exposes the selected byte order.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The remaining 12 bytes are used as the nonce.",
+      "line_start": 1349,
+      "line_end": 1349,
+      "condition": "When deriving the ChaCha20 nonce from the 16-byte sample.",
+      "required_behavior": "Use sample bytes 4 through 15 as the 12-byte nonce.",
+      "forbidden_behavior": "Do not include the first four counter bytes in the nonce or omit any of the remaining twelve bytes.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A chosen sample with distinct bytes can verify the exact twelve-byte region supplied as the nonce.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A ChaCha20\n   implementation might take an array of three 32-bit integers in place\n   of a byte sequence, in which case, the nonce bytes are interpreted as\n   a sequence of 32-bit little-endian integers.",
+      "line_start": 1349,
+      "line_end": 1352,
+      "condition": "When the ChaCha20 interface accepts the nonce as three 32-bit integers rather than twelve bytes.",
+      "required_behavior": "Interpret each consecutive four-byte nonce word as a little-endian 32-bit integer.",
+      "forbidden_behavior": "Do not interpret the nonce words as big-endian or host-endian without conversion.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Nonce bytes chosen to differ by position yield deterministic word values that reveal word grouping and byte order.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The encryption mask is produced by invoking ChaCha20 to protect 5\n   zero bytes.  In pseudocode, the header protection function is defined\n   as:\n\n   header_protection(hp_key, sample):\n     counter = sample[0..3]\n     nonce = sample[4..15]\n     mask = ChaCha20(hp_key, counter, nonce, {0,0,0,0,0})",
+      "line_start": 1354,
+      "line_end": 1361,
+      "condition": "When producing the ChaCha20-based header-protection mask from hp_key and sample.",
+      "required_behavior": "Invoke ChaCha20 with hp_key, sample[0..3] as counter, sample[4..15] as nonce, and five zero input bytes; use its five-byte output as the mask.",
+      "forbidden_behavior": "Do not use nonzero input bytes, a different input length, or different counter/nonce slices.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "For a known hp_key and sample, the five-byte mask can be compared directly with the specified ChaCha20 invocation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

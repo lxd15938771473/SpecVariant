@@ -1,0 +1,396 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "recall-07",
+  "decisions": [
+    {
+      "pair_id": "pair-a61c8788e98abbd4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The endpoint, transition, and key update differ: after client Finished both client sending and receiving keys change, while after server Finished only the server sending key changes and application data becomes sendable."
+    },
+    {
+      "pair_id": "pair-76782802a5e356ed",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The illegal_parameter outcomes match, but the conditions test different relations: selection outside ClientHello.cipher_suites versus a ServerHello cipher-suite change from HelloRetryRequest."
+    },
+    {
+      "pair_id": "pair-912c88ba4ba3a612",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different CipherSuite members to different wire values: TLS_AES_128_GCM_SHA256 to 0x1301 and TLS_CHACHA20_POLY1305_SHA256 to 0x1303."
+    },
+    {
+      "pair_id": "pair-e3525007460a3490",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The conditions select different signature families, and the PSS rule specifically constrains the signed digest while the PKCS1-v1_5 rule defines that scheme family's corresponding hash."
+    },
+    {
+      "pair_id": "pair-b22ec12a0d74e983",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different AlertDescription members to different values: certificate_expired to 45 and certificate_required to 116."
+    },
+    {
+      "pair_id": "pair-95da5f3876419dca",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Negotiating cryptographic modes and parameters across the handshake is broader than selecting cryptographic parameters specifically during the Key Exchange phase."
+    },
+    {
+      "pair_id": "pair-620db77004bd4806",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different ContentType members to different values: change_cipher_spec to 20 and application_data to 23."
+    },
+    {
+      "pair_id": "pair-0f45ba6f950914c0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and allowed message sets: signature_algorithms in CH/CR versus early_data in CH/EE/NST."
+    },
+    {
+      "pair_id": "pair-8566e3644835564f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The records and allowed values differ: an initial ClientHello record permits legacy_record_version 0x0301 or 0x0303, while a ServerHello record requires 0x0303."
+    },
+    {
+      "pair_id": "pair-703e9730eceedc88",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different AlertDescription members to different values: unknown_ca to 48 and unknown_psk_identity to 115."
+    },
+    {
+      "pair_id": "pair-bead08a18b4a73a5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: supported_groups in CH/EE versus oid_filters only in CR."
+    },
+    {
+      "pair_id": "pair-248205f78ad277f2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: use_srtp in CH/EE versus signature_algorithms_cert in CH/CR."
+    },
+    {
+      "pair_id": "pair-96fd544b63c275f8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different AlertDescription members to different values: certificate_unknown to 46 and certificate_required to 116."
+    },
+    {
+      "pair_id": "pair-93de3b101c879164",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One constrains the declared byte size of a fixed-length vector, while the other rejects an encoded vector whose runtime byte length contains a partial element; the declaration and parsing conditions are not equivalent."
+    },
+    {
+      "pair_id": "pair-a09755eed8582994",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: heartbeat in CH/EE versus signature_algorithms_cert in CH/CR."
+    },
+    {
+      "pair_id": "pair-02bed8476fa3260e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The bounds apply to different Certificate fields and widths: CertificateEntry.extensions permits 0..65535 bytes, while certificate_request_context permits 0..255 bytes."
+    },
+    {
+      "pair_id": "pair-943a3e2821083c1a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same retry ClientHello triggers separate recomputations of different fields: obfuscated_ticket_age values versus PSK binder values."
+    },
+    {
+      "pair_id": "pair-079234c483ee72f2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The opaque vectors are different fields with different minima: OIDFilter.certificate_extension_values permits empty content, while KeyShareEntry.key_exchange requires at least one byte."
+    },
+    {
+      "pair_id": "pair-6c7566e26b497de6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Although both terminate with unexpected_message, one trigger is a specifically premature KeyUpdate handshake message and the other is receipt of an unexpected record type."
+    },
+    {
+      "pair_id": "pair-abe44d981b742cf7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They order different preference lists: supported protocol versions versus named groups."
+    },
+    {
+      "pair_id": "pair-2ee62b4fa739b132",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: client_certificate_type in CH/EE versus oid_filters only in CR."
+    },
+    {
+      "pair_id": "pair-6f4084b02f899f66",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: supported_versions in CH/SH/HRR versus signature_algorithms_cert in CH/CR."
+    },
+    {
+      "pair_id": "pair-447f91ce55002c64",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: status_request in CH/CR/CT versus early_data in CH/EE/NST."
+    },
+    {
+      "pair_id": "pair-c2cd587328f239e8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: server_certificate_type in CH/EE versus psk_key_exchange_modes only in CH."
+    },
+    {
+      "pair_id": "pair-27daa7681ccacc67",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different ExtensionType members to different values: client_certificate_type to 19 and server_certificate_type to 20."
+    },
+    {
+      "pair_id": "pair-85a70f7a2ed8283c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The opaque vectors are different fields with different minima: Cookie.cookie requires 1..65535 bytes, while OIDFilter.certificate_extension_values permits 0..65535 bytes."
+    },
+    {
+      "pair_id": "pair-21ce1fd814351d29",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One orders a client's Certificate before its CertificateVerify; the other requires a certificate-authenticating server to send CertificateVerify at all."
+    },
+    {
+      "pair_id": "pair-d4f39918121bf9b1",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: psk_key_exchange_modes only in CH versus early_data in CH/EE/NST."
+    },
+    {
+      "pair_id": "pair-20da8bd1c262ad43",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The receiver and message differ: a server ignores an unrecognized ClientHello parameter, while a client ignores an unrecognized NewSessionTicket extension."
+    },
+    {
+      "pair_id": "pair-c927b81b5e7b1bed",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The limits apply to different fields and have different minima: OfferedPsks.identities starts at 7 encoded bytes, while CertificateEntry.extensions starts at 0."
+    },
+    {
+      "pair_id": "pair-ecb39a6384abde5a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The vectors carry different element types and have different maxima: ClientHello supported_versions is 2..254 bytes, while supported_signature_algorithms is 2..65534 bytes."
+    },
+    {
+      "pair_id": "pair-750e0d26d9488d13",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The source states, received messages, and target states differ: WAIT_EE plus EncryptedExtensions enters WAIT_CERT_CR, while WAIT_CERT_CR plus CertificateRequest enters WAIT_CERT."
+    },
+    {
+      "pair_id": "pair-f66d5f66fd73131b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: supported_versions in CH/SH/HRR versus oid_filters only in CR."
+    },
+    {
+      "pair_id": "pair-cc4abcc132ae5579",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The bounds apply to different Certificate fields and widths: certificate_request_context permits 0..255 bytes, while certificate_list permits 0..16777215 bytes."
+    },
+    {
+      "pair_id": "pair-c0bfae595702fca3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: server_certificate_type in CH/EE versus oid_filters only in CR."
+    },
+    {
+      "pair_id": "pair-421b052054873851",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different AlertDescription members to different values: bad_certificate to 42 and bad_certificate_hash_value_RESERVED to 114."
+    },
+    {
+      "pair_id": "pair-0184c3a96df93880",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Figure 4 check only orders EndOfEarlyData before client Finished, while the state-machine check triggers after receipt of server Finished and orders EndOfEarlyData before all remaining client handshake messages."
+    },
+    {
+      "pair_id": "pair-79af1684d92346ed",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical byte range applies to different fields: OIDFilterExtension.filters versus CertificateEntry.extensions."
+    },
+    {
+      "pair_id": "pair-65493f3456b8e6c5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The opaque vectors are different fields with different minima: DistinguishedName requires 1..65535 bytes, while OIDFilter.certificate_extension_values permits 0..65535 bytes."
+    },
+    {
+      "pair_id": "pair-73e8511544495066",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Accepting a PSK cipher suite is a prerequisite distinct from verifying that the selected cipher suite exactly matches the suite associated with the selected PSK."
+    },
+    {
+      "pair_id": "pair-a768107a2217c15a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The required ClientHello extensions and conditions differ: supported_versions is generally required, while supported_groups is required for DHE or ECDHE key exchange."
+    },
+    {
+      "pair_id": "pair-173016fb72ef4ac1",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Restricting all PSKs offered in the ClientHello to advertised modes is broader than restricting only PSK resumption to an advertised mode."
+    },
+    {
+      "pair_id": "pair-e5dbf9eb3de54cd7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement-table rule applies to any psk_key_exchange_modes occurrence and permits it only in ClientHello; the normative rule is the narrower directional prohibition on a server sending the extension."
+    },
+    {
+      "pair_id": "pair-68e448e850c0389d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different CertificateType members to different values: X509 to 0 and OpenPGP_RESERVED to 1."
+    },
+    {
+      "pair_id": "pair-c774f15ba07902e6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different CipherSuite members to different wire values: TLS_CHACHA20_POLY1305_SHA256 to 0x1303 and TLS_AES_128_CCM_SHA256 to 0x1304."
+    },
+    {
+      "pair_id": "pair-758766045fece98b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The triggers differ: intent to authenticate the server by certificate versus any TLS 1.3 ClientHello that omits pre_shared_key."
+    },
+    {
+      "pair_id": "pair-0d7746e2406d224f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The PSK sources and parameter sources differ: externally provisioned PSKs use provisioned 0-RTT parameters, while ticket PSKs inherit them from the connection that issued the ticket."
+    },
+    {
+      "pair_id": "pair-c78d463ff18ab787",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The vectors carry different element types and declared maxima: SignatureSchemeList is 2..65534 bytes, while NamedGroupList is 2..65535 bytes."
+    },
+    {
+      "pair_id": "pair-e0a9c5d35766aa10",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: psk_key_exchange_modes only in CH versus certificate_authorities in CH/CR."
+    },
+    {
+      "pair_id": "pair-ad9fca003ed89ae7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The limits apply to different fields and have different minima: CertificateAuthoritiesExtension.authorities starts at 3 bytes, while CertificateRequest.extensions starts at 2."
+    },
+    {
+      "pair_id": "pair-a483b2ea24778b04",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical byte range applies to different fields: OIDFilterExtension.filters versus EncryptedExtensions.extensions."
+    },
+    {
+      "pair_id": "pair-b52fd4f1ab7e6690",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The alert outcome matches, but the malformed inputs are separate alternatives: invalid unencrypted change_cipher_spec content versus any protected change_cipher_spec record."
+    },
+    {
+      "pair_id": "pair-afa51f7413de0752",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations use different secrets, labels, and transcript endpoints: server_handshake_traffic_secret with 's hs traffic' through ServerHello versus exporter_master_secret with 'exp master' through server Finished."
+    },
+    {
+      "pair_id": "pair-9670c4fffdf250bd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: signed_certificate_timestamp in CH/CR/CT versus key_share in CH/SH/HRR."
+    },
+    {
+      "pair_id": "pair-dd928213d97ed266",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The serialization checks target different structures and fields: TLSPlaintext.fragment versus TLSInnerPlaintext.content."
+    },
+    {
+      "pair_id": "pair-d8fbfc0f3a8aa71e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One states the cross-ticket security outcome after a PSK compromise; the other requires the distinct-key mechanism for multiple tickets. Outcome and mechanism are not the same atomic check."
+    },
+    {
+      "pair_id": "pair-b3cf61a9efef6319",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different HandshakeType members to different values: certificate_request to 13 and certificate_status_RESERVED to 22."
+    },
+    {
+      "pair_id": "pair-63889be8bdf6db24",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different ContentType members to different values: invalid to 0 and alert to 21."
+    },
+    {
+      "pair_id": "pair-c2f8588129ffe923",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks concern different extensions and message sets: max_fragment_length in CH/EE versus post_handshake_auth only in CH."
+    },
+    {
+      "pair_id": "pair-64b7ae90e85e9373",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different AlertDescription members to different values: bad_record_mac to 20 and bad_certificate to 42."
+    },
+    {
+      "pair_id": "pair-bb34679d35aaba67",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One restricts pre_shared_key to ClientHello or ServerHello; the other separately requires pre_shared_key to be the final extension within ClientHello."
+    },
+    {
+      "pair_id": "pair-4e42dda72b62b5b7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The limits apply to different Certificate fields and widths: certificate_request_context is 0..255 bytes, while certificate_list is 0..16777215 encoded bytes."
+    },
+    {
+      "pair_id": "pair-7f5910881d5e16b4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The WAIT_EOED inputs and effects differ: early application data keeps the server in WAIT_EOED, while EndOfEarlyData changes the receiving key and enters WAIT_FLIGHT2."
+    },
+    {
+      "pair_id": "pair-bc5698245ad7185b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different HandshakeType members to different values: server_hello to 2 and certificate to 11."
+    },
+    {
+      "pair_id": "pair-aa1f9dc6c287b65a",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-22933e9bed98e16dd376",
+      "reason": "Both compute Finished.verify_data as a MAC over the same handshake transcript using a key derived from the applicable Base Key; the canonical evidence gives the direct HMAC formula, finished_key, and optional-certificate handling."
+    }
+  ]
+}

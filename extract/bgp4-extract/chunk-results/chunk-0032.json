@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0032",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If a peer sends a NOTIFICATION message, and the receiver of the\n   message detects an error in that message, the receiver cannot use a\n   NOTIFICATION message to report this error back to the peer.",
+      "line_start": 1878,
+      "line_end": 1880,
+      "condition": "The receiver detects an error in a NOTIFICATION message received from a peer (for example, an unrecognized Error Code or Error Subcode).",
+      "required_behavior": "",
+      "forbidden_behavior": "Use a NOTIFICATION message to report the detected NOTIFICATION-message error back to the peer.",
+      "error_behavior": "",
+      "check_type": "error_handling",
+      "why_checkable": "Inject an erroneous NOTIFICATION and observe whether the receiver sends a NOTIFICATION reporting that error.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Any such\n   error (e.g., an unrecognized Error Code or Error Subcode) SHOULD be\n   noticed, logged locally, and brought to the attention of the\n   administration of the peer.",
+      "line_start": 1880,
+      "line_end": 1883,
+      "condition": "The receiver detects an error in a NOTIFICATION message received from a peer (for example, an unrecognized Error Code or Error Subcode).",
+      "required_behavior": "The error SHOULD be noticed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "error_handling",
+      "why_checkable": "Inspect whether malformed NOTIFICATION handling recognizes and surfaces the error, including unrecognized Error Codes or Error Subcodes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Any such\n   error (e.g., an unrecognized Error Code or Error Subcode) SHOULD be\n   noticed, logged locally, and brought to the attention of the\n   administration of the peer.",
+      "line_start": 1880,
+      "line_end": 1883,
+      "condition": "The receiver detects an error in a NOTIFICATION message received from a peer (for example, an unrecognized Error Code or Error Subcode).",
+      "required_behavior": "The error SHOULD be logged locally.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "error_handling",
+      "why_checkable": "Inject an erroneous NOTIFICATION and inspect local logging of its error.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Any such\n   error (e.g., an unrecognized Error Code or Error Subcode) SHOULD be\n   noticed, logged locally, and brought to the attention of the\n   administration of the peer.",
+      "line_start": 1880,
+      "line_end": 1883,
+      "condition": "The receiver detects an error in a NOTIFICATION message received from a peer (for example, an unrecognized Error Code or Error Subcode).",
+      "required_behavior": "The error SHOULD be brought to the attention of the administration of the peer; the means is unspecified.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "error_handling",
+      "why_checkable": "Inspect whether the implementation provides an administrative indication of an erroneous NOTIFICATION without requiring any particular reporting mechanism.",
+      "eligibility": "eligible"
+    }
+  ]
+}

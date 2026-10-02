@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0149",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   An endpoint uses a RESET_STREAM frame (type=0x04) to abruptly\n   terminate the sending part of a stream.",
+      "line_start": 6064,
+      "line_end": 6065,
+      "condition": "When an endpoint abruptly terminates the sending part of a stream using RESET_STREAM",
+      "required_behavior": "Use a RESET_STREAM frame with frame type 0x04.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A frame encoder or parser can be checked for the fixed RESET_STREAM type value and its stream-termination use.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   After sending a RESET_STREAM, an endpoint ceases transmission and\n   retransmission of STREAM frames on the identified stream.  A receiver",
+      "line_start": 6067,
+      "line_end": 6068,
+      "condition": "After an endpoint sends a RESET_STREAM for an identified stream",
+      "required_behavior": "Cease transmission and retransmission of STREAM frames on that stream.",
+      "forbidden_behavior": "Do not transmit or retransmit further STREAM frames on the identified stream.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can send RESET_STREAM and verify that no subsequent original or retransmitted STREAM frame is emitted for that stream.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   retransmission of STREAM frames on the identified stream.  A receiver\n   of RESET_STREAM can discard any data that it already received on that\n   stream.",
+      "line_start": 6068,
+      "line_end": 6070,
+      "condition": "When a receiver has received RESET_STREAM for a stream",
+      "required_behavior": "Permit already-received data on that stream to be discarded.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The receiver's post-reset stream state can be tested to confirm that buffered data may be released without further processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint that receives a RESET_STREAM frame for a send-only stream\n   MUST terminate the connection with error STREAM_STATE_ERROR.",
+      "line_start": 6072,
+      "line_end": 6073,
+      "condition": "When an endpoint receives a RESET_STREAM frame for a send-only stream",
+      "required_behavior": "Terminate the connection.",
+      "forbidden_behavior": "Do not continue the connection or accept the frame as valid for that stream.",
+      "error_behavior": "Use STREAM_STATE_ERROR when terminating the connection.",
+      "check_type": "error_handling",
+      "why_checkable": "A focused protocol test can inject RESET_STREAM on a send-only stream and verify connection termination and the exact error code.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   RESET_STREAM Frame {\n     Type (i) = 0x04,\n     Stream ID (i),\n     Application Protocol Error Code (i),\n     Final Size (i),\n   }",
+      "line_start": 6077,
+      "line_end": 6082,
+      "condition": "When encoding or decoding a RESET_STREAM frame",
+      "required_behavior": "Represent the frame as, in order: Type, Stream ID, Application Protocol Error Code, and Final Size.",
+      "forbidden_behavior": "Do not omit, duplicate, or reorder the listed fields.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded frame layout and parser consumption order can be compared directly with the specified field sequence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   RESET_STREAM Frame {\n     Type (i) = 0x04,\n     Stream ID (i),\n     Application Protocol Error Code (i),\n     Final Size (i),\n   }",
+      "line_start": 6077,
+      "line_end": 6082,
+      "condition": "When encoding or decoding the Type field of a RESET_STREAM frame",
+      "required_behavior": "Encode the Type field as a variable-length integer with value 0x04.",
+      "forbidden_behavior": "Do not identify a RESET_STREAM frame with a Type value other than 0x04.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field encoding form and fixed numeric value are directly inspectable in serialized frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Stream ID:  A variable-length integer encoding of the stream ID of\n      the stream being terminated.",
+      "line_start": 6088,
+      "line_end": 6089,
+      "condition": "When encoding or decoding the Stream ID field of a RESET_STREAM frame",
+      "required_behavior": "Encode it as a variable-length integer identifying the stream being terminated.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A codec test can verify both the variable-length integer representation and that the decoded identifier selects the terminated stream.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Application Protocol Error Code:  A variable-length integer\n      containing the application protocol error code (see Section 20.2)\n      that indicates why the stream is being closed.",
+      "line_start": 6091,
+      "line_end": 6093,
+      "condition": "When encoding or decoding the Application Protocol Error Code field of a RESET_STREAM frame",
+      "required_behavior": "Encode it as a variable-length integer containing the application protocol error code that indicates why the stream is being closed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A codec test can verify the variable-length integer representation and preservation of the supplied application error code.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Final Size:  A variable-length integer indicating the final size of\n      the stream by the RESET_STREAM sender, in units of bytes; see\n      Section 4.5.",
+      "line_start": 6095,
+      "line_end": 6097,
+      "condition": "When encoding or decoding the Final Size field of a RESET_STREAM frame",
+      "required_behavior": "Encode it as a variable-length integer giving the sender-declared final stream size in bytes.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A codec test can verify the variable-length integer representation and that the numeric value is interpreted in bytes as the final stream size.",
+      "eligibility": "eligible"
+    }
+  ]
+}

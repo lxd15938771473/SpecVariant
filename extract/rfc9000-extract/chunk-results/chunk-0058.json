@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0058",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Path validation only fails when the endpoint attempting to validate the path abandons its attempt to validate the path.",
+      "line_start": 2609,
+      "line_end": 2610,
+      "condition": "An endpoint is attempting to validate a path.",
+      "required_behavior": "Treat path validation as failed only when the endpoint abandons its validation attempt.",
+      "forbidden_behavior": "Do not treat path validation as failed before the validation attempt is abandoned.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation's validation state transitions can be observed to verify that failure occurs only following abandonment.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints SHOULD abandon path validation based on a timer.",
+      "line_start": 2612,
+      "line_end": 2612,
+      "condition": "An endpoint is performing path validation.",
+      "required_behavior": "Use a timer as the basis for abandoning path validation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation can be inspected or tested to determine whether expiration of a timer controls abandonment.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A value of three times the larger of the current PTO or the PTO for the new path (using kInitialRtt, as defined in [QUIC-RECOVERY]) is RECOMMENDED.",
+      "line_start": 2614,
+      "line_end": 2616,
+      "condition": "An endpoint sets the timer used to abandon path validation.",
+      "required_behavior": "Set the timer to three times the larger of the current PTO and the PTO for the new path, calculating the new-path PTO using kInitialRtt.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The configured timeout can be compared with the two PTO values and the specified multiplier.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This timeout allows for multiple PTOs to expire prior to failing path validation, so that loss of a single PATH_CHALLENGE or PATH_RESPONSE frame does not cause path validation failure.",
+      "line_start": 2618,
+      "line_end": 2620,
+      "condition": "A single PATH_CHALLENGE or PATH_RESPONSE frame is lost during timed path validation.",
+      "required_behavior": "Allow multiple PTOs to expire before failing path validation.",
+      "forbidden_behavior": "Do not fail path validation solely because one PATH_CHALLENGE or PATH_RESPONSE frame is lost.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A loss-injection test can drop one validation frame and verify that validation is not immediately failed and that multiple PTO opportunities remain.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "a PATH_RESPONSE frame with appropriate data is required for path validation to succeed.",
+      "line_start": 2623,
+      "line_end": 2624,
+      "condition": "An endpoint determines whether validation of a new path has succeeded.",
+      "required_behavior": "Require receipt of a PATH_RESPONSE frame containing appropriate data before declaring path validation successful.",
+      "forbidden_behavior": "Do not declare path validation successful merely because packets containing other frames were received on the new path.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can send packets with non-PATH_RESPONSE frames or an inappropriate PATH_RESPONSE and verify that neither causes validation success.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When an endpoint abandons path validation, it determines that the path is unusable.",
+      "line_start": 2626,
+      "line_end": 2627,
+      "condition": "An endpoint abandons path validation.",
+      "required_behavior": "Mark or otherwise determine the path to be unusable.",
+      "forbidden_behavior": "Do not continue treating the abandoned path as usable.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The path state and subsequent path-selection behavior can be checked after abandonment.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If no paths are available, an endpoint can wait for a new path to become available or close the connection.",
+      "line_start": 2629,
+      "line_end": 2630,
+      "condition": "No paths are available.",
+      "required_behavior": "The endpoint may either wait for a new path to become available or close the connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The endpoint's behavior when all paths are unavailable can be observed and matched to either permitted outcome.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint that has no valid network path to its peer MAY signal this using the NO_VIABLE_PATH connection error, noting that this is only possible if the network path exists but does not support the required MTU (Section 14).",
+      "line_start": 2630,
+      "line_end": 2634,
+      "condition": "The endpoint has no valid network path to its peer, while a network path exists but does not support the required MTU.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not use NO_VIABLE_PATH to report this condition unless a network path exists but fails to support the required MTU.",
+      "error_behavior": "The endpoint may signal the condition using the NO_VIABLE_PATH connection error.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can vary path existence and MTU support and observe whether NO_VIABLE_PATH is emitted only in the stated circumstance.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Primarily, this happens if a connection migration to a new path is initiated while a path validation on the old path is in progress.",
+      "line_start": 2636,
+      "line_end": 2639,
+      "condition": "Migration to a new path begins while validation of the old path is in progress.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The passage describes a common reason for abandonment but does not unambiguously require the implementation to abandon old-path validation in this situation.",
+      "eligibility": "exclude"
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": "speclitmus.dedup-component-review.v1",
+  "records": [
+    {
+      "component_id": "dup-79614693a210387e",
+      "verdict": "invalid_merge",
+      "reason": "The unconditioned requirement limits PskIdentity.identity as a structural field constraint, while the other member is expressly limited to encoding. A decoder that accepts an empty or oversized identity can violate the former without violating the encoding-only check, so the conditions are not equivalent."
+    },
+    {
+      "component_id": "dup-7df09983e108e247",
+      "verdict": "valid_merge",
+      "reason": "Both members require a TLS 1.3 client to ignore an unrecognized CertificateRequest extension. Rejecting or changing handshake processing solely for that extension is the direct forbidden converse of the same check."
+    },
+    {
+      "component_id": "dup-8e9c151faccf2735",
+      "verdict": "valid_merge",
+      "reason": "All three members impose the same fixed-value check: a TLS 1.3 ServerHello must carry legacy_version 0x0303. The unconditional structural wording merely makes the ServerHello field context implicit."
+    },
+    {
+      "component_id": "dup-9054f8b670a466f9",
+      "verdict": "valid_merge",
+      "reason": "Both members require record-layer headers to be absent from the handshake-message concatenation hashed as the TLS transcript. Their conditions and positive/negative directions describe the same hash-input check."
+    },
+    {
+      "component_id": "dup-9691f62ef004505e",
+      "verdict": "valid_merge",
+      "reason": "Both members require tickets established on one connection to be associated with different keys. The first member's compromise-resistance wording states the consequence of that same key-separation requirement and does not introduce a different error outcome."
+    },
+    {
+      "component_id": "dup-98c2c3dc3d1934b8",
+      "verdict": "valid_merge",
+      "reason": "Both members require any TLSInnerPlaintext padding to follow the inner content-type field. Padding before the type or within the content is the same prohibited field-order violation."
+    },
+    {
+      "component_id": "dup-9bf757084d377c80",
+      "verdict": "valid_merge",
+      "reason": "Both members place the compatibility-mode dummy change_cipher_spec immediately before the client's second flight when early data is not offered. The second flight begins with either the second ClientHello or the encrypted handshake flight, so the alternative wording is equivalent."
+    },
+    {
+      "component_id": "dup-b5d7e7d19f97b65e",
+      "verdict": "valid_merge",
+      "reason": "Both members require a server processing ClientHello to ignore an unrecognized cipher suite. Continuing with recognized values is the operational meaning of ignoring the unknown value, with no differing error outcome."
+    },
+    {
+      "component_id": "dup-b6c24d027705ce5e",
+      "verdict": "valid_merge",
+      "reason": "Both members require the handshake message type field to be included in the bytes supplied to Transcript-Hash. Hashing only the body is the direct converse of the same atomic check."
+    },
+    {
+      "component_id": "dup-bcf6abb8739f2321",
+      "verdict": "valid_merge",
+      "reason": "Both members require a TLS 1.3 client to ignore an unrecognized NewSessionTicket extension. Rejecting the ticket or connection solely for that extension is the direct forbidden consequence of failing the same check."
+    },
+    {
+      "component_id": "dup-c3cfebe2693dd195",
+      "verdict": "valid_merge",
+      "reason": "Under the same condition of requested client authentication with no suitable certificate, both members require a Certificate message with an empty certificate_list. That encoding necessarily excludes both omission and sending an unsuitable certificate."
+    },
+    {
+      "component_id": "dup-ca11c8c7d184d3bd",
+      "verdict": "valid_merge",
+      "reason": "Both members require the ServerHello/HelloRetryRequest supported_versions variant to contain exactly one fixed-width selected_version ProtocolVersion. Encoding and parsing scope is equivalent in both records."
+    },
+    {
+      "component_id": "dup-ce7560148039359b",
+      "verdict": "valid_merge",
+      "reason": "Both members impose the same sender-side fixed-value rule: a TLS 1.3 ClientHello must set legacy_version to 0x0303 and no other value."
+    },
+    {
+      "component_id": "dup-d3220f84d90b2252",
+      "verdict": "valid_merge",
+      "reason": "For an apparent replay from a false-positive-capable store, both records require rejection of 0-RTT while continuing rather than aborting the handshake. Their required, forbidden, and error fields jointly describe the same outcome."
+    },
+    {
+      "component_id": "dup-d98087d39bcc735b",
+      "verdict": "valid_merge",
+      "reason": "Both members require the client Certificate message when the server requested certificate-based client authentication through CertificateRequest. They have the same positive state-machine direction and no differing error behavior."
+    },
+    {
+      "component_id": "dup-ec6d24dc6114e721",
+      "verdict": "valid_merge",
+      "reason": "Both members prohibit a client Certificate message when the server did not send CertificateRequest. Expressing the result as omission versus a prohibition on sending is the same negative state-machine check."
+    },
+    {
+      "component_id": "dup-f42adf01e046d36c",
+      "verdict": "valid_merge",
+      "reason": "Both members require a server authenticating with a certificate to send CertificateVerify and prohibit omitting it. The condition, direction, and outcome are identical."
+    },
+    {
+      "component_id": "dup-f5b2e91cc79965e0",
+      "verdict": "valid_merge",
+      "reason": "Both members require CertificateVerify to be signed by the private key corresponding to the end-entity public key sent in the associated Certificate message. The immediately preceding-message wording only makes that association explicit."
+    },
+    {
+      "component_id": "dup-fae3ca7809e788b6",
+      "verdict": "valid_merge",
+      "reason": "Both members require the CertificateVerify signed content to use Transcript-Hash(Handshake Context, Certificate), ending at Certificate. Calling it the content component rather than the value being signed does not change the transcript-input check or outcome."
+    },
+    {
+      "component_id": "dup-fb66af14e9f16a8f",
+      "verdict": "invalid_merge",
+      "reason": "One member checks only encoding psk_dhe_ke as numeric value 1, while the other independently requires both encoding and decoding that mapping. A correct encoder with an incorrect decoder passes the former and fails the latter, so these are not the same atomic implementation check."
+    }
+  ]
+}

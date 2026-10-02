@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0045",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An endpoint MUST ignore transport parameters that it does not support.",
+      "line_start": 2134,
+      "line_end": 2135,
+      "condition": "When an endpoint receives a transport parameter that it does not support.",
+      "required_behavior": "The endpoint must ignore the unsupported transport parameter.",
+      "forbidden_behavior": "The endpoint must not apply or act on the unsupported transport parameter.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation can be given an unsupported transport parameter and observed to verify that processing continues without applying that parameter.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The absence of a transport parameter therefore disables any optional protocol feature that is negotiated using the parameter.",
+      "line_start": 2135,
+      "line_end": 2136,
+      "condition": "When a transport parameter used to negotiate an optional protocol feature is absent.",
+      "required_behavior": "The optional protocol feature negotiated by that parameter must be disabled.",
+      "forbidden_behavior": "The implementation must not enable the optional protocol feature in the parameter's absence.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can omit the relevant transport parameter and verify that the associated optional feature remains disabled.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0126",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Packet numbers are integers in the range 0 to 2^62-1 (Section 12.3).",
+      "line_start": 4903,
+      "line_end": 4903,
+      "condition": "For every packet number.",
+      "required_behavior": "Represent the packet number as an integer from 0 through 2^62-1, inclusive.",
+      "forbidden_behavior": "Do not use a packet number below 0 or above 2^62-1.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation or generated packet number can be checked against the explicit inclusive numeric bounds.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When present in long or short packet headers, they are encoded in 1\n   to 4 bytes.  The number of bits required to represent the packet\n   number is reduced by including only the least significant bits of the\n   packet number.",
+      "line_start": 4904,
+      "line_end": 4907,
+      "condition": "When a packet number is present in a long or short packet header.",
+      "required_behavior": "Encode the packet number in 1 to 4 bytes.",
+      "forbidden_behavior": "Do not encode the packet-number field using zero bytes or more than four bytes.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The packet-number field length can be measured directly in serialized long and short packet headers.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When present in long or short packet headers, they are encoded in 1\n   to 4 bytes.  The number of bits required to represent the packet\n   number is reduced by including only the least significant bits of the\n   packet number.",
+      "line_start": 4904,
+      "line_end": 4907,
+      "condition": "When a packet number is encoded in a long or short packet header using fewer bits than its full representation.",
+      "required_behavior": "Include the least significant bits of the packet number in the encoded field.",
+      "forbidden_behavior": "Do not truncate the packet number by retaining a different portion of its bits.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serialized field can be compared with the corresponding least-significant bits of the full packet number.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The encoded packet number is protected as described in Section 5.4 of\n   [QUIC-TLS].",
+      "line_start": 4909,
+      "line_end": 4910,
+      "condition": "When transmitting an encoded packet number.",
+      "required_behavior": "Protect the encoded packet number according to QUIC-TLS Section 5.4.",
+      "forbidden_behavior": "Do not transmit the encoded packet number without the prescribed protection.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The requirement identifies a protection operation, but its precise algorithm and parameters are only defined by an external passage not present in this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   Prior to receiving an acknowledgment for a packet number space, the\n   full packet number MUST be included; it is not to be truncated, as\n   described below.",
+      "line_start": 4912,
+      "line_end": 4914,
+      "condition": "Before an acknowledgment has been received for the applicable packet number space.",
+      "required_behavior": "Include the full packet number.",
+      "forbidden_behavior": "Do not truncate the packet number.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A sender's acknowledgment state and the emitted packet-number representation can be inspected to verify that no truncation occurs before the first acknowledgment.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   After an acknowledgment is received for a packet number space, the\n   sender MUST use a packet number size able to represent more than\n   twice as large a range as the difference between the largest\n   acknowledged packet number and the packet number being sent.  A peer",
+      "line_start": 4916,
+      "line_end": 4919,
+      "condition": "After an acknowledgment has been received for the packet number space and the sender is selecting the encoding size for a packet number.",
+      "required_behavior": "Use a packet-number size whose representable range is greater than twice the difference between the packet number being sent and the largest acknowledged packet number.",
+      "forbidden_behavior": "Do not use a size whose representable range is less than or equal to twice that difference.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The selected bit width, sent packet number, and largest acknowledged packet number determine whether the strict range inequality holds.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   many higher-numbered packets have been received.  An endpoint SHOULD\n   use a large enough packet number encoding to allow the packet number\n   to be recovered even if the packet arrives after packets that are\n   sent afterwards.",
+      "line_start": 4922,
+      "line_end": 4925,
+      "condition": "When an endpoint selects a packet-number encoding size after acknowledgments are available.",
+      "required_behavior": "Use an encoding large enough for the packet number to remain recoverable even when the packet arrives after packets sent later.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can delay a packet behind later-sent, higher-numbered packets and verify that the chosen encoding still permits recovery, though the recommendation does not prescribe a fixed reordering bound.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   As a result, the size of the packet number encoding is at least one\n   bit more than the base-2 logarithm of the number of contiguous\n   unacknowledged packet numbers, including the new packet.  Pseudocode",
+      "line_start": 4927,
+      "line_end": 4929,
+      "condition": "When selecting the packet-number encoding size based on the contiguous unacknowledged packet-number span, including the new packet.",
+      "required_behavior": "Use an encoding size of at least one bit more than the base-2 logarithm of the number of contiguous unacknowledged packet numbers, counting the new packet.",
+      "forbidden_behavior": "Do not select an encoding size below that lower bound.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The contiguous unacknowledged count and selected bit width can be used to evaluate the stated lower-bound formula.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   At a receiver, protection of the packet number is removed prior to\n   recovering the full packet number.  The full packet number is then",
+      "line_start": 4933,
+      "line_end": 4934,
+      "condition": "When a receiver processes a protected packet number.",
+      "required_behavior": "Remove packet-number protection before recovering the full packet number.",
+      "forbidden_behavior": "Do not attempt full packet-number recovery before packet-number protection has been removed.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Instrumentation or control-flow inspection can verify the required ordering of protection removal and full-number recovery.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   recovering the full packet number.  The full packet number is then\n   reconstructed based on the number of significant bits present, the\n   value of those bits, and the largest packet number received in a\n   successfully authenticated packet.  Recovering the full packet number",
+      "line_start": 4934,
+      "line_end": 4937,
+      "condition": "When a receiver reconstructs a full packet number from its encoded form.",
+      "required_behavior": "Base reconstruction on the number of significant bits present, the value of those bits, and the largest packet number received in a successfully authenticated packet.",
+      "forbidden_behavior": "Do not use a packet number from an unauthenticated packet as the largest-received reconstruction reference.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The decoder's inputs and stored largest-received reference can be inspected to ensure all three specified inputs are used and that the reference originates from a successfully authenticated packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   successfully authenticated packet.  Recovering the full packet number\n   is necessary to successfully complete the removal of packet\n   protection.",
+      "line_start": 4937,
+      "line_end": 4939,
+      "condition": "When a receiver removes packet protection.",
+      "required_behavior": "Recover the full packet number before packet-protection removal can be successfully completed.",
+      "forbidden_behavior": "Do not report successful completion of packet-protection removal without recovering the full packet number.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The receive path can be tested or inspected to ensure packet-protection removal cannot complete successfully before full packet-number recovery.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Once header protection is removed, the packet number is decoded by\n   finding the packet number value that is closest to the next expected\n   packet.  The next expected packet is the highest received packet\n   number plus one.  Pseudocode and an example for packet number",
+      "line_start": 4941,
+      "line_end": 4944,
+      "condition": "Once header protection has been removed and the receiver decodes a truncated packet number.",
+      "required_behavior": "Decode it as the candidate packet-number value closest to the next expected packet number.",
+      "forbidden_behavior": "Do not select another candidate when a closer candidate packet-number value exists.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Candidate values and their distances from the next expected value can be calculated and compared with the decoder's result.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   finding the packet number value that is closest to the next expected\n   packet.  The next expected packet is the highest received packet\n   number plus one.  Pseudocode and an example for packet number",
+      "line_start": 4942,
+      "line_end": 4944,
+      "condition": "When calculating the next expected packet number for packet-number decoding.",
+      "required_behavior": "Set the next expected packet number to the highest received packet number plus one.",
+      "forbidden_behavior": "Do not derive the next expected packet number from a different value or offset.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The receiver's highest received packet number and computed next expected value can be compared using the exact plus-one relation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

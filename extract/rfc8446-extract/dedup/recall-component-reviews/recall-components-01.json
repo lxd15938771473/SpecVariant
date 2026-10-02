@@ -1,0 +1,188 @@
+{
+  "schema_version": "speclitmus.dedup-component-partitions.v1",
+  "batch_id": "recall-components-01",
+  "partitions": [
+    {
+      "component_id": "recall-comp-0810c43ad8ebb401",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-2061a6b72d20a00688f5",
+            "req-6dfb3ca09f00106f36cd"
+          ],
+          "canonical_requirement_id": "req-6dfb3ca09f00106f36cd",
+          "reason": "Both require a RawPublicKey CertificateEntry.ASN1_subjectPublicKeyInfo payload to have a length from 1 through 2^24-1 octets. The canonical cites the direct primary-body structure and states both encoding and acceptance boundaries."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-0c2ff33bc60a4529",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-92ce892162635336fb0b",
+            "req-d75f83b499468628323b"
+          ],
+          "canonical_requirement_id": "req-d75f83b499468628323b",
+          "reason": "Both impose the same bidirectional NamedGroup mapping: ffdhe4096 encodes and decodes as 0x0102. The canonical cites the direct primary-body enum entry rather than its appendix repetition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-121d16622d159bc5",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-0c9294bef28b81e284be",
+            "req-3ca1404a3b7e3dad3156"
+          ],
+          "canonical_requirement_id": "req-0c9294bef28b81e284be",
+          "reason": "Both require ProtocolVersion to use the uint16 wire representation. The canonical is the clearer direct primary-body definition and explicitly identifies the parsing and encoding check."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-12d1fa2c3371c9dc",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-1a8576c72b0437765e63",
+            "req-e4494dddec05c7f4c4cc"
+          ],
+          "canonical_requirement_id": "req-e4494dddec05c7f4c4cc",
+          "reason": "Both impose the same 7 through 2^16-1 encoded-content-length bound on OfferedPsks.identities. The canonical cites the direct primary-body structure and states the vector boundary check explicitly."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-170cd84a8a182f6e",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-78de548d20f43adff36e",
+            "req-87a0a5e039279769d7f0"
+          ],
+          "canonical_requirement_id": "req-87a0a5e039279769d7f0",
+          "reason": "Both impose the same bidirectional SignatureScheme mapping: ecdsa_secp256r1_sha256 encodes and decodes as 0x0403. The canonical cites the direct primary-body enum entry."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-1ddaff9069e3b6df",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-1068f5c40c1d85369715",
+            "req-fa5e7380b15fcdd39c15"
+          ],
+          "canonical_requirement_id": "req-1068f5c40c1d85369715",
+          "reason": "Both impose the same bidirectional ContentType mapping: application_data encodes and parses as numeric value 23. The canonical cites the direct primary-body record-layer enum definition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-2abbceb2c7b4d7ed",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-743966c20830e1a37885",
+            "req-fb08cdcdb35f83161647"
+          ],
+          "canonical_requirement_id": "req-743966c20830e1a37885",
+          "reason": "Both impose the same bidirectional ContentType mapping: change_cipher_spec encodes and parses as numeric value 20. The canonical cites the direct primary-body record-layer enum definition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-2b0a17c040539111",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-52ae1ac401656af30629",
+            "req-d040ee61e53384f85263"
+          ],
+          "canonical_requirement_id": "req-52ae1ac401656af30629",
+          "reason": "Both impose the same bidirectional SignatureScheme mapping: rsa_pss_pss_sha384 encodes and decodes as 0x080a. The canonical cites the direct primary-body enum entry."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-2cceaad4f9fa461a",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-67c630e527911e12adc7",
+            "req-b44e4e3f63f42196aceb"
+          ],
+          "canonical_requirement_id": "req-67c630e527911e12adc7",
+          "reason": "Both require NewSessionTicket.ticket_lifetime to occupy a uint32 wire field when the message is encoded or parsed. The canonical cites the direct primary-body message structure and states the width check explicitly."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-2fc3b0ffcb4829bd",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-2897c5463ba534425f62",
+            "req-b53205e2e0ea01b5462b"
+          ],
+          "canonical_requirement_id": "req-2897c5463ba534425f62",
+          "reason": "Both require the handshake-message length field to be included in the message bytes supplied to Transcript-Hash; the key-schedule term Messages names that same concatenated transcript input. The canonical directly defines the general transcript-hash input."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-3562cc3713fedea3",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-60f00b028de6d11a6665",
+            "req-b49cfb275b487f6d51ed"
+          ],
+          "canonical_requirement_id": "req-b49cfb275b487f6d51ed",
+          "reason": "Both impose the same bidirectional SignatureScheme mapping: rsa_pkcs1_sha384 encodes and decodes as 0x0501. The canonical cites the direct primary-body enum entry rather than its appendix repetition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-39906ba1f200c09e",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-91ead3bf0bfee475e474",
+            "req-e4c6f31cce27d46d11e4"
+          ],
+          "canonical_requirement_id": "req-e4c6f31cce27d46d11e4",
+          "reason": "Both require a client that includes pre_shared_key in ClientHello to place it last, with no following extension. The canonical states the rule directly in the primary-body pre_shared_key section."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-39d00e48f98f78af",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-4fbf4ad29e9b93dbfe38",
+            "req-7b1c314761397adad328"
+          ],
+          "canonical_requirement_id": "req-4fbf4ad29e9b93dbfe38",
+          "reason": "Both impose the same bidirectional SignatureScheme mapping: rsa_pkcs1_sha1 encodes and decodes as 0x0201. The canonical cites the direct primary-body enum entry."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-3aa6e4fa7622aec5",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-11a637e290f25863d5ad",
+            "req-ecb451f7a3d55110bf58"
+          ],
+          "canonical_requirement_id": "req-ecb451f7a3d55110bf58",
+          "reason": "Both impose the same bidirectional NamedGroup mapping: ffdhe6144 encodes and decodes as 0x0103. The canonical cites the direct primary-body enum entry rather than its appendix repetition."
+        }
+      ]
+    }
+  ]
+}

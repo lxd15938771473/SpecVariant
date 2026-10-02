@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0006",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Initial: 0b01",
+      "line_start": 148,
+      "line_end": 148,
+      "condition": "when encoding or interpreting a version 2 Initial Long Header packet",
+      "required_behavior": "use 0b01 as the Type field value",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The packet encoder and parser can be checked for the fixed Initial packet Type field value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "0-RTT: 0b10",
+      "line_start": 150,
+      "line_end": 150,
+      "condition": "when encoding or interpreting a version 2 0-RTT Long Header packet",
+      "required_behavior": "use 0b10 as the Type field value",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The packet encoder and parser can be checked for the fixed 0-RTT packet Type field value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Handshake: 0b11",
+      "line_start": 152,
+      "line_end": 152,
+      "condition": "when encoding or interpreting a version 2 Handshake Long Header packet",
+      "required_behavior": "use 0b11 as the Type field value",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The packet encoder and parser can be checked for the fixed Handshake packet Type field value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Retry: 0b00",
+      "line_start": 154,
+      "line_end": 154,
+      "condition": "when encoding or interpreting a version 2 Retry Long Header packet",
+      "required_behavior": "use 0b00 as the Type field value",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The packet encoder and parser can be checked for the fixed Retry packet Type field value.",
+      "eligibility": "eligible"
+    }
+  ]
+}

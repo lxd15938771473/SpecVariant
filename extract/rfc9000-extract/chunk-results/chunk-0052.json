@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0052",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Clients MAY use tokens obtained on one connection for any connection attempt using the same version.",
+      "line_start": 2421,
+      "line_end": 2422,
+      "condition": "A client has obtained a token on one connection and attempts another connection using the same version.",
+      "required_behavior": "The implementation permits the client to use the token for the connection attempt.",
+      "forbidden_behavior": "The implementation must not categorically reject token reuse solely because the token was obtained on another connection.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can obtain a token on one connection and verify that the client permits its use on another connection attempt using the same version.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When selecting a token to use, clients do not need to consider other properties of the connection that is being attempted, including the choice of possible application protocols, session tickets, or other connection properties.",
+      "line_start": 2422,
+      "line_end": 2425,
+      "condition": "A client selects a token for a connection attempt using the same version.",
+      "required_behavior": "The implementation permits token selection without matching application protocols, session tickets, or other connection properties.",
+      "forbidden_behavior": "The implementation must not require those other connection properties to match as a prerequisite for selecting the token.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Tests can vary application protocols, session tickets, and other connection properties while holding the version constant and verify that token selection remains permitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To avoid attacks that exploit this property, a server can limit its use of tokens to only the information needed to validate client addresses.",
+      "line_start": 2417,
+      "line_end": 2419,
+      "condition": "A server uses tokens to carry information for later client-address validation.",
+      "required_behavior": "The server can restrict token-carried information to information needed for client-address validation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Token contents can be inspected at the point before encryption to determine whether they contain information unrelated to address validation, but the permissive wording and undefined scope of \"needed\" do not establish a definite implementation requirement.",
+      "eligibility": "exclude"
+    }
+  ]
+}

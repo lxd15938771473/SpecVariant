@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0083",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If a local system TCP user interface supports the TCP PUSH function,\n   then each BGP message SHOULD be transmitted with PUSH flag set.",
+      "line_start": 5247,
+      "line_end": 5248,
+      "condition": "If the local system TCP user interface supports the TCP PUSH function.",
+      "required_behavior": "Each BGP message SHOULD be transmitted with the PUSH flag set.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "TCP transmission flags can be inspected for BGP messages when PUSH is supported.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a local system TCP user interface supports setting the DSCP field\n   [RFC2474] for TCP connections, then the TCP connection used by BGP\n   SHOULD be opened with bits 0-2 of the DSCP field set to 110 (binary).",
+      "line_start": 5252,
+      "line_end": 5254,
+      "condition": "If the local system TCP user interface supports setting the DSCP field for TCP connections.",
+      "required_behavior": "The TCP connection used by BGP SHOULD be opened with bits 0-2 of the DSCP field set to 110 (binary).",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The DSCP bits configured on BGP TCP connections can be inspected when the interface supports DSCP configuration.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An implementation MUST support the TCP MD5 option [RFC2385].",
+      "line_start": 5256,
+      "line_end": 5256,
+      "condition": "For a BGP implementation.",
+      "required_behavior": "The implementation MUST support the TCP MD5 option [RFC2385].",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation can be checked for support of the TCP MD5 option.",
+      "eligibility": "eligible"
+    }
+  ]
+}

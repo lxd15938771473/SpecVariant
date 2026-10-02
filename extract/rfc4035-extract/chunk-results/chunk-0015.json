@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0015",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Upon receiving a relevant query that has the EDNS ([RFC2671]) OPT\n   pseudo-RR DO bit ([RFC3225]) set, a security-aware authoritative name\n   server for a signed zone MUST include additional RRSIG, NSEC, and DS\n   RRs, according to the following rules:\n\n   o  RRSIG RRs that can be used to authenticate a response MUST be\n      included in the response according to the rules in Section 3.1.1.\n\n\n\n\n\n\n\nArends, et al.              Standards Track                     [Page 9]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   o  NSEC RRs that can be used to provide authenticated denial of\n      existence MUST be included in the response automatically according\n      to the rules in Section 3.1.3.\n\n   o  Either a DS RRset or an NSEC RR proving that no DS RRs exist MUST\n      be included in referrals automatically according to the rules in\n      Section 3.1.4.\n\n   These rules only apply to responses where the semantics convey\n   information about the presence or absence of resource records.  That\n   is, these rules are not intended to rule out responses such as RCODE\n   4 (\"Not Implemented\") or RCODE 5 (\"Refused\").",
+      "line_start": 500,
+      "line_end": 531,
+      "condition": "A security-aware authoritative name server for a signed zone receives a relevant query with the EDNS OPT pseudo-RR DO bit set, and the response semantics convey information about the presence or absence of resource records.",
+      "required_behavior": "The server MUST include in the response RRSIG RRs that can be used to authenticate the response, according to the rules in Section 3.1.1.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "RRSIG inclusion can be inspected in response construction, but the referenced Section 3.1.1 selection and applicability rules are absent from this chunk; complete evidence is needed before downstream checking.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   Upon receiving a relevant query that has the EDNS ([RFC2671]) OPT\n   pseudo-RR DO bit ([RFC3225]) set, a security-aware authoritative name\n   server for a signed zone MUST include additional RRSIG, NSEC, and DS\n   RRs, according to the following rules:\n\n   o  RRSIG RRs that can be used to authenticate a response MUST be\n      included in the response according to the rules in Section 3.1.1.\n\n\n\n\n\n\n\nArends, et al.              Standards Track                     [Page 9]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   o  NSEC RRs that can be used to provide authenticated denial of\n      existence MUST be included in the response automatically according\n      to the rules in Section 3.1.3.\n\n   o  Either a DS RRset or an NSEC RR proving that no DS RRs exist MUST\n      be included in referrals automatically according to the rules in\n      Section 3.1.4.\n\n   These rules only apply to responses where the semantics convey\n   information about the presence or absence of resource records.  That\n   is, these rules are not intended to rule out responses such as RCODE\n   4 (\"Not Implemented\") or RCODE 5 (\"Refused\").",
+      "line_start": 500,
+      "line_end": 531,
+      "condition": "A security-aware authoritative name server for a signed zone receives a relevant query with the EDNS OPT pseudo-RR DO bit set, and the response semantics convey information about the presence or absence of resource records.",
+      "required_behavior": "The server MUST automatically include in the response NSEC RRs that can be used to provide authenticated denial of existence, according to the rules in Section 3.1.3.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Automatic NSEC inclusion can be inspected in response construction, but the referenced Section 3.1.3 selection and applicability rules are absent from this chunk; complete evidence is needed before downstream checking.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   Upon receiving a relevant query that has the EDNS ([RFC2671]) OPT\n   pseudo-RR DO bit ([RFC3225]) set, a security-aware authoritative name\n   server for a signed zone MUST include additional RRSIG, NSEC, and DS\n   RRs, according to the following rules:\n\n   o  RRSIG RRs that can be used to authenticate a response MUST be\n      included in the response according to the rules in Section 3.1.1.\n\n\n\n\n\n\n\nArends, et al.              Standards Track                     [Page 9]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   o  NSEC RRs that can be used to provide authenticated denial of\n      existence MUST be included in the response automatically according\n      to the rules in Section 3.1.3.\n\n   o  Either a DS RRset or an NSEC RR proving that no DS RRs exist MUST\n      be included in referrals automatically according to the rules in\n      Section 3.1.4.\n\n   These rules only apply to responses where the semantics convey\n   information about the presence or absence of resource records.  That\n   is, these rules are not intended to rule out responses such as RCODE\n   4 (\"Not Implemented\") or RCODE 5 (\"Refused\").",
+      "line_start": 500,
+      "line_end": 531,
+      "condition": "A security-aware authoritative name server for a signed zone receives a relevant query with the EDNS OPT pseudo-RR DO bit set, and the response semantics convey information about the presence or absence of resource records. The response is a referral.",
+      "required_behavior": "The server MUST automatically include either a DS RRset or an NSEC RR proving that no DS RRs exist in the referral, according to the rules in Section 3.1.4.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A referral can be checked for a DS RRset or an NSEC proof of DS absence, but the referenced Section 3.1.4 inclusion rules are absent from this chunk; complete evidence is needed before downstream checking.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   Upon receiving a relevant query that has the EDNS ([RFC2671]) OPT\n   pseudo-RR DO bit ([RFC3225]) set, a security-aware authoritative name\n   server for a signed zone MUST include additional RRSIG, NSEC, and DS\n   RRs, according to the following rules:\n\n   o  RRSIG RRs that can be used to authenticate a response MUST be\n      included in the response according to the rules in Section 3.1.1.\n\n\n\n\n\n\n\nArends, et al.              Standards Track                     [Page 9]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   o  NSEC RRs that can be used to provide authenticated denial of\n      existence MUST be included in the response automatically according\n      to the rules in Section 3.1.3.\n\n   o  Either a DS RRset or an NSEC RR proving that no DS RRs exist MUST\n      be included in referrals automatically according to the rules in\n      Section 3.1.4.\n\n   These rules only apply to responses where the semantics convey\n   information about the presence or absence of resource records.  That\n   is, these rules are not intended to rule out responses such as RCODE\n   4 (\"Not Implemented\") or RCODE 5 (\"Refused\").",
+      "line_start": 500,
+      "line_end": 531,
+      "condition": "A security-aware authoritative name server for a signed zone receives a relevant query with the EDNS OPT pseudo-RR DO bit set, and returns a response whose semantics do not convey information about the presence or absence of resource records.",
+      "required_behavior": "The additional RRSIG, NSEC, and DS inclusion rules do not apply to this response. Responses such as RCODE 4 (Not Implemented) or RCODE 5 (Refused) remain permitted by these rules.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The applicability guard can be inspected to verify that the additional-record inclusion obligations are limited to responses conveying RR presence or absence; the text expressly leaves error responses such as RCODE 4 and RCODE 5 permitted.",
+      "eligibility": "eligible"
+    }
+  ]
+}

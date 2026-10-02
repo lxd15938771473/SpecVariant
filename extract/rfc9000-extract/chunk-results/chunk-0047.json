@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0047",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Therefore, after receiving packets from an address that is not yet validated, an endpoint MUST limit the amount of data it sends to the unvalidated address to three times the amount of data received from that address.",
+      "line_start": 2191,
+      "line_end": 2194,
+      "condition": "After an endpoint receives packets from an address that has not yet been validated.",
+      "required_behavior": "The endpoint must limit the amount of data it sends to that unvalidated address to no more than three times the amount of data received from that address.",
+      "forbidden_behavior": "The endpoint must not send more than three times the amount of data received from the unvalidated address.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation test can track bytes received from an unvalidated address and verify that bytes sent to it do not exceed the stated 3:1 anti-amplification limit.",
+      "eligibility": "eligible"
+    }
+  ]
+}

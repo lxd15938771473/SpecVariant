@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0061",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "struct {} EndOfEarlyData;",
+      "line_start": 4017,
+      "line_end": 4017,
+      "condition": "when encoding or parsing an EndOfEarlyData handshake message",
+      "required_behavior": "encode and accept an empty message body",
+      "forbidden_behavior": "including fields or payload bytes in the EndOfEarlyData body",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The handshake serializer and parser expose the exact body length.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the server sent an \"early_data\" extension in EncryptedExtensions,\n   the client MUST send an EndOfEarlyData message after receiving the\n   server Finished.",
+      "line_start": 4019,
+      "line_end": 4021,
+      "condition": "the server sent early_data in EncryptedExtensions",
+      "required_behavior": "send EndOfEarlyData after receiving the server Finished message",
+      "forbidden_behavior": "omitting EndOfEarlyData or sending it before receiving server Finished",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A handshake trace can verify both presence and ordering of EndOfEarlyData.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the server does not send an \"early_data\"\n   extension in EncryptedExtensions, then the client MUST NOT send an\n   EndOfEarlyData message.",
+      "line_start": 4021,
+      "line_end": 4023,
+      "condition": "the server did not send early_data in EncryptedExtensions",
+      "required_behavior": "",
+      "forbidden_behavior": "sending an EndOfEarlyData message",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The client flight can be checked against the negotiated early-data state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This message indicates that all 0-RTT\n   application_data messages, if any, have been transmitted and that the\n\n\n\nRescorla                     Standards Track                   [Page 72]\n\nRFC 8446                           TLS                       August 2018\n\n\n   following records are protected under handshake traffic keys.",
+      "line_start": 4023,
+      "line_end": 4033,
+      "condition": "the client sends EndOfEarlyData",
+      "required_behavior": "transmit all 0-RTT application_data messages before EndOfEarlyData",
+      "forbidden_behavior": "sending 0-RTT application_data after EndOfEarlyData",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Record ordering and traffic epochs are observable in a client trace.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This message indicates that all 0-RTT\n   application_data messages, if any, have been transmitted and that the\n\n\n\nRescorla                     Standards Track                   [Page 72]\n\nRFC 8446                           TLS                       August 2018\n\n\n   following records are protected under handshake traffic keys.",
+      "line_start": 4023,
+      "line_end": 4033,
+      "condition": "after the client sends EndOfEarlyData",
+      "required_behavior": "protect following records with handshake traffic keys",
+      "forbidden_behavior": "protecting following records with early-data traffic keys",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The sender's selected traffic secret is visible at the record-protection boundary.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Servers MUST NOT send this message",
+      "line_start": 4034,
+      "line_end": 4034,
+      "condition": "the endpoint is a server",
+      "required_behavior": "",
+      "forbidden_behavior": "sending EndOfEarlyData",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Server handshake emission paths can be inspected or traced.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "clients receiving it MUST\n   terminate the connection with an \"unexpected_message\" alert.",
+      "line_start": 4034,
+      "line_end": 4035,
+      "condition": "a client receives EndOfEarlyData",
+      "required_behavior": "terminate the connection",
+      "forbidden_behavior": "continuing the connection after receiving EndOfEarlyData",
+      "error_behavior": "send an unexpected_message alert",
+      "check_type": "error_handling",
+      "why_checkable": "Malformed peer-role input has an exact required alert and terminal outcome.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This\n   message is encrypted under keys derived from the\n   client_early_traffic_secret.",
+      "line_start": 4035,
+      "line_end": 4037,
+      "condition": "the client sends EndOfEarlyData",
+      "required_behavior": "encrypt the message under keys derived from client_early_traffic_secret",
+      "forbidden_behavior": "encrypting EndOfEarlyData under handshake or application traffic keys",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The record layer's traffic-secret selection is concrete and testable.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0046",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "To use DNSSEC RRs for authentication, a security-aware resolver\n   requires configured knowledge of at least one authenticated DNSKEY or\n   DS RR.",
+      "line_start": 1377,
+      "line_end": 1379,
+      "condition": "A security-aware resolver uses DNSSEC RRs for authentication.",
+      "required_behavior": "The resolver requires configured knowledge of at least one authenticated DNSKEY RR or DS RR.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The trust-anchor configuration and its use as the starting point of authentication are inspectable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To authenticate an apex DNSKEY RRset by using an initial key,\n   the resolver MUST:\n\n   1.  verify that the initial DNSKEY RR appears in the apex DNSKEY\n       RRset, and that the DNSKEY RR has the Zone Key Flag (DNSKEY RDATA\n       bit 7) set; and",
+      "line_start": 1388,
+      "line_end": 1393,
+      "condition": "A resolver authenticates an apex DNSKEY RRset by using an initial DNSKEY key.",
+      "required_behavior": "The resolver MUST verify that the initial DNSKEY RR appears in the apex DNSKEY RRset.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A candidate apex DNSKEY RRset can be varied to include or omit the initial DNSKEY RR, and the membership check can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To authenticate an apex DNSKEY RRset by using an initial key,\n   the resolver MUST:\n\n   1.  verify that the initial DNSKEY RR appears in the apex DNSKEY\n       RRset, and that the DNSKEY RR has the Zone Key Flag (DNSKEY RDATA\n       bit 7) set; and",
+      "line_start": 1388,
+      "line_end": 1393,
+      "condition": "A resolver authenticates an apex DNSKEY RRset by using an initial DNSKEY key.",
+      "required_behavior": "The resolver MUST verify that the initial DNSKEY RR has the Zone Key Flag (DNSKEY RDATA bit 7) set.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The flag check can be inspected and the initial DNSKEY RR can be supplied with bit 7 set or clear.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To authenticate an apex DNSKEY RRset by using an initial key,\n   the resolver MUST:\n\n   1.  verify that the initial DNSKEY RR appears in the apex DNSKEY\n       RRset, and that the DNSKEY RR has the Zone Key Flag (DNSKEY RDATA\n       bit 7) set; and\n\n   2.  verify that there is some RRSIG RR that covers the apex DNSKEY\n       RRset, and that the combination of the RRSIG RR and the initial\n       DNSKEY RR authenticates the DNSKEY RRset.",
+      "line_start": 1388,
+      "line_end": 1397,
+      "condition": "A resolver authenticates an apex DNSKEY RRset by using an initial DNSKEY key.",
+      "required_behavior": "The resolver MUST verify that some RRSIG RR covers the apex DNSKEY RRset.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A covering RRSIG RR can be present or absent and the resolver check can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To authenticate an apex DNSKEY RRset by using an initial key,\n   the resolver MUST:\n\n   1.  verify that the initial DNSKEY RR appears in the apex DNSKEY\n       RRset, and that the DNSKEY RR has the Zone Key Flag (DNSKEY RDATA\n       bit 7) set; and\n\n   2.  verify that there is some RRSIG RR that covers the apex DNSKEY\n       RRset, and that the combination of the RRSIG RR and the initial\n       DNSKEY RR authenticates the DNSKEY RRset.",
+      "line_start": 1388,
+      "line_end": 1397,
+      "condition": "A resolver authenticates an apex DNSKEY RRset by using an initial DNSKEY key.",
+      "required_behavior": "The resolver MUST verify that the combination of the covering RRSIG RR and the initial DNSKEY RR authenticates the apex DNSKEY RRset.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The signature verification must bind the covering RRSIG and candidate RRset to the initial DNSKEY RR; the inputs can be varied independently.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When a resolver indicates support for DNSSEC (by setting the DO bit),\n   a security-aware name server should attempt to provide the necessary\n   DNSKEY, RRSIG, NSEC, and DS RRsets in a response (see Section 3).",
+      "line_start": 1417,
+      "line_end": 1419,
+      "condition": "A resolver indicates support for DNSSEC by setting the DO bit, and a DNSKEY RRset is necessary for the response.",
+      "required_behavior": "The security-aware name server should attempt to provide the necessary DNSKEY RRset in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "For a DO-bit query that needs this RRset type, response-construction code and emitted records can be inspected for the advised attempt; this does not require success in every response.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When a resolver indicates support for DNSSEC (by setting the DO bit),\n   a security-aware name server should attempt to provide the necessary\n   DNSKEY, RRSIG, NSEC, and DS RRsets in a response (see Section 3).",
+      "line_start": 1417,
+      "line_end": 1419,
+      "condition": "A resolver indicates support for DNSSEC by setting the DO bit, and a RRSIG RRset is necessary for the response.",
+      "required_behavior": "The security-aware name server should attempt to provide the necessary RRSIG RRset in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "For a DO-bit query that needs this RRset type, response-construction code and emitted records can be inspected for the advised attempt; this does not require success in every response.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When a resolver indicates support for DNSSEC (by setting the DO bit),\n   a security-aware name server should attempt to provide the necessary\n   DNSKEY, RRSIG, NSEC, and DS RRsets in a response (see Section 3).",
+      "line_start": 1417,
+      "line_end": 1419,
+      "condition": "A resolver indicates support for DNSSEC by setting the DO bit, and a NSEC RRset is necessary for the response.",
+      "required_behavior": "The security-aware name server should attempt to provide the necessary NSEC RRset in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "For a DO-bit query that needs this RRset type, response-construction code and emitted records can be inspected for the advised attempt; this does not require success in every response.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When a resolver indicates support for DNSSEC (by setting the DO bit),\n   a security-aware name server should attempt to provide the necessary\n   DNSKEY, RRSIG, NSEC, and DS RRsets in a response (see Section 3).",
+      "line_start": 1417,
+      "line_end": 1419,
+      "condition": "A resolver indicates support for DNSSEC by setting the DO bit, and a DS RRset is necessary for the response.",
+      "required_behavior": "The security-aware name server should attempt to provide the necessary DS RRset in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "For a DO-bit query that needs this RRset type, response-construction code and emitted records can be inspected for the advised attempt; this does not require success in every response.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The absence of DNSSEC data in a response MUST NOT by\n   itself be taken as an indication that no authentication information\n   exists.",
+      "line_start": 1435,
+      "line_end": 1437,
+      "condition": "A resolver receives a response without DNSSEC data.",
+      "required_behavior": "",
+      "forbidden_behavior": "The resolver MUST NOT take the absence of DNSSEC data in the response, by itself, as an indication that no authentication information exists.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The resolver branch for missing DNSSEC data can be checked for whether absence alone determines that no authentication information exists.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A resolver SHOULD expect authentication information from signed\n   zones.",
+      "line_start": 1439,
+      "line_end": 1440,
+      "condition": "A resolver obtains responses from a signed zone.",
+      "required_behavior": "The resolver SHOULD expect authentication information from the signed zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The expected-authentication state for responses from a signed zone can be inspected, including the path when authentication information is missing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A resolver SHOULD believe that a zone is signed if the\n   resolver has been configured with public key information for the\n   zone, or if the zone's parent is signed and the delegation from the\n   parent contains a DS RRset.",
+      "line_start": 1440,
+      "line_end": 1443,
+      "condition": "A resolver has been configured with public key information for a zone.",
+      "required_behavior": "The resolver SHOULD believe that the zone is signed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The resolver signed-zone classification can be inspected under a configuration containing public key information for the zone.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A resolver SHOULD believe that a zone is signed if the\n   resolver has been configured with public key information for the\n   zone, or if the zone's parent is signed and the delegation from the\n   parent contains a DS RRset.",
+      "line_start": 1440,
+      "line_end": 1443,
+      "condition": "A zone's parent is signed and the delegation from that parent contains a DS RRset.",
+      "required_behavior": "The resolver SHOULD believe that the zone is signed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The signed-zone classification can be inspected when a signed parent supplies a delegation with a DS RRset.",
+      "eligibility": "eligible"
+    }
+  ]
+}

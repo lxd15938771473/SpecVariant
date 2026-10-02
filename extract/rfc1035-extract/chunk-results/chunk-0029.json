@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0029",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "3.3.8. MR RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   NEWNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+",
+      "line_start": 913,
+      "line_end": 918,
+      "condition": "When implementing the experimental MR resource record type.",
+      "required_behavior": "Represent MR RDATA as a single NEWNAME field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The MR RDATA parser and serializer can be checked for the single-field layout shown in the format diagram.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.8. MR RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   NEWNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nNEWNAME         A <domain-name> which specifies a mailbox which is the\n                proper rename of the specified mailbox.",
+      "line_start": 913,
+      "line_end": 923,
+      "condition": "When implementing the experimental MR resource record type.",
+      "required_behavior": "Encode and interpret the MR NEWNAME field as a domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The MR RDATA field type and domain-name parsing and serialization can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.8. MR RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   NEWNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nNEWNAME         A <domain-name> which specifies a mailbox which is the\n                proper rename of the specified mailbox.",
+      "line_start": 913,
+      "line_end": 923,
+      "condition": "When implementing the experimental MR resource record type.",
+      "required_behavior": "Interpret NEWNAME as the mailbox that is the proper rename of the mailbox specified by the MR record.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A record with distinct original and replacement mailbox names allows checking the semantic interpretation of NEWNAME.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.8. MR RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   NEWNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nNEWNAME         A <domain-name> which specifies a mailbox which is the\n                proper rename of the specified mailbox.\n\nMR records cause no additional section processing.",
+      "line_start": 913,
+      "line_end": 925,
+      "condition": "When implementing the experimental MR resource record type.",
+      "required_behavior": "",
+      "forbidden_behavior": "Cause additional section processing as a result of an MR record.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "MR record handling can be inspected or exercised to determine whether it triggers additional section processing.",
+      "eligibility": "eligible"
+    }
+  ]
+}

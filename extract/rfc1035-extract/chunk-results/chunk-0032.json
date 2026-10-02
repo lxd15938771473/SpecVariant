@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0032",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   NSDNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nNSDNAME         A <domain-name> which specifies a host which should be\n                authoritative for the specified class and domain.",
+      "line_start": 976,
+      "line_end": 984,
+      "condition": "Encoding or decoding NS RDATA.",
+      "required_behavior": "Represent NS RDATA as a single NSDNAME field encoded as a domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The NS RDATA encoder and parser can be checked for one domain-name field matching the illustrated layout.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "NSDNAME         A <domain-name> which specifies a host which should be\n                authoritative for the specified class and domain.",
+      "line_start": 983,
+      "line_end": 984,
+      "condition": "Interpreting the NSDNAME of an NS resource record.",
+      "required_behavior": "Treat NSDNAME as the name of a host that should be authoritative for the specified class and domain; this is an expectation of authority, not a guarantee that the target is authoritative.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The record interpretation and selection of an expected authoritative host can be checked against its NSDNAME, class, and domain.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "NS records cause both the usual additional section processing to locate\na type A record, and, when used in a referral, a special search of the\nzone in which they reside for glue information.",
+      "line_start": 986,
+      "line_end": 988,
+      "condition": "Processing an NS record for additional-section information.",
+      "required_behavior": "Perform the usual additional-section processing to locate a type A record for the named host.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An NS processing path can be exercised with a target host address record to observe the additional-record lookup.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "NS records cause both the usual additional section processing to locate\na type A record, and, when used in a referral, a special search of the\nzone in which they reside for glue information.",
+      "line_start": 986,
+      "line_end": 988,
+      "condition": "Using an NS record in a referral.",
+      "required_behavior": "Perform a special search for glue information in the zone in which the NS record resides.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A referral can be constructed with glue in the containing zone and the zone search can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The NS RR states that the named host should be expected to have a zone\nstarting at owner name of the specified class.",
+      "line_start": 990,
+      "line_end": 991,
+      "condition": "Interpreting the zone expected at the host named by an NS resource record.",
+      "required_behavior": "Expect the named host to have a zone starting at the NS record owner name in the specified class; preserve this as an expectation rather than a mandatory availability guarantee.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The zone apex and class associated with the NS target can be checked against the record owner and class.",
+      "eligibility": "eligible"
+    }
+  ]
+}

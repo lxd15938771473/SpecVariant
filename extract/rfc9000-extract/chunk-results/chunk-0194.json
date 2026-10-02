@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0194",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   streams to be received out of sequence.  On receiving a higher-\n   numbered stream ID, a receiver is required to open all intervening\n   streams of the same type; see Section 3.2.  Thus, on a new",
+      "line_start": 7582,
+      "line_end": 7585,
+      "condition": "A receiver receives a higher-numbered stream ID with intervening streams of the same type not yet open.",
+      "required_behavior": "The receiver opens every intervening stream of that same type.",
+      "forbidden_behavior": "The receiver must not leave any intervening stream of the same type unopened.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can deliver a higher-numbered stream ID and inspect whether all lower intervening stream IDs of the same type become open.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   streams of the same type; see Section 3.2.  Thus, on a new\n   connection, opening stream 4000000 opens 1 million and 1 client-\n   initiated bidirectional streams.",
+      "line_start": 7585,
+      "line_end": 7587,
+      "condition": "Stream 4000000 is opened on a new connection as a client-initiated bidirectional stream.",
+      "required_behavior": "The connection has 1 million and 1 client-initiated bidirectional streams opened as a consequence.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The stated stream-number example gives an exact expected count that can be checked after processing the opening stream.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The number of active streams is limited by the\n   initial_max_streams_bidi and initial_max_streams_uni transport\n   parameters as updated by any received MAX_STREAMS frames, as\n   explained in Section 4.6.  If chosen judiciously, these limits",
+      "line_start": 7589,
+      "line_end": 7592,
+      "condition": "An endpoint determines how many streams may be active, including after receiving MAX_STREAMS frames.",
+      "required_behavior": "The endpoint limits active streams according to initial_max_streams_bidi and initial_max_streams_uni, with those limits updated by received MAX_STREAMS frames.",
+      "forbidden_behavior": "The endpoint must not allow the number of active streams to exceed the applicable updated limit.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can configure the initial transport parameters, deliver MAX_STREAMS frames, and verify that active-stream admission follows the resulting limits.",
+      "eligibility": "eligible"
+    }
+  ]
+}

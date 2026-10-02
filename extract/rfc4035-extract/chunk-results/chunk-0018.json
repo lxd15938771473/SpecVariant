@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0018",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   When responding to a query that has the DO bit set, a security-aware\n   authoritative name server for a signed zone MUST include NSEC RRs in\n   each of the following cases:\n\n   No Data: The zone contains RRsets that exactly match <SNAME, SCLASS>\n      but does not contain any RRsets that exactly match <SNAME, SCLASS,\n      STYPE>.",
+      "line_start": 594,
+      "line_end": 600,
+      "condition": "A security-aware authoritative name server for a signed zone responds to a query with the DO bit set, and the zone contains RRsets exactly matching <SNAME, SCLASS> but no RRset exactly matching <SNAME, SCLASS, STYPE> (No Data).",
+      "required_behavior": "The server MUST include NSEC RRs in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A signed zone with an existing queried name and class but no queried type can be queried with DO set, and the response can be checked for NSEC RRs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When responding to a query that has the DO bit set, a security-aware\n   authoritative name server for a signed zone MUST include NSEC RRs in\n   each of the following cases:\n\n   No Data: The zone contains RRsets that exactly match <SNAME, SCLASS>\n      but does not contain any RRsets that exactly match <SNAME, SCLASS,\n      STYPE>.\n\n   Name Error: The zone does not contain any RRsets that match <SNAME,\n      SCLASS> either exactly or via wildcard name expansion.",
+      "line_start": 594,
+      "line_end": 603,
+      "condition": "A security-aware authoritative name server for a signed zone responds to a query with the DO bit set, and the zone contains no RRsets matching <SNAME, SCLASS>, either exactly or through wildcard name expansion (Name Error).",
+      "required_behavior": "The server MUST include NSEC RRs in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A DO-set query for a name and class absent both exactly and through wildcard expansion permits checking the response for NSEC RRs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When responding to a query that has the DO bit set, a security-aware\n   authoritative name server for a signed zone MUST include NSEC RRs in\n   each of the following cases:\n\n   No Data: The zone contains RRsets that exactly match <SNAME, SCLASS>\n      but does not contain any RRsets that exactly match <SNAME, SCLASS,\n      STYPE>.\n\n   Name Error: The zone does not contain any RRsets that match <SNAME,\n      SCLASS> either exactly or via wildcard name expansion.\n\n   Wildcard Answer: The zone does not contain any RRsets that exactly\n      match <SNAME, SCLASS> but does contain an RRset that matches\n      <SNAME, SCLASS, STYPE> via wildcard name expansion.",
+      "line_start": 594,
+      "line_end": 607,
+      "condition": "A security-aware authoritative name server for a signed zone responds to a query with the DO bit set, and the zone contains no RRsets exactly matching <SNAME, SCLASS> but contains an RRset matching <SNAME, SCLASS, STYPE> through wildcard name expansion (Wildcard Answer).",
+      "required_behavior": "The server MUST include NSEC RRs in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A DO-set query satisfied only by wildcard expansion permits checking that the wildcard answer includes NSEC RRs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When responding to a query that has the DO bit set, a security-aware\n   authoritative name server for a signed zone MUST include NSEC RRs in\n   each of the following cases:\n\n   No Data: The zone contains RRsets that exactly match <SNAME, SCLASS>\n      but does not contain any RRsets that exactly match <SNAME, SCLASS,\n      STYPE>.\n\n   Name Error: The zone does not contain any RRsets that match <SNAME,\n      SCLASS> either exactly or via wildcard name expansion.\n\n   Wildcard Answer: The zone does not contain any RRsets that exactly\n      match <SNAME, SCLASS> but does contain an RRset that matches\n      <SNAME, SCLASS, STYPE> via wildcard name expansion.\n\n   Wildcard No Data: The zone does not contain any RRsets that exactly\n      match <SNAME, SCLASS> and does contain one or more RRsets that\n      match <SNAME, SCLASS> via wildcard name expansion, but does not\n      contain any RRsets that match <SNAME, SCLASS, STYPE> via wildcard\n      name expansion.",
+      "line_start": 594,
+      "line_end": 613,
+      "condition": "A security-aware authoritative name server for a signed zone responds to a query with the DO bit set, and the zone contains no RRsets exactly matching <SNAME, SCLASS>, contains one or more RRsets matching <SNAME, SCLASS> through wildcard name expansion, and contains no RRsets matching <SNAME, SCLASS, STYPE> through wildcard name expansion (Wildcard No Data).",
+      "required_behavior": "The server MUST include NSEC RRs in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A wildcard matching the queried name and class but lacking the queried type supplies a concrete DO-set query case whose response can be checked for NSEC RRs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When responding to a query that has the DO bit set, a security-aware\n   authoritative name server for a signed zone MUST include NSEC RRs in\n   each of the following cases:\n\n   No Data: The zone contains RRsets that exactly match <SNAME, SCLASS>\n      but does not contain any RRsets that exactly match <SNAME, SCLASS,\n      STYPE>.\n\n   Name Error: The zone does not contain any RRsets that match <SNAME,\n      SCLASS> either exactly or via wildcard name expansion.\n\n   Wildcard Answer: The zone does not contain any RRsets that exactly\n      match <SNAME, SCLASS> but does contain an RRset that matches\n      <SNAME, SCLASS, STYPE> via wildcard name expansion.\n\n   Wildcard No Data: The zone does not contain any RRsets that exactly\n      match <SNAME, SCLASS> and does contain one or more RRsets that\n      match <SNAME, SCLASS> via wildcard name expansion, but does not\n      contain any RRsets that match <SNAME, SCLASS, STYPE> via wildcard\n      name expansion.\n\n   In each of these cases, the name server includes NSEC RRs in the\n   response to prove that an exact match for <SNAME, SCLASS, STYPE> was\n   not present in the zone and that the response that the name server is\n   returning is correct given the data in the zone.",
+      "line_start": 594,
+      "line_end": 618,
+      "condition": "A security-aware authoritative name server for a signed zone responds to a query with the DO bit set, and the response is a No Data, Name Error, Wildcard Answer, or Wildcard No Data case as defined in the evidence.",
+      "required_behavior": "The NSEC RRs included in the response prove that an exact match for <SNAME, SCLASS, STYPE> is absent from the zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "For each of the four cases, the NSEC proof can be compared with the queried tuple and known zone data to check that it establishes absence of an exact RRset match.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When responding to a query that has the DO bit set, a security-aware\n   authoritative name server for a signed zone MUST include NSEC RRs in\n   each of the following cases:\n\n   No Data: The zone contains RRsets that exactly match <SNAME, SCLASS>\n      but does not contain any RRsets that exactly match <SNAME, SCLASS,\n      STYPE>.\n\n   Name Error: The zone does not contain any RRsets that match <SNAME,\n      SCLASS> either exactly or via wildcard name expansion.\n\n   Wildcard Answer: The zone does not contain any RRsets that exactly\n      match <SNAME, SCLASS> but does contain an RRset that matches\n      <SNAME, SCLASS, STYPE> via wildcard name expansion.\n\n   Wildcard No Data: The zone does not contain any RRsets that exactly\n      match <SNAME, SCLASS> and does contain one or more RRsets that\n      match <SNAME, SCLASS> via wildcard name expansion, but does not\n      contain any RRsets that match <SNAME, SCLASS, STYPE> via wildcard\n      name expansion.\n\n   In each of these cases, the name server includes NSEC RRs in the\n   response to prove that an exact match for <SNAME, SCLASS, STYPE> was\n   not present in the zone and that the response that the name server is\n   returning is correct given the data in the zone.",
+      "line_start": 594,
+      "line_end": 618,
+      "condition": "A security-aware authoritative name server for a signed zone responds to a query with the DO bit set, and the response is a No Data, Name Error, Wildcard Answer, or Wildcard No Data case as defined in the evidence.",
+      "required_behavior": "The NSEC RRs included in the response prove that the returned response is correct given the zone data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The chosen response case and its NSEC proof can be compared with zone data to check that the proof supports the actual response returned.",
+      "eligibility": "eligible"
+    }
+  ]
+}

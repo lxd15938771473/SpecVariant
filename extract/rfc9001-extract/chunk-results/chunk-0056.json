@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0056",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "First, the packet\n   containing a ClientHello MUST be padded to a minimum size.",
+      "line_start": 2055,
+      "line_end": 2056,
+      "condition": "When sending a packet that contains a ClientHello.",
+      "required_behavior": "Pad the packet to the required minimum size.",
+      "forbidden_behavior": "Do not send the ClientHello-containing packet below the required minimum size.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The padding obligation is clear, but this chunk does not state the minimum byte size, so it lacks the threshold needed for a self-contained concrete check.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "Second,\n   if responding to an unverified source address, the server is\n   forbidden to send more than three times as many bytes as the number\n   of bytes it has received (see Section 8.1 of [QUIC-TRANSPORT]).",
+      "line_start": 2056,
+      "line_end": 2059,
+      "condition": "While a server responds to a source address that has not been verified.",
+      "required_behavior": "Limit bytes sent to at most three times the number of bytes received from that address.",
+      "forbidden_behavior": "Do not send more than 3 * received_bytes before the source address is verified.",
+      "error_behavior": "Defer additional transmission until more bytes are received or the address is verified.",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can track cumulative bytes received and sent before address validation and compare them against the exact 3:1 bound.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Finally, because acknowledgments of Handshake packets are\n   authenticated, a blind attacker cannot forge them.",
+      "line_start": 2060,
+      "line_end": 2061,
+      "condition": "When accepting an acknowledgment that covers a Handshake packet.",
+      "required_behavior": "Accept the acknowledgment only after authenticating the packet that carries it.",
+      "forbidden_behavior": "Do not act on an unauthenticated or forged acknowledgment of a Handshake packet.",
+      "error_behavior": "Ignore an ACK-carrying packet that fails authentication.",
+      "check_type": "security_consistency",
+      "why_checkable": "An ACK packet with invalid authentication can be injected and the endpoint observed for whether it changes Handshake loss-recovery state.",
+      "eligibility": "eligible"
+    }
+  ]
+}

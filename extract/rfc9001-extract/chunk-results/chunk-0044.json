@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0044",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A recovered packet number that is lower than any\n   packet number from the current key phase uses the previous packet\n   protection keys",
+      "line_start": 1739,
+      "line_end": 1741,
+      "condition": "When a recovered packet number is lower than every packet number observed in the current key phase and old packets are being supported.",
+      "required_behavior": "Use the previous packet-protection keys to remove protection.",
+      "forbidden_behavior": "Selecting the current or next packet-protection keys for this packet-number relation.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packets with controlled recovered numbers can verify which receive-key set is selected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "a recovered packet number that is higher than any\n   packet number from the current key phase requires the use of the next\n   packet protection keys.",
+      "line_start": 1741,
+      "line_end": 1743,
+      "condition": "When a recovered packet number is higher than every packet number observed in the current key phase.",
+      "required_behavior": "Use the next packet-protection keys to remove protection.",
+      "forbidden_behavior": "Selecting the previous or current packet-protection keys for this packet-number relation.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packets with controlled recovered numbers can verify which receive-key set is selected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Some care is necessary to ensure that any process for selecting\n   between previous, current, and next packet protection keys does not\n   expose a timing side channel that might reveal which keys were used\n   to remove packet protection.",
+      "line_start": 1745,
+      "line_end": 1748,
+      "condition": "When selecting among previous, current, and next receive packet-protection keys.",
+      "required_behavior": "Perform selection and unprotection without an observable timing signal that reveals the key set used.",
+      "forbidden_behavior": "Exposing a timing side channel that distinguishes which receive keys removed packet protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Controlled packets for each key set can be measured statistically for distinguishable processing-time distributions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MAY allow a period of approximately the Probe Timeout\n   (PTO; see [QUIC-RECOVERY]) after promoting the next set of receive\n   keys to be current before it creates the subsequent set of packet\n   protection keys.",
+      "line_start": 1755,
+      "line_end": 1758,
+      "condition": "After promoting the next receive-key set to current and before creating the subsequent set.",
+      "required_behavior": "If generation is deferred, limit the deferral to a period approximately equal to the PTO.",
+      "forbidden_behavior": "Deferring generation for substantially longer than the intended PTO-scale interval.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The text does not define a tolerance for \"approximately\", so no objective pass/fail timing boundary can be constructed from this evidence alone.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "Endpoints SHOULD wait three times\n   the PTO before initiating a key update after receiving an\n   acknowledgment that confirms that the previous key update was\n   received.",
+      "line_start": 1767,
+      "line_end": 1770,
+      "condition": "After receiving an acknowledgment confirming that the peer received the previous key update.",
+      "required_behavior": "Wait three times the PTO before initiating another key update.",
+      "forbidden_behavior": "Initiating the next key update before the three-PTO waiting period expires.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A simulated clock can compare the confirming acknowledgment time, PTO value, and next key-update event.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint SHOULD retain old read keys for no more than three times\n   the PTO after having received a packet protected using the new keys.\n   After this period, old read keys and their corresponding secrets\n   SHOULD be discarded.",
+      "line_start": 1773,
+      "line_end": 1776,
+      "condition": "Once three times the PTO has elapsed after receiving a packet protected with the new keys.",
+      "required_behavior": "Discard the old read keys.",
+      "forbidden_behavior": "Retaining the old read keys beyond that deadline.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A simulated clock and key-store inspection can verify deletion by the three-PTO deadline.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint SHOULD retain old read keys for no more than three times\n   the PTO after having received a packet protected using the new keys.\n   After this period, old read keys and their corresponding secrets\n   SHOULD be discarded.",
+      "line_start": 1773,
+      "line_end": 1776,
+      "condition": "Once three times the PTO has elapsed after receiving a packet protected with the new keys.",
+      "required_behavior": "Discard the secrets corresponding to the old read keys.",
+      "forbidden_behavior": "Retaining the corresponding old secrets beyond that deadline.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A simulated clock and secret-store inspection can verify deletion by the three-PTO deadline.",
+      "eligibility": "eligible"
+    }
+  ]
+}

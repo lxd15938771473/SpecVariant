@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0016",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Because QoS1 and QoS2 indicate that messages must be delivered, the broker stores messages in a database.",
+      "line_start": 2433,
+      "line_end": 2433,
+      "condition": "A message is handled at QoS 1 or QoS 2.",
+      "required_behavior": "The message must be delivered.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can publish messages at QoS 1 and QoS 2 and verify that the implementation completes delivery rather than silently discarding them.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Because QoS1 and QoS2 indicate that messages must be delivered, the broker stores messages in a database.",
+      "line_start": 2433,
+      "line_end": 2433,
+      "condition": "The broker handles messages requiring delivery at QoS 1 or QoS 2.",
+      "required_behavior": "The broker stores the messages in a database.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Broker persistence behavior for QoS 1 and QoS 2 messages can be inspected or tested across interruptions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The time delay (retry interval) before resending a message that has not been acknowledged is specific to the application, and is not defined by the protocol specification.",
+      "line_start": 2453,
+      "line_end": 2453,
+      "condition": "A message has not been acknowledged and is to be resent after a delay.",
+      "required_behavior": "The application determines the retry interval.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation can be checked to verify that retry timing is application-specific rather than mandated by a protocol-defined interval.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The time delay (retry interval) before resending a message that has not been acknowledged is specific to the application, and is not defined by the protocol specification.",
+      "line_start": 2453,
+      "line_end": 2453,
+      "condition": "A message has not been acknowledged and retry timing is selected.",
+      "required_behavior": "",
+      "forbidden_behavior": "The implementation must not treat a particular retry interval as being defined by the MQTT protocol specification.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Configuration and retry behavior can be inspected to determine whether the implementation incorrectly enforces a purported protocol-defined interval.",
+      "eligibility": "eligible"
+    }
+  ]
+}

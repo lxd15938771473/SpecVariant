@@ -1,0 +1,19 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0089",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "Because BGP-4 is capable of carrying aggregated routes that cannot be\n   properly represented in BGP-3, an implementation that supports BGP-4\n   and another BGP version should provide the capability to only speak\n   BGP-4 on a per-peer basis.",
+                             "line_start":  5345,
+                             "line_end":  5348,
+                             "condition":  "The implementation supports BGP-4 and another BGP version.",
+                             "required_behavior":  "The implementation should provide a per-peer capability to restrict the spoken BGP version to BGP-4.",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Per-peer version configuration and its effect on version negotiation can be inspected and exercised.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

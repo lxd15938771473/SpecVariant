@@ -1,0 +1,79 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0044",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "A sender SHOULD pace sending of all in-flight packets based on input\n   from the congestion controller.",
+                             "line_start":  1187,
+                             "line_end":  1188,
+                             "condition":  "When a sender transmits packets that are considered in flight.",
+                             "required_behavior":  "Pace the sending of every in-flight packet based on input from the congestion controller.",
+                             "forbidden_behavior":  "Leaving in-flight packet transmissions outside congestion-controller-informed pacing without a valid reason for departing from the SHOULD recommendation.",
+                             "error_behavior":  "No specific error response is defined.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can classify transmitted packets as in flight and verify that their release timing is controlled by pacing decisions informed by congestion-controller state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Senders MUST either use pacing or limit such bursts.",
+                             "line_start":  1192,
+                             "line_end":  1192,
+                             "condition":  "When a sender sends multiple packets without delay between them, creating a burst.",
+                             "required_behavior":  "Use pacing for the transmissions or enforce a limit on the burst.",
+                             "forbidden_behavior":  "Sending an unpaced burst without any enforced burst limit.",
+                             "error_behavior":  "No specific error response is defined.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Packet-send timestamps and the sender\u0027s burst limiter can be observed to verify that every back-to-back burst is paced or bounded.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Senders SHOULD limit bursts to the initial congestion window; see\n   Section 7.2.  A sender with knowledge that the network path to the\n   receiver can absorb larger bursts MAY use a higher limit.",
+                             "line_start":  1193,
+                             "line_end":  1195,
+                             "condition":  "When a sender emits a burst and does not rely on knowledge that the path can absorb a larger burst.",
+                             "required_behavior":  "Limit the burst to no more than the initial congestion window.",
+                             "forbidden_behavior":  "Using a burst limit larger than the initial congestion window without a valid reason for departing from the SHOULD recommendation.",
+                             "error_behavior":  "No specific error response is defined.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can compare the bytes released in a burst with the initial congestion-window value and account for the stated path-knowledge exception.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A sender with knowledge that the network path to the\n   receiver can absorb larger bursts MAY use a higher limit.",
+                             "line_start":  1194,
+                             "line_end":  1195,
+                             "condition":  "When a sender knows that the network path to the receiver can absorb bursts larger than the initial congestion window.",
+                             "required_behavior":  "The sender is permitted, but not required, to use a higher burst limit.",
+                             "forbidden_behavior":  "No behavior is forbidden by this permission statement.",
+                             "error_behavior":  "No specific error response is defined.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The statement only grants an optional behavior and supplies no independently falsifiable implementation obligation.",
+                             "eligibility":  "exclude"
+                         },
+                         {
+                             "quote":  "An implementation should take care to architect its congestion\n   controller to work well with a pacer.",
+                             "line_start":  1197,
+                             "line_end":  1198,
+                             "condition":  "When an implementation combines a congestion controller with a pacer.",
+                             "required_behavior":  "Architect the congestion controller so that it works well with the pacer.",
+                             "forbidden_behavior":  "An architecture that does not work well with the pacer.",
+                             "error_behavior":  "No specific error response is defined.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "The phrase \u0027work well\u0027 has no measurable threshold or required architecture, and the following examples are explicitly alternatives rather than exhaustive rules.",
+                             "eligibility":  "exclude"
+                         },
+                         {
+                             "quote":  "To avoid delaying their delivery to the peer, packets\n   containing only ACK frames SHOULD therefore not be paced.",
+                             "line_start":  1204,
+                             "line_end":  1205,
+                             "condition":  "When a packet contains only ACK frames.",
+                             "required_behavior":  "Send the ACK-only packet without subjecting it to pacing delay.",
+                             "forbidden_behavior":  "Delaying an ACK-only packet through the pacer without a valid reason for departing from the SHOULD recommendation.",
+                             "error_behavior":  "No specific error response is defined.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can generate ACK-only packets and observe whether their send time is deferred by the pacing scheduler.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

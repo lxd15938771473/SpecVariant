@@ -1,0 +1,67 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0007",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "QUIC separates transmission order from delivery\n   order: packet numbers indicate transmission order, and delivery order\n   is determined by the stream offsets in STREAM frames.",
+                             "line_start":  214,
+                             "line_end":  216,
+                             "condition":  "When determining delivery order for data carried in STREAM frames.",
+                             "required_behavior":  "Determine delivery order from STREAM frame stream offsets, independently of packet transmission order.",
+                             "forbidden_behavior":  "Do not use packet numbers or packet arrival/transmission order as the STREAM data delivery order.",
+                             "error_behavior":  "No specific error response is stated in this chunk.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can deliver STREAM frames in packet-number order that differs from stream-offset order and verify that reassembly and delivery follow the offsets.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "QUIC\u0027s packet number is strictly increasing within a packet number\n   space and directly encodes transmission order.",
+                             "line_start":  218,
+                             "line_end":  219,
+                             "condition":  "For successive packets sent within the same packet number space.",
+                             "required_behavior":  "Assign each later-sent packet a packet number strictly greater than every earlier-sent packet in that packet number space.",
+                             "forbidden_behavior":  "Do not reuse, repeat, or decrease packet numbers within a packet number space.",
+                             "error_behavior":  "No specific error response is stated in this chunk.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "An implementation trace can group sent packets by packet number space and verify strict monotonic increase in send order.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A higher packet\n   number signifies that the packet was sent later, and a lower packet\n   number signifies that the packet was sent earlier.",
+                             "line_start":  219,
+                             "line_end":  221,
+                             "condition":  "When comparing two packets in the same packet number space.",
+                             "required_behavior":  "Interpret the packet with the higher packet number as the later transmission and the packet with the lower packet number as the earlier transmission.",
+                             "forbidden_behavior":  "Do not interpret packet-number ordering as delivery or arrival ordering, or reverse its relationship to transmission time.",
+                             "error_behavior":  "No specific error response is stated in this chunk.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A test can compare packet numbers with recorded send order and verify the stated ordering relation.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When a packet\n   containing ack-eliciting frames is detected lost, QUIC includes\n   necessary frames in a new packet with a new packet number, removing\n   ambiguity about which packet is acknowledged when an ACK is received.",
+                             "line_start":  221,
+                             "line_end":  224,
+                             "condition":  "When a packet containing ack-eliciting frames is declared lost and frames from it need to be sent again.",
+                             "required_behavior":  "Place the frames that need to be sent again into a newly constructed packet and assign that packet a new packet number.",
+                             "forbidden_behavior":  "Do not retransmit the lost packet as the same packet or reuse its packet number for the new transmission.",
+                             "error_behavior":  "No specific error response is stated in this chunk.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A loss-recovery test can record the lost packet and the recovery transmission and verify that the latter is a distinct packet with a distinct packet number.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When a packet\n   containing ack-eliciting frames is detected lost, QUIC includes\n   necessary frames in a new packet with a new packet number, removing\n   ambiguity about which packet is acknowledged when an ACK is received.",
+                             "line_start":  221,
+                             "line_end":  224,
+                             "condition":  "When an ACK is received after frames from a lost packet have been sent in a new packet.",
+                             "required_behavior":  "Attribute the acknowledgment to the particular packet number carried by the ACK and keep the original and replacement transmissions distinguishable.",
+                             "forbidden_behavior":  "Do not treat acknowledgment of one packet as acknowledgment of another packet merely because both carried the same frame data.",
+                             "error_behavior":  "No specific error response is stated in this chunk.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A test can send identical frame data under two packet numbers, acknowledge only one number, and verify that acknowledgment state changes only for that transmission.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

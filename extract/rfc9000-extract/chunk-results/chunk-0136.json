@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0136",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Subsequent Initial packets from the client include the connection ID\n   and token values from the Retry packet.  The client copies the Source\n   Connection ID field from the Retry packet to the Destination\n   Connection ID field and uses this value until an Initial packet with\n   an updated value is received; see Section 7.2.  The value of the\n   Token field is copied to all subsequent Initial packets; see\n   Section 8.1.2.",
+      "line_start": 5431,
+      "line_end": 5437,
+      "condition": "After the client receives and processes a Retry packet, when it sends a subsequent Initial packet before receiving an Initial packet with an updated connection ID value.",
+      "required_behavior": "Copy the Retry packet's Source Connection ID into the Destination Connection ID field and continue using that value.",
+      "forbidden_behavior": "Do not replace that Destination Connection ID value before an Initial packet carrying an updated value is received.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet traces can verify the Destination Connection ID of every applicable subsequent Initial packet against the Source Connection ID from the Retry packet and detect the update event.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Subsequent Initial packets from the client include the connection ID\n   and token values from the Retry packet.  The client copies the Source\n   Connection ID field from the Retry packet to the Destination\n   Connection ID field and uses this value until an Initial packet with\n   an updated value is received; see Section 7.2.  The value of the\n   Token field is copied to all subsequent Initial packets; see\n   Section 8.1.2.",
+      "line_start": 5431,
+      "line_end": 5437,
+      "condition": "After the client receives a Retry packet, whenever it sends a subsequent Initial packet.",
+      "required_behavior": "Copy the Token field value from the Retry packet into every subsequent Initial packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Each subsequent Initial packet's Token field can be compared byte-for-byte with the Retry packet's Token field.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Other than updating the Destination Connection ID and Token fields,\n   the Initial packet sent by the client is subject to the same\n   restrictions as the first Initial packet.  A client MUST use the same\n   cryptographic handshake message it included in this packet.  A server\n   MAY treat a packet that contains a different cryptographic handshake\n   message as a connection error or discard it.  Note that including a\n   Token field reduces the available space for the cryptographic\n   handshake message, which might result in the client needing to send\n   multiple Initial packets.",
+      "line_start": 5439,
+      "line_end": 5447,
+      "condition": "When a client sends an Initial packet after Retry.",
+      "required_behavior": "Apply the restrictions governing the first Initial packet, except that the Destination Connection ID and Token fields are updated.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The exception fields are identified, but the other restrictions are not stated in this chunk and require evidence from outside it.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   Other than updating the Destination Connection ID and Token fields,\n   the Initial packet sent by the client is subject to the same\n   restrictions as the first Initial packet.  A client MUST use the same\n   cryptographic handshake message it included in this packet.  A server\n   MAY treat a packet that contains a different cryptographic handshake\n   message as a connection error or discard it.  Note that including a\n   Token field reduces the available space for the cryptographic\n   handshake message, which might result in the client needing to send\n   multiple Initial packets.",
+      "line_start": 5439,
+      "line_end": 5447,
+      "condition": "When a client sends an Initial packet after Retry.",
+      "required_behavior": "Use the same cryptographic handshake message that was included in the first Initial packet.",
+      "forbidden_behavior": "Do not substitute a different cryptographic handshake message.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The cryptographic handshake message in the post-Retry Initial packet can be compared with the message in the first Initial packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Other than updating the Destination Connection ID and Token fields,\n   the Initial packet sent by the client is subject to the same\n   restrictions as the first Initial packet.  A client MUST use the same\n   cryptographic handshake message it included in this packet.  A server\n   MAY treat a packet that contains a different cryptographic handshake\n   message as a connection error or discard it.  Note that including a\n   Token field reduces the available space for the cryptographic\n   handshake message, which might result in the client needing to send\n   multiple Initial packets.",
+      "line_start": 5439,
+      "line_end": 5447,
+      "condition": "When a server receives a post-Retry Initial packet containing a cryptographic handshake message different from the client's original message.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The server may treat the packet as a connection error or discard the packet.",
+      "check_type": "error_handling",
+      "why_checkable": "A focused test can send a changed handshake message and observe whether the server reports a connection error or silently discards the packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A client MAY attempt 0-RTT after receiving a Retry packet by sending\n   0-RTT packets to the connection ID provided by the server.",
+      "line_start": 5449,
+      "line_end": 5450,
+      "condition": "After a client receives a Retry packet and chooses to attempt 0-RTT.",
+      "required_behavior": "Send the 0-RTT packets to the connection ID provided by the server.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A packet trace can compare the destination connection ID of post-Retry 0-RTT packets with the connection ID supplied by the server.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A client MUST NOT reset the packet number for any packet number space\n   after processing a Retry packet.  In particular, 0-RTT packets\n   contain confidential information that will most likely be\n   retransmitted on receiving a Retry packet.  The keys used to protect\n   these new 0-RTT packets will not change as a result of responding to\n   a Retry packet.  However, the data sent in these packets could be\n   different than what was sent earlier.  Sending these new packets with\n   the same packet number is likely to compromise the packet protection\n   for those packets because the same key and nonce could be used to\n   protect different content.  A server MAY abort the connection if it\n   detects that the client reset the packet number.",
+      "line_start": 5452,
+      "line_end": 5462,
+      "condition": "After a client processes a Retry packet.",
+      "required_behavior": "Continue packet-number progression independently in every packet number space without resetting it.",
+      "forbidden_behavior": "Do not reset the packet number in any packet number space.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet numbers emitted before and after Retry can be tracked per packet number space to detect any reset, including reuse that could repeat a key-and-nonce combination.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A client MUST NOT reset the packet number for any packet number space\n   after processing a Retry packet.  In particular, 0-RTT packets\n   contain confidential information that will most likely be\n   retransmitted on receiving a Retry packet.  The keys used to protect\n   these new 0-RTT packets will not change as a result of responding to\n   a Retry packet.  However, the data sent in these packets could be\n   different than what was sent earlier.  Sending these new packets with\n   the same packet number is likely to compromise the packet protection\n   for those packets because the same key and nonce could be used to\n   protect different content.  A server MAY abort the connection if it\n   detects that the client reset the packet number.",
+      "line_start": 5452,
+      "line_end": 5462,
+      "condition": "When a server detects that a client reset a packet number after processing Retry.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The server may abort the connection.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can cause or simulate a detectable packet-number reset and observe whether the server aborts the connection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The connection IDs used in Initial and Retry packets exchanged\n   between client and server are copied to the transport parameters and\n   validated as described in Section 7.3.",
+      "line_start": 5464,
+      "line_end": 5466,
+      "condition": "For connection IDs used in Initial and Retry packets exchanged between the client and server.",
+      "required_behavior": "Copy those connection IDs to the corresponding transport parameters.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Captured Initial and Retry connection IDs can be compared with the connection ID values encoded in the transport parameters.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The connection IDs used in Initial and Retry packets exchanged\n   between client and server are copied to the transport parameters and\n   validated as described in Section 7.3.",
+      "line_start": 5464,
+      "line_end": 5466,
+      "condition": "When validating transport parameters containing connection IDs copied from exchanged Initial and Retry packets.",
+      "required_behavior": "Validate the copied connection IDs as described in Section 7.3.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The chunk requires validation but delegates the validation rules and consequences to Section 7.3, which is not present here.",
+      "eligibility": "exclude"
+    }
+  ]
+}

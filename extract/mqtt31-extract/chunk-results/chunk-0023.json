@@ -1,0 +1,104 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "document_id": "mqtt-v3.1.1",
+  "chunk_id": "chunk-0023",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "As a transport protocol, MQTT is concerned only with message transmission and it is the implementer’s responsibility to provide appropriate security features.",
+      "line_start": 1674,
+      "line_end": 1674,
+      "condition": "When MQTT is used in an environment requiring security controls",
+      "required_behavior": "The implementer would provide security features outside MQTT's message-transmission function.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The text does not define which security properties or mechanisms are appropriate, so it supplies no objective pass/fail behavior for an implementation.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "The CONNECT Packet contains Username and Password fields.",
+      "line_start": 1689,
+      "line_end": 1689,
+      "condition": "For the MQTT CONNECT Packet model",
+      "required_behavior": "The implementation must define and be able to represent the Username and Password fields of CONNECT.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The CONNECT encoder, decoder, or packet representation can be inspected for both named fields without asserting that they are present in every packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Implementations can choose how to make use of the content of these fields.",
+      "line_start": 1689,
+      "line_end": 1689,
+      "condition": "When an implementation receives Username or Password content in CONNECT",
+      "required_behavior": "The authentication use of that content may be implementation-defined.",
+      "forbidden_behavior": "A conformance check must not require one particular authentication mechanism solely from this statement.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "An implementation's policy can select local, external, operating-system, or other authentication handling without violating this protocol-level permission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Implementations passing authentication data in clear text, obfuscating such data elements or requiring no authentication data should be aware this can give rise to Man-in-the-Middle and replay attacks.",
+      "line_start": 1691,
+      "line_end": 1691,
+      "condition": "When authentication data is clear text, merely obfuscated, or absent",
+      "required_behavior": "The implementation would account for Man-in-the-Middle and replay risks.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The phrase “should be aware” specifies no required mitigation, observable state change, or acceptance criterion, so the constrained behavior is incomplete.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "The MQTT protocol is not trust symmetrical: it provides no mechanism for the Client to authenticate the Server.",
+      "line_start": 1701,
+      "line_end": 1701,
+      "condition": "When only the MQTT protocol mechanisms defined here are used",
+      "required_behavior": "The implementation must treat Server authentication as unavailable at the MQTT protocol layer.",
+      "forbidden_behavior": "The Client must not claim that core MQTT alone authenticates the Server.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The MQTT handshake and packet fields can be inspected for absence of a Server-authentication mechanism, independently of external transports such as TLS.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "There are valid TLS cipher suites that include a NULL encryption algorithm that does not encrypt data.",
+      "line_start": 1715,
+      "line_end": 1715,
+      "condition": "When a TLS cipher suite using a NULL encryption algorithm is negotiated",
+      "required_behavior": "The connection's application data must be treated as unencrypted rather than confidential by virtue of TLS.",
+      "forbidden_behavior": "The implementation must not represent a NULL-encryption TLS connection as providing data encryption.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The negotiated cipher suite can be inspected for a NULL encryption algorithm and the implementation's privacy classification checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To ensure privacy Clients and Servers should avoid these cipher suites.",
+      "line_start": 1715,
+      "line_end": 1715,
+      "condition": "When Clients and Servers intend TLS to ensure privacy",
+      "required_behavior": "They should avoid negotiating cipher suites that use a NULL encryption algorithm.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "TLS configuration and negotiated cipher suites can be checked for exclusion of NULL encryption when privacy is an explicit objective.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This would not provide privacy for other properties of the Application Message such as Topic Name.",
+      "line_start": 1717,
+      "line_end": 1717,
+      "condition": "When an application independently encrypts only the contents of its Application Messages",
+      "required_behavior": "The implementation must treat non-content properties such as Topic Name as not protected by that content encryption.",
+      "forbidden_behavior": "The implementation must not claim that encrypting Application Message contents also makes Topic Name private.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A captured PUBLISH Packet can be inspected to distinguish encrypted payload contents from the separately exposed Topic Name.",
+      "eligibility": "eligible"
+    }
+  ]
+}

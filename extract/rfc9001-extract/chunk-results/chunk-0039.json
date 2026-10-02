@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0039",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Once the handshake is confirmed (see Section 4.1.2), an endpoint MAY\n   initiate a key update.",
+      "line_start": 1548,
+      "line_end": 1549,
+      "condition": "Once the endpoint's handshake is confirmed.",
+      "required_behavior": "Permit the endpoint to initiate a key update.",
+      "forbidden_behavior": "Do not initiate a key update before handshake confirmation.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can request key updates before and after the handshake-confirmed transition and inspect whether update packets are emitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Key Phase bit indicates which packet protection keys are used to\n   protect the packet.",
+      "line_start": 1551,
+      "line_end": 1552,
+      "condition": "For each 1-RTT packet protected under a packet-protection key generation.",
+      "required_behavior": "Set the Key Phase bit to identify the key generation used to protect that packet.",
+      "forbidden_behavior": "Do not emit a Key Phase bit value inconsistent with the keys that protect the packet.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The packet's Key Phase value can be compared with the key generation that successfully authenticates and decrypts it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Key Phase bit is initially set to 0 for the\n   first set of 1-RTT packets",
+      "line_start": 1552,
+      "line_end": 1553,
+      "condition": "For the first set of 1-RTT packets sent before any key update.",
+      "required_behavior": "Set the Key Phase bit to 0.",
+      "forbidden_behavior": "Do not set the initial Key Phase bit to 1.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The first emitted 1-RTT packets can be decrypted and their unprotected Key Phase bits inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Key Phase bit is initially set to 0 for the\n   first set of 1-RTT packets and toggled to signal each subsequent key\n   update.",
+      "line_start": 1552,
+      "line_end": 1554,
+      "condition": "For each key update after the initial 1-RTT key generation.",
+      "required_behavior": "Toggle the Key Phase bit relative to the preceding key generation.",
+      "forbidden_behavior": "Do not retain the preceding Key Phase value when switching to the next key generation.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet traces across successive key updates can verify alternating Key Phase values for adjacent key generations.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint that notices a changed Key Phase bit updates\n   keys and decrypts the packet that contains the changed value.",
+      "line_start": 1558,
+      "line_end": 1559,
+      "condition": "When an endpoint receives a packet whose Key Phase bit differs from the currently used phase.",
+      "required_behavior": "Update the packet-protection keys for the changed phase.",
+      "forbidden_behavior": "Do not continue using only the previous receive keys after detecting the changed Key Phase.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Key-schedule instrumentation can verify that detection of the changed phase invokes derivation or installation of the next keys.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint that notices a changed Key Phase bit updates\n   keys and decrypts the packet that contains the changed value.",
+      "line_start": 1558,
+      "line_end": 1559,
+      "condition": "After an endpoint notices a changed Key Phase bit and updates its keys.",
+      "required_behavior": "Decrypt the packet containing the changed Key Phase value using the corresponding updated keys.",
+      "forbidden_behavior": "Do not discard an otherwise valid phase-changing packet without attempting decryption using the updated keys.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A valid first packet from the next key phase can be delivered and observed for successful decryption and frame processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Initiating a key update results in both endpoints updating keys.",
+      "line_start": 1561,
+      "line_end": 1561,
+      "condition": "When either endpoint initiates a QUIC key update.",
+      "required_behavior": "Cause both endpoints to transition to the updated key generation.",
+      "forbidden_behavior": "Do not leave either endpoint permanently using only the preceding key generation.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "After one peer initiates an update, bidirectional traffic can verify that both peers install and use the corresponding updated keys.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints\n   MUST NOT send a TLS KeyUpdate message.",
+      "line_start": 1565,
+      "line_end": 1566,
+      "condition": "During a QUIC connection, including when updating packet-protection keys.",
+      "required_behavior": "Use the QUIC Key Phase mechanism rather than a TLS KeyUpdate message.",
+      "forbidden_behavior": "Do not send any TLS KeyUpdate message.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Decrypted TLS handshake-message traces carried by QUIC can be checked for the absence of KeyUpdate messages.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints MUST treat the\n   receipt of a TLS KeyUpdate message as a connection error of type\n   0x010a, equivalent to a fatal TLS alert of unexpected_message; see\n   Section 4.8.",
+      "line_start": 1566,
+      "line_end": 1569,
+      "condition": "When an endpoint receives a TLS KeyUpdate message over QUIC.",
+      "required_behavior": "Classify the event as a connection error of type 0x010a.",
+      "forbidden_behavior": "Do not accept or process the TLS KeyUpdate as a valid QUIC key update.",
+      "error_behavior": "Close the connection with error code 0x010a, corresponding to the fatal TLS alert unexpected_message.",
+      "check_type": "error_handling",
+      "why_checkable": "A peer can inject a TLS KeyUpdate message and verify the resulting connection-close code and absence of a successful key transition.",
+      "eligibility": "eligible"
+    }
+  ]
+}

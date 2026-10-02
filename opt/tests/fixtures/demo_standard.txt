@@ -1,0 +1,13 @@
+1. Limit Extension
+
+When an endpoint receives a Limit value greater than 10, it MUST reject
+the message with a limit_error response.
+
+An endpoint MUST accept Limit values from 0 through 10 when all other
+message fields are valid.
+
+2. Token Processing
+
+Within one connection, an endpoint MUST NOT process the same Token value
+more than once.
+

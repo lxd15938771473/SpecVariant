@@ -1,0 +1,127 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0026",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "Until the server has validated the client\u0027s address on the path, the\n   amount of data it can send is limited to three times the amount of\n   data received, as specified in Section 8.1 of [QUIC-TRANSPORT].",
+                             "line_start":  718,
+                             "line_end":  720,
+                             "condition":  "The server has not yet validated the client\u0027s address on the path.",
+                             "required_behavior":  "Limit the cumulative amount of data sent on the path to no more than three times the amount of data received on that path.",
+                             "forbidden_behavior":  "Send more than three times the amount of data received on the unvalidated path.",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "A test can track bytes received and sent before address validation and verify that sent bytes never exceed the stated three-to-one limit.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "If\n   no additional data can be sent, the server\u0027s PTO timer MUST NOT be\n   armed until datagrams have been received from the client because\n   packets sent on PTO count against the anti-amplification limit.",
+                             "line_start":  720,
+                             "line_end":  723,
+                             "condition":  "The server cannot send additional data because of the anti-amplification limit.",
+                             "required_behavior":  "Leave the server PTO timer unarmed until a datagram is received from the client.",
+                             "forbidden_behavior":  "Arm the server PTO timer before receiving another client datagram while no additional data can be sent.",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The server timer state can be observed while its anti-amplification allowance is exhausted and before versus after a client datagram arrives.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "packets sent on PTO count against the anti-amplification limit.",
+                             "line_start":  723,
+                             "line_end":  723,
+                             "condition":  "The server sends packets on PTO while subject to the anti-amplification limit.",
+                             "required_behavior":  "Include bytes sent in PTO packets in the server\u0027s anti-amplification accounting.",
+                             "forbidden_behavior":  "Exclude PTO packet bytes from the anti-amplification limit calculation.",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "A test can trigger PTO transmission before address validation and compare the remaining send allowance with the transmitted PTO packet bytes.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When the server receives a datagram from the client, the\n   amplification limit is increased and the server resets the PTO timer.",
+                             "line_start":  725,
+                             "line_end":  726,
+                             "condition":  "The server receives a datagram from the client before address validation.",
+                             "required_behavior":  "Increase the server\u0027s amplification limit to reflect the newly received datagram.",
+                             "forbidden_behavior":  "Leave the amplification limit unchanged after receiving the client datagram.",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "The send allowance can be measured immediately before and after delivery of a client datagram.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When the server receives a datagram from the client, the\n   amplification limit is increased and the server resets the PTO timer.",
+                             "line_start":  725,
+                             "line_end":  726,
+                             "condition":  "The server receives a datagram from the client before address validation.",
+                             "required_behavior":  "Reset the server\u0027s PTO timer.",
+                             "forbidden_behavior":  "Retain the pre-receipt PTO deadline without resetting the timer.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can compare the server\u0027s PTO deadline before and after receipt of the datagram.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "If the PTO timer is then set to a time in the past, it is executed\n   immediately.",
+                             "line_start":  727,
+                             "line_end":  728,
+                             "condition":  "After the server resets the PTO timer upon receiving a client datagram, the resulting deadline is in the past.",
+                             "required_behavior":  "Execute the PTO immediately.",
+                             "forbidden_behavior":  "Delay or skip execution of an already-expired PTO timer.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A controlled clock and timer observer can establish a past deadline after reset and verify immediate PTO execution.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "the client MUST set the PTO timer if the client has not received an\n   acknowledgment for any of its Handshake packets and the handshake is\n   not confirmed (see Section 4.1.2 of [QUIC-TLS]), even if there are no\n   packets in flight.",
+                             "line_start":  737,
+                             "line_end":  740,
+                             "condition":  "The client has received no acknowledgment for any Handshake packet and the handshake is not confirmed, including when no packets are in flight.",
+                             "required_behavior":  "Set the client PTO timer.",
+                             "forbidden_behavior":  "Leave the PTO timer unset because there are no packets in flight.",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can withhold all Handshake acknowledgments, keep the handshake unconfirmed, empty the in-flight set, and inspect whether the PTO timer is set.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When the PTO fires, the client MUST send a\n   Handshake packet if it has Handshake keys",
+                             "line_start":  740,
+                             "line_end":  741,
+                             "condition":  "The client\u0027s PTO fires and the client has Handshake keys.",
+                             "required_behavior":  "Send a Handshake packet.",
+                             "forbidden_behavior":  "Fail to send a Handshake packet or send only an Initial packet.",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can fire the PTO with Handshake keys installed and inspect the packet type emitted by the client.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "otherwise it MUST send an\n   Initial packet in a UDP datagram with a payload of at least 1200\n   bytes.",
+                             "line_start":  741,
+                             "line_end":  743,
+                             "condition":  "The client\u0027s PTO fires and the client does not have Handshake keys.",
+                             "required_behavior":  "Send an Initial packet in a UDP datagram.",
+                             "forbidden_behavior":  "Fail to send an Initial packet in a UDP datagram.",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can fire the PTO without Handshake keys and inspect the emitted datagram for an Initial packet.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "otherwise it MUST send an\n   Initial packet in a UDP datagram with a payload of at least 1200\n   bytes.",
+                             "line_start":  741,
+                             "line_end":  743,
+                             "condition":  "The client\u0027s PTO fires without Handshake keys and it sends the required Initial packet in a UDP datagram.",
+                             "required_behavior":  "Make the UDP datagram payload at least 1200 bytes.",
+                             "forbidden_behavior":  "Send the required Initial packet in a UDP datagram whose payload is smaller than 1200 bytes.",
+                             "error_behavior":  "",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "The UDP payload length of the PTO probe datagram can be measured directly.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

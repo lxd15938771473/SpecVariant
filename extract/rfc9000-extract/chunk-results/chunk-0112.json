@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0112",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   If validation fails, then the endpoint MUST disable ECN.  It stops\n   setting the ECT codepoint in IP packets that it sends, assuming that\n   either the network path or the peer does not support ECN.",
+      "line_start": 4575,
+      "line_end": 4577,
+      "condition": "ECN validation fails.",
+      "required_behavior": "The endpoint must disable ECN.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can cause ECN validation to fail and verify that ECN is disabled at the endpoint.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If validation fails, then the endpoint MUST disable ECN.  It stops\n   setting the ECT codepoint in IP packets that it sends, assuming that\n   either the network path or the peer does not support ECN.",
+      "line_start": 4575,
+      "line_end": 4577,
+      "condition": "ECN validation fails and the endpoint sends subsequent IP packets.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not set the ECT codepoint in IP packets that it sends.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The adjacent sentences define disabling ECN as stopping use of the ECT codepoint, which can be observed in subsequently sent IP packets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Even if validation fails, an endpoint MAY revalidate ECN for the same\n   path at any later time in the connection.  An endpoint could continue\n   to periodically attempt validation.",
+      "line_start": 4579,
+      "line_end": 4581,
+      "condition": "ECN validation has failed for a path and the connection remains active.",
+      "required_behavior": "The endpoint may revalidate ECN for the same path at any later time in the connection, including through periodic validation attempts.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation can be checked to ensure its state machine permits later ECN revalidation on the same path after a failed validation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Upon successful validation, an endpoint MAY continue to set an ECT\n   codepoint in subsequent packets it sends, with the expectation that\n   the path is ECN capable.  Network routing and path elements can",
+      "line_start": 4583,
+      "line_end": 4585,
+      "condition": "ECN validation succeeds.",
+      "required_behavior": "The endpoint may continue setting an ECT codepoint in subsequent packets it sends.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can complete ECN validation successfully and verify that the implementation permits ECT marking on later packets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   the path is ECN capable.  Network routing and path elements can\n   change mid-connection; an endpoint MUST disable ECN if validation\n   later fails.",
+      "line_start": 4585,
+      "line_end": 4587,
+      "condition": "ECN was previously validated but validation later fails during the connection.",
+      "required_behavior": "The endpoint must disable ECN.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can first establish successful ECN validation, induce a later validation failure, and verify the endpoint transitions to ECN-disabled state.",
+      "eligibility": "eligible"
+    }
+  ]
+}

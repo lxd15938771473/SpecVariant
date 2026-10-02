@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0062",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The Phase 1 decision function is invoked whenever the local BGP\n   speaker receives, from a peer, an UPDATE message that advertises a\n   new route, a replacement route, or withdrawn routes.",
+      "line_start": 4265,
+      "line_end": 4267,
+      "condition": "The local BGP speaker receives from a peer an UPDATE advertising a new route, a replacement route, or withdrawn routes.",
+      "required_behavior": "Invoke the Phase 1 decision function whenever such an UPDATE is received.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "UPDATE dispatch can be checked for Phase 1 invocation for each listed route-change category.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Phase 1 decision function is a separate process,f which completes\n   when it has no further work to do.",
+      "line_start": 4269,
+      "line_end": 4270,
+      "condition": "Execution of the Phase 1 decision function.",
+      "required_behavior": "Run the Phase 1 decision function as a separate process.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The implementation can be inspected for a distinct Phase 1 decision process.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Phase 1 decision function is a separate process,f which completes\n   when it has no further work to do.",
+      "line_start": 4269,
+      "line_end": 4270,
+      "condition": "The Phase 1 decision function has no further work to do.",
+      "required_behavior": "Complete the Phase 1 decision function.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The no-pending-work condition can be checked against termination of the decision function.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Phase 1 decision function locks an Adj-RIB-In prior to operating\n   on any route contained within it, and unlocks it after operating on\n   all new or unfeasible routes contained within it.",
+      "line_start": 4272,
+      "line_end": 4274,
+      "condition": "Before the Phase 1 decision function operates on any route in an Adj-RIB-In.",
+      "required_behavior": "Lock that Adj-RIB-In before operating on any contained route.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Lock acquisition can be checked to precede accesses to the contained routes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Phase 1 decision function locks an Adj-RIB-In prior to operating\n   on any route contained within it, and unlocks it after operating on\n   all new or unfeasible routes contained within it.",
+      "line_start": 4272,
+      "line_end": 4274,
+      "condition": "The Phase 1 decision function has operated on all new or unfeasible routes contained in an Adj-RIB-In.",
+      "required_behavior": "Unlock the Adj-RIB-In after completing those operations.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Lock release can be checked against completion of all listed route operations.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For each newly received or replacement feasible route, the local BGP\n   speaker determines a degree of preference as follows:",
+      "line_start": 4276,
+      "line_end": 4277,
+      "condition": "Each newly received or replacement feasible route.",
+      "required_behavior": "Determine a degree of preference for the route.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Each qualifying route can be checked for a computed or assigned preference.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the route is learned from an internal peer, either the value of\n      the LOCAL_PREF attribute is taken as the degree of preference, or\n      the local system computes the degree of preference of the route\n      based on preconfigured policy information.  Note that the latter\n      may result in formation of persistent routing loops.",
+      "line_start": 4279,
+      "line_end": 4283,
+      "condition": "A newly received or replacement feasible route is learned from an internal peer.",
+      "required_behavior": "Either take the LOCAL_PREF attribute value as the degree of preference, or compute the degree of preference based on preconfigured policy information.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The internal-peer preference branch can be checked for either permitted source of preference.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the route is learned from an external peer, then the local BGP\n      speaker computes the degree of preference based on preconfigured\n      policy information.  If the return value indicates the route is\n      ineligible, the route MAY NOT serve as an input to the next phase\n      of route selection; otherwise, the return value MUST be used as\n      the LOCAL_PREF value in any IBGP readvertisement.",
+      "line_start": 4285,
+      "line_end": 4290,
+      "condition": "A newly received or replacement feasible route is learned from an external peer.",
+      "required_behavior": "Compute the degree of preference based on preconfigured policy information.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The external-peer preference branch can be checked for invocation of the configured policy.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the route is learned from an external peer, then the local BGP\n      speaker computes the degree of preference based on preconfigured\n      policy information.  If the return value indicates the route is\n      ineligible, the route MAY NOT serve as an input to the next phase\n      of route selection; otherwise, the return value MUST be used as\n      the LOCAL_PREF value in any IBGP readvertisement.",
+      "line_start": 4285,
+      "line_end": 4290,
+      "condition": "For a route learned from an external peer, the policy computation return value indicates that the route is ineligible.",
+      "required_behavior": "",
+      "forbidden_behavior": "The route MAY NOT serve as an input to the next phase of route selection.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Eligibility and admission to the next selection phase can be compared; the source MAY NOT wording is retained.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the route is learned from an external peer, then the local BGP\n      speaker computes the degree of preference based on preconfigured\n      policy information.  If the return value indicates the route is\n      ineligible, the route MAY NOT serve as an input to the next phase\n      of route selection; otherwise, the return value MUST be used as\n      the LOCAL_PREF value in any IBGP readvertisement.",
+      "line_start": 4285,
+      "line_end": 4290,
+      "condition": "For a route learned from an external peer, the policy computation return value does not indicate ineligibility, and the route is readvertised through IBGP.",
+      "required_behavior": "The return value MUST be used as the LOCAL_PREF value in any IBGP readvertisement.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The policy return value can be compared with LOCAL_PREF in each IBGP readvertisement.",
+      "eligibility": "eligible"
+    }
+  ]
+}

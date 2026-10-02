@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0023",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "3.3.2. HINFO RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                      CPU                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                       OS                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+",
+      "line_start": 758,
+      "line_end": 764,
+      "condition": "When encoding or interpreting HINFO RDATA.",
+      "required_behavior": "Represent HINFO RDATA as the CPU field followed by the OS field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The HINFO serializer and parser field sequence can be checked against the depicted two-field layout.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.2. HINFO RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                      CPU                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                       OS                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nCPU             A <character-string> which specifies the CPU type.",
+      "line_start": 758,
+      "line_end": 768,
+      "condition": "When encoding or interpreting HINFO RDATA.",
+      "required_behavior": "Encode the CPU field as a <character-string>.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The CPU field serializer and parser can be inspected for character-string encoding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.2. HINFO RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                      CPU                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                       OS                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nCPU             A <character-string> which specifies the CPU type.",
+      "line_start": 758,
+      "line_end": 768,
+      "condition": "When encoding or interpreting HINFO RDATA.",
+      "required_behavior": "Interpret the CPU field as specifying the CPU type.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The association between the decoded CPU field and the CPU-type value can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.2. HINFO RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                      CPU                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                       OS                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nCPU             A <character-string> which specifies the CPU type.\n\nOS              A <character-string> which specifies the operating\n                system type.",
+      "line_start": 758,
+      "line_end": 771,
+      "condition": "When encoding or interpreting HINFO RDATA.",
+      "required_behavior": "Encode the OS field as a <character-string>.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The OS field serializer and parser can be inspected for character-string encoding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.2. HINFO RDATA format\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                      CPU                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                       OS                      /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nCPU             A <character-string> which specifies the CPU type.\n\nOS              A <character-string> which specifies the operating\n                system type.",
+      "line_start": 758,
+      "line_end": 771,
+      "condition": "When encoding or interpreting HINFO RDATA.",
+      "required_behavior": "Interpret the OS field as specifying the operating system type.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The association between the decoded OS field and the operating-system-type value can be inspected.",
+      "eligibility": "eligible"
+    }
+  ]
+}

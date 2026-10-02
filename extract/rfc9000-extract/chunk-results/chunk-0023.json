@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0023",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Endpoints need to eventually agree on the amount of flow control credit that has been consumed on every stream, to be able to account for all bytes for connection-level flow control.",
+      "line_start": 1151,
+      "line_end": 1153,
+      "condition": "For every stream whose bytes contribute to connection-level flow control accounting.",
+      "required_behavior": "Endpoints eventually agree on the amount of flow-control credit consumed on the stream and account for all bytes at the connection level.",
+      "forbidden_behavior": "Endpoints must not leave per-stream consumed credit permanently inconsistent or omit stream bytes from connection-level flow-control accounting.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can compare the peers' eventual consumed-credit accounting for each stream and verify that all stream bytes are included in connection-level accounting.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "On receipt of a RESET_STREAM frame, an endpoint will tear down state for the matching stream and ignore further data arriving on that stream.",
+      "line_start": 1155,
+      "line_end": 1157,
+      "condition": "An endpoint receives a RESET_STREAM frame for a matching stream.",
+      "required_behavior": "The endpoint tears down state for the matching stream.",
+      "forbidden_behavior": "The endpoint must not retain the stream's operational state after processing the reset.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Stream state can be inspected after RESET_STREAM processing to verify that the matching stream was torn down.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "On receipt of a RESET_STREAM frame, an endpoint will tear down state for the matching stream and ignore further data arriving on that stream.",
+      "line_start": 1155,
+      "line_end": 1157,
+      "condition": "Data arrives on a stream after the endpoint has received a RESET_STREAM frame for that stream.",
+      "required_behavior": "The endpoint ignores the further arriving data.",
+      "forbidden_behavior": "The endpoint must not deliver or otherwise process further arriving data as stream data.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can inject stream data after RESET_STREAM and verify that it is neither delivered nor processed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "RESET_STREAM terminates one direction of a stream abruptly.",
+      "line_start": 1159,
+      "line_end": 1159,
+      "condition": "A RESET_STREAM frame is applied to a stream direction.",
+      "required_behavior": "The affected direction enters an abruptly terminated state.",
+      "forbidden_behavior": "The RESET_STREAM must not terminate more than the affected stream direction.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The state transition of the affected stream direction can be observed after processing RESET_STREAM.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For a bidirectional stream, RESET_STREAM has no effect on data flow in the opposite direction.",
+      "line_start": 1159,
+      "line_end": 1161,
+      "condition": "RESET_STREAM terminates one direction of a bidirectional stream.",
+      "required_behavior": "Data flow in the opposite direction remains unaffected.",
+      "forbidden_behavior": "The endpoint must not stop, reset, or otherwise alter opposite-direction data flow solely because RESET_STREAM was applied to the other direction.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A bidirectional-stream test can reset one direction and verify that data continues to flow normally in the opposite direction.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Both endpoints MUST maintain flow control state for the stream in the unterminated direction until that direction enters a terminal state.",
+      "line_start": 1161,
+      "line_end": 1163,
+      "condition": "One direction of a bidirectional stream has been terminated by RESET_STREAM while the opposite direction has not entered a terminal state.",
+      "required_behavior": "Both endpoints maintain flow-control state for the stream in the unterminated direction until that direction enters a terminal state.",
+      "forbidden_behavior": "Neither endpoint may discard the unterminated direction's flow-control state before that direction enters a terminal state.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation test can reset one direction and inspect flow-control tracking throughout the opposite direction's lifetime, including its transition to a terminal state.",
+      "eligibility": "eligible"
+    }
+  ]
+}

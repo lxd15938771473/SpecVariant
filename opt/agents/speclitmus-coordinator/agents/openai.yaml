@@ -1,0 +1,4 @@
+interface:
+  display_name: "SpecLitmus Coordinator"
+  short_description: "Orchestrate the evidence-driven audit pipeline"
+  default_prompt: "Use $speclitmus-coordinator to run and supervise a complete SpecLitmus audit."

@@ -1,0 +1,402 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "batch-10",
+  "decisions": [
+    {
+      "pair_id": "pair-73f6acebe15fc1fe",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One check governs a server generating the downgrade sentinel, while the other governs a TLS 1.2 client validating that sentinel."
+    },
+    {
+      "pair_id": "pair-92a70114f8fa74cb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting rsa_pss_rsae_sha256 for CertificateVerify and implementing the key_share extension are different capabilities."
+    },
+    {
+      "pair_id": "pair-0f64e974be2f375f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks cover different HandshakeType members with different numeric values, 3 and 6."
+    },
+    {
+      "pair_id": "pair-58c83fbbbef39b85",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The length constraints apply to different NewSessionTicket fields and specify different ranges."
+    },
+    {
+      "pair_id": "pair-d639ad031e5c1e99",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Signature-scheme support and supported_groups extension implementation are separate implementation checks."
+    },
+    {
+      "pair_id": "pair-62f8674fb729a1d7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints concern different extensions and different allowed handshake-message sets."
+    },
+    {
+      "pair_id": "pair-162874829f92e02a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check requires the key_share body to carry the server's ephemeral share, while the right check states extension presence only."
+    },
+    {
+      "pair_id": "pair-115f2f787642699d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Binding state into Finished MAC verification and binding it into signature verification are different cryptographic checks."
+    },
+    {
+      "pair_id": "pair-d3fc023b5f6077ec",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The entries assign different code points to different ExtensionType members."
+    },
+    {
+      "pair_id": "pair-4127236edd57624b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules apply to different extensions and permit different destination messages."
+    },
+    {
+      "pair_id": "pair-96c5847f544653c4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The bounds apply to different certificate payload fields under RawPublicKey and X509 conditions."
+    },
+    {
+      "pair_id": "pair-2c0a62b96ecf8717",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One is a receive-side Handshake error and alert outcome; the other is a send-side non-empty Alert-record constraint."
+    },
+    {
+      "pair_id": "pair-57a3db9f57667061",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The constraints cover separate OIDFilter fields with different minimum and maximum lengths."
+    },
+    {
+      "pair_id": "pair-d3f5346557bf65c4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Supporting a signature scheme and implementing the signature_algorithms extension are separate capabilities."
+    },
+    {
+      "pair_id": "pair-6918154cf1270ef3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Session-key agreement is narrower than agreement on all cryptographic parameters and does not include the downgrade baseline."
+    },
+    {
+      "pair_id": "pair-7df09983e108e247",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-73174437bfd2ba3b647d",
+      "reason": "Both require a TLS 1.3 client to ignore an unrecognized CertificateRequest extension; the canonical has the direct primary-body MUST evidence."
+    },
+    {
+      "pair_id": "pair-946f42d70bc6fe1c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left binds ALPN parameters for sending or accepting 0-RTT generally, while the right is the server's pre-acceptance verification step."
+    },
+    {
+      "pair_id": "pair-13a9b21092ffa6ec",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Certificate signature-scheme support and cookie extension implementation are different capabilities."
+    },
+    {
+      "pair_id": "pair-d02c3f4d395326de",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed-width checks apply to different integer types, uint16 and uint64."
+    },
+    {
+      "pair_id": "pair-4a669cc3fc6179db",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The entries constrain different extensions and different allowed handshake messages."
+    },
+    {
+      "pair_id": "pair-2a1d4437d5e5580d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Rejecting offered 0-RTT and avoiding every other freshness-dependent action are separate required outcomes."
+    },
+    {
+      "pair_id": "pair-e86dddfb9b92313c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The omission rules concern different endpoints, different Certificate messages, and different triggering conditions."
+    },
+    {
+      "pair_id": "pair-a586189001183973",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One checks TLSPlaintext.legacy_record_version placement; the other checks TLSCiphertext.length placement."
+    },
+    {
+      "pair_id": "pair-9682601f9fde33d4",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-dd69089987910866a8de",
+      "reason": "Both require an initial-handshake CertificateRequest to follow EncryptedExtensions; the canonical is the direct primary-body MUST statement."
+    },
+    {
+      "pair_id": "pair-ae61c972d03249f3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks cover complementary request states and opposite Certificate-message obligations, omission versus required sending."
+    },
+    {
+      "pair_id": "pair-09a837a2c4fa1b83",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed-width checks apply to different integer types, uint16 and uint32."
+    },
+    {
+      "pair_id": "pair-af785d7f6dcee80c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The 0-RTT consistency checks compare different PSK metadata, ALPN protocol and TLS version."
+    },
+    {
+      "pair_id": "pair-83985e564bf5a0fa",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake union dispatches different message types to different body structures."
+    },
+    {
+      "pair_id": "pair-71228a831f050093",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Initial ClientHello records permit an additional compatibility value that all other generated records forbid."
+    },
+    {
+      "pair_id": "pair-7040bcd9091d25ad",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The zero-field structures represent different protocol messages."
+    },
+    {
+      "pair_id": "pair-8425959981935099",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Certificate signature-scheme support and server_name extension implementation are different capabilities."
+    },
+    {
+      "pair_id": "pair-297b70e21f77f1d0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-ebc134e74a721b3c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same reserved label denotes two disjoint NamedGroup numeric ranges, requiring separate value checks."
+    },
+    {
+      "pair_id": "pair-4391bcdbeb326328",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Signature-scheme support and signature_algorithms_cert extension implementation are different capabilities."
+    },
+    {
+      "pair_id": "pair-c231274e88098222",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints concern different extensions with different allowed handshake-message sets."
+    },
+    {
+      "pair_id": "pair-1b8b7c1aa045cdfd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Including Finished and making Finished the final Authentication Block message are separate checks; inclusion does not establish order."
+    },
+    {
+      "pair_id": "pair-a251dec4ae6e7938",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules govern different extensions and different allowed messages."
+    },
+    {
+      "pair_id": "pair-ec4e990218e16b93",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Even with the same allowed messages, max_fragment_length and client_certificate_type are different extension fields."
+    },
+    {
+      "pair_id": "pair-c54934438bc2e7bc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements cover different PSK modes, endpoints, and normative directions for key_share."
+    },
+    {
+      "pair_id": "pair-4106781ddb317765",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed-width checks apply to different integer types, uint16 and uint24."
+    },
+    {
+      "pair_id": "pair-577d36f6b9a88061",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake union dispatches certificate_verify and key_update to different body structures."
+    },
+    {
+      "pair_id": "pair-310ed8f1823495cb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake union dispatches client_hello and new_session_ticket to different body structures."
+    },
+    {
+      "pair_id": "pair-fc0838e5433a2732",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to different extensions and different allowed messages."
+    },
+    {
+      "pair_id": "pair-f3d7eb1e33fb771e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake union dispatches end_of_early_data and finished to different body structures."
+    },
+    {
+      "pair_id": "pair-8f5bf8ed940abcf1",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left applies to every TLS 1.3 record except the initial ClientHello, while the right is limited to TLSCiphertext generation."
+    },
+    {
+      "pair_id": "pair-faf91886846221ae",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "ECDSA signature support and supported_versions extension implementation are different capabilities."
+    },
+    {
+      "pair_id": "pair-c72b136518266505",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-fa57715ec609e4862cc7",
+      "reason": "Both require a server to ignore an unrecognized ClientHello extension; the canonical has direct primary-body MUST evidence rather than checklist wording."
+    },
+    {
+      "pair_id": "pair-ab3a7effc4c1de6b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Certificate and CertificateVerify are separate client-authentication messages with separate presence checks."
+    },
+    {
+      "pair_id": "pair-14ec5be33410a6bd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Certificate signature-scheme support and cookie extension implementation are different capabilities."
+    },
+    {
+      "pair_id": "pair-79402d8bdbb5a759",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake union dispatches server_hello and new_session_ticket to different body structures."
+    },
+    {
+      "pair_id": "pair-846777a5fcc81275",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The primary-body requirement explicitly covers encoding and parsing, including rejection of a wrong length; the appendix extraction states encoding only."
+    },
+    {
+      "pair_id": "pair-bfba72f89d0b261c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The code-point checks apply to different signature schemes and different values, 0x0804 and 0x0805."
+    },
+    {
+      "pair_id": "pair-3e8b73f059a0d905",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "An unrecognized cipher suite and another unrecognized ClientHello parameter are different parameter categories."
+    },
+    {
+      "pair_id": "pair-c698cdf829a7db50",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same condition independently requires two different extensions, signature_algorithms and supported_groups."
+    },
+    {
+      "pair_id": "pair-1858f71b2ebee71e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The bounds apply to different fields in different messages, legacy_session_id and legacy_session_id_echo."
+    },
+    {
+      "pair_id": "pair-2df9a8b8de1a1f54",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Signature-scheme support and cookie extension implementation are separate capabilities."
+    },
+    {
+      "pair_id": "pair-6f6d5584c202ca25",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Handshake union dispatches client_hello and end_of_early_data to different body structures."
+    },
+    {
+      "pair_id": "pair-202a39251e6cd991",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Certificate signature-scheme support and server_name extension implementation are different capabilities."
+    },
+    {
+      "pair_id": "pair-f039d95d40aa086f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Trust-anchor certificates and self-signed certificates are different certificate categories even though their signature-validation outcomes can overlap."
+    },
+    {
+      "pair_id": "pair-bbf722009cab8faa",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Verifying the original server certificate is one specific check; behaving as a compliant TLS client is a broader set of obligations."
+    },
+    {
+      "pair_id": "pair-53248136a8473b4a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Certificate signature-scheme support and signature_algorithms_cert extension implementation are different capabilities."
+    },
+    {
+      "pair_id": "pair-b17e58108caf87f0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The first-flight transcript hashes truncated ClientHello1 directly, while the second-flight transcript hashes and reinjects it as message_hash."
+    },
+    {
+      "pair_id": "pair-46c8a9d468202571",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations produce different secrets using different labels and different transcript endpoints."
+    },
+    {
+      "pair_id": "pair-0cf70e490b2a0d19",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The code-point checks apply to different signature schemes and different values, 0x0804 and 0x0806."
+    },
+    {
+      "pair_id": "pair-1ff04d2a3eb338c6",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-dd69089987910866a8de",
+      "reason": "Both require an initial-handshake CertificateRequest to follow EncryptedExtensions; the canonical has the clearer direct primary-body MUST evidence."
+    },
+    {
+      "pair_id": "pair-44496a14b557c367",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-dd5493904c7f797c3299",
+      "reason": "Both require supported_versions in a TLS 1.3 ServerHello; the canonical is the clearer direct primary-body MUST statement with the negotiation condition explicit."
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0089",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   QUIC endpoints communicate by exchanging packets.  Packets have\n   confidentiality and integrity protection; see Section 12.1.  Packets",
+      "line_start": 3684,
+      "line_end": 3685,
+      "condition": "For packets exchanged by QUIC endpoints.",
+      "required_behavior": "Packets provide both confidentiality protection and integrity protection.",
+      "forbidden_behavior": "Exchanging packets without confidentiality protection or without integrity protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet protection processing can be inspected or tested to verify that both confidentiality and integrity protections are applied.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   are carried in UDP datagrams; see Section 12.2.",
+      "line_start": 3686,
+      "line_end": 3686,
+      "condition": "When transporting QUIC packets.",
+      "required_behavior": "Carry QUIC packets in UDP datagrams.",
+      "forbidden_behavior": "Carry QUIC packets directly in a transport other than UDP datagrams.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The implementation's network transport can be inspected or exercised to verify that packet bytes are encapsulated in UDP datagrams.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   This version of QUIC uses the long packet header during connection\n   establishment; see Section 17.2.  Packets with the long header are",
+      "line_start": 3688,
+      "line_end": 3689,
+      "condition": "During connection establishment in this version of QUIC.",
+      "required_behavior": "Use the long packet header.",
+      "forbidden_behavior": "Use only the short packet header for connection-establishment packets.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet traces during connection establishment can be checked for use of the long-header form.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   establishment; see Section 17.2.  Packets with the long header are\n   Initial (Section 17.2.2), 0-RTT (Section 17.2.3), Handshake\n   (Section 17.2.4), and Retry (Section 17.2.5).  Version negotiation",
+      "line_start": 3689,
+      "line_end": 3691,
+      "condition": "For packets with a long header, excluding the separately described version-negotiation packet.",
+      "required_behavior": "Classify the packet as Initial, 0-RTT, Handshake, or Retry.",
+      "forbidden_behavior": "Encode another connection packet type as a long-header packet.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The long-header packet-type field can be decoded and checked against the four listed packet types.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   (Section 17.2.4), and Retry (Section 17.2.5).  Version negotiation\n   uses a version-independent packet with a long header; see\n   Section 17.2.1.",
+      "line_start": 3691,
+      "line_end": 3693,
+      "condition": "When performing version negotiation.",
+      "required_behavior": "Use a version-independent packet with a long header.",
+      "forbidden_behavior": "Use a version-specific packet or a short-header packet for version negotiation.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A generated version-negotiation packet can be decoded to verify both its version-independent format and long-header form.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   are used after a connection is established and 1-RTT keys are\n   available; see Section 17.3.",
+      "line_start": 3696,
+      "line_end": 3697,
+      "condition": "When using a packet with the short header.",
+      "required_behavior": "Use the short header only after the connection is established and 1-RTT keys are available.",
+      "forbidden_behavior": "Use a short-header packet before connection establishment or before 1-RTT keys are available.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Runtime packet traces can correlate short-header transmission with connection state and 1-RTT key availability.",
+      "eligibility": "eligible"
+    }
+  ]
+}

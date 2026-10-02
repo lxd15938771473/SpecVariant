@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0005",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The Version field of long headers is 0x6b3343cf.",
+      "line_start": 139,
+      "line_end": 139,
+      "condition": "when encoding or processing a QUIC version 2 long header",
+      "required_behavior": "set or recognize the Version field as 0x6b3343cf",
+      "forbidden_behavior": "use a different Version field value for a QUIC version 2 long header",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The four-byte Version field in an encoded long header can be compared directly with 0x6b3343cf.",
+      "eligibility": "eligible"
+    }
+  ]
+}

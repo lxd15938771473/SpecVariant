@@ -1,0 +1,79 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0022",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "Once a later packet within the same packet number space has been\n   acknowledged, an endpoint SHOULD declare an earlier packet lost if it\n   was sent a threshold amount of time in the past.",
+                             "line_start":  566,
+                             "line_end":  568,
+                             "condition":  "A later packet in the same packet number space has been acknowledged, and an earlier packet was sent at least the loss time threshold ago.",
+                             "required_behavior":  "The endpoint should declare the earlier packet lost.",
+                             "forbidden_behavior":  "The endpoint should not normally leave the earlier packet undeclared as lost once both conditions hold.",
+                             "error_behavior":  "No protocol error is specified; failure to act is a deviation from the recommendation unless justified by implementation-specific circumstances.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can acknowledge a later packet in the same packet number space, advance elapsed time beyond the threshold, and observe whether the earlier packet is declared lost.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "To avoid declaring\n   packets as lost too early, this time threshold MUST be set to at\n   least the local timer granularity, as indicated by the kGranularity\n   constant.",
+                             "line_start":  568,
+                             "line_end":  571,
+                             "condition":  "The endpoint configures or computes the time threshold used to declare packets lost.",
+                             "required_behavior":  "Set the time threshold to a value greater than or equal to the local timer granularity represented by kGranularity.",
+                             "forbidden_behavior":  "Do not set the time threshold below kGranularity.",
+                             "error_behavior":  "No wire error is specified; a threshold below kGranularity is a local implementation violation.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The configured or computed threshold and local kGranularity can be inspected and compared numerically.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The time threshold is:\n\n   max(kTimeThreshold * max(smoothed_rtt, latest_rtt), kGranularity)",
+                             "line_start":  571,
+                             "line_end":  573,
+                             "condition":  "The endpoint computes the packet-loss time threshold from its RTT estimates and timer granularity.",
+                             "required_behavior":  "Compute the threshold as max(kTimeThreshold * max(smoothed_rtt, latest_rtt), kGranularity).",
+                             "forbidden_behavior":  "Do not use a value below either kTimeThreshold multiplied by the larger RTT estimate or kGranularity when applying this specified calculation.",
+                             "error_behavior":  "No protocol error is specified; an incorrect result is a local loss-detection calculation defect.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "Given fixed smoothed_rtt, latest_rtt, kTimeThreshold, and kGranularity values, a test can compare the implementation result with the stated formula.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "If packets sent prior to the largest acknowledged packet cannot yet\n   be declared lost, then a timer SHOULD be set for the remaining time.",
+                             "line_start":  575,
+                             "line_end":  576,
+                             "condition":  "One or more packets sent before the largest acknowledged packet have not yet reached the time threshold for being declared lost.",
+                             "required_behavior":  "The endpoint should set a timer for the remaining time until those packets can be declared lost.",
+                             "forbidden_behavior":  "The endpoint should not normally omit the timer while such earlier outstanding packets await expiration of the loss time threshold.",
+                             "error_behavior":  "No protocol error is specified; omitting the timer is a deviation from the recommendation unless justified by implementation-specific circumstances.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can create an outstanding earlier packet below the loss threshold and inspect whether a timer is armed with the remaining delay.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The RECOMMENDED time threshold (kTimeThreshold), expressed as an RTT\n   multiplier, is 9/8.",
+                             "line_start":  588,
+                             "line_end":  589,
+                             "condition":  "The implementation selects the recommended RTT multiplier for time-threshold loss detection.",
+                             "required_behavior":  "Use 9/8 as kTimeThreshold.",
+                             "forbidden_behavior":  "Do not use a different default while claiming to implement the recommended kTimeThreshold value.",
+                             "error_behavior":  "No protocol error is specified; a different value is a departure from the recommendation.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The implementation\u0027s kTimeThreshold constant or effective multiplier can be inspected and compared with 9/8.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The RECOMMENDED value of the timer granularity\n   (kGranularity) is 1 millisecond.",
+                             "line_start":  589,
+                             "line_end":  590,
+                             "condition":  "The implementation selects the recommended timer granularity for loss detection.",
+                             "required_behavior":  "Use 1 millisecond as kGranularity.",
+                             "forbidden_behavior":  "Do not use a different default while claiming to implement the recommended kGranularity value.",
+                             "error_behavior":  "No protocol error is specified; a different value is a departure from the recommendation.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The implementation\u0027s kGranularity constant or effective timer granularity can be inspected and compared with 1 millisecond.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

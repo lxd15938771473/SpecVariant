@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0105",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Packets containing PADDING frames are considered to be in flight for\n   congestion control purposes [QUIC-RECOVERY].  Packets containing only",
+      "line_start": 4305,
+      "line_end": 4306,
+      "condition": "A packet contains one or more PADDING frames.",
+      "required_behavior": "Treat the packet as in flight for congestion-control purposes.",
+      "forbidden_behavior": "Do not exclude the packet from bytes in flight merely because it contains PADDING frames.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A congestion-control implementation can be tested or inspected to verify that packets containing PADDING frames are recorded as in flight.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   congestion control purposes [QUIC-RECOVERY].  Packets containing only\n   PADDING frames therefore consume congestion window but do not\n   generate acknowledgments that will open the congestion window.  To",
+      "line_start": 4306,
+      "line_end": 4308,
+      "condition": "A packet contains only PADDING frames.",
+      "required_behavior": "Account the packet against the congestion window.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Congestion-window accounting can be observed after sending a packet whose frames are exclusively PADDING.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   congestion control purposes [QUIC-RECOVERY].  Packets containing only\n   PADDING frames therefore consume congestion window but do not\n   generate acknowledgments that will open the congestion window.  To",
+      "line_start": 4306,
+      "line_end": 4308,
+      "condition": "A packet contains only PADDING frames.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not treat the packet as generating an acknowledgment that opens the congestion window.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Acknowledgment generation and congestion-window opening can be observed after receipt of a packet containing only PADDING frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   avoid a deadlock, a sender SHOULD ensure that other frames are sent\n   periodically in addition to PADDING frames to elicit acknowledgments\n   from the receiver.",
+      "line_start": 4309,
+      "line_end": 4311,
+      "condition": "A sender sends PADDING frames and needs to avoid congestion-window deadlock.",
+      "required_behavior": "Periodically send frames other than PADDING frames in addition to PADDING frames so that the receiver is elicited to acknowledge.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A sender's emitted frame sequence can be inspected over time to determine whether non-PADDING frames are periodically included to elicit acknowledgments.",
+      "eligibility": "eligible"
+    }
+  ]
+}

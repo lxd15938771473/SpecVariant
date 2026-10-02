@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0185",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Because the migration attack described in Section 21.5.4 is quite\n   powerful and does not have adequate countermeasures, QUIC server\n   implementations should assume that attackers can cause them to\n   generate arbitrary UDP payloads to arbitrary destinations.  QUIC",
+      "line_start": 7319,
+      "line_end": 7322,
+      "condition": "When designing or evaluating a QUIC server implementation against migration-based request forgery attacks.",
+      "required_behavior": "Assume that attackers can cause the server to generate arbitrary UDP payloads to arbitrary destinations.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The implementation's threat model and request-forgery defenses can be inspected and tested to determine whether they remain safe under attacker-selected UDP payloads and destinations.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   servers SHOULD NOT be deployed in networks that do not deploy ingress\n   filtering [BCP38] and also have inadequately secured UDP endpoints.",
+      "line_start": 7323,
+      "line_end": 7324,
+      "condition": "When a network both lacks ingress filtering and contains inadequately secured UDP endpoints.",
+      "required_behavior": "",
+      "forbidden_behavior": "Deploying QUIC servers in that network.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Deployment configuration can be checked for the simultaneous absence of ingress filtering, presence of inadequately secured UDP endpoints, and deployment of a QUIC server.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Although it is not generally possible to ensure that clients are not\n   co-located with vulnerable endpoints, this version of QUIC does not\n   allow servers to migrate, thus preventing spoofed migration attacks\n   on clients.  Any future extension that allows server migration MUST",
+      "line_start": 7326,
+      "line_end": 7329,
+      "condition": "For servers implementing this version of QUIC.",
+      "required_behavior": "",
+      "forbidden_behavior": "Server migration.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A server implementation can be tested to verify that it never changes its network path through server-initiated migration.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   on clients.  Any future extension that allows server migration MUST\n   also define countermeasures for forgery attacks.",
+      "line_start": 7329,
+      "line_end": 7330,
+      "condition": "When a future QUIC extension allows server migration.",
+      "required_behavior": "Define countermeasures for forgery attacks.",
+      "forbidden_behavior": "Allowing server migration without defined countermeasures for forgery attacks.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "An extension and its implementation can be inspected to confirm that server-migration support is accompanied by defined request-forgery countermeasures.",
+      "eligibility": "eligible"
+    }
+  ]
+}

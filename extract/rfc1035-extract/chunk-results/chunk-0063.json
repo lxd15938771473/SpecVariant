@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0063",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Since the owner name is not known, any domain name\ncan be used as a placeholder (and is ignored).",
+      "line_start": 2313,
+      "line_end": 2314,
+      "condition": "When constructing an inverse query whose owner name is unknown.",
+      "required_behavior": "Any domain name may be used as the owner-name placeholder.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The query constructor can be checked for its permitted placeholder owner names; this is permission and does not require choosing a particular name.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Since the owner name is not known, any domain name\ncan be used as a placeholder (and is ignored).",
+      "line_start": 2313,
+      "line_end": 2314,
+      "condition": "When processing the owner-name placeholder in an inverse query.",
+      "required_behavior": "Ignore the placeholder owner name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The inverse-query matching path can be inspected or exercised with different placeholder names to verify that the name does not affect matching.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A single octet of zero,\nsignifying the root, is usually used because it minimizes the length of\nthe message.",
+      "line_start": 2314,
+      "line_end": 2316,
+      "condition": "When constructing the owner-name placeholder in an inverse query.",
+      "required_behavior": "A single zero octet may be used as the root owner-name placeholder; this choice is customary rather than mandatory.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The inverse-query encoding can be checked for the permitted single-zero-octet root placeholder, without requiring every query to choose it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This query asks for a question whose answer is the Internet style\naddress 10.1.0.52.  Since the owner name is not known, any domain name\ncan be used as a placeholder (and is ignored).  A single octet of zero,\nsignifying the root, is usually used because it minimizes the length of\nthe message.  The TTL of the RR is not significant.",
+      "line_start": 2312,
+      "line_end": 2316,
+      "condition": "When processing the resource record in an inverse query.",
+      "required_behavior": "Treat the query resource record TTL as insignificant for the inverse lookup.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The matching path can be inspected or exercised with varying query TTL values to verify that the TTL does not constrain the inverse lookup.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Note that the QTYPE in a response to an inverse query is the same as the\nTYPE field in the answer section of the inverse query.",
+      "line_start": 2350,
+      "line_end": 2351,
+      "condition": "When constructing a question in a response to an inverse query.",
+      "required_behavior": "Set the response question QTYPE equal to the TYPE field in the inverse query answer section.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The response question QTYPE can be directly compared with the corresponding inverse query answer TYPE.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Responses to\ninverse queries may contain multiple questions when the inverse is not\nunique.",
+      "line_start": 2351,
+      "line_end": 2353,
+      "condition": "When the inverse lookup is not unique.",
+      "required_behavior": "The inverse-query response may contain multiple questions.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Response construction can be checked for the permitted multiple-question form when there are multiple inverse matches; multiple questions are allowed, not required.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the question section in the response is not empty, then the\nRR in the answer section is modified to correspond to be an exact copy\nof an RR at the first QNAME.",
+      "line_start": 2353,
+      "line_end": 2355,
+      "condition": "When an inverse-query response has a nonempty question section.",
+      "required_behavior": "Modify the resource record in the response answer section to be an exact copy of a resource record at the first response QNAME.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The response answer resource record can be compared field by field with a stored resource record at the first response question name.",
+      "eligibility": "eligible"
+    }
+  ]
+}

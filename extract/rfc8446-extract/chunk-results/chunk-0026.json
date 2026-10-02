@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0026",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "For every TLS 1.3 ClientHello, this vector\n      MUST contain exactly one byte, set to zero",
+      "line_start": 1627,
+      "line_end": 1628,
+      "condition": "encoding or parsing a TLS 1.3 ClientHello",
+      "required_behavior": "encode legacy_compression_methods as exactly one byte whose value is zero",
+      "forbidden_behavior": "use another vector length or byte value",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The vector length and sole byte can be checked directly on the wire.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a\n      TLS 1.3 ClientHello is received with any other value in this\n      field, the server MUST abort the handshake with an\n      \"illegal_parameter\" alert.",
+      "line_start": 1629,
+      "line_end": 1632,
+      "condition": "a server receives a TLS 1.3 ClientHello whose legacy_compression_methods is not exactly the required zero byte",
+      "required_behavior": "abort the handshake",
+      "forbidden_behavior": "accept the malformed legacy compression field",
+      "error_behavior": "send an illegal_parameter alert",
+      "check_type": "error_handling",
+      "why_checkable": "Malformed vector lengths and nonzero values can be injected to observe the required alert.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "TLS 1.3 servers might\n      receive TLS 1.2 or prior ClientHellos which contain other\n      compression methods and (if negotiating such a prior version) MUST\n      follow the procedures for the appropriate prior version of TLS.",
+      "line_start": 1632,
+      "line_end": 1635,
+      "condition": "a TLS 1.3-capable server receives a legacy ClientHello and negotiates TLS 1.2 or earlier",
+      "required_behavior": "process compression methods using the procedures for the negotiated prior TLS version",
+      "forbidden_behavior": "apply the TLS 1.3 zero-only rule to the negotiated prior-version handshake",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Legacy ClientHello handling can be tested under a prior-version negotiation path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Servers MUST ignore unrecognized extensions.",
+      "line_start": 1642,
+      "line_end": 1642,
+      "condition": "a server parses an unrecognized ClientHello extension",
+      "required_behavior": "ignore the unrecognized extension",
+      "forbidden_behavior": "reject the ClientHello solely because the extension is unrecognized",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An unknown extension can be added to an otherwise valid ClientHello and server behavior observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "TLS 1.3 ClientHello messages always\n      contain extensions",
+      "line_start": 1644,
+      "line_end": 1646,
+      "condition": "the message is a TLS 1.3 ClientHello",
+      "required_behavior": "include the extensions field",
+      "forbidden_behavior": "encode a TLS 1.3 ClientHello without extensions",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The parser and serializer can be tested for mandatory field presence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "TLS 1.3 ClientHello messages always\n      contain extensions (minimally \"supported_versions\", otherwise, they\n      will be interpreted as TLS 1.2 ClientHello messages).",
+      "line_start": 1644,
+      "line_end": 1647,
+      "condition": "the client constructs a TLS 1.3 ClientHello",
+      "required_behavior": "include supported_versions in the extensions field",
+      "forbidden_behavior": "omit supported_versions while intending the message to be interpreted as TLS 1.3",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Extension presence and version classification are directly testable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The presence of\n      extensions can be detected by determining whether there are bytes\n      following the compression_methods field at the end of the\n      ClientHello.",
+      "line_start": 1649,
+      "line_end": 1652,
+      "condition": "a server parses the optional extensions field of a legacy-compatible ClientHello",
+      "required_behavior": "detect extension presence from whether bytes remain after compression_methods",
+      "forbidden_behavior": "assume a separate variable-length wrapper exists for optional extension presence",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Parser behavior can be exercised with a ClientHello ending at compression_methods and one with trailing extension bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "TLS 1.3 servers will need to perform this check first",
+      "line_start": 1655,
+      "line_end": 1655,
+      "condition": "a TLS 1.3-capable server begins ClientHello version negotiation",
+      "required_behavior": "check for the extensions field before attempting TLS 1.3 negotiation",
+      "forbidden_behavior": "attempt TLS 1.3 negotiation before determining whether extensions are present",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The parser and negotiation call order can be inspected or instrumented.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "only attempt to negotiate TLS 1.3 if the \"supported_versions\"\n      extension is present.",
+      "line_start": 1655,
+      "line_end": 1657,
+      "condition": "a TLS 1.3-capable server processes ClientHello",
+      "required_behavior": "gate TLS 1.3 negotiation on presence of supported_versions",
+      "forbidden_behavior": "negotiate TLS 1.3 when supported_versions is absent",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A ClientHello without supported_versions can verify that the TLS 1.3 negotiation path is not entered.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If negotiating a version of TLS prior to 1.3,\n      a server MUST check that the message either contains no data after\n      legacy_compression_methods or that it contains a valid extensions\n      block with no data following.",
+      "line_start": 1657,
+      "line_end": 1660,
+      "condition": "the server negotiates TLS earlier than 1.3",
+      "required_behavior": "accept the ClientHello framing only if it ends after legacy_compression_methods or contains one valid extensions block followed by no data",
+      "forbidden_behavior": "accept malformed trailing bytes, an invalid extension block, or data after the extension block",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Each legal and illegal trailing-data shape can be supplied to the prior-version parser.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If not, then it MUST abort the\n      handshake with a \"decode_error\" alert.",
+      "line_start": 1660,
+      "line_end": 1661,
+      "condition": "a prior-version ClientHello has data after legacy_compression_methods that is not exactly a valid final extensions block",
+      "required_behavior": "abort the handshake",
+      "forbidden_behavior": "continue after the framing validation fails",
+      "error_behavior": "send a decode_error alert",
+      "check_type": "error_handling",
+      "why_checkable": "Malformed trailing data can be injected and the decode_error termination observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "After sending the ClientHello message, the client waits for a\n      ServerHello or HelloRetryRequest message.",
+      "line_start": 1667,
+      "line_end": 1668,
+      "condition": "the client has sent ClientHello",
+      "required_behavior": "enter a state expecting ServerHello or HelloRetryRequest as the next handshake response",
+      "forbidden_behavior": "treat another handshake message as the expected response",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The client's next-message acceptance set can be checked in the post-ClientHello state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If early data is in use,\n      the client may transmit early Application Data (Section 2.3) while\n      waiting for the next handshake message.",
+      "line_start": 1668,
+      "line_end": 1670,
+      "condition": "early data is in use and the client is waiting after ClientHello",
+      "required_behavior": "permit early Application Data transmission before the next handshake message arrives",
+      "forbidden_behavior": "require the next handshake response to arrive before any allowed early Application Data is sent",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The client state machine can be tested for an enabled early-data send transition while awaiting the server response.",
+      "eligibility": "eligible"
+    }
+  ]
+}

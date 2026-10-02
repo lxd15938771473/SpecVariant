@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0085",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The BGP protocol allows for multiple address prefixes with the same\n   path attributes to be specified in one message.",
+      "line_start": 5271,
+      "line_end": 5272,
+      "condition": "Multiple address prefixes share the same path attributes.",
+      "required_behavior": "Permit multiple such address prefixes to be specified in one message.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The message encoder and decoder can be checked for support of multiple prefixes under one path attribute set.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The BGP protocol allows for multiple address prefixes with the same\n   path attributes to be specified in one message.  Using this\n   capability is highly recommended.",
+      "line_start": 5271,
+      "line_end": 5273,
+      "condition": "Advertising multiple address prefixes with the same path attributes.",
+      "required_behavior": "Combining these prefixes in one message is highly recommended.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Advertisement batching can be inspected while preserving its recommendation strength.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As each address prefix is processed, a\n   message for the associated set of path attributes is allocated, if it\n   does not exist, and the new address prefix is added to it.",
+      "line_start": 5283,
+      "line_end": 5285,
+      "condition": "If using the described optional routing-table scanning method, a prefix is processed and no message for its path attribute set exists.",
+      "required_behavior": "Allocate a message for the associated path attribute set.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The optional batching algorithm has an observable allocation branch.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As each address prefix is processed, a\n   message for the associated set of path attributes is allocated, if it\n   does not exist, and the new address prefix is added to it.",
+      "line_start": 5283,
+      "line_end": 5285,
+      "condition": "If using the described optional routing-table scanning method, a message has just been allocated for the prefix's path attribute set.",
+      "required_behavior": "Add the new address prefix to that message.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The newly created message can be checked for the triggering prefix.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If such a\n   message exists, the new address prefix is appended to it.",
+      "line_start": 5285,
+      "line_end": 5286,
+      "condition": "If using the described optional batching method, a message for the path attribute set already exists and has room for the prefix.",
+      "required_behavior": "Append the new address prefix to that message.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The existing-message branch can be checked for prefix accumulation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the\n   message lacks the space to hold the new address prefix, it is\n   transmitted, a new message is allocated, and the new address prefix\n   is inserted into the new message.",
+      "line_start": 5286,
+      "line_end": 5289,
+      "condition": "If using the described optional batching method, the current message lacks space for the next address prefix.",
+      "required_behavior": "Transmit the current message.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The capacity branch has a directly observable send action.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the\n   message lacks the space to hold the new address prefix, it is\n   transmitted, a new message is allocated, and the new address prefix\n   is inserted into the new message.",
+      "line_start": 5286,
+      "line_end": 5289,
+      "condition": "If using the described optional batching method, a full message has been transmitted because the next prefix would not fit.",
+      "required_behavior": "Allocate a new message.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The capacity branch can be inspected for allocation of a replacement message.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the\n   message lacks the space to hold the new address prefix, it is\n   transmitted, a new message is allocated, and the new address prefix\n   is inserted into the new message.",
+      "line_start": 5286,
+      "line_end": 5289,
+      "condition": "If using the described optional batching method, a replacement message has been allocated after the previous message lacked space for the prefix.",
+      "required_behavior": "Insert the new address prefix into the replacement message.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The overflow prefix can be checked for inclusion in the replacement message.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When the entire routing table has\n   been scanned, all allocated messages are sent and their resources are\n   released.",
+      "line_start": 5289,
+      "line_end": 5291,
+      "condition": "If using the described optional batching method, the entire routing table has been scanned.",
+      "required_behavior": "Send all allocated messages.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "End-of-scan flushing can be checked against the pending message set.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When the entire routing table has\n   been scanned, all allocated messages are sent and their resources are\n   released.",
+      "line_start": 5289,
+      "line_end": 5291,
+      "condition": "If using the described optional batching method, the entire routing table has been scanned and allocated messages have been sent.",
+      "required_behavior": "Release the resources of the allocated messages.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Resource ownership after flushing can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "One method of doing this is to limit the rate of updates.",
+      "line_start": 5300,
+      "line_end": 5300,
+      "condition": "When peering with an implementation that sends separate messages for address prefixes, if choosing the described optional overhead-reduction method.",
+      "required_behavior": "Limit the rate of updates.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The optional method maps to an inspectable update-rate control.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A better\n   method would be to read all received messages before sending updates.",
+      "line_start": 5306,
+      "line_end": 5307,
+      "condition": "When reducing overhead from a peer that does not compress multiple address prefixes into one message.",
+      "required_behavior": "Reading all received messages before sending updates is suggested as the better method.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Receive processing and outbound-update ordering are observable; this is advisory, not mandatory.",
+      "eligibility": "eligible"
+    }
+  ]
+}

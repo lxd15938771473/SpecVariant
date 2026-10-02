@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0089",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A TLS-compliant application MUST implement the TLS_AES_128_GCM_SHA256\n   [GCM] cipher suite and SHOULD implement the TLS_AES_256_GCM_SHA384\n   [GCM] and TLS_CHACHA20_POLY1305_SHA256 [RFC8439] cipher suites (see\n   Appendix B.4).",
+      "line_start": 5687,
+      "line_end": 5690,
+      "condition": "in the absence of an application profile standard specifying otherwise",
+      "required_behavior": "implement the TLS_AES_128_GCM_SHA256 cipher suite",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The application's cipher-suite registry and handshake negotiation can be checked for TLS_AES_128_GCM_SHA256 support.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A TLS-compliant application MUST implement the TLS_AES_128_GCM_SHA256\n   [GCM] cipher suite and SHOULD implement the TLS_AES_256_GCM_SHA384\n   [GCM] and TLS_CHACHA20_POLY1305_SHA256 [RFC8439] cipher suites (see\n   Appendix B.4).",
+      "line_start": 5687,
+      "line_end": 5690,
+      "condition": "in the absence of an application profile standard specifying otherwise",
+      "required_behavior": "implement the TLS_AES_256_GCM_SHA384 cipher suite",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The application's cipher-suite registry and handshake negotiation can be checked for TLS_AES_256_GCM_SHA384 support.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A TLS-compliant application MUST implement the TLS_AES_128_GCM_SHA256\n   [GCM] cipher suite and SHOULD implement the TLS_AES_256_GCM_SHA384\n   [GCM] and TLS_CHACHA20_POLY1305_SHA256 [RFC8439] cipher suites (see\n   Appendix B.4).",
+      "line_start": 5687,
+      "line_end": 5690,
+      "condition": "in the absence of an application profile standard specifying otherwise",
+      "required_behavior": "implement the TLS_CHACHA20_POLY1305_SHA256 cipher suite",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The application's cipher-suite registry and handshake negotiation can be checked for TLS_CHACHA20_POLY1305_SHA256 support.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A TLS-compliant application MUST support digital signatures with\n   rsa_pkcs1_sha256 (for certificates), rsa_pss_rsae_sha256 (for\n   CertificateVerify and certificates), and ecdsa_secp256r1_sha256.",
+      "line_start": 5692,
+      "line_end": 5694,
+      "condition": "in the absence of an application profile standard specifying otherwise",
+      "required_behavior": "support rsa_pkcs1_sha256 signatures for certificates",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Certificate signature-algorithm support can be inspected and exercised with an rsa_pkcs1_sha256-signed certificate.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A TLS-compliant application MUST support digital signatures with\n   rsa_pkcs1_sha256 (for certificates), rsa_pss_rsae_sha256 (for\n   CertificateVerify and certificates), and ecdsa_secp256r1_sha256.",
+      "line_start": 5692,
+      "line_end": 5694,
+      "condition": "in the absence of an application profile standard specifying otherwise",
+      "required_behavior": "support rsa_pss_rsae_sha256 signatures for CertificateVerify",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "CertificateVerify generation or verification can be exercised with rsa_pss_rsae_sha256.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A TLS-compliant application MUST support digital signatures with\n   rsa_pkcs1_sha256 (for certificates), rsa_pss_rsae_sha256 (for\n   CertificateVerify and certificates), and ecdsa_secp256r1_sha256.",
+      "line_start": 5692,
+      "line_end": 5694,
+      "condition": "in the absence of an application profile standard specifying otherwise",
+      "required_behavior": "support rsa_pss_rsae_sha256 signatures for certificates",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Certificate signature-algorithm support can be exercised with an rsa_pss_rsae_sha256-signed certificate.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A TLS-compliant application MUST support digital signatures with\n   rsa_pkcs1_sha256 (for certificates), rsa_pss_rsae_sha256 (for\n   CertificateVerify and certificates), and ecdsa_secp256r1_sha256.",
+      "line_start": 5692,
+      "line_end": 5694,
+      "condition": "in the absence of an application profile standard specifying otherwise",
+      "required_behavior": "support ecdsa_secp256r1_sha256 digital signatures",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Signature generation or verification can be exercised with ecdsa_secp256r1_sha256.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A\n   TLS-compliant application MUST support key exchange with secp256r1\n   (NIST P-256) and SHOULD support key exchange with X25519 [RFC7748].",
+      "line_start": 5694,
+      "line_end": 5696,
+      "condition": "in the absence of an application profile standard specifying otherwise",
+      "required_behavior": "support key exchange with secp256r1",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The supported-group registry and a secp256r1 handshake can verify key-exchange support.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A\n   TLS-compliant application MUST support key exchange with secp256r1\n   (NIST P-256) and SHOULD support key exchange with X25519 [RFC7748].",
+      "line_start": 5694,
+      "line_end": 5696,
+      "condition": "in the absence of an application profile standard specifying otherwise",
+      "required_behavior": "support key exchange with X25519",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The supported-group registry and an X25519 handshake can verify key-exchange support.",
+      "eligibility": "eligible"
+    }
+  ]
+}

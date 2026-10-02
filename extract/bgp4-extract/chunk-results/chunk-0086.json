@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0086",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "To avoid excessive route flapping, a BGP speaker that needs to\n   withdraw a destination and send an update about a more specific or\n   less specific route should combine them into the same UPDATE message.",
+      "line_start": 5323,
+      "line_end": 5325,
+      "condition": "A BGP speaker needs to withdraw a destination and send an update about a more specific or less specific route.",
+      "required_behavior": "The speaker should combine the withdrawal and the route update into the same UPDATE message to avoid excessive route flapping.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "UPDATE construction can be inspected to determine whether a pending withdrawal and related more-specific or less-specific route advertisement are combined in one message.",
+      "eligibility": "eligible"
+    }
+  ]
+}

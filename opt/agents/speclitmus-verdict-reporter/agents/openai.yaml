@@ -1,0 +1,4 @@
+interface:
+  display_name: "Verdict Reporter"
+  short_description: "Adjudicate evidence and write Markdown issue reports"
+  default_prompt: "Use $speclitmus-verdict-reporter to issue a three-way verdict and write Markdown reports."

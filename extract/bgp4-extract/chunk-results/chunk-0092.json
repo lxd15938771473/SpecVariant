@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0092",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Malformed Attribute List           1      See Section 6.3",
+      "line_start": 5582,
+      "line_end": 5582,
+      "condition": "Encoding or interpreting the Malformed Attribute List UPDATE Message Error subcode.",
+      "required_behavior": "Use the numeric subcode value 1 for Malformed Attribute List.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The UPDATE Message Error encoder and decoder can be checked for the mapping between Malformed Attribute List and value 1.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Unrecognized Well-known Attribute  2      See Section 6.3",
+      "line_start": 5583,
+      "line_end": 5583,
+      "condition": "Encoding or interpreting the Unrecognized Well-known Attribute UPDATE Message Error subcode.",
+      "required_behavior": "Use the numeric subcode value 2 for Unrecognized Well-known Attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The UPDATE Message Error encoder and decoder can be checked for the mapping between Unrecognized Well-known Attribute and value 2.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Missing Well-known Attribute       3      See Section 6.3",
+      "line_start": 5584,
+      "line_end": 5584,
+      "condition": "Encoding or interpreting the Missing Well-known Attribute UPDATE Message Error subcode.",
+      "required_behavior": "Use the numeric subcode value 3 for Missing Well-known Attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The UPDATE Message Error encoder and decoder can be checked for the mapping between Missing Well-known Attribute and value 3.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Attribute Flags Error              4      See Section 6.3",
+      "line_start": 5585,
+      "line_end": 5585,
+      "condition": "Encoding or interpreting the Attribute Flags Error UPDATE Message Error subcode.",
+      "required_behavior": "Use the numeric subcode value 4 for Attribute Flags Error.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The UPDATE Message Error encoder and decoder can be checked for the mapping between Attribute Flags Error and value 4.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Attribute Length Error             5      See Section 6.3",
+      "line_start": 5586,
+      "line_end": 5586,
+      "condition": "Encoding or interpreting the Attribute Length Error UPDATE Message Error subcode.",
+      "required_behavior": "Use the numeric subcode value 5 for Attribute Length Error.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The UPDATE Message Error encoder and decoder can be checked for the mapping between Attribute Length Error and value 5.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Invalid ORIGIN Attribute           6      See Section 6.3",
+      "line_start": 5587,
+      "line_end": 5587,
+      "condition": "Encoding or interpreting the Invalid ORIGIN Attribute UPDATE Message Error subcode.",
+      "required_behavior": "Use the numeric subcode value 6 for Invalid ORIGIN Attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The UPDATE Message Error encoder and decoder can be checked for the mapping between Invalid ORIGIN Attribute and value 6.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Invalid NEXT_HOP Attribute         8      See Section 6.3",
+      "line_start": 5589,
+      "line_end": 5589,
+      "condition": "Encoding or interpreting the Invalid NEXT_HOP Attribute UPDATE Message Error subcode.",
+      "required_behavior": "Use the numeric subcode value 8 for Invalid NEXT_HOP Attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The UPDATE Message Error encoder and decoder can be checked for the mapping between Invalid NEXT_HOP Attribute and value 8.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Optional Attribute Error           9      See Section 6.3",
+      "line_start": 5590,
+      "line_end": 5590,
+      "condition": "Encoding or interpreting the Optional Attribute Error UPDATE Message Error subcode.",
+      "required_behavior": "Use the numeric subcode value 9 for Optional Attribute Error.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The UPDATE Message Error encoder and decoder can be checked for the mapping between Optional Attribute Error and value 9.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Invalid Network Field             10      See Section 6.3",
+      "line_start": 5591,
+      "line_end": 5591,
+      "condition": "Encoding or interpreting the Invalid Network Field UPDATE Message Error subcode.",
+      "required_behavior": "Use the numeric subcode value 10 for Invalid Network Field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The UPDATE Message Error encoder and decoder can be checked for the mapping between Invalid Network Field and value 10.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Malformed AS_PATH                 11      See Section 6.3",
+      "line_start": 5592,
+      "line_end": 5592,
+      "condition": "Encoding or interpreting the Malformed AS_PATH UPDATE Message Error subcode.",
+      "required_behavior": "Use the numeric subcode value 11 for Malformed AS_PATH.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The UPDATE Message Error encoder and decoder can be checked for the mapping between Malformed AS_PATH and value 11.",
+      "eligibility": "eligible"
+    }
+  ]
+}

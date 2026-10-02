@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0011",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "QUIC does not provide a mechanism for exchanging prioritization information. Instead, it relies on receiving priority information from the application.",
+      "line_start": 600,
+      "line_end": 602,
+      "condition": "When obtaining stream-priority information",
+      "required_behavior": "Receive priority information from the application.",
+      "forbidden_behavior": "Provide or use a QUIC protocol mechanism for exchanging prioritization information.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The implementation's protocol surface and priority-input path can be inspected to verify that priority information comes from the application rather than QUIC wire exchange.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A QUIC implementation SHOULD provide ways in which an application can indicate the relative priority of streams.",
+      "line_start": 604,
+      "line_end": 605,
+      "condition": "For a QUIC implementation exposing streams to an application",
+      "required_behavior": "Provide one or more application-facing ways to indicate the relative priority of streams.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The application-facing API can be inspected or tested for a facility that accepts relative stream priorities.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An implementation uses information provided by the application to determine how to allocate resources to active streams.",
+      "line_start": 605,
+      "line_end": 607,
+      "condition": "When allocating resources among active streams and application-provided priority information is available",
+      "required_behavior": "Use the application-provided information to determine resource allocation among active streams.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can supply differing application priorities for active streams and observe or instrument whether resource-allocation decisions consume that information.",
+      "eligibility": "eligible"
+    }
+  ]
+}

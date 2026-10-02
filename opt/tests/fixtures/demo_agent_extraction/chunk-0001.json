@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0001",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "When an endpoint receives a Limit value greater than 10, it MUST reject\nthe message with a limit_error response.",
+      "line_start": 3,
+      "line_end": 4,
+      "condition": "an endpoint receives a Limit value greater than 10",
+      "required_behavior": "reject the message with a limit_error response",
+      "forbidden_behavior": "",
+      "error_behavior": "send a limit_error response",
+      "check_type": "error_handling",
+      "why_checkable": "The parser's upper-bound and error-mapping branches can be inspected and tested.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST accept Limit values from 0 through 10 when all other\nmessage fields are valid.",
+      "line_start": 6,
+      "line_end": 7,
+      "condition": "all other message fields are valid",
+      "required_behavior": "accept Limit values from 0 through 10",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The valid inclusive range can be checked in the parser and at both boundaries.",
+      "eligibility": "eligible"
+    }
+  ]
+}

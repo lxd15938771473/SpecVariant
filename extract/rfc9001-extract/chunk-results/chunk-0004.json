@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0004",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Figure 2 omits the EndOfEarlyData message, which is not used in QUIC;\n   see Section 8.3.",
+      "line_start": 241,
+      "line_end": 242,
+      "condition": "When implementing the TLS handshake message flow for QUIC.",
+      "required_behavior": "Omit the EndOfEarlyData message from the QUIC TLS handshake.",
+      "forbidden_behavior": "Using or sending an EndOfEarlyData message in QUIC.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A handshake trace or message dispatcher can be checked for the presence of EndOfEarlyData.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Likewise, neither ChangeCipherSpec nor KeyUpdate\n   messages are used by QUIC.",
+      "line_start": 242,
+      "line_end": 243,
+      "condition": "When implementing TLS message handling for QUIC.",
+      "required_behavior": "Exclude ChangeCipherSpec messages from the QUIC TLS message flow.",
+      "forbidden_behavior": "Using or sending a TLS ChangeCipherSpec message in QUIC.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A QUIC TLS handshake trace and message-generation paths can be inspected for ChangeCipherSpec messages.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Likewise, neither ChangeCipherSpec nor KeyUpdate\n   messages are used by QUIC.",
+      "line_start": 242,
+      "line_end": 243,
+      "condition": "When implementing TLS message handling for QUIC.",
+      "required_behavior": "Exclude TLS KeyUpdate messages from the QUIC TLS message flow.",
+      "forbidden_behavior": "Using or sending a TLS KeyUpdate message in QUIC.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A QUIC TLS handshake trace and message-generation paths can be inspected for TLS KeyUpdate messages.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Data is protected using a number of encryption levels:\n\n   *  Initial keys\n\n   *  Early data (0-RTT) keys\n\n   *  Handshake keys\n\n   *  Application data (1-RTT) keys",
+      "line_start": 247,
+      "line_end": 255,
+      "condition": "When protecting QUIC data.",
+      "required_behavior": "Use the Initial, Early Data (0-RTT), Handshake, or Application Data (1-RTT) encryption level, as applicable.",
+      "forbidden_behavior": "Using an encryption level outside the four enumerated levels.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The implementation's encryption-level enumeration and packet-processing paths can be compared with the four listed levels.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Application data can only appear in the early data and application\n   data levels.",
+      "line_start": 257,
+      "line_end": 258,
+      "condition": "When carrying application data in QUIC.",
+      "required_behavior": "Place application data only at the Early Data or Application Data encryption level.",
+      "forbidden_behavior": "Placing application data at the Initial or Handshake encryption level.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet traces or frame-level tests can correlate application data with the encryption level used.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Handshake and alert messages may appear in any level.",
+      "line_start": 258,
+      "line_end": 258,
+      "condition": "When carrying a TLS handshake message in QUIC.",
+      "required_behavior": "Treat every defined encryption level as structurally permitted for handshake messages.",
+      "forbidden_behavior": "Rejecting a handshake message solely because of its encryption level, absent a more specific rule.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Level-validation logic can be tested with handshake messages at each defined encryption level while controlling for more specific message rules.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Handshake and alert messages may appear in any level.",
+      "line_start": 258,
+      "line_end": 258,
+      "condition": "When carrying a TLS alert message in QUIC.",
+      "required_behavior": "Treat every defined encryption level as structurally permitted for alert messages.",
+      "forbidden_behavior": "Rejecting an alert message solely because of its encryption level, absent a more specific rule.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Level-validation logic can be tested with alert messages at each defined encryption level while controlling for more specific message rules.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In the 1-RTT handshake, the client is\n   unable to send protected application data until it has received all\n   of the handshake messages sent by the server.",
+      "line_start": 261,
+      "line_end": 263,
+      "condition": "During a 1-RTT handshake, before the client has received all handshake messages sent by the server.",
+      "required_behavior": "Wait until all server handshake messages have been received before sending protected application data.",
+      "forbidden_behavior": "Sending protected application data before all server handshake messages have been received.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A handshake trace can compare the client's first protected application-data send with receipt of the server's complete handshake flight.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This application data can be replayed by an\n      attacker, so 0-RTT is not suitable for carrying instructions that\n      might initiate any action that could cause unwanted effects if\n      replayed.",
+      "line_start": 214,
+      "line_end": 217,
+      "condition": "When selecting instructions to carry in 0-RTT application data.",
+      "required_behavior": "Use 0-RTT only for instructions whose replay cannot cause unwanted effects.",
+      "forbidden_behavior": "Carrying instructions in 0-RTT when replay could initiate an action with unwanted effects.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Replay is concrete, but whether an application action has an unwanted effect depends on unspecified application semantics, so this text does not define an objective protocol-level check.",
+      "eligibility": "exclude"
+    }
+  ]
+}

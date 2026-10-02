@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0156",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A MAX_STREAMS frame (type=0x12 or 0x13) informs the peer of the\n   cumulative number of streams of a given type it is permitted to open.",
+      "line_start": 6356,
+      "line_end": 6357,
+      "condition": "When processing a MAX_STREAMS frame.",
+      "required_behavior": "Interpret the frame value as the cumulative number of streams of the applicable type that the peer is permitted to open.",
+      "forbidden_behavior": "Do not interpret the value as a non-cumulative allowance.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A parser or connection-state test can verify that the advertised value is applied as a cumulative stream allowance for one stream type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A MAX_STREAMS frame with a type of 0x12 applies to bidirectional\n   streams, and a MAX_STREAMS frame with a type of 0x13 applies to\n   unidirectional streams.",
+      "line_start": 6358,
+      "line_end": 6360,
+      "condition": "When decoding a MAX_STREAMS frame with type 0x12.",
+      "required_behavior": "Apply the advertised limit to bidirectional streams.",
+      "forbidden_behavior": "Do not apply a type 0x12 limit to unidirectional streams.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A decoder test can verify which stream-limit state variable is updated by frame type 0x12.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A MAX_STREAMS frame with a type of 0x12 applies to bidirectional\n   streams, and a MAX_STREAMS frame with a type of 0x13 applies to\n   unidirectional streams.",
+      "line_start": 6358,
+      "line_end": 6360,
+      "condition": "When decoding a MAX_STREAMS frame with type 0x13.",
+      "required_behavior": "Apply the advertised limit to unidirectional streams.",
+      "forbidden_behavior": "Do not apply a type 0x13 limit to bidirectional streams.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A decoder test can verify which stream-limit state variable is updated by frame type 0x13.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   MAX_STREAMS Frame {\n     Type (i) = 0x12..0x13,\n     Maximum Streams (i),\n   }",
+      "line_start": 6364,
+      "line_end": 6367,
+      "condition": "When encoding or decoding a MAX_STREAMS frame.",
+      "required_behavior": "Represent the frame as a variable-length integer Type field with value 0x12 or 0x13 followed by a variable-length integer Maximum Streams field.",
+      "forbidden_behavior": "Do not encode another frame type as MAX_STREAMS or reverse the specified field order.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Binary codec tests can inspect the allowed type values, field encodings, and field order.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Maximum Streams:  A count of the cumulative number of streams of the\n      corresponding type that can be opened over the lifetime of the\n      connection.  This value cannot exceed 2^60, as it is not possible\n      to encode stream IDs larger than 2^62-1.  Receipt of a frame that\n      permits opening of a stream larger than this limit MUST be treated\n      as a connection error of type FRAME_ENCODING_ERROR.",
+      "line_start": 6373,
+      "line_end": 6378,
+      "condition": "When interpreting the Maximum Streams field.",
+      "required_behavior": "Treat it as the cumulative number of streams of the corresponding type that can be opened over the lifetime of the connection.",
+      "forbidden_behavior": "Do not treat it as a count that resets during the connection.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A lifetime state test can verify that previously opened streams continue to consume the cumulative allowance.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Maximum Streams:  A count of the cumulative number of streams of the\n      corresponding type that can be opened over the lifetime of the\n      connection.  This value cannot exceed 2^60, as it is not possible\n      to encode stream IDs larger than 2^62-1.  Receipt of a frame that\n      permits opening of a stream larger than this limit MUST be treated\n      as a connection error of type FRAME_ENCODING_ERROR.",
+      "line_start": 6373,
+      "line_end": 6378,
+      "condition": "When receiving a MAX_STREAMS frame whose value permits opening a stream beyond the 2^60 stream-count limit.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not accept a Maximum Streams value exceeding 2^60 as a valid limit.",
+      "error_behavior": "Treat receipt as a connection error of type FRAME_ENCODING_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A boundary test can send values at and above the stated limit and inspect whether the required connection error is produced.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   MAX_STREAMS frames that do not increase the stream limit MUST be\n   ignored.",
+      "line_start": 6382,
+      "line_end": 6383,
+      "condition": "When a MAX_STREAMS frame advertises a limit less than or equal to the currently recorded limit for that stream type.",
+      "required_behavior": "Ignore the frame and retain the existing stream limit.",
+      "forbidden_behavior": "Do not reduce or otherwise change the current stream limit based on the frame.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-transition test can deliver equal and lower limits and verify that the stored limit remains unchanged.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MUST NOT open more streams than permitted by the current\n   stream limit set by its peer.  For instance, a server that receives a\n   unidirectional stream limit of 3 is permitted to open streams 3, 7,\n   and 11, but not stream 15.  An endpoint MUST terminate a connection\n   with an error of type STREAM_LIMIT_ERROR if a peer opens more streams\n   than was permitted.  This includes violations of remembered limits in\n   Early Data; see Section 7.4.1.",
+      "line_start": 6385,
+      "line_end": 6391,
+      "condition": "When an endpoint opens streams of a given type.",
+      "required_behavior": "Keep the cumulative number of opened streams within the current limit set by the peer.",
+      "forbidden_behavior": "Do not open more streams than the peer's current stream limit permits.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation test can set a peer limit and attempt to open the first stream beyond that limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MUST NOT open more streams than permitted by the current\n   stream limit set by its peer.  For instance, a server that receives a\n   unidirectional stream limit of 3 is permitted to open streams 3, 7,\n   and 11, but not stream 15.  An endpoint MUST terminate a connection\n   with an error of type STREAM_LIMIT_ERROR if a peer opens more streams\n   than was permitted.  This includes violations of remembered limits in\n   Early Data; see Section 7.4.1.",
+      "line_start": 6385,
+      "line_end": 6391,
+      "condition": "When a peer opens more streams than the applicable permitted limit.",
+      "required_behavior": "Terminate the connection.",
+      "forbidden_behavior": "Do not continue the connection after detecting the violation.",
+      "error_behavior": "Terminate with an error of type STREAM_LIMIT_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A peer can open one stream beyond an advertised limit and the resulting connection close and error type can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MUST NOT open more streams than permitted by the current\n   stream limit set by its peer.  For instance, a server that receives a\n   unidirectional stream limit of 3 is permitted to open streams 3, 7,\n   and 11, but not stream 15.  An endpoint MUST terminate a connection\n   with an error of type STREAM_LIMIT_ERROR if a peer opens more streams\n   than was permitted.  This includes violations of remembered limits in\n   Early Data; see Section 7.4.1.",
+      "line_start": 6385,
+      "line_end": 6391,
+      "condition": "When a peer violates a remembered stream limit while using Early Data.",
+      "required_behavior": "Apply the remembered stream limit to the Early Data stream openings and terminate the connection upon a violation.",
+      "forbidden_behavior": "Do not exempt Early Data from enforcement of the remembered stream limit.",
+      "error_behavior": "Terminate with an error of type STREAM_LIMIT_ERROR.",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A resumption test can use a remembered limit, open excess streams in Early Data, and inspect the connection termination and error type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Note that these frames (and the corresponding transport parameters)\n   do not describe the number of streams that can be opened\n   concurrently.  The limit includes streams that have been closed as\n   well as those that are open.",
+      "line_start": 6393,
+      "line_end": 6396,
+      "condition": "When accounting opened streams against a MAX_STREAMS limit or corresponding transport-parameter limit.",
+      "required_behavior": "Count both closed and currently open streams against the cumulative limit.",
+      "forbidden_behavior": "Do not restore stream allowance merely because a stream closes, and do not interpret the limit as a concurrency limit.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can open and close streams up to the limit and verify that closing them does not permit additional stream openings without an increased limit.",
+      "eligibility": "eligible"
+    }
+  ]
+}

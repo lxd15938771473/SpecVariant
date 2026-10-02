@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0020",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If the zone does not contain any RRsets matching <SNAME, SCLASS>\n   either exactly or via wildcard name expansion, then the name server\n   MUST include the following NSEC RRs in the Authority section, along\n   with their associated RRSIG RRs:\n\n   o  An NSEC RR proving that there is no exact match for <SNAME,\n      SCLASS>.\n\n   o  An NSEC RR proving that the zone contains no RRsets that would\n      match <SNAME, SCLASS> via wildcard name expansion.\n\n   In some cases, a single NSEC RR may prove both of these points.  If\n   it does, the name server SHOULD only include the NSEC RR and its\n   RRSIG RR(s) once in the Authority section.\n\n   If space does not permit inclusion of these NSEC and RRSIG RRs, the\n   name server MUST set the TC bit (see Section 3.1.1).\n\n   The owner names of these NSEC and RRSIG RRs are not subject to\n   wildcard name expansion when these RRs are included in the Authority\n   section of the response.\n\n   Note that this form of response includes cases in which SNAME\n   corresponds to an empty non-terminal name within the zone (a name\n   that is not the owner name for any RRset but that is the parent name\n   of one or more RRsets).",
+      "line_start": 650,
+      "line_end": 675,
+      "condition": "The zone contains no RRsets matching <SNAME, SCLASS> either exactly or via wildcard name expansion; this includes the stated cases where SNAME is an empty non-terminal name within the zone (not an RRset owner but a parent of one or more RRsets).",
+      "required_behavior": "The name server MUST include an NSEC RR proving that there is no exact match for <SNAME, SCLASS> in the Authority section of the name error response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A zone and query with neither an exact nor wildcard match allow checking the response Authority section for an NSEC proof of the missing exact match, including the stated empty non-terminal cases.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone does not contain any RRsets matching <SNAME, SCLASS>\n   either exactly or via wildcard name expansion, then the name server\n   MUST include the following NSEC RRs in the Authority section, along\n   with their associated RRSIG RRs:\n\n   o  An NSEC RR proving that there is no exact match for <SNAME,\n      SCLASS>.\n\n   o  An NSEC RR proving that the zone contains no RRsets that would\n      match <SNAME, SCLASS> via wildcard name expansion.\n\n   In some cases, a single NSEC RR may prove both of these points.  If\n   it does, the name server SHOULD only include the NSEC RR and its\n   RRSIG RR(s) once in the Authority section.\n\n   If space does not permit inclusion of these NSEC and RRSIG RRs, the\n   name server MUST set the TC bit (see Section 3.1.1).\n\n   The owner names of these NSEC and RRSIG RRs are not subject to\n   wildcard name expansion when these RRs are included in the Authority\n   section of the response.\n\n   Note that this form of response includes cases in which SNAME\n   corresponds to an empty non-terminal name within the zone (a name\n   that is not the owner name for any RRset but that is the parent name\n   of one or more RRsets).",
+      "line_start": 650,
+      "line_end": 675,
+      "condition": "The zone contains no RRsets matching <SNAME, SCLASS> either exactly or via wildcard name expansion; this includes the stated cases where SNAME is an empty non-terminal name within the zone (not an RRset owner but a parent of one or more RRsets).",
+      "required_behavior": "The name server MUST include an NSEC RR proving that the zone contains no RRsets matching <SNAME, SCLASS> via wildcard name expansion in the Authority section of the name error response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A zone and query with neither an exact nor wildcard match allow checking the Authority section for an NSEC proof excluding a wildcard match.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone does not contain any RRsets matching <SNAME, SCLASS>\n   either exactly or via wildcard name expansion, then the name server\n   MUST include the following NSEC RRs in the Authority section, along\n   with their associated RRSIG RRs:\n\n   o  An NSEC RR proving that there is no exact match for <SNAME,\n      SCLASS>.\n\n   o  An NSEC RR proving that the zone contains no RRsets that would\n      match <SNAME, SCLASS> via wildcard name expansion.\n\n   In some cases, a single NSEC RR may prove both of these points.  If\n   it does, the name server SHOULD only include the NSEC RR and its\n   RRSIG RR(s) once in the Authority section.\n\n   If space does not permit inclusion of these NSEC and RRSIG RRs, the\n   name server MUST set the TC bit (see Section 3.1.1).\n\n   The owner names of these NSEC and RRSIG RRs are not subject to\n   wildcard name expansion when these RRs are included in the Authority\n   section of the response.\n\n   Note that this form of response includes cases in which SNAME\n   corresponds to an empty non-terminal name within the zone (a name\n   that is not the owner name for any RRset but that is the parent name\n   of one or more RRsets).",
+      "line_start": 650,
+      "line_end": 675,
+      "condition": "The zone contains no RRsets matching <SNAME, SCLASS> either exactly or via wildcard name expansion; this includes the stated cases where SNAME is an empty non-terminal name within the zone (not an RRset owner but a parent of one or more RRsets).",
+      "required_behavior": "The name server MUST include the RRSIG RRs associated with the required NSEC RRs in the Authority section of the name error response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The Authority section can be inspected for the signatures associated with each required NSEC proof.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone does not contain any RRsets matching <SNAME, SCLASS>\n   either exactly or via wildcard name expansion, then the name server\n   MUST include the following NSEC RRs in the Authority section, along\n   with their associated RRSIG RRs:\n\n   o  An NSEC RR proving that there is no exact match for <SNAME,\n      SCLASS>.\n\n   o  An NSEC RR proving that the zone contains no RRsets that would\n      match <SNAME, SCLASS> via wildcard name expansion.\n\n   In some cases, a single NSEC RR may prove both of these points.  If\n   it does, the name server SHOULD only include the NSEC RR and its\n   RRSIG RR(s) once in the Authority section.",
+      "line_start": 650,
+      "line_end": 663,
+      "condition": "A single NSEC RR proves both the absence of an exact match for <SNAME, SCLASS> and the absence of a match via wildcard name expansion in this name error response.",
+      "required_behavior": "The name server SHOULD include that NSEC RR only once in the Authority section.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "When one NSEC RR establishes both proofs, its occurrence count in the Authority section checks the advisory deduplication behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone does not contain any RRsets matching <SNAME, SCLASS>\n   either exactly or via wildcard name expansion, then the name server\n   MUST include the following NSEC RRs in the Authority section, along\n   with their associated RRSIG RRs:\n\n   o  An NSEC RR proving that there is no exact match for <SNAME,\n      SCLASS>.\n\n   o  An NSEC RR proving that the zone contains no RRsets that would\n      match <SNAME, SCLASS> via wildcard name expansion.\n\n   In some cases, a single NSEC RR may prove both of these points.  If\n   it does, the name server SHOULD only include the NSEC RR and its\n   RRSIG RR(s) once in the Authority section.",
+      "line_start": 650,
+      "line_end": 663,
+      "condition": "A single NSEC RR proves both the absence of an exact match for <SNAME, SCLASS> and the absence of a match via wildcard name expansion in this name error response.",
+      "required_behavior": "The name server SHOULD include the RRSIG RR(s) associated with that NSEC RR only once in the Authority section.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The occurrence counts of the shared NSEC proof's associated RRSIG records check the advisory signature deduplication behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone does not contain any RRsets matching <SNAME, SCLASS>\n   either exactly or via wildcard name expansion, then the name server\n   MUST include the following NSEC RRs in the Authority section, along\n   with their associated RRSIG RRs:\n\n   o  An NSEC RR proving that there is no exact match for <SNAME,\n      SCLASS>.\n\n   o  An NSEC RR proving that the zone contains no RRsets that would\n      match <SNAME, SCLASS> via wildcard name expansion.\n\n   In some cases, a single NSEC RR may prove both of these points.  If\n   it does, the name server SHOULD only include the NSEC RR and its\n   RRSIG RR(s) once in the Authority section.\n\n   If space does not permit inclusion of these NSEC and RRSIG RRs, the\n   name server MUST set the TC bit (see Section 3.1.1).",
+      "line_start": 650,
+      "line_end": 666,
+      "condition": "Space does not permit inclusion of the NSEC and associated RRSIG RRs required for this name error response.",
+      "required_behavior": "The name server MUST set the TC bit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A response size limit that prevents inclusion of the required NSEC and RRSIG records allows checking the TC flag.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone does not contain any RRsets matching <SNAME, SCLASS>\n   either exactly or via wildcard name expansion, then the name server\n   MUST include the following NSEC RRs in the Authority section, along\n   with their associated RRSIG RRs:\n\n   o  An NSEC RR proving that there is no exact match for <SNAME,\n      SCLASS>.\n\n   o  An NSEC RR proving that the zone contains no RRsets that would\n      match <SNAME, SCLASS> via wildcard name expansion.\n\n   In some cases, a single NSEC RR may prove both of these points.  If\n   it does, the name server SHOULD only include the NSEC RR and its\n   RRSIG RR(s) once in the Authority section.\n\n   If space does not permit inclusion of these NSEC and RRSIG RRs, the\n   name server MUST set the TC bit (see Section 3.1.1).\n\n   The owner names of these NSEC and RRSIG RRs are not subject to\n   wildcard name expansion when these RRs are included in the Authority\n   section of the response.",
+      "line_start": 650,
+      "line_end": 670,
+      "condition": "The name server includes an NSEC RR for this name error response in the Authority section.",
+      "required_behavior": "",
+      "forbidden_behavior": "Apply wildcard name expansion to the owner name of that NSEC RR.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An NSEC record with a wildcard owner allows comparing its response owner name against the original owner name.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone does not contain any RRsets matching <SNAME, SCLASS>\n   either exactly or via wildcard name expansion, then the name server\n   MUST include the following NSEC RRs in the Authority section, along\n   with their associated RRSIG RRs:\n\n   o  An NSEC RR proving that there is no exact match for <SNAME,\n      SCLASS>.\n\n   o  An NSEC RR proving that the zone contains no RRsets that would\n      match <SNAME, SCLASS> via wildcard name expansion.\n\n   In some cases, a single NSEC RR may prove both of these points.  If\n   it does, the name server SHOULD only include the NSEC RR and its\n   RRSIG RR(s) once in the Authority section.\n\n   If space does not permit inclusion of these NSEC and RRSIG RRs, the\n   name server MUST set the TC bit (see Section 3.1.1).\n\n   The owner names of these NSEC and RRSIG RRs are not subject to\n   wildcard name expansion when these RRs are included in the Authority\n   section of the response.",
+      "line_start": 650,
+      "line_end": 670,
+      "condition": "The name server includes an associated RRSIG RR for this name error response in the Authority section.",
+      "required_behavior": "",
+      "forbidden_behavior": "Apply wildcard name expansion to the owner name of that RRSIG RR.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An associated RRSIG record with a wildcard owner allows checking that its response owner name is not expanded.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0107",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Endpoints SHOULD prioritize retransmission of data over sending new\n   data, unless priorities specified by the application indicate\n   otherwise; see Section 2.3.",
+      "line_start": 4418,
+      "line_end": 4420,
+      "condition": "When an endpoint has both data requiring retransmission and new data to send, and application-specified priorities do not indicate otherwise.",
+      "required_behavior": "Prioritize retransmission of data over sending new data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The ordering or scheduling of retransmitted and new data can be observed and compared when both are pending, including whether the application-priority exception applies.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   to retransmit copies of frames from lost packets.  A sender that\n   retransmits copies of frames needs to handle decreases in available\n   payload size due to changes in packet number length, connection ID\n   length, and path MTU.  A receiver MUST accept packets containing an",
+      "line_start": 4424,
+      "line_end": 4427,
+      "condition": "When a sender retransmits copies of frames and the available payload size decreases because the packet number length changes.",
+      "required_behavior": "Handle the reduced available payload size so that the retransmitted packet fits the available payload.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can change packet number length, reduce payload capacity, and verify that retransmitted frame copies are packaged within the resulting size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   to retransmit copies of frames from lost packets.  A sender that\n   retransmits copies of frames needs to handle decreases in available\n   payload size due to changes in packet number length, connection ID\n   length, and path MTU.  A receiver MUST accept packets containing an",
+      "line_start": 4424,
+      "line_end": 4427,
+      "condition": "When a sender retransmits copies of frames and the available payload size decreases because the connection ID length changes.",
+      "required_behavior": "Handle the reduced available payload size so that the retransmitted packet fits the available payload.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can change connection ID length, reduce payload capacity, and verify that retransmitted frame copies are packaged within the resulting size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   to retransmit copies of frames from lost packets.  A sender that\n   retransmits copies of frames needs to handle decreases in available\n   payload size due to changes in packet number length, connection ID\n   length, and path MTU.  A receiver MUST accept packets containing an",
+      "line_start": 4424,
+      "line_end": 4427,
+      "condition": "When a sender retransmits copies of frames and the available payload size decreases because the path MTU changes.",
+      "required_behavior": "Handle the reduced available payload size so that the retransmitted packet fits the available payload.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can reduce the path MTU and verify that retransmitted frame copies are packaged within the resulting payload limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   length, and path MTU.  A receiver MUST accept packets containing an\n   outdated frame, such as a MAX_DATA frame carrying a smaller maximum\n   data value than one found in an older packet.",
+      "line_start": 4427,
+      "line_end": 4429,
+      "condition": "When a received packet contains an outdated frame, including a MAX_DATA frame whose maximum data value is smaller than one received in an older packet.",
+      "required_behavior": "Accept the packet containing the outdated frame.",
+      "forbidden_behavior": "Reject the packet merely because it contains an outdated frame.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A receiver can be sent a newer packet containing a lower MAX_DATA value after an older packet with a higher value, and its packet-acceptance behavior can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A sender SHOULD avoid retransmitting information from packets once\n   they are acknowledged.  This includes packets that are acknowledged\n   after being declared lost, which can happen in the presence of\n   network reordering.",
+      "line_start": 4431,
+      "line_end": 4434,
+      "condition": "Once a packet is acknowledged, including when it is acknowledged after previously being declared lost.",
+      "required_behavior": "Avoid retransmitting information from the acknowledged packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can acknowledge a packet, including after loss declaration, and observe whether its information is subsequently retransmitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   after being declared lost, which can happen in the presence of\n   network reordering.  Doing so requires senders to retain information\n   about packets after they are declared lost.  A sender can discard",
+      "line_start": 4433,
+      "line_end": 4435,
+      "condition": "When a sender implements avoidance of retransmitting information from packets that can later be acknowledged after being declared lost.",
+      "required_behavior": "Retain information about packets after declaring them lost.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The chunk directly states that retaining packet information after loss declaration is necessary to stop retransmission if a reordered acknowledgment later arrives; retained state and resulting behavior can be tested.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Upon detecting losses, a sender MUST take appropriate congestion\n   control action.  The details of loss detection and congestion control\n   are described in [QUIC-RECOVERY].",
+      "line_start": 4441,
+      "line_end": 4443,
+      "condition": "Upon detecting losses.",
+      "required_behavior": "Take appropriate congestion control action.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The trigger and general action are stated, but this chunk delegates the details that define appropriate congestion control behavior to an external document, so the required concrete behavior cannot be determined from the supplied evidence alone.",
+      "eligibility": "exclude"
+    }
+  ]
+}

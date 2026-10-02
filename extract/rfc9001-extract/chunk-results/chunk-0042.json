@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0042",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Endpoints responding to an apparent key update MUST NOT generate a\n   timing side-channel signal that might indicate that the Key Phase bit\n   was invalid (see Section 9.5).",
+      "line_start": 1684,
+      "line_end": 1686,
+      "condition": "When responding to a packet that appears to initiate a key update.",
+      "required_behavior": "Process valid and invalid apparent Key Phase changes without an observable timing distinction that reveals invalidity.",
+      "forbidden_behavior": "Generating a timing side-channel signal that indicates the Key Phase bit was invalid.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Controlled valid and invalid Key Phase inputs can be measured statistically for distinguishable processing-time distributions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For a short period after a key\n   update completes, up to the PTO, endpoints MAY defer generation of\n   the next set of receive packet protection keys.",
+      "line_start": 1699,
+      "line_end": 1701,
+      "condition": "After a key update completes and the next receive-key set has not yet been generated.",
+      "required_behavior": "Generate the next receive packet-protection key set no later than one PTO after completion of the update.",
+      "forbidden_behavior": "Deferring generation beyond the PTO bound.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A simulated clock can compare the key-update completion time, PTO value, and next-key generation event.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Once generated, the next set of packet protection keys SHOULD be\n   retained, even if the packet that was received was subsequently\n   discarded.",
+      "line_start": 1704,
+      "line_end": 1706,
+      "condition": "Once the next set of receive packet-protection keys has been generated.",
+      "required_behavior": "Retain the generated next-key set even if the packet that triggered generation is later discarded.",
+      "forbidden_behavior": "Discarding the next-key set solely because the triggering packet was discarded.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A forged apparent update can trigger generation and later packet discard while key-store state is observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For this reason, endpoints MUST be able to retain two sets of packet\n   protection keys for receiving packets: the current and the next.",
+      "line_start": 1711,
+      "line_end": 1712,
+      "condition": "When maintaining receive packet-protection keys.",
+      "required_behavior": "Support simultaneous retention of two receive-key sets: the current set and the next set.",
+      "forbidden_behavior": "Using a receive-key store incapable of retaining both sets concurrently.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Key-store capacity and runtime state can be tested with current and next keys installed together.",
+      "eligibility": "eligible"
+    }
+  ]
+}

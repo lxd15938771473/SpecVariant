@@ -1,0 +1,43 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0039",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "Probe packets MUST NOT be blocked by the congestion controller.",
+                             "line_start":  1046,
+                             "line_end":  1046,
+                             "condition":  "When a sender is ready to transmit a probe packet and the congestion controller would otherwise prevent transmission.",
+                             "required_behavior":  "Permit the probe packet to be transmitted without congestion-controller blocking.",
+                             "forbidden_behavior":  "The congestion controller MUST NOT block transmission of a probe packet.",
+                             "error_behavior":  "No separate error response is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A focused test can place the sender at its congestion limit, trigger probe transmission, and verify that the congestion controller does not suppress the probe.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A\n   sender MUST however count these packets as being additionally in\n   flight, since these packets add network load without establishing\n   packet loss.",
+                             "line_start":  1046,
+                             "line_end":  1049,
+                             "condition":  "When a sender transmits probe packets.",
+                             "required_behavior":  "Add the transmitted probe packets to the sender\u0027s in-flight accounting.",
+                             "forbidden_behavior":  "The sender MUST NOT omit probe packets from in-flight accounting or treat them as replacing already-counted in-flight packets.",
+                             "error_behavior":  "No separate error response is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The sender\u0027s bytes-in-flight state can be observed before and after probe transmission to verify that the probes are counted additionally.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Note that sending probe packets might cause the\n   sender\u0027s bytes in flight to exceed the congestion window until an\n   acknowledgment is received that establishes loss or delivery of\n   packets.",
+                             "line_start":  1049,
+                             "line_end":  1052,
+                             "condition":  "After probe packets are sent while their loss or delivery has not yet been established, and counting them raises bytes in flight above the congestion window.",
+                             "required_behavior":  "Allow bytes in flight to remain above the congestion window while the probe packets are outstanding, until an acknowledgment establishes packet loss or delivery.",
+                             "forbidden_behavior":  "The implementation MUST NOT block the required probe transmission or falsify in-flight accounting solely to preserve a bytes-in-flight-at-or-below-congestion-window invariant.",
+                             "error_behavior":  "No separate error response is specified.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A test can send a probe at the congestion-window limit and verify both that bytes in flight exceeds the window and that the excess persists until acknowledgment-driven loss or delivery processing updates the accounting.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

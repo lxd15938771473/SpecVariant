@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0033",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Note that clients could choose not to use the preferred address.",
+      "line_start": 1560,
+      "line_end": 1561,
+      "condition": "When a server requests migration using the preferred_address transport parameter.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A client implementation can be observed choosing not to migrate, but the passage does not clearly impose a corresponding mandatory behavior on either endpoint.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "A server in a deployment that does not implement a solution to maintain connection continuity when the client address changes SHOULD indicate that migration is not supported by using the disable_active_migration transport parameter.",
+      "line_start": 1563,
+      "line_end": 1566,
+      "condition": "The server is in a deployment that does not implement a solution for maintaining connection continuity when the client's address changes.",
+      "required_behavior": "The server should indicate that migration is unsupported by using the disable_active_migration transport parameter.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can inspect the server's transport parameters under the stated deployment condition and verify that disable_active_migration is present.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The disable_active_migration transport parameter does not prohibit connection migration after a client has acted on a preferred_address transport parameter.",
+      "line_start": 1566,
+      "line_end": 1569,
+      "condition": "The server sent disable_active_migration and the client has acted on a preferred_address transport parameter.",
+      "required_behavior": "Connection migration resulting after the client acts on preferred_address remains permitted.",
+      "forbidden_behavior": "The implementation must not treat disable_active_migration as prohibiting that connection migration.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A focused test can combine both transport parameters, have the client act on preferred_address, and verify that the resulting migration is not rejected merely because disable_active_migration was sent.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Server deployments that use this simple form of load balancing MUST avoid the creation of a stateless reset oracle; see Section 21.11.",
+      "line_start": 1571,
+      "line_end": 1572,
+      "condition": "A server deployment uses load balancing based only on source and destination IP addresses and ports.",
+      "required_behavior": "The deployment must avoid creating a stateless reset oracle.",
+      "forbidden_behavior": "The deployment must not create a stateless reset oracle.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Security testing can probe the load-balanced deployment for behavior that functions as a stateless reset oracle, though the detailed oracle definition is referenced outside this chunk.",
+      "eligibility": "eligible"
+    }
+  ]
+}

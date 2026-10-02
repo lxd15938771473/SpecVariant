@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0028",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "When any of the conditions described here are detected, a\n   NOTIFICATION message, with the indicated Error Code, Error Subcode,\n   and Data fields, is sent, and the BGP connection is closed (unless it\n   is explicitly stated that no NOTIFICATION message is to be sent and\n   the BGP connection is not to be closed).  If no Error Subcode is\n   specified, then a zero MUST be used.",
+      "line_start": 1652,
+      "line_end": 1657,
+      "condition": "An error condition described in BGP Error Handling is detected, unless explicitly specified that no NOTIFICATION is sent and the connection is not closed.",
+      "required_behavior": "Send a NOTIFICATION message.",
+      "forbidden_behavior": "",
+      "error_behavior": "Send a NOTIFICATION message.",
+      "check_type": "error_handling",
+      "why_checkable": "The error branch can be checked for emission of a NOTIFICATION.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When any of the conditions described here are detected, a\n   NOTIFICATION message, with the indicated Error Code, Error Subcode,\n   and Data fields, is sent, and the BGP connection is closed (unless it\n   is explicitly stated that no NOTIFICATION message is to be sent and\n   the BGP connection is not to be closed).  If no Error Subcode is\n   specified, then a zero MUST be used.",
+      "line_start": 1652,
+      "line_end": 1657,
+      "condition": "An error condition described in BGP Error Handling is detected, unless explicitly specified that no NOTIFICATION is sent and the connection is not closed.",
+      "required_behavior": "Use the indicated Error Code in the NOTIFICATION.",
+      "forbidden_behavior": "",
+      "error_behavior": "Populate the indicated Error Code.",
+      "check_type": "error_handling",
+      "why_checkable": "The emitted Error Code can be compared with the error condition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When any of the conditions described here are detected, a\n   NOTIFICATION message, with the indicated Error Code, Error Subcode,\n   and Data fields, is sent, and the BGP connection is closed (unless it\n   is explicitly stated that no NOTIFICATION message is to be sent and\n   the BGP connection is not to be closed).  If no Error Subcode is\n   specified, then a zero MUST be used.",
+      "line_start": 1652,
+      "line_end": 1657,
+      "condition": "An error condition described in BGP Error Handling is detected, unless explicitly specified that no NOTIFICATION is sent and the connection is not closed. An Error Subcode is indicated.",
+      "required_behavior": "Use the indicated Error Subcode in the NOTIFICATION.",
+      "forbidden_behavior": "",
+      "error_behavior": "Populate the indicated Error Subcode.",
+      "check_type": "error_handling",
+      "why_checkable": "The emitted Error Subcode can be compared with the error condition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When any of the conditions described here are detected, a\n   NOTIFICATION message, with the indicated Error Code, Error Subcode,\n   and Data fields, is sent, and the BGP connection is closed (unless it\n   is explicitly stated that no NOTIFICATION message is to be sent and\n   the BGP connection is not to be closed).  If no Error Subcode is\n   specified, then a zero MUST be used.",
+      "line_start": 1652,
+      "line_end": 1657,
+      "condition": "An error condition described in BGP Error Handling is detected, unless explicitly specified that no NOTIFICATION is sent and the connection is not closed. Data is indicated.",
+      "required_behavior": "Use the indicated Data field in the NOTIFICATION.",
+      "forbidden_behavior": "",
+      "error_behavior": "Populate the indicated Data field.",
+      "check_type": "error_handling",
+      "why_checkable": "The emitted Data bytes can be compared with the error condition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When any of the conditions described here are detected, a\n   NOTIFICATION message, with the indicated Error Code, Error Subcode,\n   and Data fields, is sent, and the BGP connection is closed (unless it\n   is explicitly stated that no NOTIFICATION message is to be sent and\n   the BGP connection is not to be closed).  If no Error Subcode is\n   specified, then a zero MUST be used.",
+      "line_start": 1652,
+      "line_end": 1657,
+      "condition": "An error condition described in BGP Error Handling is detected, unless explicitly specified that no NOTIFICATION is sent and the connection is not closed.",
+      "required_behavior": "Close the BGP connection after sending the NOTIFICATION.",
+      "forbidden_behavior": "",
+      "error_behavior": "Close the BGP connection.",
+      "check_type": "error_handling",
+      "why_checkable": "The error path and connection state expose whether notification is followed by closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When any of the conditions described here are detected, a\n   NOTIFICATION message, with the indicated Error Code, Error Subcode,\n   and Data fields, is sent, and the BGP connection is closed (unless it\n   is explicitly stated that no NOTIFICATION message is to be sent and\n   the BGP connection is not to be closed).  If no Error Subcode is\n   specified, then a zero MUST be used.",
+      "line_start": 1652,
+      "line_end": 1657,
+      "condition": "An error NOTIFICATION is sent and no Error Subcode is specified.",
+      "required_behavior": "MUST use zero as the Error Subcode.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The default Error Subcode is a directly observable encoded value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The phrase \"the BGP connection is closed\" means the TCP connection\n   has been closed, the associated Adj-RIB-In has been cleared, and all\n   resources for that BGP connection have been deallocated.  Entries in\n   the Loc-RIB associated with the remote peer are marked as invalid.\n   The local system recalculates its best routes for the destinations of\n   the routes marked as invalid.  Before the invalid routes are deleted\n   from the system, it advertises, to its peers, either withdraws for\n   the routes marked as invalid, or the new best routes before the\n   invalid routes are deleted from the system.",
+      "line_start": 1659,
+      "line_end": 1667,
+      "condition": "The BGP connection is closed.",
+      "required_behavior": "Close the associated TCP connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Transport state can be checked after BGP closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The phrase \"the BGP connection is closed\" means the TCP connection\n   has been closed, the associated Adj-RIB-In has been cleared, and all\n   resources for that BGP connection have been deallocated.  Entries in\n   the Loc-RIB associated with the remote peer are marked as invalid.\n   The local system recalculates its best routes for the destinations of\n   the routes marked as invalid.  Before the invalid routes are deleted\n   from the system, it advertises, to its peers, either withdraws for\n   the routes marked as invalid, or the new best routes before the\n   invalid routes are deleted from the system.",
+      "line_start": 1659,
+      "line_end": 1667,
+      "condition": "The BGP connection is closed.",
+      "required_behavior": "Clear the associated Adj-RIB-In.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The peer-specific Adj-RIB-In can be inspected after closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The phrase \"the BGP connection is closed\" means the TCP connection\n   has been closed, the associated Adj-RIB-In has been cleared, and all\n   resources for that BGP connection have been deallocated.  Entries in\n   the Loc-RIB associated with the remote peer are marked as invalid.\n   The local system recalculates its best routes for the destinations of\n   the routes marked as invalid.  Before the invalid routes are deleted\n   from the system, it advertises, to its peers, either withdraws for\n   the routes marked as invalid, or the new best routes before the\n   invalid routes are deleted from the system.",
+      "line_start": 1659,
+      "line_end": 1667,
+      "condition": "The BGP connection is closed.",
+      "required_behavior": "Deallocate all resources for that BGP connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Connection teardown resource ownership and cleanup can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The phrase \"the BGP connection is closed\" means the TCP connection\n   has been closed, the associated Adj-RIB-In has been cleared, and all\n   resources for that BGP connection have been deallocated.  Entries in\n   the Loc-RIB associated with the remote peer are marked as invalid.\n   The local system recalculates its best routes for the destinations of\n   the routes marked as invalid.  Before the invalid routes are deleted\n   from the system, it advertises, to its peers, either withdraws for\n   the routes marked as invalid, or the new best routes before the\n   invalid routes are deleted from the system.",
+      "line_start": 1659,
+      "line_end": 1667,
+      "condition": "The BGP connection is closed.",
+      "required_behavior": "Mark the Loc-RIB entries associated with the remote peer as invalid.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Loc-RIB validity of the closing peer's entries can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The phrase \"the BGP connection is closed\" means the TCP connection\n   has been closed, the associated Adj-RIB-In has been cleared, and all\n   resources for that BGP connection have been deallocated.  Entries in\n   the Loc-RIB associated with the remote peer are marked as invalid.\n   The local system recalculates its best routes for the destinations of\n   the routes marked as invalid.  Before the invalid routes are deleted\n   from the system, it advertises, to its peers, either withdraws for\n   the routes marked as invalid, or the new best routes before the\n   invalid routes are deleted from the system.",
+      "line_start": 1659,
+      "line_end": 1667,
+      "condition": "The BGP connection is closed and associated routes are marked invalid.",
+      "required_behavior": "Recalculate best routes for the destinations of the routes marked invalid.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Route-selection invocation and resulting best routes can be checked for affected destinations.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The phrase \"the BGP connection is closed\" means the TCP connection\n   has been closed, the associated Adj-RIB-In has been cleared, and all\n   resources for that BGP connection have been deallocated.  Entries in\n   the Loc-RIB associated with the remote peer are marked as invalid.\n   The local system recalculates its best routes for the destinations of\n   the routes marked as invalid.  Before the invalid routes are deleted\n   from the system, it advertises, to its peers, either withdraws for\n   the routes marked as invalid, or the new best routes before the\n   invalid routes are deleted from the system.",
+      "line_start": 1659,
+      "line_end": 1667,
+      "condition": "The BGP connection is closed and associated routes are marked invalid.",
+      "required_behavior": "Before deleting invalid routes from the system, advertise to peers either withdrawals for those routes or the new best routes.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Advertisement contents and ordering relative to invalid-route deletion are observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Unless specified explicitly, the Data field of the NOTIFICATION\n   message that is sent to indicate an error is empty.",
+      "line_start": 1669,
+      "line_end": 1670,
+      "condition": "An error NOTIFICATION is sent and its Data field is not explicitly specified.",
+      "required_behavior": "Leave the Data field empty.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The default notification payload length can be inspected.",
+      "eligibility": "eligible"
+    }
+  ]
+}

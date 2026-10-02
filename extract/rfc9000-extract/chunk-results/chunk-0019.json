@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0019",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "streams are flow controlled both individually and across a connection as a whole.",
+      "line_start": 1018,
+      "line_end": 1019,
+      "condition": "When an implementation sends or receives stream data on a QUIC connection.",
+      "required_behavior": "Apply flow control independently to each stream and collectively across the connection.",
+      "forbidden_behavior": "Do not limit stream data solely at the per-stream level or solely at the connection-wide level.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Implementation behavior can be tested to confirm that both per-stream and connection-wide flow-control limits constrain stream data.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A QUIC receiver controls the maximum amount of data the sender can send on a stream as well as across all streams at any time",
+      "line_start": 1019,
+      "line_end": 1022,
+      "condition": "When a QUIC receiver advertises or enforces flow-control limits.",
+      "required_behavior": "Control both the maximum data permitted on each stream and the maximum data permitted across all streams at any time.",
+      "forbidden_behavior": "Do not permit the sender to exceed either the applicable per-stream maximum or the aggregate maximum across all streams.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can vary per-stream and aggregate transmitted data and verify that the receiver maintains and enforces both maxima over the connection state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "a QUIC endpoint controls the maximum cumulative number of streams that its peer can initiate",
+      "line_start": 1024,
+      "line_end": 1026,
+      "condition": "When a peer initiates streams on a QUIC connection.",
+      "required_behavior": "Control the maximum cumulative number of streams that the peer is permitted to initiate.",
+      "forbidden_behavior": "Do not treat the stream limit merely as a limit on concurrently open streams when doing so permits the cumulative number initiated to exceed the allowed maximum.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation can be tested by repeatedly opening and closing streams and checking that the initiation allowance is tracked cumulatively.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Data sent in CRYPTO frames is not flow controlled in the same way as stream data.",
+      "line_start": 1028,
+      "line_end": 1029,
+      "condition": "When processing data carried in CRYPTO frames.",
+      "required_behavior": "Handle CRYPTO-frame data outside the stream-data flow-control mechanism.",
+      "forbidden_behavior": "Do not apply stream-data flow control to CRYPTO-frame data in the same way as stream data.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Frame-processing paths and runtime behavior can be inspected to verify that CRYPTO data is not accounted against or gated by stream-data flow-control limits.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QUIC implementations SHOULD provide an interface for the cryptographic protocol implementation to communicate its buffering limits.",
+      "line_start": 1031,
+      "line_end": 1033,
+      "condition": "When a QUIC implementation integrates with a cryptographic protocol implementation that has buffering limits.",
+      "required_behavior": "Provide an interface through which the cryptographic protocol implementation can communicate its buffering limits.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The integration API and runtime communication can be inspected or tested for a mechanism that conveys cryptographic buffering limits to QUIC.",
+      "eligibility": "eligible"
+    }
+  ]
+}

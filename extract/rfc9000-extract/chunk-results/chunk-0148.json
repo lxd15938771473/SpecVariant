@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0148",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   The ACK frame uses the least significant bit of the type value (that\n   is, type 0x03) to indicate ECN feedback and report receipt of QUIC\n   packets with associated ECN codepoints of ECT(0), ECT(1), or ECN-CE\n   in the packet's IP header.  ECN counts are only present when the ACK\n   frame type is 0x03.",
+      "line_start": 6030,
+      "line_end": 6034,
+      "condition": "When an ACK frame carries ECN counts",
+      "required_behavior": "The ACK frame type is 0x03.",
+      "forbidden_behavior": "An ACK frame whose type is not 0x03 must not contain ECN counts.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A parser or encoder can inspect the ACK frame type and determine whether ECN count fields are present.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The ACK frame uses the least significant bit of the type value (that\n   is, type 0x03) to indicate ECN feedback and report receipt of QUIC\n   packets with associated ECN codepoints of ECT(0), ECT(1), or ECN-CE\n   in the packet's IP header.  ECN counts are only present when the ACK\n   frame type is 0x03.",
+      "line_start": 6030,
+      "line_end": 6034,
+      "condition": "When the ACK frame type is 0x03",
+      "required_behavior": "Interpret the least significant type bit as indicating ECN feedback that reports receipt of packets marked ECT(0), ECT(1), or ECN-CE.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Frame decoding can verify that type 0x03 selects the ACK variant containing ECN feedback for the three stated codepoints.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When present, there are three ECN counts, as shown in Figure 27.",
+      "line_start": 6036,
+      "line_end": 6036,
+      "condition": "When ECN counts are present in an ACK frame",
+      "required_behavior": "Exactly three ECN counts are present.",
+      "forbidden_behavior": "Do not encode fewer or more than three ECN counts.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The decoded or encoded ECN-count group can be checked for an exact field count of three.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ECN Counts {\n     ECT0 Count (i),\n     ECT1 Count (i),\n     ECN-CE Count (i),\n   }",
+      "line_start": 6038,
+      "line_end": 6042,
+      "condition": "When the ECN Counts structure is encoded or decoded",
+      "required_behavior": "The three fields occur in the order ECT0 Count, ECT1 Count, and ECN-CE Count, and each is encoded as a variable-length integer.",
+      "forbidden_behavior": "Do not omit, duplicate, or reorder these fields within the ECN Counts structure.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The frame grammar explicitly enumerates the fields, their order, and their variable-length-integer encoding marker.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ECT0 Count:  A variable-length integer representing the total number\n      of packets received with the ECT(0) codepoint in the packet number\n      space of the ACK frame.",
+      "line_start": 6048,
+      "line_end": 6050,
+      "condition": "When producing or interpreting ECT0 Count",
+      "required_behavior": "Encode it as a variable-length integer equal to the total number of received ECT(0)-marked packets in the ACK frame's packet number space.",
+      "forbidden_behavior": "Do not include packets from another packet number space or packets without the ECT(0) codepoint in this total.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field's encoding and value can be compared with tracked received-packet metadata for the ACK frame's packet number space.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ECT1 Count:  A variable-length integer representing the total number\n      of packets received with the ECT(1) codepoint in the packet number\n      space of the ACK frame.",
+      "line_start": 6052,
+      "line_end": 6054,
+      "condition": "When producing or interpreting ECT1 Count",
+      "required_behavior": "Encode it as a variable-length integer equal to the total number of received ECT(1)-marked packets in the ACK frame's packet number space.",
+      "forbidden_behavior": "Do not include packets from another packet number space or packets without the ECT(1) codepoint in this total.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field's encoding and value can be compared with tracked received-packet metadata for the ACK frame's packet number space.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ECN-CE Count:  A variable-length integer representing the total\n      number of packets received with the ECN-CE codepoint in the packet\n      number space of the ACK frame.",
+      "line_start": 6056,
+      "line_end": 6058,
+      "condition": "When producing or interpreting ECN-CE Count",
+      "required_behavior": "Encode it as a variable-length integer equal to the total number of received ECN-CE-marked packets in the ACK frame's packet number space.",
+      "forbidden_behavior": "Do not include packets from another packet number space or packets without the ECN-CE codepoint in this total.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field's encoding and value can be compared with tracked received-packet metadata for the ACK frame's packet number space.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   ECN counts are maintained separately for each packet number space.",
+      "line_start": 6060,
+      "line_end": 6060,
+      "condition": "When tracking ECN counts across packet number spaces",
+      "required_behavior": "Maintain an independent set of ECN counts for each packet number space.",
+      "forbidden_behavior": "Do not combine ECN counts from different packet number spaces.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Implementation state can be inspected to verify that ECN counters are partitioned by packet number space and updated independently.",
+      "eligibility": "eligible"
+    }
+  ]
+}

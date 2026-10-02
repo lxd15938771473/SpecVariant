@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0030",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Parts of QUIC packet headers, in particular the Packet Number field,\n   are protected using a key that is derived separately from the packet\n   protection key and IV.",
+      "line_start": 1158,
+      "line_end": 1160,
+      "condition": "When deriving the key used for QUIC header protection.",
+      "required_behavior": "Derive the header-protection key separately from the packet-protection key and IV.",
+      "forbidden_behavior": "Do not use the packet-protection key or IV directly as the header-protection key.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Key-schedule instrumentation or known-answer vectors can verify that header protection uses a separately labeled derivation output.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The key derived using the \"quic hp\" label is\n   used to provide confidentiality protection for those fields that are\n   not exposed to on-path elements.",
+      "line_start": 1160,
+      "line_end": 1162,
+      "condition": "When applying confidentiality protection to non-exposed QUIC header fields.",
+      "required_behavior": "Use the key derived with the \"quic hp\" label.",
+      "forbidden_behavior": "Do not use a key derived with a different label for QUIC header protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A known header-protection vector can verify that the mask is produced with the key derived from the exact \"quic hp\" label.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This protection applies to the least significant bits of the first\n   byte, plus the Packet Number field.",
+      "line_start": 1164,
+      "line_end": 1165,
+      "condition": "For a QUIC packet type to which header protection applies.",
+      "required_behavior": "Apply header protection to the Packet Number field.",
+      "forbidden_behavior": "Do not leave the Packet Number field unprotected.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serialized packet number bytes can be compared before and after application of the header-protection mask.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The four least significant bits\n   of the first byte are protected for packets with long headers;",
+      "line_start": 1165,
+      "line_end": 1166,
+      "condition": "For a packet with a long header to which header protection applies.",
+      "required_behavior": "Apply header protection to exactly the four least significant bits of the first byte.",
+      "forbidden_behavior": "Do not apply the first-byte header-protection mask outside those four least significant bits.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known unprotected and protected header bytes can be XOR-compared to verify the four-bit mask boundary.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the\n   five least significant bits of the first byte are protected for\n   packets with short headers.",
+      "line_start": 1166,
+      "line_end": 1168,
+      "condition": "For a packet with a short header to which header protection applies.",
+      "required_behavior": "Apply header protection to exactly the five least significant bits of the first byte.",
+      "forbidden_behavior": "Do not apply the first-byte header-protection mask outside those five least significant bits.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known unprotected and protected header bytes can be XOR-compared to verify the five-bit mask boundary.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For both header forms, this covers the\n   reserved bits and the Packet Number Length field; the Key Phase bit\n   is also protected for packets with a short header.",
+      "line_start": 1168,
+      "line_end": 1170,
+      "condition": "For either a protected long-header or short-header packet.",
+      "required_behavior": "Apply header protection to the reserved bits.",
+      "forbidden_behavior": "Do not expose the reserved bits without header protection.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The reserved-bit positions can be checked for application of the first-byte protection mask in both header forms.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For both header forms, this covers the\n   reserved bits and the Packet Number Length field; the Key Phase bit\n   is also protected for packets with a short header.",
+      "line_start": 1168,
+      "line_end": 1170,
+      "condition": "For either a protected long-header or short-header packet.",
+      "required_behavior": "Apply header protection to the Packet Number Length field.",
+      "forbidden_behavior": "Do not expose the Packet Number Length field without header protection.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The Packet Number Length bit positions can be checked for application of the first-byte protection mask in both header forms.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For both header forms, this covers the\n   reserved bits and the Packet Number Length field; the Key Phase bit\n   is also protected for packets with a short header.",
+      "line_start": 1168,
+      "line_end": 1170,
+      "condition": "For a protected packet with a short header.",
+      "required_behavior": "Apply header protection to the Key Phase bit.",
+      "forbidden_behavior": "Do not expose the Key Phase bit without header protection.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The Key Phase bit position can be checked for application of the short-header first-byte protection mask.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The same header protection key is used for the duration of the\n   connection, with the value not changing after a key update (see\n   Section 6).",
+      "line_start": 1172,
+      "line_end": 1174,
+      "condition": "Throughout a connection, including after packet-protection key updates.",
+      "required_behavior": "Continue using the same header-protection key value.",
+      "forbidden_behavior": "Do not change the header-protection key as part of a key update.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Header-protection key values can be captured before and after key updates and compared for equality over the connection lifetime.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This process does not apply to Retry or Version Negotiation packets,\n   which do not contain a protected payload or any of the fields that\n   are protected by this process.",
+      "line_start": 1177,
+      "line_end": 1179,
+      "condition": "When serializing or parsing a Retry packet.",
+      "required_behavior": "Leave the Retry packet outside the header-protection process.",
+      "forbidden_behavior": "Do not apply QUIC header protection to a Retry packet.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A Retry packet can be serialized and compared with its defined fields to verify that no header-protection mask is applied.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This process does not apply to Retry or Version Negotiation packets,\n   which do not contain a protected payload or any of the fields that\n   are protected by this process.",
+      "line_start": 1177,
+      "line_end": 1179,
+      "condition": "When serializing or parsing a Version Negotiation packet.",
+      "required_behavior": "Leave the Version Negotiation packet outside the header-protection process.",
+      "forbidden_behavior": "Do not apply QUIC header protection to a Version Negotiation packet.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A Version Negotiation packet can be serialized and compared with its defined fields to verify that no header-protection mask is applied.",
+      "eligibility": "eligible"
+    }
+  ]
+}

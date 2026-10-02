@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0050",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "There is one FSM per BGP connection.",
+      "line_start": 2873,
+      "line_end": 2873,
+      "condition": "For each BGP connection",
+      "required_behavior": "Maintain one FSM per BGP connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Connection creation and FSM ownership can be checked for one FSM per connection, including concurrent connections to the same peer.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "After the\n   connection collision is resolved (see Section 6.8), the FSM for the\n   connection that is closed SHOULD be disposed.",
+      "line_start": 2875,
+      "line_end": 2877,
+      "condition": "After a connection collision is resolved and a connection is closed",
+      "required_behavior": "The FSM for the closed connection SHOULD be disposed.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Collision resolution cleanup can be inspected to determine whether it disposes the closed connection's FSM.",
+      "eligibility": "eligible"
+    }
+  ]
+}

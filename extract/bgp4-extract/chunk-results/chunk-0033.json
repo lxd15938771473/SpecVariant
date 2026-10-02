@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0033",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If a system does not receive successive KEEPALIVE, UPDATE, and/or\n   NOTIFICATION messages within the period specified in the Hold Time\n   field of the OPEN message, then the NOTIFICATION message with the\n   Hold Timer Expired Error Code is sent and the BGP connection is\n   closed.",
+      "line_start": 1888,
+      "line_end": 1892,
+      "condition": "A system does not receive successive KEEPALIVE, UPDATE, and/or NOTIFICATION messages within the period specified in the Hold Time field of the OPEN message.",
+      "required_behavior": "Send a NOTIFICATION message with the Hold Timer Expired Error Code.",
+      "forbidden_behavior": "",
+      "error_behavior": "Send a NOTIFICATION message with the Hold Timer Expired Error Code.",
+      "check_type": "error_handling",
+      "why_checkable": "The Hold Timer expiration handler and emitted NOTIFICATION error code can be inspected and checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a system does not receive successive KEEPALIVE, UPDATE, and/or\n   NOTIFICATION messages within the period specified in the Hold Time\n   field of the OPEN message, then the NOTIFICATION message with the\n   Hold Timer Expired Error Code is sent and the BGP connection is\n   closed.",
+      "line_start": 1888,
+      "line_end": 1892,
+      "condition": "A system does not receive successive KEEPALIVE, UPDATE, and/or NOTIFICATION messages within the period specified in the Hold Time field of the OPEN message.",
+      "required_behavior": "Close the BGP connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "Close the BGP connection.",
+      "check_type": "error_handling",
+      "why_checkable": "The BGP connection state following Hold Timer expiration can be inspected and checked.",
+      "eligibility": "eligible"
+    }
+  ]
+}

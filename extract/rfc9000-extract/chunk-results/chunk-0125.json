@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0125",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   All numeric values are encoded in network byte order (that is, big\n   endian), and all field sizes are in bits.  Hexadecimal notation is\n   used for describing the value of fields.",
+      "line_start": 4897,
+      "line_end": 4899,
+      "condition": "When encoding any numeric value in a packet format.",
+      "required_behavior": "Encode the numeric value in network byte order (big endian).",
+      "forbidden_behavior": "Do not encode numeric values using any other byte order.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet bytes can be inspected to verify that every multibyte numeric value uses big-endian ordering.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   All numeric values are encoded in network byte order (that is, big\n   endian), and all field sizes are in bits.  Hexadecimal notation is\n   used for describing the value of fields.",
+      "line_start": 4897,
+      "line_end": 4899,
+      "condition": "When interpreting field-size specifications in the packet formats.",
+      "required_behavior": "Interpret every stated field size as a number of bits.",
+      "forbidden_behavior": "Do not interpret field sizes as bytes or another unit.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation's packet field widths and resulting layout can be compared against the specified bit counts.",
+      "eligibility": "eligible"
+    }
+  ]
+}

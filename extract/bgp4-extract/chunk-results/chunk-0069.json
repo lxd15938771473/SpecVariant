@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0069",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "When a BGP speaker receives an UPDATE message from an internal peer,\n   the receiving BGP speaker SHALL NOT re-distribute the routing\n   information contained in that UPDATE message to other internal peers\n   (unless the speaker acts as a BGP Route Reflector [RFC2796]).",
+      "line_start": 4674,
+      "line_end": 4677,
+      "condition": "A BGP speaker receives an UPDATE from an internal peer and is not acting as a BGP Route Reflector.",
+      "required_behavior": "",
+      "forbidden_behavior": "SHALL NOT redistribute the routing information in that UPDATE to other internal peers.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Internal-peer input can be followed to outbound advertisements to verify the redistribution restriction and reflector exception.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As part of Phase 3 of the route selection process, the BGP speaker\n   has updated its Adj-RIBs-Out.  All newly installed routes and all\n   newly unfeasible routes for which there is no replacement route SHALL\n   be advertised to its peers by means of an UPDATE message.",
+      "line_start": 4679,
+      "line_end": 4682,
+      "condition": "Phase 3 has updated Adj-RIBs-Out with newly installed routes.",
+      "required_behavior": "SHALL advertise all newly installed routes to its peers by means of an UPDATE message.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "New Adj-RIB-Out entries can be compared with the resulting outbound UPDATE messages.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As part of Phase 3 of the route selection process, the BGP speaker\n   has updated its Adj-RIBs-Out.  All newly installed routes and all\n   newly unfeasible routes for which there is no replacement route SHALL\n   be advertised to its peers by means of an UPDATE message.",
+      "line_start": 4679,
+      "line_end": 4682,
+      "condition": "Phase 3 has updated Adj-RIBs-Out with newly unfeasible routes for which there is no replacement route.",
+      "required_behavior": "SHALL advertise all such newly unfeasible routes to its peers by means of an UPDATE message.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Route loss without replacement can be correlated with outbound withdrawal UPDATE messages.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker SHOULD NOT advertise a given feasible BGP route from\n   its Adj-RIB-Out if it would produce an UPDATE message containing the\n   same BGP route as was previously advertised.",
+      "line_start": 4684,
+      "line_end": 4686,
+      "condition": "Advertising a given feasible BGP route from Adj-RIB-Out would produce an UPDATE containing the same BGP route as previously advertised.",
+      "required_behavior": "",
+      "forbidden_behavior": "SHOULD NOT advertise that feasible BGP route again.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Previously advertised route state and unchanged-route suppression can be inspected and exercised.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Any routes in the Loc-RIB marked as unfeasible SHALL be removed.\n   Changes to the reachable destinations within its own autonomous\n   system SHALL also be advertised in an UPDATE message.",
+      "line_start": 4688,
+      "line_end": 4690,
+      "condition": "Routes in the Loc-RIB are marked as unfeasible.",
+      "required_behavior": "SHALL remove every such route from the Loc-RIB.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Marking a Loc-RIB route unfeasible permits checking that its entry is removed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Any routes in the Loc-RIB marked as unfeasible SHALL be removed.\n   Changes to the reachable destinations within its own autonomous\n   system SHALL also be advertised in an UPDATE message.",
+      "line_start": 4688,
+      "line_end": 4690,
+      "condition": "Reachable destinations within the BGP speaker's own autonomous system change.",
+      "required_behavior": "SHALL advertise those changes in an UPDATE message.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A change to local-AS destination reachability can be matched to outbound UPDATE content.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If, due to the limits on the maximum size of an UPDATE message (see\n   Section 4), a single route doesn't fit into the message, the BGP\n   speaker MUST not advertise the route to its peers and MAY choose to\n   log an error locally.",
+      "line_start": 4692,
+      "line_end": 4695,
+      "condition": "A single route does not fit into an UPDATE because of the maximum UPDATE message size limit.",
+      "required_behavior": "",
+      "forbidden_behavior": "MUST NOT advertise that route to its peers.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A route whose encoded UPDATE exceeds the maximum size can be used to check advertisement suppression.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If, due to the limits on the maximum size of an UPDATE message (see\n   Section 4), a single route doesn't fit into the message, the BGP\n   speaker MUST not advertise the route to its peers and MAY choose to\n   log an error locally.",
+      "line_start": 4692,
+      "line_end": 4695,
+      "condition": "A single route does not fit into an UPDATE because of the maximum UPDATE message size limit.",
+      "required_behavior": "MAY choose to log an error locally.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The oversized-route handling branch can optionally emit a local error log; absence of a log is also permitted.",
+      "eligibility": "eligible"
+    }
+  ]
+}

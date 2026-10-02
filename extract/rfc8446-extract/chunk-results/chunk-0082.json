@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0082",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "For finite field groups, a conventional Diffie-Hellman [DH76]\n   computation is performed.",
+      "line_start": 5303,
+      "line_end": 5304,
+      "condition": "when the negotiated group is a finite field group",
+      "required_behavior": "perform a conventional Diffie-Hellman computation",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The finite-field shared-secret computation path and its operands can be inspected and tested.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The negotiated key (Z) is converted to a\n   byte string by encoding in big-endian form and left-padded with zeros\n   up to the size of the prime.",
+      "line_start": 5304,
+      "line_end": 5306,
+      "condition": "when converting a finite-field Diffie-Hellman negotiated key Z to bytes",
+      "required_behavior": "encode Z in big-endian form",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known Diffie-Hellman values can verify byte order independently of padding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The negotiated key (Z) is converted to a\n   byte string by encoding in big-endian form and left-padded with zeros\n   up to the size of the prime.",
+      "line_start": 5304,
+      "line_end": 5306,
+      "condition": "when the big-endian encoding of finite-field Diffie-Hellman key Z is shorter than the prime size",
+      "required_behavior": "left-pad the encoding with zero octets to the size of the prime",
+      "forbidden_behavior": "strip or omit leading zero octets needed to reach the prime size",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Boundary values can verify that the encoded secret has exactly the prime's byte length.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This byte string is used as the shared\n   secret in the key schedule as specified above.",
+      "line_start": 5306,
+      "line_end": 5307,
+      "condition": "after encoding and padding the finite-field Diffie-Hellman key Z",
+      "required_behavior": "use the resulting byte string as the key schedule shared secret",
+      "forbidden_behavior": "substitute an unencoded or differently padded value as the key schedule shared secret",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The bytes passed into the key schedule can be compared with the required encoded and padded value.",
+      "eligibility": "eligible"
+    }
+  ]
+}

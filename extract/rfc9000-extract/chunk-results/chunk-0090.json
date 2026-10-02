@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0090",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Version Negotiation packets have no cryptographic protection; see\n   [QUIC-INVARIANTS].",
+      "line_start": 3706,
+      "line_end": 3707,
+      "condition": "When processing or generating a Version Negotiation packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not apply cryptographic protection to the packet.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet generation and parsing can be inspected or tested to verify that Version Negotiation packets are not cryptographically protected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Retry packets use an AEAD function [AEAD] to protect against\n   accidental modification.",
+      "line_start": 3709,
+      "line_end": 3710,
+      "condition": "When generating or validating a Retry packet.",
+      "required_behavior": "Use an AEAD function to provide protection against accidental modification.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The Retry packet protection path can be inspected or tested to verify that it invokes an AEAD construction.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Initial packets use an AEAD function, the keys for which are derived\n   using a value that is visible on the wire.  Initial packets therefore\n   do not have effective confidentiality protection.  Initial protection\n   exists to ensure that the sender of the packet is on the network\n   path.  Any entity that receives an Initial packet from a client can\n   recover the keys that will allow them to both read the contents of\n   the packet and generate Initial packets that will be successfully\n   authenticated at either endpoint.  The AEAD also protects Initial\n   packets against accidental modification.",
+      "line_start": 3712,
+      "line_end": 3720,
+      "condition": "When protecting or validating an Initial packet.",
+      "required_behavior": "Use an AEAD function with keys derived using a value visible on the wire.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Key derivation inputs and the Initial packet protection algorithm can be inspected or exercised to confirm use of an on-wire value and AEAD.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Initial packets use an AEAD function, the keys for which are derived\n   using a value that is visible on the wire.  Initial packets therefore\n   do not have effective confidentiality protection.  Initial protection\n   exists to ensure that the sender of the packet is on the network\n   path.  Any entity that receives an Initial packet from a client can\n   recover the keys that will allow them to both read the contents of\n   the packet and generate Initial packets that will be successfully\n   authenticated at either endpoint.  The AEAD also protects Initial\n   packets against accidental modification.",
+      "line_start": 3712,
+      "line_end": 3720,
+      "condition": "When an entity receives an Initial packet from a client.",
+      "required_behavior": "Permit recovery of the Initial keys from available packet information such that the entity can read the packet and generate Initial packets that authenticate successfully at either endpoint.",
+      "forbidden_behavior": "Do not treat Initial packet keys or contents as effectively confidential.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can derive keys using captured Initial traffic, decrypt its contents, and construct an Initial packet accepted by an endpoint.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Initial packets use an AEAD function, the keys for which are derived\n   using a value that is visible on the wire.  Initial packets therefore\n   do not have effective confidentiality protection.  Initial protection\n   exists to ensure that the sender of the packet is on the network\n   path.  Any entity that receives an Initial packet from a client can\n   recover the keys that will allow them to both read the contents of\n   the packet and generate Initial packets that will be successfully\n   authenticated at either endpoint.  The AEAD also protects Initial\n   packets against accidental modification.",
+      "line_start": 3712,
+      "line_end": 3720,
+      "condition": "When protecting an Initial packet.",
+      "required_behavior": "Use the AEAD to protect the packet against accidental modification.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Mutation tests can verify that accidental changes to an AEAD-protected Initial packet fail authentication.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   All other packets are protected with keys derived from the\n   cryptographic handshake.  The cryptographic handshake ensures that\n   only the communicating endpoints receive the corresponding keys for\n   Handshake, 0-RTT, and 1-RTT packets.  Packets protected with 0-RTT\n   and 1-RTT keys have strong confidentiality and integrity protection.",
+      "line_start": 3722,
+      "line_end": 3726,
+      "condition": "When protecting a packet other than a Version Negotiation, Retry, or Initial packet.",
+      "required_behavior": "Protect the packet with keys derived from the cryptographic handshake.",
+      "forbidden_behavior": "Do not protect such a packet using keys that are not derived from the cryptographic handshake.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The key schedule and packet-protection call paths can be inspected or tested to confirm the provenance of protection keys.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   All other packets are protected with keys derived from the\n   cryptographic handshake.  The cryptographic handshake ensures that\n   only the communicating endpoints receive the corresponding keys for\n   Handshake, 0-RTT, and 1-RTT packets.  Packets protected with 0-RTT\n   and 1-RTT keys have strong confidentiality and integrity protection.",
+      "line_start": 3722,
+      "line_end": 3726,
+      "condition": "When distributing or retaining corresponding keys for Handshake, 0-RTT, and 1-RTT packets.",
+      "required_behavior": "Make the corresponding keys available only to the communicating endpoints.",
+      "forbidden_behavior": "Do not disclose the corresponding keys to entities other than the communicating endpoints.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Key derivation, storage, export, and handshake behavior can be inspected to determine which parties receive these keys.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   All other packets are protected with keys derived from the\n   cryptographic handshake.  The cryptographic handshake ensures that\n   only the communicating endpoints receive the corresponding keys for\n   Handshake, 0-RTT, and 1-RTT packets.  Packets protected with 0-RTT\n   and 1-RTT keys have strong confidentiality and integrity protection.",
+      "line_start": 3722,
+      "line_end": 3726,
+      "condition": "When protecting packets with 0-RTT or 1-RTT keys.",
+      "required_behavior": "Provide confidentiality and integrity protection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet encryption and authenticated-decryption tests can verify that contents are concealed and modifications are detected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The Packet Number field that appears in some packet types has\n   alternative confidentiality protection that is applied as part of\n   header protection; see Section 5.4 of [QUIC-TLS] for details.  The\n   underlying packet number increases with each packet sent in a given\n   packet number space; see Section 12.3 for details.",
+      "line_start": 3728,
+      "line_end": 3732,
+      "condition": "When a packet type contains a Packet Number field.",
+      "required_behavior": "Apply the Packet Number field's confidentiality protection as part of header protection.",
+      "forbidden_behavior": "Do not transmit the Packet Number field without its specified header-based confidentiality protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Serialized packets and header-protection code can be inspected or tested to verify that the Packet Number field is transformed by header protection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The Packet Number field that appears in some packet types has\n   alternative confidentiality protection that is applied as part of\n   header protection; see Section 5.4 of [QUIC-TLS] for details.  The\n   underlying packet number increases with each packet sent in a given\n   packet number space; see Section 12.3 for details.",
+      "line_start": 3728,
+      "line_end": 3732,
+      "condition": "For each packet sent in a given packet number space.",
+      "required_behavior": "Increase the underlying packet number relative to the previously sent packet in that packet number space.",
+      "forbidden_behavior": "Do not reuse or decrease the underlying packet number within the same packet number space.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A sequence of sent packets can be instrumented or decoded to verify strictly increasing underlying packet numbers independently within each packet number space.",
+      "eligibility": "eligible"
+    }
+  ]
+}

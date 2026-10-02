@@ -1,0 +1,188 @@
+{
+  "schema_version": "speclitmus.dedup-component-partitions.v1",
+  "batch_id": "recall-components-04",
+  "partitions": [
+    {
+      "component_id": "recall-comp-c2757db633693264",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-6338dbb2194660f68480",
+            "req-b1bf2ec534f7b45c8da3"
+          ],
+          "canonical_requirement_id": "req-b1bf2ec534f7b45c8da3",
+          "reason": "Both impose the same post-establishment integrity check: attacker modification of protected channel data must be detected and modified data must not be accepted as authentic. The complete-network-control wording supplies the attacker model for that same property, not a different implementation direction or outcome; the canonical evidence states the integrity property directly."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-c7b8fa3967b53fbd",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-22dcb1a2b985b3410257",
+            "req-777c6c3a687d5ac0b538"
+          ],
+          "canonical_requirement_id": "req-22dcb1a2b985b3410257",
+          "reason": "Both require encoding and decoding SignatureScheme.rsa_pkcs1_sha256 as 0x0401. They have the same field, value, bidirectional implementation check, and error outcome; the canonical requirement cites the primary-body enum."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-d0919ef27e9933f4",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-04f3639d39743f83a5d6",
+            "req-43552402d91bd84de150"
+          ],
+          "canonical_requirement_id": "req-43552402d91bd84de150",
+          "reason": "Both apply the identical 0-through-32-octet structural bound to ServerHello.legacy_session_id_echo for encoding and parsing, with no distinct error outcome. The canonical requirement uses the direct primary-body field definition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-dce509bd8dfc604b",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-2c9bf6ece6ab668643a6",
+            "req-f4a992bd40da789f2e8a"
+          ],
+          "canonical_requirement_id": "req-2c9bf6ece6ab668643a6",
+          "reason": "Both require encoding and decoding SignatureScheme.rsa_pss_rsae_sha384 as 0x0805. The field, value, direction, and outcome are identical; the canonical requirement cites the primary-body enum."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-dd5159c85ee90662",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-9699989453e197951737",
+            "req-dc6b73e8f01ef8051165"
+          ],
+          "canonical_requirement_id": "req-9699989453e197951737",
+          "reason": "Both constrain the client-created ClientHello.cipher_suites list to record-protection/AEAD and HKDF-hash pairs the client supports. Constructing and offering the list are the same outbound check here, and neither member adds a different field, value, direction, or error outcome; the canonical requirement is the direct field definition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-e2e4aa0d90986d37",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-d3e4022b981ba7346fec"
+          ],
+          "canonical_requirement_id": "req-d3e4022b981ba7346fec",
+          "reason": "This member is the broader check requiring supported_versions whenever sending a ServerHello. It is not equivalent to the TLS 1.3-negotiation/message-specific members, as confirmed by the known broader-versus-narrower conflict, so it remains self-canonical."
+        },
+        {
+          "member_requirement_ids": [
+            "req-dd5493904c7f797c3299",
+            "req-dd8dbd1b93a5e1d0cf73"
+          ],
+          "canonical_requirement_id": "req-dd5493904c7f797c3299",
+          "reason": "Both require a server's TLS 1.3 ServerHello to contain supported_versions and prohibit omission. Negotiating TLS 1.3 and the outbound message being a TLS 1.3 ServerHello identify the same server-side condition, direction, and outcome; the canonical requirement is the clearer direct normative primary-body statement."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-e795d1912cfb26bd",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-302441b5c14c50db478e"
+          ],
+          "canonical_requirement_id": "req-302441b5c14c50db478e",
+          "reason": "This requirement is limited to encoding PskBinderEntry with a 32-through-255-octet payload. It does not contain the parser-direction check present in the unconditioned structural requirement, so it remains self-canonical."
+        },
+        {
+          "member_requirement_ids": [
+            "req-8ad5a86d83737d0acf1b"
+          ],
+          "canonical_requirement_id": "req-8ad5a86d83737d0acf1b",
+          "reason": "This unconditioned structural field bound applies to serializer and parser behavior. A correct encoder with a parser that accepts an out-of-range PskBinderEntry can satisfy the encoding-only member but violate this one, so the broader bidirectional check remains distinct and self-canonical."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-ea2de75ed26e98c9",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-6c00f4e8120f3b66da55",
+            "req-a648ce5e984eebd3234e"
+          ],
+          "canonical_requirement_id": "req-a648ce5e984eebd3234e",
+          "reason": "Both require encoding and decoding SignatureScheme.rsa_pss_rsae_sha256 as 0x0804. The field, value, bidirectional check, and outcome are identical; the canonical requirement cites the primary-body enum."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-ec97bf54583327b6",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-21bb6cb4572ac1303774",
+            "req-7075fda48671888a4d40"
+          ],
+          "canonical_requirement_id": "req-21bb6cb4572ac1303774",
+          "reason": "Both require encoding and decoding NamedGroup.ffdhe8192 as 0x0104. The field, value, bidirectional check, and outcome are identical; the canonical requirement cites the primary-body enum."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-f1135a92dc297d10",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-9a71cbb43e941b4b4935",
+            "req-d787d5d9611f8ef85c28"
+          ],
+          "canonical_requirement_id": "req-d787d5d9611f8ef85c28",
+          "reason": "Both require encoding and decoding SignatureScheme.rsa_pss_rsae_sha512 as 0x0806. The field, value, bidirectional check, and outcome are identical; the canonical requirement cites the primary-body enum."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-f15d993da4a990db",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-692039b9802c0e18d855",
+            "req-e7a8db054a7125386478"
+          ],
+          "canonical_requirement_id": "req-e7a8db054a7125386478",
+          "reason": "Both impose the same structural serializer/parser check that the encoded ClientHello.extensions vector has a byte length from 8 through 2^16-1. The field, bounds, direction, and outcome are identical; the canonical requirement uses the direct primary-body field definition."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-f626013f77410633",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-00c7c6d105ff45eb1243",
+            "req-92ec41f284647a6355d3"
+          ],
+          "canonical_requirement_id": "req-00c7c6d105ff45eb1243",
+          "reason": "Both require a conforming implementation's outbound ClientHello to contain supported_versions and prohibit omission. The condition, sender direction, extension-presence check, and outcome are equivalent; the canonical requirement cites the direct primary-body MUST statement."
+        }
+      ]
+    },
+    {
+      "component_id": "recall-comp-f701f50abc63679c",
+      "groups": [
+        {
+          "member_requirement_ids": [
+            "req-189b578a62913951beab",
+            "req-e67b19f4bf06b0c036c1"
+          ],
+          "canonical_requirement_id": "req-189b578a62913951beab",
+          "reason": "Both require serializing UncompressedPointRepresentation.X as exactly coordinate_length octets. They cover the same X field, length value, encoding direction, and outcome; the canonical requirement cites the primary-body structure."
+        }
+      ]
+    }
+  ]
+}

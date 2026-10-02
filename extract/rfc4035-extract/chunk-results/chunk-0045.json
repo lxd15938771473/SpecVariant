@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0045",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A non-validating security-aware stub resolver MAY chose to examine\n   the setting of the AD bit in response messages that it receives in\n   order to determine whether the security-aware recursive name server\n   that sent the response claims to have cryptographically verified the\n   data in the Answer and Authority sections of the response message.",
+      "line_start": 1347,
+      "line_end": 1351,
+      "condition": "A non-validating security-aware stub resolver receives a response message.",
+      "required_behavior": "The resolver MAY examine the AD bit to determine whether the responding security-aware recursive name server claims to have cryptographically verified the data in the Answer and Authority sections.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Response processing can be inspected to establish whether this permitted AD-bit inspection is implemented; implementing it is optional.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In any case, a security-aware stub resolver MUST\n   NOT place any reliance on signature validation allegedly performed on\n   its behalf, except when the security-aware stub resolver obtained the\n   data in question from a trusted security-aware recursive name server\n   via a secure channel.",
+      "line_start": 1356,
+      "line_end": 1360,
+      "condition": "A security-aware stub resolver has not obtained the data in question from a trusted security-aware recursive name server via a secure channel.",
+      "required_behavior": "",
+      "forbidden_behavior": "The stub resolver MUST NOT place any reliance on signature validation allegedly performed on its behalf.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The decision to rely on remote signature validation can be checked with trusted and untrusted recursive servers and secure and insecure channels; both trust and a secure channel are necessary for the exception.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A validating security-aware stub resolver SHOULD NOT examine the\n   setting of the AD bit in response messages, as, by definition, the\n   stub resolver performs its own signature validation regardless of the\n   setting of the AD bit.",
+      "line_start": 1362,
+      "line_end": 1365,
+      "condition": "A validating security-aware stub resolver processes response messages.",
+      "required_behavior": "",
+      "forbidden_behavior": "The validating security-aware stub resolver SHOULD NOT examine the AD bit in response messages.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Response handling can be inspected for AD-bit examination, preserving the source recommendation rather than treating it as an unconditional prohibition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A validating security-aware stub resolver SHOULD NOT examine the\n   setting of the AD bit in response messages, as, by definition, the\n   stub resolver performs its own signature validation regardless of the\n   setting of the AD bit.",
+      "line_start": 1362,
+      "line_end": 1365,
+      "condition": "A validating security-aware stub resolver processes response messages.",
+      "required_behavior": "The validating security-aware stub resolver performs its own signature validation regardless of the AD-bit setting.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Responses differing only in the AD-bit setting can establish whether the stub resolver performs its own signature validation in both cases.",
+      "eligibility": "eligible"
+    }
+  ]
+}

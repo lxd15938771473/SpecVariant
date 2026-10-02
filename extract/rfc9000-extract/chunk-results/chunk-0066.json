@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0066",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Packets sent on the old path MUST NOT contribute to congestion control or RTT estimation for the new path.",
+      "line_start": 2852,
+      "line_end": 2853,
+      "condition": "When packets were sent on an old path and congestion control or RTT estimation is performed for a new path.",
+      "required_behavior": "",
+      "forbidden_behavior": "Using packets sent on the old path as input to congestion control or RTT estimation for the new path.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation test can send packets over an old path, migrate to a new path, and verify that the new path's congestion-control and RTT state is not derived from those packets.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "On confirming a peer's ownership of its new address, an endpoint MUST immediately reset the congestion controller and round-trip time estimator for the new path to initial values (see Appendices A.3 and B.3 of [QUIC-RECOVERY]) unless the only change in the peer's address is its port number.",
+      "line_start": 2855,
+      "line_end": 2859,
+      "condition": "When an endpoint confirms the peer's ownership of a new address and the address change is not limited to the port number.",
+      "required_behavior": "Immediately reset the congestion controller for the new path to its initial values.",
+      "forbidden_behavior": "Retaining the previous congestion-controller state after confirmation when the address change is not port-only.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A migration test can confirm ownership of a non-port-only new address and inspect whether the new path's congestion controller is reset immediately.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "On confirming a peer's ownership of its new address, an endpoint MUST immediately reset the congestion controller and round-trip time estimator for the new path to initial values (see Appendices A.3 and B.3 of [QUIC-RECOVERY]) unless the only change in the peer's address is its port number.",
+      "line_start": 2855,
+      "line_end": 2859,
+      "condition": "When an endpoint confirms the peer's ownership of a new address and the address change is not limited to the port number.",
+      "required_behavior": "Immediately reset the round-trip time estimator for the new path to its initial values.",
+      "forbidden_behavior": "Retaining the previous round-trip estimate after confirmation when the address change is not port-only.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A migration test can confirm ownership of a non-port-only new address and inspect whether the new path's RTT estimator is reset immediately.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Because port-only changes are commonly the result of NAT rebinding or other middlebox activity, the endpoint MAY instead retain its congestion control state and round-trip estimate in those cases instead of reverting to initial values.",
+      "line_start": 2859,
+      "line_end": 2862,
+      "condition": "When the only change in the peer's address is its port number.",
+      "required_behavior": "The endpoint is permitted to retain its congestion-control state and round-trip estimate instead of resetting them to initial values.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A port-only migration test can verify that retaining both prior values is an allowed implementation behavior and is not rejected as noncompliant.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A receiver of packets on multiple paths will still send ACK frames covering all received packets.",
+      "line_start": 2872,
+      "line_end": 2873,
+      "condition": "When a receiver receives packets over multiple paths during migration.",
+      "required_behavior": "Send ACK frames whose coverage includes all received packets across those paths.",
+      "forbidden_behavior": "Omitting received packets from ACK coverage solely because they arrived over a different path.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can deliver packets over multiple paths and inspect emitted ACK ranges to verify that every received packet is covered.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This timer SHOULD be set as described in Section 6.2.1 of [QUIC-RECOVERY] and MUST NOT be more aggressive.",
+      "line_start": 2889,
+      "line_end": 2890,
+      "condition": "When an endpoint uses a separate timer for a PATH_CHALLENGE awaiting its corresponding PATH_RESPONSE.",
+      "required_behavior": "Set the timer according to Section 6.2.1 of QUIC-RECOVERY unless a justified exception applies.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The timer's configured duration and scheduling policy can be compared with the algorithm referenced by the requirement.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This timer SHOULD be set as described in Section 6.2.1 of [QUIC-RECOVERY] and MUST NOT be more aggressive.",
+      "line_start": 2889,
+      "line_end": 2890,
+      "condition": "When an endpoint uses a separate timer for a PATH_CHALLENGE awaiting its corresponding PATH_RESPONSE.",
+      "required_behavior": "",
+      "forbidden_behavior": "Configuring or firing the PATH_CHALLENGE timer more aggressively than the timing described in Section 6.2.1 of QUIC-RECOVERY.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Runtime timestamps for PATH_CHALLENGE retransmissions can be compared with the referenced recovery timing to detect an impermissibly aggressive timer.",
+      "eligibility": "eligible"
+    }
+  ]
+}

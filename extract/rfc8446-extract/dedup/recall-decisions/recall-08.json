@@ -1,0 +1,396 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "recall-08",
+  "decisions": [
+    {
+      "pair_id": "pair-6532f6b272ec43ab",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-c69abc40a80815f631f0",
+      "reason": "Both map KeyUpdateRequest.update_requested to numeric value 1; the canonical evidence is the direct primary-body enum rather than its appendix repetition."
+    },
+    {
+      "pair_id": "pair-7b992a18b926c8fc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The corresponding-hash checks apply to different signature families: ECDSA versus RSASSA-PSS PSS."
+    },
+    {
+      "pair_id": "pair-58c7008dae75a34e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One also requires the selected identity to be among the client's offered PSKs, while the diagram only requires pre_shared_key presence in a particular subsequent handshake."
+    },
+    {
+      "pair_id": "pair-6eb805002e1c3af5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Rejecting 0-RTT and continuing via the 1-RTT fallback are separate outcomes of the same freshness failure."
+    },
+    {
+      "pair_id": "pair-0f07e254893ae955",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different ContentType members to different values: invalid to 0 and handshake to 22."
+    },
+    {
+      "pair_id": "pair-e5ec61626210e680",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They are different server transitions with different input messages, receiving keys, and destination states."
+    },
+    {
+      "pair_id": "pair-b9c357f7d5fe79ae",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One restricts optional CertificateRequest extensions to those defined for the message; the other requires signature_algorithms to be present."
+    },
+    {
+      "pair_id": "pair-f15d993da4a990db",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-e7a8db054a7125386478",
+      "reason": "Both limit ClientHello.extensions to 8 through 2^16-1 octets; the canonical evidence is the direct primary-body structure rather than its appendix repetition."
+    },
+    {
+      "pair_id": "pair-1bc981a0e7a3feb4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and allowed messages: ALPN in CH/EE versus pre_shared_key in CH/SH."
+    },
+    {
+      "pair_id": "pair-b74c9768fd9764f0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different ContentType members to different values: handshake to 22 and heartbeat to 24."
+    },
+    {
+      "pair_id": "pair-399b414d3e569f9e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Using a KeyUpdate message and permitting sending-key updates only after handshake completion are separate atomic checks."
+    },
+    {
+      "pair_id": "pair-f858e63c745eea38",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "PSK authentication is a narrower case than the general condition that a server is not authenticating with a certificate."
+    },
+    {
+      "pair_id": "pair-6adc1597d10b1560",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different HandshakeType members to different values: end_of_early_data to 5 and encrypted_extensions to 8."
+    },
+    {
+      "pair_id": "pair-233b61e85d202352",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Sending supported_versions in ClientHello and using it when processing ClientHello are different directional checks."
+    },
+    {
+      "pair_id": "pair-feb5372cc1426364",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The first ordering applies specifically to the Figure 4 0-RTT server flight, while the state-machine rule covers the broader NEGOTIATED state and additional messages."
+    },
+    {
+      "pair_id": "pair-4540e4b6914ac143",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fields and directions differ: ServerHello.legacy_version from the server versus ClientHello.legacy_version from the client."
+    },
+    {
+      "pair_id": "pair-17a617d81144274f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Although both abort with illegal_parameter, the invalid inputs differ: a pre-TLS-1.3 selected version versus an unoffered HelloRetryRequest group."
+    },
+    {
+      "pair_id": "pair-27ec160a81d79249",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One orders EndOfEarlyData before the client Finished; the other conditions its presence and orders it after the server Finished."
+    },
+    {
+      "pair_id": "pair-b2b6337508a29a11",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The bounds apply to different vectors and have different minima: authorities starts at 3 and CertificateEntry.extensions at 0."
+    },
+    {
+      "pair_id": "pair-d701a066fbaa7a4a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The derivations use different base secrets, labels, outputs, and transcript endpoints."
+    },
+    {
+      "pair_id": "pair-b3a437b431d9f956",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requires a client CertificateVerify under requested certificate authentication; the other forbids a server CertificateVerify under PSK authentication."
+    },
+    {
+      "pair_id": "pair-a47c2bf4d4d6111d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The corresponding-hash checks apply to different signature families: ECDSA versus RSASSA-PSS RSAE."
+    },
+    {
+      "pair_id": "pair-6928b4c278079577",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different AlertDescription members to different values: decryption_failed_RESERVED to 21 and decompression_failure_RESERVED to 30."
+    },
+    {
+      "pair_id": "pair-28c53cc76f8793c2",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different HandshakeType members to different values: certificate_request to 13 and certificate_url_RESERVED to 21."
+    },
+    {
+      "pair_id": "pair-f2bede94fda2a80f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and allowed messages: max_fragment_length in CH/EE versus signature_algorithms in CH/CR."
+    },
+    {
+      "pair_id": "pair-7fe7040a9afaf914",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The roles and resulting actions differ: a client sends a new ClientHello, while a server waits for one after sending HelloRetryRequest."
+    },
+    {
+      "pair_id": "pair-0672f65c58c519ed",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different AlertDescription members to different values: unknown_ca to 48 and unknown_psk_identity to 115."
+    },
+    {
+      "pair_id": "pair-a87bdcd27d13f0fd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different reserved SignatureScheme members to different values: dsa_sha1 to 0x0202 and dsa_sha256 to 0x0402."
+    },
+    {
+      "pair_id": "pair-d786df11d2133387",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and allowed messages: ALPN in CH/EE versus cookie in CH/HRR."
+    },
+    {
+      "pair_id": "pair-faa9f2415b7cc8d5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One applies to every RSASSA-PKCS1-v1_5 scheme's corresponding hash, while the other specifically binds the legacy rsa_pkcs1_sha1 scheme to SHA-1."
+    },
+    {
+      "pair_id": "pair-5c2492b455883de4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same numeric range bounds different fields: KeyShareClientHello.client_shares versus CertificateEntry.extensions."
+    },
+    {
+      "pair_id": "pair-bca61dc447edf706",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The stateless-server rule between two ClientHellos is narrower in role and timing than the peer-wide rule for change_cipher_spec during the handshake."
+    },
+    {
+      "pair_id": "pair-219aa4c68b039647",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different reserved HandshakeType members to different values: certificate_url to 21 and certificate_status to 22."
+    },
+    {
+      "pair_id": "pair-58a40677237dee0e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The bounds apply to different fields and maxima: CertificateEntry.extensions at 2^16-1 versus certificate_list at 2^24-1."
+    },
+    {
+      "pair_id": "pair-071606b1a4bd0417",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and allowed messages: status_request in CH/CR/CT versus psk_key_exchange_modes only in CH."
+    },
+    {
+      "pair_id": "pair-b2de31cca1413367",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Limiting RSASSA-PKCS1-v1_5 scheme values solely to certificate signatures is broader than the partial consequence forbidding them in signed handshake messages."
+    },
+    {
+      "pair_id": "pair-19a540ac2f11bb0c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and allowed messages: psk_key_exchange_modes only in CH versus signature_algorithms_cert in CH/CR."
+    },
+    {
+      "pair_id": "pair-d7b25613a5febc4c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The bounds apply to different vectors and have different minima: client_shares starts at 0 and CertificateRequest.extensions at 2."
+    },
+    {
+      "pair_id": "pair-ea8c6e62051c74f6",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The identical range constrains different fields: one Extension.extension_data value versus the EncryptedExtensions.extensions vector."
+    },
+    {
+      "pair_id": "pair-2d32c66be27b8a83",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and messages: psk_key_exchange_modes only in CH versus oid_filters only in CR."
+    },
+    {
+      "pair_id": "pair-6d6b60c2a7e0f3f6",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-f0b792f09687f44d7343",
+      "reason": "Both map NamedGroup.ffdhe3072 to 0x0101; the canonical evidence is the direct primary-body enum rather than its appendix repetition."
+    },
+    {
+      "pair_id": "pair-6ead9435b2efa213",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different ExtensionType members to different values: server_name to 0 and supported_versions to 43."
+    },
+    {
+      "pair_id": "pair-3aa6e4fa7622aec5",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-ecb451f7a3d55110bf58",
+      "reason": "Both map NamedGroup.ffdhe6144 to 0x0103; the canonical evidence is the direct primary-body enum rather than its appendix repetition."
+    },
+    {
+      "pair_id": "pair-471c24d7326b4d88",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The server-specific rule forbids psk_key_exchange_modes, while the general PSK requirement requires the extension in an applicable sender context."
+    },
+    {
+      "pair_id": "pair-2ef13c3df9babc21",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and allowed messages: ALPN in CH/EE versus early_data in CH/EE/NST."
+    },
+    {
+      "pair_id": "pair-70a35075d44adf7e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The shared numeric value belongs to different enum types and members: ContentType.alert versus ExtensionType.padding."
+    },
+    {
+      "pair_id": "pair-0c2ff33bc60a4529",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-d75f83b499468628323b",
+      "reason": "Both map NamedGroup.ffdhe4096 to 0x0102; the canonical evidence is the direct primary-body enum rather than its appendix repetition."
+    },
+    {
+      "pair_id": "pair-5a86a201f89d3d5c",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-d6427e74726244756ae8",
+      "reason": "Both map NamedGroup.ffdhe2048 to 0x0100; the canonical evidence is the direct primary-body enum rather than its appendix repetition."
+    },
+    {
+      "pair_id": "pair-ec97bf54583327b6",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-21bb6cb4572ac1303774",
+      "reason": "Both map NamedGroup.ffdhe8192 to 0x0104; the canonical evidence is the direct primary-body enum rather than its appendix repetition."
+    },
+    {
+      "pair_id": "pair-e795d1912cfb26bd",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-302441b5c14c50db478e",
+      "reason": "Both limit each PskBinderEntry to 32 through 255 octets; the canonical evidence is the direct primary-body definition rather than its appendix repetition."
+    },
+    {
+      "pair_id": "pair-2f342fe2c6b92208",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The directions and transitions differ: switching the server sending key after sending Finished versus switching its receiving key after receiving Finished."
+    },
+    {
+      "pair_id": "pair-bbad2cc148c451aa",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-7e9605f9ae52df3b558a",
+      "reason": "Both require TLSCiphertext.encrypted_record to contain exactly TLSCiphertext.length octets; the canonical evidence is the direct primary-body structure."
+    },
+    {
+      "pair_id": "pair-d90c9431eee98a68",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Selecting the identity map as the ECDH KDF and generating ECDH parameters with ECKAS-DH1 are separate algorithm checks."
+    },
+    {
+      "pair_id": "pair-ddf19eab0073ba02",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different reserved SignatureScheme members to different values: dsa_sha1 to 0x0202 and dsa_sha384 to 0x0502."
+    },
+    {
+      "pair_id": "pair-3745d7a9a52fe460",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Server PSK authentication is a narrower role and authentication mode than any endpoint not authenticating via a certificate."
+    },
+    {
+      "pair_id": "pair-b63efe9ca6cf13ee",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks apply to different extensions and allowed messages: max_fragment_length in CH/EE versus key_share in CH/SH/HRR."
+    },
+    {
+      "pair_id": "pair-f9dc7ec49a0c37ec",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different NamedGroup members to different values: ffdhe2048 to 0x0100 and ffdhe6144 to 0x0103."
+    },
+    {
+      "pair_id": "pair-660eb0b8fedd7881",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different AlertDescription members to different values: bad_certificate to 42 and unsupported_certificate to 43."
+    },
+    {
+      "pair_id": "pair-75732dc32b7bb078",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One constructs a public KeyShareEntry from the standard basepoint; the other computes a shared secret from the peer's public key."
+    },
+    {
+      "pair_id": "pair-c77dba1f1c832807",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They remove different obsolete capabilities: EXPORT ciphers versus MD5 through signature_algorithms."
+    },
+    {
+      "pair_id": "pair-43f2d3419ca5f935",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different CipherSuite members to different values: CHACHA20_POLY1305_SHA256 to 0x1303 and AES_128_CCM_8_SHA256 to 0x1305."
+    },
+    {
+      "pair_id": "pair-35cfb24997096497",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The direction and semantic target differ: client preferences from ClientHello versus the selected version from ServerHello."
+    },
+    {
+      "pair_id": "pair-706330fd372b2f12",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The same membership relation is enforced in opposite directions: client-offered shares versus the server-selected share."
+    },
+    {
+      "pair_id": "pair-4895bbfeb8d51fc8",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different NamedGroup members to different values: ffdhe3072 to 0x0101 and ffdhe2048 to 0x0100."
+    },
+    {
+      "pair_id": "pair-be4632390581d96f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "They map different NamedGroup members to different values: ffdhe4096 to 0x0102 and ffdhe2048 to 0x0100."
+    }
+  ]
+}

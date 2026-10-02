@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0031",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   An HTTP/2 implementation MAY treat the negotiation of any of the\n   following cipher suites with TLS 1.2 as a connection error\n   (Section 5.4.1) of type INADEQUATE_SECURITY:",
+      "line_start": 3833,
+      "line_end": 3835,
+      "condition": "When any of the referenced following cipher suites is negotiated with TLS 1.2.",
+      "required_behavior": "The implementation is permitted to treat the negotiation as a connection error of type INADEQUATE_SECURITY.",
+      "forbidden_behavior": "",
+      "error_behavior": "If the implementation elects to reject the negotiation, it may report a connection error of type INADEQUATE_SECURITY.",
+      "check_type": "error_handling",
+      "why_checkable": "The implementation's response to negotiating a listed TLS 1.2 cipher suite can be observed, but the cipher-suite list is not present in this chunk, so the affected inputs cannot be identified from the supplied evidence alone.",
+      "eligibility": "exclude"
+    }
+  ]
+}

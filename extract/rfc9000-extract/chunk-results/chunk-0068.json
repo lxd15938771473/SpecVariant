@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0068",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Migrating a connection to a new server address mid-connection is not supported by the version of QUIC specified in this document.",
+      "line_start": 2974,
+      "line_end": 2975,
+      "condition": "A connection is already in progress.",
+      "required_behavior": "",
+      "forbidden_behavior": "An implementation must not migrate the connection to a new server address mid-connection.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-transition test can verify that no server-address migration occurs after the connection has been established.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a client receives packets from a new server address when the client has not initiated a migration to that address, the client SHOULD discard these packets.",
+      "line_start": 2975,
+      "line_end": 2978,
+      "condition": "A client receives packets from a new server address and has not initiated migration to that address.",
+      "required_behavior": "The client should discard the packets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A packet-processing test can inject packets from an unrequested server address and observe whether the client discards them.",
+      "eligibility": "eligible"
+    }
+  ]
+}

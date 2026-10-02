@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0187",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   address validation implicit in the handshake ensures that -- for a\n   new connection -- a client will not send other types of packets to a\n   destination that does not understand QUIC or is not willing to accept\n   a QUIC connection.",
+      "line_start": 7385,
+      "line_end": 7388,
+      "condition": "For a new connection, when the destination does not understand QUIC or is unwilling to accept a QUIC connection.",
+      "required_behavior": "",
+      "forbidden_behavior": "The client sends packet types other than Initial packets to that destination before handshake address validation permits doing so.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can use a non-QUIC or unwilling destination and verify that the client sends no non-Initial packet types during establishment.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   by clients.  A client choosing an unpredictable Destination\n   Connection ID ensures that servers are unable to control any of the\n   encrypted portion of Initial packets from clients.",
+      "line_start": 7392,
+      "line_end": 7394,
+      "condition": "When a client chooses the Destination Connection ID for an Initial packet.",
+      "required_behavior": "The Destination Connection ID is unpredictable so that a server cannot control any encrypted portion of the client's Initial packet.",
+      "forbidden_behavior": "Choosing a server-predictable Destination Connection ID that enables server control over encrypted Initial-packet content.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The client's Destination Connection ID generation and whether server-selected inputs can predict or control it can be tested or inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Clients, however, are not obligated to use the NEW_TOKEN frame.",
+      "line_start": 7401,
+      "line_end": 7401,
+      "condition": "When a client has received a NEW_TOKEN frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "Treating use of the token from NEW_TOKEN as mandatory client behavior.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can verify that a client is permitted to establish a connection without using a received NEW_TOKEN token.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Request forgery attacks that rely on the Token field can be avoided\n   if clients send an empty Token field when the server address has\n   changed from when the NEW_TOKEN frame was received.",
+      "line_start": 7402,
+      "line_end": 7404,
+      "condition": "When the server address differs from the address in use when the NEW_TOKEN frame was received.",
+      "required_behavior": "Send an empty Token field to avoid Token-field request forgery.",
+      "forbidden_behavior": "Using the previously supplied NEW_TOKEN token at the changed server address when applying this mitigation.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can change the server address after receipt of NEW_TOKEN and inspect whether the next Initial packet contains an empty Token field.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Sending a Retry packet (Section 17.2.5) offers a server the option to\n   change the Token field.  After sending a Retry, the server can also\n   control the Destination Connection ID field of subsequent Initial\n   packets from the client.",
+      "line_start": 7413,
+      "line_end": 7416,
+      "condition": "After a server sends a Retry packet.",
+      "required_behavior": "Subsequent client Initial packets use the Token field and Destination Connection ID selected through the Retry exchange.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A server can send a Retry containing chosen token and connection-ID values and inspect the client's subsequent Initial packet fields.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Retry packet validates the server's address, thereby preventing the\n   use of subsequent Initial packets for request forgery.",
+      "line_start": 7418,
+      "line_end": 7419,
+      "condition": "After a Retry packet exchange.",
+      "required_behavior": "The server's address is validated before subsequent Initial packets are usable.",
+      "forbidden_behavior": "Using subsequent Initial packets for request forgery through an unvalidated server address.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A focused Retry test can verify address validation state before subsequent Initial packets are accepted or generated.",
+      "eligibility": "eligible"
+    }
+  ]
+}

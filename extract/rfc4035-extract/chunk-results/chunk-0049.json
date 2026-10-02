@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0049",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A validator can use an RRSIG RR and its corresponding DNSKEY RR to\n   attempt to authenticate RRsets.  The validator first checks the RRSIG\n   RR to verify that it covers the RRset, has a valid time interval, and\n   identifies a valid DNSKEY RR.",
+      "line_start": 1553,
+      "line_end": 1556,
+      "condition": "When a validator chooses to attempt RRset authentication using an RRSIG RR and its corresponding DNSKEY RR.",
+      "required_behavior": "The validator first checks that the RRSIG RR covers the RRset, before constructing the canonical signed data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The authentication path can be inspected for an RRSIG-to-RRset coverage check before signed-data construction.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A validator can use an RRSIG RR and its corresponding DNSKEY RR to\n   attempt to authenticate RRsets.  The validator first checks the RRSIG\n   RR to verify that it covers the RRset, has a valid time interval, and\n   identifies a valid DNSKEY RR.",
+      "line_start": 1553,
+      "line_end": 1556,
+      "condition": "When a validator chooses to attempt RRset authentication using an RRSIG RR and its corresponding DNSKEY RR.",
+      "required_behavior": "The validator first checks that the RRSIG RR has a valid time interval, before constructing the canonical signed data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The authentication path can be inspected for the time-interval validity check and its position before signed-data construction.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A validator can use an RRSIG RR and its corresponding DNSKEY RR to\n   attempt to authenticate RRsets.  The validator first checks the RRSIG\n   RR to verify that it covers the RRset, has a valid time interval, and\n   identifies a valid DNSKEY RR.",
+      "line_start": 1553,
+      "line_end": 1556,
+      "condition": "When a validator chooses to attempt RRset authentication using an RRSIG RR and its corresponding DNSKEY RR.",
+      "required_behavior": "The validator first checks that the RRSIG RR identifies a valid DNSKEY RR, before constructing the canonical signed data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The authentication path can be inspected for DNSKEY identification and validity checks before signed-data construction.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A validator can use an RRSIG RR and its corresponding DNSKEY RR to\n   attempt to authenticate RRsets.  The validator first checks the RRSIG\n   RR to verify that it covers the RRset, has a valid time interval, and\n   identifies a valid DNSKEY RR.  The validator then constructs the\n   canonical form of the signed data by appending the RRSIG RDATA\n   (excluding the Signature Field) with the canonical form of the\n   covered RRset.",
+      "line_start": 1553,
+      "line_end": 1559,
+      "condition": "When a validator chooses to attempt RRset authentication using an RRSIG RR and its corresponding DNSKEY RR.",
+      "required_behavior": "After checking the RRSIG RR, the validator constructs the canonical signed data by concatenating the RRSIG RDATA component followed by the canonical form of the covered RRset.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The constructed signed-data bytes can be checked for the specified components, canonical RRset representation, and concatenation order.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A validator can use an RRSIG RR and its corresponding DNSKEY RR to\n   attempt to authenticate RRsets.  The validator first checks the RRSIG\n   RR to verify that it covers the RRset, has a valid time interval, and\n   identifies a valid DNSKEY RR.  The validator then constructs the\n   canonical form of the signed data by appending the RRSIG RDATA\n   (excluding the Signature Field) with the canonical form of the\n   covered RRset.",
+      "line_start": 1553,
+      "line_end": 1559,
+      "condition": "When a validator chooses to attempt RRset authentication using an RRSIG RR and its corresponding DNSKEY RR.",
+      "required_behavior": "",
+      "forbidden_behavior": "Include the Signature Field in the RRSIG RDATA component used to construct the canonical signed data.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The signed-data construction can be checked to confirm that it omits the RRSIG Signature Field.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A validator can use an RRSIG RR and its corresponding DNSKEY RR to\n   attempt to authenticate RRsets.  The validator first checks the RRSIG\n   RR to verify that it covers the RRset, has a valid time interval, and\n   identifies a valid DNSKEY RR.  The validator then constructs the\n   canonical form of the signed data by appending the RRSIG RDATA\n   (excluding the Signature Field) with the canonical form of the\n   covered RRset.  Finally, the validator uses the public key and\n   signature to authenticate the signed data.",
+      "line_start": 1553,
+      "line_end": 1560,
+      "condition": "When a validator chooses to attempt RRset authentication using an RRSIG RR and its corresponding DNSKEY RR.",
+      "required_behavior": "After constructing the canonical signed data, the validator uses the corresponding DNSKEY public key and the RRSIG signature to authenticate those signed data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The cryptographic verification call can be inspected for its public key, signature, and canonical signed-data inputs, after signed-data construction.",
+      "eligibility": "eligible"
+    }
+  ]
+}

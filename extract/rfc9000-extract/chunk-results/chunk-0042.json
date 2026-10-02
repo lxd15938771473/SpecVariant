@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0042",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Each endpoint includes the value of the Source Connection ID field\n   from the first Initial packet it sent in the\n   initial_source_connection_id transport parameter; see Section 18.2.",
+      "line_start": 1908,
+      "line_end": 1910,
+      "condition": "For each endpoint participating in the handshake.",
+      "required_behavior": "Include the Source Connection ID from the first Initial packet the endpoint sent as the initial_source_connection_id transport parameter.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can compare the parameter value with the Source Connection ID in the endpoint's first sent Initial packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A server includes the Destination Connection ID field from the first\n   Initial packet it received from the client in the\n   original_destination_connection_id transport parameter; if the server\n   sent a Retry packet, this refers to the first Initial packet received\n   before sending the Retry packet.",
+      "line_start": 1911,
+      "line_end": 1915,
+      "condition": "When a server supplies its transport parameters; if it sent Retry, use the first Initial received before Retry.",
+      "required_behavior": "Include the specified client's Destination Connection ID as original_destination_connection_id.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet traces and encoded transport parameters can be compared, including the Retry-specific packet selection rule.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If it sends a Retry packet, a\n   server also includes the Source Connection ID field from the Retry\n   packet in the retry_source_connection_id transport parameter.",
+      "line_start": 1915,
+      "line_end": 1917,
+      "condition": "If the server sends a Retry packet.",
+      "required_behavior": "Include the Retry packet's Source Connection ID in the retry_source_connection_id transport parameter.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can compare the Retry packet's Source Connection ID with the server's encoded parameter.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The values provided by a peer for these transport parameters MUST\n   match the values that an endpoint used in the Destination and Source\n   Connection ID fields of Initial packets that it sent (and received,\n   for servers).",
+      "line_start": 1919,
+      "line_end": 1922,
+      "condition": "When a peer provides these connection-ID transport parameters.",
+      "required_behavior": "The parameter values must match the corresponding Destination and Source Connection ID values used in Initial packets, including Initial packets received by a server.",
+      "forbidden_behavior": "Providing parameter values that differ from the corresponding Initial-packet connection IDs.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The received parameters can be compared directly with recorded Initial-packet fields.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints MUST validate that received transport\n   parameters match received connection ID values.",
+      "line_start": 1922,
+      "line_end": 1923,
+      "condition": "When an endpoint receives connection-ID transport parameters.",
+      "required_behavior": "Validate the parameters against the received connection ID values.",
+      "forbidden_behavior": "Accepting the parameters without performing the required consistency validation.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Focused tests can supply matching and mismatching values and observe whether validation occurs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST treat the absence of the\n   initial_source_connection_id transport parameter from either endpoint\n   or the absence of the original_destination_connection_id transport\n   parameter from the server as a connection error of type\n   TRANSPORT_PARAMETER_ERROR.",
+      "line_start": 1929,
+      "line_end": 1933,
+      "condition": "If either endpoint omits initial_source_connection_id.",
+      "required_behavior": "",
+      "forbidden_behavior": "Continuing the connection as though the required parameter were present.",
+      "error_behavior": "Treat the omission as a connection error of type TRANSPORT_PARAMETER_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A peer can omit initial_source_connection_id and the resulting connection-error type can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST treat the absence of the\n   initial_source_connection_id transport parameter from either endpoint\n   or the absence of the original_destination_connection_id transport\n   parameter from the server as a connection error of type\n   TRANSPORT_PARAMETER_ERROR.",
+      "line_start": 1929,
+      "line_end": 1933,
+      "condition": "If the server omits original_destination_connection_id.",
+      "required_behavior": "",
+      "forbidden_behavior": "Continuing the connection as though the required server parameter were present.",
+      "error_behavior": "Treat the omission as a connection error of type TRANSPORT_PARAMETER_ERROR.",
+      "check_type": "error_handling",
+      "why_checkable": "A server can omit original_destination_connection_id and the resulting connection-error type can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  absence of the retry_source_connection_id transport parameter from\n      the server after receiving a Retry packet,",
+      "line_start": 1938,
+      "line_end": 1939,
+      "condition": "After a Retry packet was received, if the server omits retry_source_connection_id.",
+      "required_behavior": "",
+      "forbidden_behavior": "Accepting the omission without the connection error required by the immediately preceding rule.",
+      "error_behavior": "Treat the omission as a connection error of type TRANSPORT_PARAMETER_ERROR or PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A Retry handshake can omit the parameter and the endpoint's resulting error type can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  presence of the retry_source_connection_id transport parameter\n      when no Retry packet was received, or",
+      "line_start": 1941,
+      "line_end": 1942,
+      "condition": "If retry_source_connection_id is present when no Retry packet was received.",
+      "required_behavior": "",
+      "forbidden_behavior": "Accepting the unexpected parameter without the connection error required by the immediately preceding rule.",
+      "error_behavior": "Treat the presence as a connection error of type TRANSPORT_PARAMETER_ERROR or PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A peer can provide the parameter without sending Retry, and the endpoint's error response can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  a mismatch between values received from a peer in these transport\n      parameters and the value sent in the corresponding Destination or\n      Source Connection ID fields of Initial packets.",
+      "line_start": 1944,
+      "line_end": 1946,
+      "condition": "If a received connection-ID transport parameter differs from the corresponding Destination or Source Connection ID sent in an Initial packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "Accepting the mismatched value without the connection error required by the immediately preceding rule.",
+      "error_behavior": "Treat the mismatch as a connection error of type TRANSPORT_PARAMETER_ERROR or PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can introduce a deliberate mismatch and verify the emitted connection-error type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a zero-length connection ID is selected, the corresponding\n   transport parameter is included with a zero-length value.",
+      "line_start": 1948,
+      "line_end": 1949,
+      "condition": "If a zero-length connection ID is selected.",
+      "required_behavior": "Include the corresponding transport parameter with a zero-length value.",
+      "forbidden_behavior": "Omitting the corresponding parameter or encoding it with a nonzero-length value.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The presence and encoded length of the corresponding transport parameter can be inspected.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0029",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "A Retry packet causes a client to send another Initial packet,\n   effectively restarting the connection process.",
+                             "line_start":  825,
+                             "line_end":  826,
+                             "condition":  "When a client processes a Retry packet.",
+                             "required_behavior":  "Send another Initial packet, thereby restarting the connection process.",
+                             "forbidden_behavior":  "Continue the connection attempt without sending another Initial packet.",
+                             "error_behavior":  "No specific error response is prescribed.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can deliver a Retry packet and verify that the client\u0027s next connection-starting transmission includes another Initial packet.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A Retry packet\n   indicates that the Initial packet was received but not processed.",
+                             "line_start":  826,
+                             "line_end":  827,
+                             "condition":  "When a client interprets a Retry packet in relation to its preceding Initial packet.",
+                             "required_behavior":  "Represent the preceding Initial packet as received by the server but not processed.",
+                             "forbidden_behavior":  "Infer from the Retry packet that the preceding Initial packet was processed.",
+                             "error_behavior":  "No specific error response is prescribed.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Client state and subsequent recovery behavior can be inspected to determine whether the preceding Initial is marked as processed.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A\n   Retry packet cannot be treated as an acknowledgment because it does\n   not indicate that a packet was processed or specify the packet\n   number.",
+                             "line_start":  827,
+                             "line_end":  830,
+                             "condition":  "When a client receives a Retry packet.",
+                             "required_behavior":  "Process the Retry packet without treating it as an acknowledgment of any packet.",
+                             "forbidden_behavior":  "Use the Retry packet as acknowledgment evidence, mark a packet acknowledged, or associate it with an acknowledged packet number.",
+                             "error_behavior":  "No specific error response is prescribed.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A focused test can compare acknowledgment, in-flight, and loss-recovery state before and after receipt of a Retry packet.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Clients that receive a Retry packet reset congestion control and loss\n   recovery state, including resetting any pending timers.",
+                             "line_start":  832,
+                             "line_end":  833,
+                             "condition":  "When a client receives a Retry packet.",
+                             "required_behavior":  "Reset the client\u0027s congestion-control state.",
+                             "forbidden_behavior":  "Carry congestion-control state from before the Retry into the restarted connection process.",
+                             "error_behavior":  "No specific error response is prescribed.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Congestion-control variables can be seeded before Retry processing and inspected afterward for reinitialization.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Clients that receive a Retry packet reset congestion control and loss\n   recovery state, including resetting any pending timers.",
+                             "line_start":  832,
+                             "line_end":  833,
+                             "condition":  "When a client receives a Retry packet.",
+                             "required_behavior":  "Reset the client\u0027s loss-recovery state.",
+                             "forbidden_behavior":  "Carry loss-recovery state from before the Retry into the restarted connection process.",
+                             "error_behavior":  "No specific error response is prescribed.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Loss-recovery variables can be seeded before Retry processing and inspected afterward for reinitialization.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Clients that receive a Retry packet reset congestion control and loss\n   recovery state, including resetting any pending timers.",
+                             "line_start":  832,
+                             "line_end":  833,
+                             "condition":  "When a client receives a Retry packet while congestion-control or loss-recovery timers are pending.",
+                             "required_behavior":  "Reset all pending timers that belong to congestion-control or loss-recovery state.",
+                             "forbidden_behavior":  "Leave a pre-Retry congestion-control or loss-recovery timer pending with its old deadline or state.",
+                             "error_behavior":  "No specific error response is prescribed.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can arm recovery timers, deliver Retry, and inspect timer cancellation or reinitialization and subsequent firing behavior.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Other\n   connection state, in particular cryptographic handshake messages, is\n   retained; see Section 17.2.5 of [QUIC-TRANSPORT].",
+                             "line_start":  833,
+                             "line_end":  835,
+                             "condition":  "When a client resets congestion-control and loss-recovery state after receiving a Retry packet.",
+                             "required_behavior":  "Retain connection state outside congestion-control and loss-recovery state, including cryptographic handshake messages.",
+                             "forbidden_behavior":  "Discard cryptographic handshake messages or other unaffected connection state solely because a Retry packet was received.",
+                             "error_behavior":  "No specific error response is prescribed.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Connection and handshake state can be populated before Retry processing and checked afterward for preservation.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The client MAY compute an RTT estimate to the server as the time\n   period from when the first Initial packet was sent to when a Retry or\n   a Version Negotiation packet is received.",
+                             "line_start":  837,
+                             "line_end":  839,
+                             "condition":  "When a client chooses to compute an RTT estimate from receipt of a Retry or Version Negotiation packet.",
+                             "required_behavior":  "It may compute the estimate as the elapsed time from sending the first Initial packet to receiving the Retry or Version Negotiation packet.",
+                             "forbidden_behavior":  "Treat this optional computation as mandatory.",
+                             "error_behavior":  "No error is required when the client does not exercise this option.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "If the option is implemented, controlled send and receive timestamps can verify the estimate\u0027s start and end events; omission of the option is also permitted.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The client MAY use this\n   value in place of its default for the initial RTT estimate.",
+                             "line_start":  839,
+                             "line_end":  840,
+                             "condition":  "When the client has computed the RTT value described from the first Initial and a received Retry or Version Negotiation packet.",
+                             "required_behavior":  "It may substitute that computed value for the default initial RTT estimate.",
+                             "forbidden_behavior":  "Treat substitution of the computed value as mandatory.",
+                             "error_behavior":  "No error is required when the client retains its default initial RTT estimate.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The initial RTT value used by loss recovery can be observed after supplying a controlled elapsed interval, while retaining the default remains conformant.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

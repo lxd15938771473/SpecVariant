@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0012",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "labels          63 octets or less",
+      "line_start": 532,
+      "line_end": 532,
+      "condition": "For a DNS label.",
+      "required_behavior": "Limit the label length to at most 63 octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded label length can be measured and checked against the 63-octet limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "names           255 octets or less",
+      "line_start": 534,
+      "line_end": 534,
+      "condition": "For a DNS name.",
+      "required_behavior": "Limit the name length to at most 255 octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded name length can be measured and checked against the 255-octet limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "TTL             positive values of a signed 32 bit number.",
+      "line_start": 536,
+      "line_end": 536,
+      "condition": "For a DNS TTL value.",
+      "required_behavior": "Limit TTL values to positive values representable by a signed 32-bit number.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The TTL value can be checked for positivity and against the signed 32-bit numeric range.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "UDP messages    512 octets or less",
+      "line_start": 538,
+      "line_end": 538,
+      "condition": "For a DNS message transported using UDP.",
+      "required_behavior": "Limit the message length to at most 512 octets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The DNS message length carried over UDP can be measured and checked against the 512-octet limit.",
+      "eligibility": "eligible"
+    }
+  ]
+}

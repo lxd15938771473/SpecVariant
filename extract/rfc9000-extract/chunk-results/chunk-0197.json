@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0197",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   against this style of denial of service, endpoints that share a\n   static key for stateless resets (see Section 10.3.2) MUST be arranged\n   so that packets with a given connection ID always arrive at an\n   instance that has connection state, unless that connection is no\n   longer active.",
+      "line_start": 7644,
+      "line_end": 7648,
+      "condition": "Endpoints share a static key for stateless resets, and the connection identified by a packet's connection ID remains active.",
+      "required_behavior": "Arrange routing so that every packet with the given connection ID arrives at an instance that has state for that connection.",
+      "forbidden_behavior": "Do not route a packet for an active connection to an instance that lacks the connection state.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A deployment test can send packets bearing an active connection ID through all applicable routing paths and verify that each reaches an instance holding the corresponding connection state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   More generally, servers MUST NOT generate a stateless reset if a\n   connection with the corresponding connection ID could be active on\n   any endpoint using the same static key.",
+      "line_start": 7650,
+      "line_end": 7652,
+      "condition": "A connection corresponding to the connection ID could be active on any endpoint that uses the same static key.",
+      "required_behavior": "",
+      "forbidden_behavior": "The server must not generate a stateless reset for that connection ID.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can establish or model a possibly active connection on an endpoint sharing the key, present its connection ID to the server, and verify that no stateless reset is generated.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   terminated.  If there is no chance of the packet being routed to the\n   correct instance, it is better to send a stateless reset than wait\n   for the connection to time out.  However, this is acceptable only if\n   the routing cannot be influenced by an attacker.",
+      "line_start": 7659,
+      "line_end": 7662,
+      "condition": "There is no chance that the packet will be routed to the correct instance, and the implementation sends a stateless reset instead of waiting for connection timeout.",
+      "required_behavior": "Ensure that the routing cannot be influenced by an attacker before treating the stateless reset behavior as acceptable.",
+      "forbidden_behavior": "Do not use this stateless-reset behavior when an attacker can influence the routing.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A routing and reset test can verify that the exceptional stateless-reset path is enabled only for routing configurations whose selection cannot be attacker-controlled.",
+      "eligibility": "eligible"
+    }
+  ]
+}

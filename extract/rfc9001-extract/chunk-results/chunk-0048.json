@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0048",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "In addition to\n   negotiation of cryptographic parameters, the TLS handshake carries\n   and authenticates values for QUIC transport parameters.",
+      "line_start": 1885,
+      "line_end": 1887,
+      "condition": "When conducting the TLS handshake for a QUIC connection.",
+      "required_behavior": "Negotiate the cryptographic parameters used by the connection.",
+      "forbidden_behavior": "Completing the handshake without cryptographic-parameter negotiation.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The TLS handshake result can be inspected for negotiated cryptographic parameters.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In addition to\n   negotiation of cryptographic parameters, the TLS handshake carries\n   and authenticates values for QUIC transport parameters.",
+      "line_start": 1885,
+      "line_end": 1887,
+      "condition": "When exchanging QUIC transport parameters.",
+      "required_behavior": "Carry the transport-parameter values in the TLS handshake.",
+      "forbidden_behavior": "Exchanging the transport-parameter values outside the authenticated TLS handshake mechanism.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A handshake trace can verify where the QUIC transport-parameter values are encoded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In addition to\n   negotiation of cryptographic parameters, the TLS handshake carries\n   and authenticates values for QUIC transport parameters.",
+      "line_start": 1885,
+      "line_end": 1887,
+      "condition": "When accepting peer-provided QUIC transport-parameter values.",
+      "required_behavior": "Authenticate the values through the TLS handshake.",
+      "forbidden_behavior": "Treating unauthenticated transport-parameter values as authenticated peer parameters.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Handshake-integrity tests can modify the carried values and observe authentication failure or rejection.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0108",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   reported congestion by reducing their sending rate in response, as\n   described in [QUIC-RECOVERY].",
+      "line_start": 4452,
+      "line_end": 4453,
+      "condition": "When congestion is reported to an endpoint.",
+      "required_behavior": "The endpoint reduces its sending rate in response as described in QUIC-RECOVERY.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can report congestion to an endpoint and observe whether its subsequent sending rate is reduced.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   To enable ECN, a sending QUIC endpoint first determines whether a\n   path supports ECN marking and whether the peer reports the ECN values\n   in received IP headers; see Section 13.4.2.",
+      "line_start": 4455,
+      "line_end": 4457,
+      "condition": "Before a sending QUIC endpoint enables ECN on a path.",
+      "required_behavior": "The endpoint determines whether the path supports ECN marking.",
+      "forbidden_behavior": "The endpoint does not enable ECN before making this determination.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Instrumentation can verify that path ECN support determination occurs before ECN is enabled.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   To enable ECN, a sending QUIC endpoint first determines whether a\n   path supports ECN marking and whether the peer reports the ECN values\n   in received IP headers; see Section 13.4.2.",
+      "line_start": 4455,
+      "line_end": 4457,
+      "condition": "Before a sending QUIC endpoint enables ECN on a path.",
+      "required_behavior": "The endpoint determines whether the peer reports the ECN values from received IP headers.",
+      "forbidden_behavior": "The endpoint does not enable ECN before making this determination.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Instrumentation can verify that peer ECN-reporting determination occurs before ECN is enabled.",
+      "eligibility": "eligible"
+    }
+  ]
+}

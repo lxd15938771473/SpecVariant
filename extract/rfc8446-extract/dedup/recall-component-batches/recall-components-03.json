@@ -1,0 +1,749 @@
+{
+  "schema_version": "speclitmus.dedup-component-partition-batch.v1",
+  "batch_id": "recall-components-03",
+  "rule": "partition every component into exact semantic-equivalence groups; singleton groups preserve distinct requirements",
+  "components": [
+    {
+      "component_id": "recall-comp-803065f02a18808c",
+      "members": [
+        {
+          "requirement_id": "req-6347885b158a86804e6c",
+          "condition": "",
+          "required_behavior": "Encode UncompressedPointRepresentation.Y with exactly coordinate_length octets.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n        uint8 legacy_form = 4;\n        opaque X[coordinate_length];\n        opaque Y[coordinate_length];\n    } UncompressedPointRepresentation;",
+            "line_start": 7061,
+            "line_end": 7065,
+            "verified": true,
+            "chunk_id": "chunk-0103"
+          }
+        },
+        {
+          "requirement_id": "req-d58ac8637c1872d8eeed",
+          "condition": "when serializing the Y coordinate of an UncompressedPointRepresentation",
+          "required_behavior": "encode Y as an opaque field of coordinate_length octets",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The Y field length is fixed by the selected curve's coordinate_length.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n          uint8 legacy_form = 4;\n          opaque X[coordinate_length];\n          opaque Y[coordinate_length];\n      } UncompressedPointRepresentation;",
+            "line_start": 2809,
+            "line_end": 2813,
+            "verified": true,
+            "chunk_id": "chunk-0041"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-803065f02a18808c",
+          "members": [
+            "req-d58ac8637c1872d8eeed",
+            "req-6347885b158a86804e6c"
+          ],
+          "reason": "Both require UncompressedPointRepresentation.Y to contain exactly coordinate_length octets; the canonical evidence is the primary-body structure."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-8f29851154402961",
+      "members": [
+        {
+          "requirement_id": "req-1f8830b88a0f0c2891fc",
+          "condition": "encoding or parsing TLSPlaintext",
+          "required_behavior": "encode legacy_record_version as ProtocolVersion after type",
+          "forbidden_behavior": "omitting, reordering, or using another field width",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The field type and ordered position are explicit.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "ProtocolVersion legacy_record_version;",
+            "line_start": 4380,
+            "line_end": 4380,
+            "verified": true,
+            "chunk_id": "chunk-0068"
+          }
+        },
+        {
+          "requirement_id": "req-314e361afec0da94f33f",
+          "condition": "",
+          "required_behavior": "Encode TLSPlaintext.legacy_record_version as ProtocolVersion.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n          ContentType type;\n          ProtocolVersion legacy_record_version;\n          uint16 length;",
+            "line_start": 6797,
+            "line_end": 6800,
+            "verified": true,
+            "chunk_id": "chunk-0102"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-8f29851154402961",
+          "members": [
+            "req-1f8830b88a0f0c2891fc",
+            "req-314e361afec0da94f33f"
+          ],
+          "reason": "Both require TLSPlaintext.legacy_record_version to occupy its ProtocolVersion field; the canonical evidence is the primary-body structure."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-926a7f46cf219e8e",
+      "members": [
+        {
+          "requirement_id": "req-21f7221ba5252f65b341",
+          "condition": "when encoding OfferedPsks.binders",
+          "required_behavior": "encode binders as a vector with encoded content length from 33 through 2^16-1 octets",
+          "forbidden_behavior": "encode binders outside the declared vector bounds",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The binders vector length prefix and content size are directly parseable.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n          PskIdentity identities<7..2^16-1>;\n          PskBinderEntry binders<33..2^16-1>;\n      } OfferedPsks;",
+            "line_start": 3091,
+            "line_end": 3094,
+            "verified": true,
+            "chunk_id": "chunk-0045"
+          }
+        },
+        {
+          "requirement_id": "req-707745fdddfc84ddcc01",
+          "condition": "",
+          "required_behavior": "Limit OfferedPsks.binders to 33 through 2^16-1 encoded octets.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n        PskIdentity identities<7..2^16-1>;\n        PskBinderEntry binders<33..2^16-1>;\n    } OfferedPsks;",
+            "line_start": 7090,
+            "line_end": 7093,
+            "verified": true,
+            "chunk_id": "chunk-0103"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-926a7f46cf219e8e",
+          "members": [
+            "req-21f7221ba5252f65b341",
+            "req-707745fdddfc84ddcc01"
+          ],
+          "reason": "Both constrain OfferedPsks.binders to 33 through 2^16-1 encoded octets. The canonical requirement uses the direct primary-body structure definition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-9558ef0ebf437336",
+      "members": [
+        {
+          "requirement_id": "req-deec8b0cb63be2d3fee6",
+          "condition": "an unknown Alert type is received",
+          "required_behavior": "treat it as an error alert",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "error_handling",
+          "why_checkable": "An unassigned description value has a deterministic classification.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "regardless of the AlertLevel in the message.  Unknown Alert types\n   MUST be treated as error alerts.",
+            "line_start": 4730,
+            "line_end": 4731,
+            "verified": true,
+            "chunk_id": "chunk-0073"
+          }
+        },
+        {
+          "requirement_id": "req-df946c013223b5b6b52a",
+          "condition": "an unknown alert is processed",
+          "required_behavior": "treat the alert as fatal",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "error_handling",
+          "why_checkable": "An unassigned alert value has a deterministic fatal classification.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "implementation MUST send alert X if it sends any alert.  All alerts\n   defined below in this section, as well as all unknown alerts, are\n   universally considered fatal as of TLS 1.3 (see Section 6).  The",
+            "line_start": 4888,
+            "line_end": 4890,
+            "verified": true,
+            "chunk_id": "chunk-0075"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-9558ef0ebf437336",
+          "members": [
+            "req-deec8b0cb63be2d3fee6",
+            "req-df946c013223b5b6b52a"
+          ],
+          "reason": "Both require a received unknown alert to be handled as a fatal error alert; the canonical evidence is the direct normative MUST in the primary Alert Protocol section."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-9a719d3ce2c3cfd5",
+      "members": [
+        {
+          "requirement_id": "req-a4ce7c76c89f1091671f",
+          "condition": "EarlyDataIndication appears in ClientHello",
+          "required_behavior": "encode an Empty body",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n        select (Handshake.msg_type) {\n            case new_session_ticket:   uint32 max_early_data_size;\n            case client_hello:         Empty;\n            case encrypted_extensions: Empty;",
+            "line_start": 7075,
+            "line_end": 7079,
+            "verified": true,
+            "chunk_id": "chunk-0103"
+          }
+        },
+        {
+          "requirement_id": "req-ffdb0efef89d0694e0e1",
+          "condition": "when EarlyDataIndication occurs in ClientHello",
+          "required_behavior": "encode extension_data as Empty",
+          "forbidden_behavior": "include payload bytes in the EarlyDataIndication",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The ClientHello variant is required to have a zero-length payload.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n          select (Handshake.msg_type) {\n              case new_session_ticket:   uint32 max_early_data_size;\n              case client_hello:         Empty;\n              case encrypted_extensions: Empty;\n          };\n      } EarlyDataIndication;",
+            "line_start": 2915,
+            "line_end": 2921,
+            "verified": true,
+            "chunk_id": "chunk-0043"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-9a719d3ce2c3cfd5",
+          "members": [
+            "req-ffdb0efef89d0694e0e1",
+            "req-a4ce7c76c89f1091671f"
+          ],
+          "reason": "Both require the ClientHello EarlyDataIndication variant to have an Empty body; the canonical evidence is the direct primary-body structure rather than the appendix repetition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-9bb05f332b82d8c3",
+      "members": [
+        {
+          "requirement_id": "req-262324f5492047a98558",
+          "condition": "record decryption fails for any reason",
+          "required_behavior": "use the uniform bad_record_mac alert",
+          "forbidden_behavior": "send distinguishable alerts for different decryption failure causes",
+          "error_behavior": "signal bad_record_mac",
+          "check_type": "error_handling",
+          "why_checkable": "Malformed-record tests can trigger distinct decryption failures and compare the emitted alert.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "TLS uses a uniform \"bad_record_mac\" alert for all decryption\nerrors, which is intended to prevent an attacker from gaining\npiecewise insight into portions of the message.",
+            "line_start": 8314,
+            "line_end": 8316,
+            "verified": true,
+            "chunk_id": "chunk-0113"
+          }
+        },
+        {
+          "requirement_id": "req-449359733cf7033be7fd",
+          "condition": "a received record cannot be deprotected for any reason",
+          "required_behavior": "use bad_record_mac for the deprotection failure",
+          "forbidden_behavior": "",
+          "error_behavior": "send a bad_record_mac alert",
+          "check_type": "security_consistency",
+          "why_checkable": "Corrupt ciphertext and authentication failures can be tested for a uniform alert.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "bad_record_mac:  This alert is returned if a record is received which\n      cannot be deprotected.  Because AEAD algorithms combine decryption\n      and verification, and also to avoid side-channel attacks, this\n      alert is used for all deprotection failures.  This alert should\n      never be observed in communication between proper implementations,\n      except when messages were corrupted in the network.",
+            "line_start": 4901,
+            "line_end": 4906,
+            "verified": true,
+            "chunk_id": "chunk-0075"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-9bb05f332b82d8c3",
+          "members": [
+            "req-449359733cf7033be7fd",
+            "req-262324f5492047a98558"
+          ],
+          "reason": "Both require the uniform bad_record_mac alert for every record decryption or deprotection failure. The canonical is the direct primary-body alert definition rather than the security-considerations restatement."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-9c66420e0a492fc5",
+      "members": [
+        {
+          "requirement_id": "req-03e19739660d5ce62f00",
+          "condition": "",
+          "required_behavior": "Limit PskKeyExchangeModes.ke_modes to 1 through 255 encoded octets.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n        PskKeyExchangeMode ke_modes<1..255>;\n    } PskKeyExchangeModes;",
+            "line_start": 7069,
+            "line_end": 7071,
+            "verified": true,
+            "chunk_id": "chunk-0103"
+          }
+        },
+        {
+          "requirement_id": "req-6b4bdb77e65459f2270a",
+          "condition": "when encoding a PskKeyExchangeModes structure",
+          "required_behavior": "encode ke_modes as a vector whose encoded content length is from 1 through 255 octets",
+          "forbidden_behavior": "encode an empty ke_modes vector or one longer than 255 octets",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The vector length prefix and payload length are directly parseable.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n          PskKeyExchangeMode ke_modes<1..255>;\n      } PskKeyExchangeModes;",
+            "line_start": 2871,
+            "line_end": 2873,
+            "verified": true,
+            "chunk_id": "chunk-0042"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-9c66420e0a492fc5",
+          "members": [
+            "req-6b4bdb77e65459f2270a",
+            "req-03e19739660d5ce62f00"
+          ],
+          "reason": "Both impose the same 1 through 255 encoded-octet bounds on PskKeyExchangeModes.ke_modes; the canonical evidence is the direct primary-body structure."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-a1a4fec051870e70",
+      "members": [
+        {
+          "requirement_id": "req-37f7859448af6d865858",
+          "condition": "",
+          "required_behavior": "Limit the encoded ServerHello.extensions vector to 6 through 2^16-1 octets.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n        ProtocolVersion legacy_version = 0x0303;    /* TLS v1.2 */\n        Random random;\n        opaque legacy_session_id_echo<0..32>;\n        CipherSuite cipher_suite;\n        uint8 legacy_compression_method = 0;\n        Extension extensions<6..2^16-1>;",
+            "line_start": 6961,
+            "line_end": 6967,
+            "verified": true,
+            "chunk_id": "chunk-0102"
+          }
+        },
+        {
+          "requirement_id": "req-a9f641e81503e836355d",
+          "condition": "when encoding or parsing ServerHello.extensions",
+          "required_behavior": "encode an Extension vector whose byte length is from 6 through 2^16-1",
+          "forbidden_behavior": "encode the ServerHello extensions vector outside the declared bounds",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The extensions vector's length prefix can be checked against both declared bounds.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "Extension extensions<6..2^16-1>;",
+            "line_start": 1695,
+            "line_end": 1695,
+            "verified": true,
+            "chunk_id": "chunk-0027"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-a1a4fec051870e70",
+          "members": [
+            "req-a9f641e81503e836355d",
+            "req-37f7859448af6d865858"
+          ],
+          "reason": "Both limit ServerHello.extensions to 6 through 2^16-1 octets; the canonical evidence is the direct primary-body structure."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-a6df13292a9b33e4",
+      "members": [
+        {
+          "requirement_id": "req-ca64d9f96e259769cbbb",
+          "condition": "when a client forms obfuscated_ticket_age for a ticket PskIdentity",
+          "required_behavior": "encode the ticket age in milliseconds plus ticket_age_add modulo 2^32",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The field can be recomputed from stored receipt time and ticket_age_add using fixed arithmetic.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "The \"obfuscated_ticket_age\"\n   field of each PskIdentity contains an obfuscated version of the\n   ticket age formed by taking the age in milliseconds and adding the\n   \"ticket_age_add\" value that was included with the ticket (see\n   Section 4.6.1), modulo 2^32.",
+            "line_start": 3208,
+            "line_end": 3212,
+            "verified": true,
+            "chunk_id": "chunk-0046"
+          }
+        },
+        {
+          "requirement_id": "req-fab787264aa768d8891b",
+          "condition": "a client encodes obfuscated_ticket_age for a ticket",
+          "required_behavior": "transmit client ticket age plus ticket_age_add modulo 2^32",
+          "forbidden_behavior": "using non-modular addition or transmitting the unobscured age",
+          "error_behavior": "",
+          "check_type": "security_consistency",
+          "why_checkable": "The wire value is determined by an exact arithmetic expression.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "The client-side ticket age is\n      added to this value modulo 2^32 to obtain the value that is\n      transmitted by the client.",
+            "line_start": 4124,
+            "line_end": 4126,
+            "verified": true,
+            "chunk_id": "chunk-0063"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-a6df13292a9b33e4",
+          "members": [
+            "req-ca64d9f96e259769cbbb",
+            "req-fab787264aa768d8891b"
+          ],
+          "reason": "Both require obfuscated_ticket_age to be the client ticket age plus ticket_age_add modulo 2^32. The canonical requirement states the complete field formula, including milliseconds, directly."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-aa1f9dc6c287b65a",
+      "members": [
+        {
+          "requirement_id": "req-22933e9bed98e16dd376",
+          "condition": "computing Finished.verify_data",
+          "required_behavior": "compute HMAC over Transcript-Hash(Handshake Context, Certificate if present, CertificateVerify if present) using finished_key",
+          "forbidden_behavior": "use a different MAC key or transcript input",
+          "error_behavior": "",
+          "check_type": "security_consistency",
+          "why_checkable": "Known transcript and key-schedule values allow exact recomputation.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "verify_data =\n    HMAC(finished_key,\n         Transcript-Hash(Handshake Context,\n                         Certificate*, CertificateVerify*))",
+            "line_start": 3992,
+            "line_end": 3995,
+            "verified": true,
+            "chunk_id": "chunk-0060"
+          }
+        },
+        {
+          "requirement_id": "req-fa607ead827892f5f0a5",
+          "condition": "computing Finished",
+          "required_behavior": "MAC Transcript-Hash(Handshake Context, Certificate, CertificateVerify) with a MAC key derived from the Base Key",
+          "forbidden_behavior": "use a different transcript input or a MAC key not derived from the applicable Base Key",
+          "error_behavior": "",
+          "check_type": "security_consistency",
+          "why_checkable": "Known transcript and key-schedule inputs allow recomputation of the Finished MAC.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "Finished:  A MAC over the value Transcript-Hash(Handshake Context,\nCertificate, CertificateVerify) using a MAC key derived from the\nBase Key.",
+            "line_start": 3437,
+            "line_end": 3439,
+            "verified": true,
+            "chunk_id": "chunk-0052"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-aa1f9dc6c287b65a",
+          "members": [
+            "req-fa607ead827892f5f0a5",
+            "req-22933e9bed98e16dd376"
+          ],
+          "reason": "Both compute Finished.verify_data as a MAC over the same handshake transcript using a key derived from the applicable Base Key; the canonical evidence gives the direct HMAC formula, finished_key, and optional-certificate handling."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-aca1fb4ce22aca52",
+      "members": [
+        {
+          "requirement_id": "req-92f64a9f3368bd58cba3",
+          "condition": "",
+          "required_behavior": "Encode and decode KeyUpdateRequest.update_not_requested with numeric value 0.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "enum {\n          update_not_requested(0), update_requested(1), (255)\n      } KeyUpdateRequest;",
+            "line_start": 7397,
+            "line_end": 7399,
+            "verified": true,
+            "chunk_id": "chunk-0104"
+          }
+        },
+        {
+          "requirement_id": "req-ca25c3009cb0a57a5b79",
+          "condition": "encoding or parsing KeyUpdateRequest",
+          "required_behavior": "map update_not_requested to value 0",
+          "forbidden_behavior": "using another numeric value for update_not_requested",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The enum's wire value is explicit.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "update_not_requested(0)",
+            "line_start": 4232,
+            "line_end": 4232,
+            "verified": true,
+            "chunk_id": "chunk-0066"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-aca1fb4ce22aca52",
+          "members": [
+            "req-ca25c3009cb0a57a5b79",
+            "req-92f64a9f3368bd58cba3"
+          ],
+          "reason": "Both map KeyUpdateRequest.update_not_requested to numeric value 0. The canonical requirement uses the direct primary-body enum definition rather than the appendix repetition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-b314070f0935e3a3",
+      "members": [
+        {
+          "requirement_id": "req-0fc45fdb47c5f2584d8f",
+          "condition": "when encoding or decoding ecdsa_secp521r1_sha512",
+          "required_behavior": "map ecdsa_secp521r1_sha512 to SignatureScheme code point 0x0603",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The enum name-to-wire-value mapping is exact.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "ecdsa_secp521r1_sha512(0x0603),",
+            "line_start": 2309,
+            "line_end": 2309,
+            "verified": true,
+            "chunk_id": "chunk-0033"
+          }
+        },
+        {
+          "requirement_id": "req-a4b7a571eb7ee4222636",
+          "condition": "",
+          "required_behavior": "Encode and decode SignatureScheme.ecdsa_secp521r1_sha512 with numeric value 0x0603.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "ecdsa_secp521r1_sha512(0x0603),",
+            "line_start": 7180,
+            "line_end": 7180,
+            "verified": true,
+            "chunk_id": "chunk-0103"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-b314070f0935e3a3",
+          "members": [
+            "req-0fc45fdb47c5f2584d8f",
+            "req-a4b7a571eb7ee4222636"
+          ],
+          "reason": "Both map ecdsa_secp521r1_sha512 to 0x0603. The canonical requirement uses the direct primary-body SignatureScheme definition rather than the appendix repetition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-bb8eb862224d0b2b",
+      "members": [
+        {
+          "requirement_id": "req-0128aaa445a7bc135be8",
+          "condition": "encoding or interpreting CertificateType RawPublicKey",
+          "required_behavior": "use enum value 2",
+          "forbidden_behavior": "map RawPublicKey to another wire value",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The enum has a fixed one-byte value.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "RawPublicKey(2),",
+            "line_start": 3550,
+            "line_end": 3550,
+            "verified": true,
+            "chunk_id": "chunk-0054"
+          }
+        },
+        {
+          "requirement_id": "req-9ba3d3adbe0edc23e283",
+          "condition": "",
+          "required_behavior": "Encode and decode CertificateType.RawPublicKey with numeric value 2.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "RawPublicKey(2),",
+            "line_start": 7342,
+            "line_end": 7342,
+            "verified": true,
+            "chunk_id": "chunk-0104"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-bb8eb862224d0b2b",
+          "members": [
+            "req-0128aaa445a7bc135be8",
+            "req-9ba3d3adbe0edc23e283"
+          ],
+          "reason": "Both require CertificateType.RawPublicKey to use wire value 2; the canonical member is the direct primary-body definition rather than the repeated appendix definition."
+        }
+      ],
+      "known_conflicts": []
+    },
+    {
+      "component_id": "recall-comp-bbad2cc148c451aa",
+      "members": [
+        {
+          "requirement_id": "req-3bc0bee3a2b9d288ccee",
+          "condition": "",
+          "required_behavior": "Encode TLSCiphertext.encrypted_record with exactly TLSCiphertext.length octets.",
+          "forbidden_behavior": "",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "struct {\n          ContentType opaque_type = application_data; /* 23 */\n          ProtocolVersion legacy_record_version = 0x0303; /* TLS v1.2 */\n          uint16 length;\n          opaque encrypted_record[TLSCiphertext.length];\n      } TLSCiphertext;",
+            "line_start": 6810,
+            "line_end": 6815,
+            "verified": true,
+            "chunk_id": "chunk-0102"
+          }
+        },
+        {
+          "requirement_id": "req-7e9605f9ae52df3b558a",
+          "condition": "encoding or parsing TLSCiphertext",
+          "required_behavior": "encode encrypted_record as exactly TLSCiphertext.length opaque bytes after length",
+          "forbidden_behavior": "a ciphertext body whose byte count differs from length or is out of order",
+          "error_behavior": "",
+          "check_type": "structural_constraint",
+          "why_checkable": "The dependent vector length and final position are explicit.",
+          "eligibility": "eligible",
+          "evidence": {
+            "source_id": "rfc8446",
+            "quote": "opaque encrypted_record[TLSCiphertext.length];",
+            "line_start": 4454,
+            "line_end": 4454,
+            "verified": true,
+            "chunk_id": "chunk-0069"
+          }
+        }
+      ],
+      "supporting_links": [
+        {
+          "kind": "recall_duplicate_pair",
+          "id": "pair-bbad2cc148c451aa",
+          "members": [
+            "req-7e9605f9ae52df3b558a",
+            "req-3bc0bee3a2b9d288ccee"
+          ],
+          "reason": "Both require TLSCiphertext.encrypted_record to contain exactly TLSCiphertext.length octets; the canonical evidence is the direct primary-body structure."
+        }
+      ],
+      "known_conflicts": []
+    }
+  ]
+}

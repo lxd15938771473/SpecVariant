@@ -1,0 +1,127 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0079",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "that the different calls to Derive-Secret may take different Messages\n   arguments, even with the same secret.  In a 0-RTT exchange,\n   Derive-Secret is called with four distinct transcripts; in a\n   1-RTT-only exchange, it is called with three distinct transcripts.",
+                             "line_start":  5213,
+                             "line_end":  5216,
+                             "condition":  "performing a 0-RTT key schedule",
+                             "required_behavior":  "call Derive-Secret with four distinct transcript inputs at the schedule\u0027s defined points",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "The transcript snapshots supplied to each derivation can be counted and compared.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "that the different calls to Derive-Secret may take different Messages\n   arguments, even with the same secret.  In a 0-RTT exchange,\n   Derive-Secret is called with four distinct transcripts; in a\n   1-RTT-only exchange, it is called with three distinct transcripts.",
+                             "line_start":  5213,
+                             "line_end":  5216,
+                             "condition":  "performing a 1-RTT-only key schedule",
+                             "required_behavior":  "call Derive-Secret with three distinct transcript inputs at the schedule\u0027s defined points",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "The transcript snapshots supplied to each derivation can be counted and compared.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "If a given secret is not available, then the 0-value consisting of a\n   string of Hash.length bytes set to zeros is used.  Note that this",
+                             "line_start":  5218,
+                             "line_end":  5219,
+                             "condition":  "a key-schedule input secret is unavailable",
+                             "required_behavior":  "substitute a Hash.length-byte string of zeros",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "The substitute value has a fixed length and byte pattern.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "If a given secret is not available, then the 0-value consisting of a\n   string of Hash.length bytes set to zeros is used.  Note that this\n   does not mean skipping rounds, so if PSK is not in use, Early Secret\n   will still be HKDF-Extract(0, 0).  For the computation of the",
+                             "line_start":  5218,
+                             "line_end":  5221,
+                             "condition":  "a key-schedule input secret is unavailable",
+                             "required_behavior":  "execute all key-schedule rounds rather than skipping a round",
+                             "forbidden_behavior":  "skip the round associated with the unavailable secret",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "The HKDF invocation sequence can be counted and compared.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "If a given secret is not available, then the 0-value consisting of a\n   string of Hash.length bytes set to zeros is used.  Note that this\n   does not mean skipping rounds, so if PSK is not in use, Early Secret\n   will still be HKDF-Extract(0, 0).  For the computation of the",
+                             "line_start":  5218,
+                             "line_end":  5221,
+                             "condition":  "PSK is not in use",
+                             "required_behavior":  "compute Early Secret as HKDF-Extract(0, 0)",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "The no-PSK derivation has fixed Salt and IKM values.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "binder_key, the label is \"ext binder\" for external PSKs (those\n   provisioned outside of TLS) and \"res binder\" for resumption PSKs\n   (those provisioned as the resumption master secret of a previous\n   handshake).  The different labels prevent the substitution of one\n   type of PSK for the other.",
+                             "line_start":  5222,
+                             "line_end":  5226,
+                             "condition":  "computing binder_key for an external PSK",
+                             "required_behavior":  "use label \u0027ext binder\u0027",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "The selected PSK origin can be checked against the exact HKDF label.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "binder_key, the label is \"ext binder\" for external PSKs (those\n   provisioned outside of TLS) and \"res binder\" for resumption PSKs\n   (those provisioned as the resumption master secret of a previous\n   handshake).  The different labels prevent the substitution of one\n   type of PSK for the other.",
+                             "line_start":  5222,
+                             "line_end":  5226,
+                             "condition":  "computing binder_key for a resumption PSK",
+                             "required_behavior":  "use label \u0027res binder\u0027",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "The selected PSK origin can be checked against the exact HKDF label.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "There are multiple potential Early Secret values, depending on which\n   PSK the server ultimately selects.  The client will need to compute\n   one for each potential PSK; if no PSK is selected, it will then need",
+                             "line_start":  5228,
+                             "line_end":  5230,
+                             "condition":  "a client offers multiple potential PSKs",
+                             "required_behavior":  "compute an Early Secret for each potential PSK",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "The number and inputs of client Early Secret computations can be checked against the offer.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "There are multiple potential Early Secret values, depending on which\n   PSK the server ultimately selects.  The client will need to compute\n   one for each potential PSK; if no PSK is selected, it will then need\n   to compute the Early Secret corresponding to the zero PSK.",
+                             "line_start":  5228,
+                             "line_end":  5231,
+                             "condition":  "the server selects no offered PSK",
+                             "required_behavior":  "compute the Early Secret corresponding to the zero PSK",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "The no-selection branch has a deterministic fallback derivation.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Once all the values which are to be derived from a given secret have\n   been computed, that secret SHOULD be erased.",
+                             "line_start":  5233,
+                             "line_end":  5234,
+                             "condition":  "all values to be derived from a given secret have been computed",
+                             "required_behavior":  "erase that secret",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Secret lifetime can be inspected after the final dependent derivation.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

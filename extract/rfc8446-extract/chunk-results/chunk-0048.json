@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0048",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "In order to avoid deadlocks,\n   when accepting \"early_data\", servers MUST process the client's\n   ClientHello and then immediately send their flight of messages,\n   rather than waiting for the client's EndOfEarlyData message before\n   sending its ServerHello.",
+      "line_start": 3275,
+      "line_end": 3279,
+      "condition": "when a server accepts early_data",
+      "required_behavior": "process the client's ClientHello and then immediately send the server flight",
+      "forbidden_behavior": "wait for the client's EndOfEarlyData before sending ServerHello",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The server's handshake state transition and outbound message order can be observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

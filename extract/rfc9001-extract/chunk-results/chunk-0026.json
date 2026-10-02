@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0026",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "*  Version Negotiation packets have no cryptographic protection.",
+      "line_start": 983,
+      "line_end": 983,
+      "condition": "When encoding or processing a Version Negotiation packet.",
+      "required_behavior": "Treat the packet as having no cryptographic protection.",
+      "forbidden_behavior": "Applying or requiring cryptographic packet protection for a Version Negotiation packet.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Wire encoding and receive processing can be checked for absence of cryptographic protection fields and operations.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  Retry packets use AEAD_AES_128_GCM to provide protection against\n      accidental modification and to limit the entities that can produce\n      a valid Retry; see Section 5.8.",
+      "line_start": 985,
+      "line_end": 987,
+      "condition": "When protecting or validating a Retry packet.",
+      "required_behavior": "Use AEAD_AES_128_GCM.",
+      "forbidden_behavior": "Using a different AEAD algorithm for Retry packet protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Retry integrity generation and validation can be tested against AEAD_AES_128_GCM vectors.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  Initial packets use AEAD_AES_128_GCM with keys derived from the\n      Destination Connection ID field of the first Initial packet sent\n      by the client; see Section 5.2.",
+      "line_start": 989,
+      "line_end": 991,
+      "condition": "When protecting or unprotecting an Initial packet.",
+      "required_behavior": "Use AEAD_AES_128_GCM.",
+      "forbidden_behavior": "Using a different AEAD algorithm for Initial packet protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Initial packet protection can be tested against AEAD_AES_128_GCM vectors.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  Initial packets use AEAD_AES_128_GCM with keys derived from the\n      Destination Connection ID field of the first Initial packet sent\n      by the client; see Section 5.2.",
+      "line_start": 989,
+      "line_end": 991,
+      "condition": "When deriving keys for Initial packets.",
+      "required_behavior": "Derive the keys from the Destination Connection ID field of the first Initial packet sent by the client.",
+      "forbidden_behavior": "Deriving Initial keys from another connection ID or another packet's field.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Key derivation inputs can be instrumented and compared with the first client Initial's Destination Connection ID.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  All other packets have strong cryptographic protections for\n      confidentiality and integrity, using keys and algorithms\n      negotiated by TLS.",
+      "line_start": 993,
+      "line_end": 995,
+      "condition": "When protecting a packet other than Version Negotiation, Retry, or Initial.",
+      "required_behavior": "Provide cryptographic confidentiality protection.",
+      "forbidden_behavior": "Sending the packet without confidentiality protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet ciphertext and deprotection behavior can be tested for confidentiality protection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  All other packets have strong cryptographic protections for\n      confidentiality and integrity, using keys and algorithms\n      negotiated by TLS.",
+      "line_start": 993,
+      "line_end": 995,
+      "condition": "When protecting a packet other than Version Negotiation, Retry, or Initial.",
+      "required_behavior": "Provide cryptographic integrity protection.",
+      "forbidden_behavior": "Sending the packet without integrity protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet tampering tests can verify integrity checking and rejection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  All other packets have strong cryptographic protections for\n      confidentiality and integrity, using keys and algorithms\n      negotiated by TLS.",
+      "line_start": 993,
+      "line_end": 995,
+      "condition": "When selecting keys for a packet other than Version Negotiation, Retry, or Initial.",
+      "required_behavior": "Use the packet-protection keys negotiated by TLS.",
+      "forbidden_behavior": "Using packet-protection keys inconsistent with the TLS negotiation.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The selected key material can be correlated with TLS key installation events.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "*  All other packets have strong cryptographic protections for\n      confidentiality and integrity, using keys and algorithms\n      negotiated by TLS.",
+      "line_start": 993,
+      "line_end": 995,
+      "condition": "When selecting a protection algorithm for a packet other than Version Negotiation, Retry, or Initial.",
+      "required_behavior": "Use the packet-protection algorithm negotiated by TLS.",
+      "forbidden_behavior": "Using an algorithm inconsistent with the TLS negotiation.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The configured packet-protection algorithm can be compared with the TLS negotiation result.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The same packet\n   protection process is applied to Initial packets.",
+      "line_start": 998,
+      "line_end": 999,
+      "condition": "When applying packet protection to an Initial packet.",
+      "required_behavior": "Apply the same packet-protection process used for Handshake, 0-RTT, and 1-RTT packets, with the Initial-specific algorithm and keys.",
+      "forbidden_behavior": "Using a different packet-protection process solely because the packet is Initial.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Protection pipeline selection can be compared across Initial, Handshake, 0-RTT, and 1-RTT packet types.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Retry packets use a fixed key",
+      "line_start": 1002,
+      "line_end": 1002,
+      "condition": "When generating or validating Retry packet protection.",
+      "required_behavior": "Use the fixed Retry key.",
+      "forbidden_behavior": "Using a connection-specific or TLS-negotiated key for Retry packet protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Retry generation and validation can be compared across connections and against the specified fixed-key behavior.",
+      "eligibility": "eligible"
+    }
+  ]
+}

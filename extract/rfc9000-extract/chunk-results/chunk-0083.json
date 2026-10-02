@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0083",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   An endpoint detects a potential Stateless Reset using the trailing 16\n   bytes of the UDP datagram.",
+      "line_start": 3487,
+      "line_end": 3488,
+      "condition": "When detecting a potential Stateless Reset from a UDP datagram.",
+      "required_behavior": "Use the trailing 16 bytes of the UDP datagram as the candidate stateless reset token.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can construct datagrams with controlled trailing bytes and verify that detection uses exactly the final 16 bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   bytes of the UDP datagram.  An endpoint remembers all stateless reset\n   tokens associated with the connection IDs and remote addresses for\n   datagrams it has recently sent.",
+      "line_start": 3488,
+      "line_end": 3490,
+      "condition": "For connection IDs and remote addresses used for recently sent datagrams.",
+      "required_behavior": "Remember all associated stateless reset tokens.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Implementation state can be inspected after sending datagrams to verify retention of every associated token and its connection-ID and remote-address association.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   datagrams it has recently sent.  This includes Stateless Reset Token\n   field values from NEW_CONNECTION_ID frames and the server's transport\n   parameters but excludes stateless reset tokens associated with\n   connection IDs that are either unused or retired.",
+      "line_start": 3490,
+      "line_end": 3493,
+      "condition": "When maintaining the stateless reset tokens used to detect resets.",
+      "required_behavior": "Include Stateless Reset Token field values received in NEW_CONNECTION_ID frames and the server's transport parameters.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Tests can supply tokens through each named protocol source and verify that both become detection candidates.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   parameters but excludes stateless reset tokens associated with\n   connection IDs that are either unused or retired.",
+      "line_start": 3492,
+      "line_end": 3493,
+      "condition": "When maintaining stateless reset tokens used for detection.",
+      "required_behavior": "",
+      "forbidden_behavior": "Include tokens associated with unused or retired connection IDs.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Tests can mark connection IDs unused or retired and verify that their tokens are excluded from the detection set.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   identifies a received datagram as a Stateless Reset by comparing the\n   last 16 bytes of the datagram with all stateless reset tokens\n   associated with the remote address on which the datagram was\n   received.",
+      "line_start": 3494,
+      "line_end": 3497,
+      "condition": "When determining whether a received datagram is a Stateless Reset.",
+      "required_behavior": "Compare the datagram's last 16 bytes with all stateless reset tokens associated with the remote address on which it was received.",
+      "forbidden_behavior": "Use tokens associated only with other remote addresses as matches for the received datagram.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can configure different token sets per remote address and verify the exact candidate set used for a received datagram.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Endpoints MAY skip this check if any packet from a datagram is\n   successfully processed.",
+      "line_start": 3500,
+      "line_end": 3501,
+      "condition": "If any packet from an incoming datagram is successfully processed.",
+      "required_behavior": "The endpoint is permitted to skip the stateless reset token comparison.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Control-flow instrumentation can verify that skipping the comparison occurs only under the stated successful-processing condition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   successfully processed.  However, the comparison MUST be performed\n   when the first packet in an incoming datagram either cannot be\n   associated with a connection or cannot be decrypted.",
+      "line_start": 3501,
+      "line_end": 3503,
+      "condition": "When the first packet in an incoming datagram cannot be associated with a connection.",
+      "required_behavior": "Perform the stateless reset token comparison.",
+      "forbidden_behavior": "Skip the stateless reset token comparison.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can provide an incoming datagram whose first packet has no connection association and observe whether comparison is performed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   successfully processed.  However, the comparison MUST be performed\n   when the first packet in an incoming datagram either cannot be\n   associated with a connection or cannot be decrypted.",
+      "line_start": 3501,
+      "line_end": 3503,
+      "condition": "When the first packet in an incoming datagram cannot be decrypted.",
+      "required_behavior": "Perform the stateless reset token comparison.",
+      "forbidden_behavior": "Skip the stateless reset token comparison.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can provide an incoming datagram whose first packet fails decryption and observe whether comparison is performed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MUST NOT check for any stateless reset tokens associated\n   with connection IDs it has not used or for connection IDs that have\n   been retired.",
+      "line_start": 3505,
+      "line_end": 3507,
+      "condition": "When checking a received datagram for a Stateless Reset.",
+      "required_behavior": "",
+      "forbidden_behavior": "Check any stateless reset token associated with a connection ID the endpoint has not used.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can install a token for an unused connection ID and verify that a matching datagram is not checked against that token.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MUST NOT check for any stateless reset tokens associated\n   with connection IDs it has not used or for connection IDs that have\n   been retired.",
+      "line_start": 3505,
+      "line_end": 3507,
+      "condition": "When checking a received datagram for a Stateless Reset.",
+      "required_behavior": "",
+      "forbidden_behavior": "Check any stateless reset token associated with a retired connection ID.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can retire a connection ID and verify that its token is no longer used in stateless reset checks.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When comparing a datagram to stateless reset token values, endpoints\n   MUST perform the comparison without leaking information about the\n   value of the token.",
+      "line_start": 3509,
+      "line_end": 3511,
+      "condition": "When comparing a datagram with stateless reset token values.",
+      "required_behavior": "Perform the comparison without leaking information about token values.",
+      "forbidden_behavior": "Expose token-value information through the comparison, including through token-dependent timing behavior.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The comparison implementation can be statically inspected and subjected to timing or side-channel tests to detect behavior dependent on token values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If the last 16 bytes of the datagram are identical in value to a\n   stateless reset token, the endpoint MUST enter the draining period\n   and not send any further packets on this connection.",
+      "line_start": 3522,
+      "line_end": 3524,
+      "condition": "If the datagram's last 16 bytes are identical in value to a stateless reset token.",
+      "required_behavior": "Enter the draining period.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A matching datagram can be injected and the endpoint's resulting connection state can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If the last 16 bytes of the datagram are identical in value to a\n   stateless reset token, the endpoint MUST enter the draining period\n   and not send any further packets on this connection.",
+      "line_start": 3522,
+      "line_end": 3524,
+      "condition": "After the datagram's last 16 bytes match a stateless reset token.",
+      "required_behavior": "",
+      "forbidden_behavior": "Send any further packets on the affected connection.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "After injecting a matching datagram, outbound traffic can be monitored to verify that no further packet is sent on the connection.",
+      "eligibility": "eligible"
+    }
+  ]
+}

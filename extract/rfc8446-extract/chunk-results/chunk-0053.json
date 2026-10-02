@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0053",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "This value is computed by hashing the concatenation\nof each included handshake message, including the handshake message\nheader carrying the handshake message type and length fields, but not\nincluding record layer headers.",
+      "line_start": 3475,
+      "line_end": 3479,
+      "condition": "computing a TLS transcript hash",
+      "required_behavior": "hash the concatenation of included handshake messages in transcript order",
+      "forbidden_behavior": "hash messages separately without preserving their transcript concatenation",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A known sequence of encoded messages yields a reproducible hash input.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This value is computed by hashing the concatenation\nof each included handshake message, including the handshake message\nheader carrying the handshake message type and length fields, but not\nincluding record layer headers.",
+      "line_start": 3475,
+      "line_end": 3479,
+      "condition": "adding a handshake message to the transcript hash",
+      "required_behavior": "include the handshake message type field in the hashed bytes",
+      "forbidden_behavior": "hash only the handshake body",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The exact hash input can be captured and checked for the type byte.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This value is computed by hashing the concatenation\nof each included handshake message, including the handshake message\nheader carrying the handshake message type and length fields, but not\nincluding record layer headers.",
+      "line_start": 3475,
+      "line_end": 3479,
+      "condition": "adding a handshake message to the transcript hash",
+      "required_behavior": "include the handshake message length field in the hashed bytes",
+      "forbidden_behavior": "omit the handshake length field from the transcript input",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The exact hash input can be captured and checked for the three-byte length.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This value is computed by hashing the concatenation\nof each included handshake message, including the handshake message\nheader carrying the handshake message type and length fields, but not\nincluding record layer headers.",
+      "line_start": 3475,
+      "line_end": 3479,
+      "condition": "computing a TLS transcript hash from handshake records",
+      "required_behavior": "exclude record-layer headers from the hash input",
+      "forbidden_behavior": "include record-layer headers in the transcript hash",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Captured record bytes can distinguish the record header from the encoded handshake message.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As an exception to this general rule, when the server responds to a\nClientHello with a HelloRetryRequest, the value of ClientHello1 is\nreplaced with a special synthetic handshake message of handshake type\n\"message_hash\" containing Hash(ClientHello1).",
+      "line_start": 3483,
+      "line_end": 3486,
+      "condition": "the server responds to ClientHello1 with HelloRetryRequest",
+      "required_behavior": "replace ClientHello1 in the transcript with a synthetic handshake message",
+      "forbidden_behavior": "retain the encoded ClientHello1 directly in the post-HelloRetryRequest transcript",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The transcript state after HelloRetryRequest can be recomputed from ClientHello1.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Hash(message_hash ||        /* Handshake type */\n     00 00 Hash.length  ||  /* Handshake message length (bytes) */\n     Hash(ClientHello1) ||  /* Hash of ClientHello1 */\n     HelloRetryRequest  || ... || Mn)",
+      "line_start": 3489,
+      "line_end": 3492,
+      "condition": "encoding the synthetic ClientHello1 replacement",
+      "required_behavior": "use handshake type message_hash",
+      "forbidden_behavior": "use ClientHello or another handshake type for the synthetic message",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The first byte of the synthetic handshake encoding is directly inspectable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Hash(message_hash ||        /* Handshake type */\n     00 00 Hash.length  ||  /* Handshake message length (bytes) */\n     Hash(ClientHello1) ||  /* Hash of ClientHello1 */\n     HelloRetryRequest  || ... || Mn)",
+      "line_start": 3489,
+      "line_end": 3492,
+      "condition": "encoding the synthetic ClientHello1 replacement",
+      "required_behavior": "encode its three-byte handshake length as 00 00 Hash.length",
+      "forbidden_behavior": "encode a length different from the negotiated hash output length",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The synthetic message length bytes have an exact expected encoding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Hash(message_hash ||        /* Handshake type */\n     00 00 Hash.length  ||  /* Handshake message length (bytes) */\n     Hash(ClientHello1) ||  /* Hash of ClientHello1 */\n     HelloRetryRequest  || ... || Mn)",
+      "line_start": 3489,
+      "line_end": 3492,
+      "condition": "encoding the synthetic ClientHello1 replacement",
+      "required_behavior": "use Hash(ClientHello1) as the synthetic message body",
+      "forbidden_behavior": "use the raw ClientHello1 or a hash of different bytes as the body",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The body can be compared with a direct hash of the first ClientHello encoding.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For concreteness, the transcript hash is always taken from the\nfollowing sequence of handshake messages, starting at the first\nClientHello and including only those messages that were sent:",
+      "line_start": 3499,
+      "line_end": 3501,
+      "condition": "initializing the handshake transcript",
+      "required_behavior": "start the transcript at the first ClientHello",
+      "forbidden_behavior": "include earlier records or begin at a later handshake message",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The first transcript input is visible in a handshake trace.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For concreteness, the transcript hash is always taken from the\nfollowing sequence of handshake messages, starting at the first\nClientHello and including only those messages that were sent:",
+      "line_start": 3499,
+      "line_end": 3501,
+      "condition": "constructing the transcript from the defined handshake sequence",
+      "required_behavior": "include only handshake messages that were actually sent",
+      "forbidden_behavior": "hash placeholders for optional messages that were absent",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The observed message sequence determines which optional transcript entries exist.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "ClientHello, HelloRetryRequest, ClientHello, ServerHello,\nEncryptedExtensions, server CertificateRequest, server Certificate,\nserver CertificateVerify, server Finished, EndOfEarlyData, client\nCertificate, client CertificateVerify, client Finished.",
+      "line_start": 3502,
+      "line_end": 3505,
+      "condition": "constructing the main-handshake transcript",
+      "required_behavior": "preserve the defined order of ClientHello, optional retry sequence, server authentication messages, EndOfEarlyData, and client authentication messages",
+      "forbidden_behavior": "reorder included handshake messages in the transcript",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A trace supplies a concrete ordered list that can be compared with transcript updates.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Note,\nhowever, that subsequent post-handshake authentications do not\ninclude each other, just the messages through the end of the main\nhandshake.",
+      "line_start": 3508,
+      "line_end": 3511,
+      "condition": "computing a transcript for a subsequent post-handshake authentication",
+      "required_behavior": "",
+      "forbidden_behavior": "include messages from an earlier post-handshake authentication",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Multiple post-handshake exchanges can test whether prior exchange bytes affect the signature.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Note,\nhowever, that subsequent post-handshake authentications do not\ninclude each other, just the messages through the end of the main\nhandshake.",
+      "line_start": 3508,
+      "line_end": 3511,
+      "condition": "forming the base transcript for post-handshake authentication",
+      "required_behavior": "include the handshake messages through the end of the main handshake",
+      "forbidden_behavior": "truncate the base transcript before the main handshake ends",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The saved main-handshake transcript hash can be compared with the post-handshake base state.",
+      "eligibility": "eligible"
+    }
+  ]
+}

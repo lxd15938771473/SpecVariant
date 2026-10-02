@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0062",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "These messages use a handshake content type",
+      "line_start": 4042,
+      "line_end": 4042,
+      "condition": "sending a TLS post-handshake message",
+      "required_behavior": "use the handshake content type",
+      "forbidden_behavior": "using a non-handshake inner content type",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The record's content type is directly encoded and parsed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "These messages use a handshake content type and are encrypted under\n   the appropriate application traffic key.",
+      "line_start": 4042,
+      "line_end": 4043,
+      "condition": "sending a TLS post-handshake message",
+      "required_behavior": "encrypt the message under the appropriate application traffic key",
+      "forbidden_behavior": "using early-data or handshake traffic keys",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The record-protection epoch and selected application key are observable.",
+      "eligibility": "eligible"
+    }
+  ]
+}

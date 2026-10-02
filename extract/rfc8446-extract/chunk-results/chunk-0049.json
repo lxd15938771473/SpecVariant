@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0049",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The next two messages from the server, EncryptedExtensions and\n   CertificateRequest, contain information from the server that\n   determines the rest of the handshake.",
+      "line_start": 3283,
+      "line_end": 3285,
+      "condition": "when the server sends CertificateRequest in its post-ServerHello flight",
+      "required_behavior": "send EncryptedExtensions before CertificateRequest",
+      "forbidden_behavior": "send CertificateRequest before EncryptedExtensions",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The two server handshake message types have an explicit relative order.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "These messages are encrypted\n   with keys derived from the server_handshake_traffic_secret.",
+      "line_start": 3285,
+      "line_end": 3286,
+      "condition": "when the server sends EncryptedExtensions",
+      "required_behavior": "encrypt it with keys derived from server_handshake_traffic_secret",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The record protection epoch for EncryptedExtensions can be traced to its traffic secret.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "These messages are encrypted\n   with keys derived from the server_handshake_traffic_secret.",
+      "line_start": 3285,
+      "line_end": 3286,
+      "condition": "when the server sends CertificateRequest",
+      "required_behavior": "encrypt it with keys derived from server_handshake_traffic_secret",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The record protection epoch for CertificateRequest can be traced to its traffic secret.",
+      "eligibility": "eligible"
+    }
+  ]
+}

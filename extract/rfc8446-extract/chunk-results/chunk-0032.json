@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0032",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "opaque cookie<1..2^16-1>;",
+      "line_start": 2197,
+      "line_end": 2197,
+      "condition": "when encoding or parsing a Cookie structure",
+      "required_behavior": "encode cookie as an opaque vector between 1 and 65535 bytes",
+      "forbidden_behavior": "encode an empty cookie or a cookie longer than 65535 bytes",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The vector length is directly available to the extension parser and serializer.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When sending the new ClientHello, the client MUST copy\n   the contents of the extension received in the HelloRetryRequest into\n   a \"cookie\" extension in the new ClientHello.",
+      "line_start": 2217,
+      "line_end": 2219,
+      "condition": "a client sends a new ClientHello after receiving a cookie extension in HelloRetryRequest",
+      "required_behavior": "copy the received cookie extension contents unchanged into a cookie extension in the new ClientHello",
+      "forbidden_behavior": "omit or alter the received cookie contents",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The HelloRetryRequest cookie bytes can be compared with the retried ClientHello cookie bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Clients MUST NOT use\n   cookies in their initial ClientHello in subsequent connections.",
+      "line_start": 2219,
+      "line_end": 2220,
+      "condition": "a client starts a subsequent connection",
+      "required_behavior": "",
+      "forbidden_behavior": "include a previously obtained cookie in the initial ClientHello",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Initial ClientHello messages on later connections can be inspected for stale cookie reuse.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When a server is operating statelessly, it may receive an unprotected\n   record of type change_cipher_spec between the first and second\n   ClientHello (see Section 5).  Since the server is not storing any\n   state, this will appear as if it were the first message to be\n   received.  Servers operating statelessly MUST ignore these records.",
+      "line_start": 2222,
+      "line_end": 2226,
+      "condition": "a stateless server receives an unprotected change_cipher_spec record between the first and second ClientHello",
+      "required_behavior": "ignore the change_cipher_spec record",
+      "forbidden_behavior": "treat the record as a handshake message or fail the retry solely because of it",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A change_cipher_spec record can be inserted into a stateless retry flow and server behavior observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

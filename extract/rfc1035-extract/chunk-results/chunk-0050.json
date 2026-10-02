@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0050",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Master files are text files that contain RRs in text form.",
+      "line_start": 1852,
+      "line_end": 1852,
+      "condition": "When representing resource records in a master file.",
+      "required_behavior": "Represent the resource records in text form in a text file.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A master-file reader or writer can be checked for handling resource records as text.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0024",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "3.3.3. MB RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MADNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+",
+      "line_start": 779,
+      "line_end": 784,
+      "condition": "When implementing the experimental MB record RDATA format.",
+      "required_behavior": "Represent MB RDATA as a single MADNAME field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The MB RDATA serializer and parser can be checked for the single field shown in the format diagram.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.3. MB RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MADNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMADNAME         A <domain-name> which specifies a host which has the\n                specified mailbox.",
+      "line_start": 779,
+      "line_end": 789,
+      "condition": "When encoding or decoding MADNAME in an implemented experimental MB record.",
+      "required_behavior": "Encode and interpret MADNAME as a domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The MADNAME field codec can be checked for domain-name representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.3. MB RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MADNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMADNAME         A <domain-name> which specifies a host which has the\n                specified mailbox.",
+      "line_start": 779,
+      "line_end": 789,
+      "condition": "When constructing or interpreting an implemented experimental MB record.",
+      "required_behavior": "Use MADNAME to specify a host that has the specified mailbox.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A controlled mailbox and host fixture can verify that the MB target represents the mailbox host.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "3.3.3. MB RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   MADNAME                     /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n\nwhere:\n\nMADNAME         A <domain-name> which specifies a host which has the\n                specified mailbox.\n\n\n\nMockapetris                                                    [Page 14]\n\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n\nMB records cause additional section processing which looks up an A type\nRRs corresponding to MADNAME.",
+      "line_start": 779,
+      "line_end": 800,
+      "condition": "When processing an implemented experimental MB record.",
+      "required_behavior": "Trigger additional-section processing that looks up A resource records corresponding to MADNAME.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Additional-section processing can be observed with an MB record whose MADNAME has known A records.",
+      "eligibility": "eligible"
+    }
+  ]
+}

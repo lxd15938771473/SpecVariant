@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0175",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   replacing or racing Initial packets.  Once valid Initial packets have\n   been exchanged, subsequent Handshake packets are protected with the\n   Handshake keys, and an on-path attacker cannot force handshake\n   failure other than by dropping packets to cause endpoints to abandon\n   the attempt.",
+      "line_start": 6941,
+      "line_end": 6945,
+      "condition": "Once valid Initial packets have been exchanged.",
+      "required_behavior": "Protect subsequent Handshake packets with the Handshake keys.",
+      "forbidden_behavior": "Do not process subsequent Handshake packets without Handshake-key protection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A runtime or static test can verify that Handshake packets sent or accepted after valid Initial packet exchange use Handshake-key protection.",
+      "eligibility": "eligible"
+    }
+  ]
+}

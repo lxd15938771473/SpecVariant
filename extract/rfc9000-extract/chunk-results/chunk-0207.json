@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0207",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   The \"QUIC Versions\" registry governs a 32-bit space; see Section 15.",
+      "line_start": 7833,
+      "line_end": 7833,
+      "condition": "When representing or processing a QUIC version codepoint.",
+      "required_behavior": "Use a value from a 32-bit codepoint space.",
+      "forbidden_behavior": "Do not represent a QUIC version codepoint as wider than the defined 32-bit space.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The width and resulting numeric bounds of version codepoints can be checked in parsing, serialization, and internal representations.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The codepoint of 0x00000001 for the protocol is assigned with\n   permanent status to the protocol defined in this document.  The",
+      "line_start": 7838,
+      "line_end": 7839,
+      "condition": "When identifying the protocol version defined by RFC 9000.",
+      "required_behavior": "Use version codepoint 0x00000001.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Tests can verify that the implementation identifies and encodes the protocol defined by this document with the fixed 32-bit value 0x00000001.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   codepoint of 0x00000000 is permanently reserved; the note for this\n   codepoint indicates that this version is reserved for version\n   negotiation.",
+      "line_start": 7840,
+      "line_end": 7842,
+      "condition": "When processing or selecting QUIC version codepoint 0x00000000.",
+      "required_behavior": "Treat 0x00000000 as reserved for version negotiation.",
+      "forbidden_behavior": "Do not treat 0x00000000 as an ordinary assigned protocol version.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "An implementation can be tested to ensure that the fixed zero version value is recognized only in its reserved version-negotiation role.",
+      "eligibility": "eligible"
+    }
+  ]
+}

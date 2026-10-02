@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0172",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   The QUIC handshake incorporates the TLS 1.3 handshake and inherits\n   the cryptographic properties described in Appendix E.1 of [TLS13].",
+      "line_start": 6889,
+      "line_end": 6890,
+      "condition": "When implementing the QUIC handshake.",
+      "required_behavior": "Incorporate the TLS 1.3 handshake.",
+      "forbidden_behavior": "Implement the QUIC handshake without the TLS 1.3 handshake.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The handshake implementation can be inspected or exercised to verify that it uses the TLS 1.3 handshake.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The QUIC handshake incorporates the TLS 1.3 handshake and inherits\n   the cryptographic properties described in Appendix E.1 of [TLS13].",
+      "line_start": 6889,
+      "line_end": 6890,
+      "condition": "When implementing the QUIC handshake.",
+      "required_behavior": "Preserve the TLS 1.3 cryptographic properties described in Appendix E.1 of TLS 1.3.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The claimed properties are identified only by an external reference, so their exact implementation checkpoints are not established by this chunk alone.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   Any attack on the TLS handshake that compromises the secrecy or\n   uniqueness of session keys, or the authentication of the\n   participating peers, affects other security guarantees provided by\n   QUIC that depend on those keys.  For instance, migration (Section 9)\n   depends on the efficacy of confidentiality protections, both for the\n   negotiation of keys using the TLS handshake and for QUIC packet\n   protection, to avoid linkability across network paths.",
+      "line_start": 6895,
+      "line_end": 6901,
+      "condition": "When negotiating keys used for connection migration.",
+      "required_behavior": "Provide effective confidentiality protection for key negotiation through the TLS handshake to avoid linkability across network paths.",
+      "forbidden_behavior": "Expose key-negotiation information in a way that permits linking migration across network paths.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests and code inspection can verify that migration-related keys are negotiated under TLS confidentiality protection and that observable negotiation data does not enable cross-path linkage.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Any attack on the TLS handshake that compromises the secrecy or\n   uniqueness of session keys, or the authentication of the\n   participating peers, affects other security guarantees provided by\n   QUIC that depend on those keys.  For instance, migration (Section 9)\n   depends on the efficacy of confidentiality protections, both for the\n   negotiation of keys using the TLS handshake and for QUIC packet\n   protection, to avoid linkability across network paths.",
+      "line_start": 6895,
+      "line_end": 6901,
+      "condition": "When protecting QUIC packets during connection migration.",
+      "required_behavior": "Provide effective QUIC packet confidentiality protection to avoid linkability across network paths.",
+      "forbidden_behavior": "Protect packets in a way that permits linking migration across network paths.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet-protection behavior and network-visible outputs can be tested across path migration for confidentiality and cross-path linkability.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An attack on the integrity of the TLS handshake might allow an\n   attacker to affect the selection of application protocol or QUIC\n   version.",
+      "line_start": 6903,
+      "line_end": 6905,
+      "condition": "If the integrity of the TLS handshake is attacked.",
+      "required_behavior": "",
+      "forbidden_behavior": "Allow an attacker to affect application-protocol or QUIC-version selection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The passage describes a possible consequence rather than an unambiguous implementation requirement, so the constrained behavior is incomplete.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   In addition to the properties provided by TLS, the QUIC handshake\n   provides some defense against DoS attacks on the handshake.",
+      "line_start": 6907,
+      "line_end": 6908,
+      "condition": "When handling potential denial-of-service attacks against the QUIC handshake.",
+      "required_behavior": "Provide some defense against denial-of-service attacks on the handshake in addition to TLS properties.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The phrase \"some defense\" gives no specific mechanism, threshold, or observable acceptance criterion.",
+      "eligibility": "exclude"
+    }
+  ]
+}

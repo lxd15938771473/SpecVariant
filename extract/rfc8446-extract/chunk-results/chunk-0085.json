@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0085",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The simplest form of anti-replay defense is for the server to only\n   allow each session ticket to be used once.",
+      "line_start": 5500,
+      "line_end": 5501,
+      "condition": "when a server implements the single-use-ticket anti-replay defense",
+      "required_behavior": "allow each session ticket to be used at most once",
+      "forbidden_behavior": "accept a second use of the same session ticket",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The same ticket can be presented twice and successful resumptions or 0-RTT acceptances counted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For instance, the server\n   can maintain a database of all outstanding valid tickets, deleting\n   each ticket from the database as it is used.  If an unknown ticket is\n   provided, the server would then fall back to a full handshake.",
+      "line_start": 5501,
+      "line_end": 5504,
+      "condition": "when a server uses the described outstanding-ticket database and receives a ticket absent from that database",
+      "required_behavior": "fall back to a full handshake",
+      "forbidden_behavior": "resume the session or accept 0-RTT based on the unknown ticket",
+      "error_behavior": "continue with a full handshake rather than accepting the unknown ticket for resumption",
+      "check_type": "derived_constraint",
+      "why_checkable": "An unrecognized database key can be supplied and the resulting handshake path observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Unlike session databases,\n   session tickets can successfully do PSK-based session establishment\n   even without consistent storage, though when 0-RTT is allowed they\n   still require consistent storage for anti-replay of 0-RTT data, as\n   detailed in the following section.",
+      "line_start": 5514,
+      "line_end": 5518,
+      "condition": "when a distributed server deployment allows 0-RTT with session tickets",
+      "required_behavior": "use consistent storage sufficient to provide anti-replay protection for the 0-RTT data",
+      "forbidden_behavior": "rely on inconsistent ticket storage while claiming the described 0-RTT anti-replay property",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Cross-node replays can test whether ticket-use or ClientHello state is consistently enforced.",
+      "eligibility": "eligible"
+    }
+  ]
+}

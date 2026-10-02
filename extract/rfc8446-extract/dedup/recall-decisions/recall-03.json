@@ -1,0 +1,396 @@
+{
+  "schema_version": "speclitmus.dedup-decisions.v1",
+  "batch_id": "recall-03",
+  "decisions": [
+    {
+      "pair_id": "pair-a2c86b31b36c91bd",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check rejects replayed 0-RTT, while the right check accepts the PSK on the non-abort branch; these are different actions within the same alternative."
+    },
+    {
+      "pair_id": "pair-6b8336da2ab00c86",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One check requires sending a KeyUpdate response; the other independently constrains that response's request_update field to update_not_requested."
+    },
+    {
+      "pair_id": "pair-37031b60136ff134",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements concern support for different primitives: a CHACHA20 cipher suite versus rsa_pkcs1_sha256 certificate signatures."
+    },
+    {
+      "pair_id": "pair-11d72247194ce242",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The field-order checks apply to different message structures, CertificateRequest and CertificateVerify."
+    },
+    {
+      "pair_id": "pair-0f136ab9f35dcdec",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to different extensions and different allowed message sets."
+    },
+    {
+      "pair_id": "pair-a02079b3b7e44fe7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Although both failures produce illegal_parameter, one checks an unoffered supported_versions selection and the other a NamedGroup mismatch after HelloRetryRequest."
+    },
+    {
+      "pair_id": "pair-e1bce79efdc9e007",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The mappings are for different SignatureScheme values, rsa_pkcs1_sha256 and rsa_pkcs1_sha384, with different code points."
+    },
+    {
+      "pair_id": "pair-5d6ba6f0f2631427",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks reject different group errors: an HRR group absent from supported_groups versus a ServerHello group differing from the HRR selection."
+    },
+    {
+      "pair_id": "pair-3d234488a694a12f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules govern different extensions, client_certificate_type and signature_algorithms_cert."
+    },
+    {
+      "pair_id": "pair-b314070f0935e3a3",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-0fc45fdb47c5f2584d8f",
+      "reason": "Both map ecdsa_secp521r1_sha512 to 0x0603. The canonical requirement uses the direct primary-body SignatureScheme definition rather than the appendix repetition."
+    },
+    {
+      "pair_id": "pair-24e16e6778c9e725",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left requirement broadly classifies each binder as an HMAC computed by the binder procedure; the right requirement specifically checks the transcript-hash input, so their scopes are not identical."
+    },
+    {
+      "pair_id": "pair-0a311668533fd86f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements map different RSA-PSS scheme families and values: rsa_pss_rsae_sha512 at 0x0806 versus rsa_pss_pss_sha512 at 0x080b."
+    },
+    {
+      "pair_id": "pair-e69158a0221acb64",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement checks target different extensions with different allowed messages: key_share versus psk_key_exchange_modes."
+    },
+    {
+      "pair_id": "pair-b249e0031f546ed3",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The code-point checks apply to different schemes, rsa_pkcs1_sha256 and rsa_pkcs1_sha512."
+    },
+    {
+      "pair_id": "pair-3493846cc5406cdb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The numeric encodings are for different AlertDescription values, unsupported_certificate and unsupported_extension."
+    },
+    {
+      "pair_id": "pair-766cb24686d50623",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-22391ff889157c0adb79",
+      "reason": "Both map ecdsa_secp384r1_sha384 to 0x0503. The canonical requirement cites the direct primary-body SignatureScheme definition rather than the appendix repetition."
+    },
+    {
+      "pair_id": "pair-43f227d998223165",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One check derives new traffic keys from the next traffic secret; the other deletes the previous secret and keys after derivation."
+    },
+    {
+      "pair_id": "pair-4177f41f3e770e1b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left requirement defines the server's selected_group request semantics, while the right checks the client's group choice in the retried KeyShareEntry."
+    },
+    {
+      "pair_id": "pair-5f3989b37de95619",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One condition requires supported_groups when pre_shared_key is absent; the other requires key_share whenever supported_groups is present."
+    },
+    {
+      "pair_id": "pair-5f394a8d0c73e4eb",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The 0x0303 constraints apply to different endpoint messages and fields: ClientHello.legacy_version versus ServerHello.legacy_version."
+    },
+    {
+      "pair_id": "pair-cfab26c43acd024c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed-width X encodings use different curves and lengths, P-256 at 32 octets and P-521 at 66 octets."
+    },
+    {
+      "pair_id": "pair-926a7f46cf219e8e",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-21f7221ba5252f65b341",
+      "reason": "Both constrain OfferedPsks.binders to 33 through 2^16-1 encoded octets. The canonical requirement uses the direct primary-body structure definition."
+    },
+    {
+      "pair_id": "pair-fb61bf7700e1599e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks map different RSA-PSS scheme families and code points, rsa_pss_rsae_sha384 at 0x0805 and rsa_pss_pss_sha384 at 0x080a."
+    },
+    {
+      "pair_id": "pair-627e137304099c92",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The unrecognized-extension handling applies to different received messages, CertificateRequest on the left and NewSessionTicket on the right."
+    },
+    {
+      "pair_id": "pair-78578f8e9c57b7fc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The fixed-width Y encodings use different curves and lengths, P-256 at 32 octets and P-521 at 66 octets."
+    },
+    {
+      "pair_id": "pair-30709c77a050b654",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check forbids a sender from emitting an unsolicited extension response; the right check requires a receiver to abort with unsupported_extension upon receiving one."
+    },
+    {
+      "pair_id": "pair-6ca5e872e8f0c2cc",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Removing all SSL support and removing MD5 from signature_algorithms are separate capability checks despite appearing in the same checklist sentence."
+    },
+    {
+      "pair_id": "pair-0d950da347ca3232",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The mappings are for different alerts and values, decode_error at 50 and decrypt_error at 51."
+    },
+    {
+      "pair_id": "pair-13500e5e874d6b8d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements concern different supported primitives: TLS_CHACHA20_POLY1305_SHA256 and rsa_pss_rsae_sha256 certificate signatures."
+    },
+    {
+      "pair_id": "pair-a6df13292a9b33e4",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-ca64d9f96e259769cbbb",
+      "reason": "Both require obfuscated_ticket_age to be the client ticket age plus ticket_age_add modulo 2^32. The canonical requirement states the complete field formula, including milliseconds, directly."
+    },
+    {
+      "pair_id": "pair-cfb7fc44e42d598b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements map different RSA-PSS scheme families and code points, rsa_pss_rsae_sha256 at 0x0804 and rsa_pss_pss_sha256 at 0x0809."
+    },
+    {
+      "pair_id": "pair-146a5fd3228c2923",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules apply to different extensions and allowed message sets, early_data versus cookie."
+    },
+    {
+      "pair_id": "pair-14d8303c1acc87ae",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints target different extensions, pre_shared_key and early_data, with different permitted messages."
+    },
+    {
+      "pair_id": "pair-70047cfc6565ae9a",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The Base Key checks cover different authentication phases, endpoint roles, and secrets: server handshake authentication versus post-handshake client authentication."
+    },
+    {
+      "pair_id": "pair-eb5ff168b6bb37db",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "One requirement omits CertificateVerify when certificate authentication is absent; the other orders a sent client Certificate before CertificateVerify."
+    },
+    {
+      "pair_id": "pair-e5973fd637030328",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The at-most-once conclusions have different preconditions: correct replay mechanisms with consistent cluster state versus limiting one ticket's 0-RTT use to a single cluster."
+    },
+    {
+      "pair_id": "pair-aca1fb4ce22aca52",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-ca25c3009cb0a57a5b79",
+      "reason": "Both map KeyUpdateRequest.update_not_requested to numeric value 0. The canonical requirement uses the direct primary-body enum definition rather than the appendix repetition."
+    },
+    {
+      "pair_id": "pair-e7ae68b795e27e61",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The code points belong to different schemes, rsa_pkcs1_sha384 at 0x0501 and rsa_pkcs1_sha512 at 0x0601."
+    },
+    {
+      "pair_id": "pair-9eb8d64ac0aa971e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules govern different extensions and permitted messages, server_certificate_type versus signature_algorithms_cert."
+    },
+    {
+      "pair_id": "pair-84c82a6922918bf4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The checks cover separate authentication operations: MAC binding of the key to server identity and verification of the server's transcript signature."
+    },
+    {
+      "pair_id": "pair-e861671d4d0631d4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The required support is for different primitives, a CHACHA20 cipher suite versus rsa_pss_rsae_sha256 in CertificateVerify."
+    },
+    {
+      "pair_id": "pair-cec27e9164aadaa1",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "A Certificate response copies the request context, whereas a server-authentication Certificate encodes a zero-length context under a different condition."
+    },
+    {
+      "pair_id": "pair-4edf3bccda902df5",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left rule covers every record after Finished; the right is a narrower application of that rule to server alerts responding to client authentication."
+    },
+    {
+      "pair_id": "pair-390e646b5aca277c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The numeric values encode different HandshakeType members, certificate_request and certificate_verify."
+    },
+    {
+      "pair_id": "pair-1d9885fc22dfb60d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints concern different extensions and message sets, supported_versions versus post_handshake_auth."
+    },
+    {
+      "pair_id": "pair-6bb0a7dce0ab45fa",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-adb758cff1b51b2f8233",
+      "reason": "Both require an Empty EarlyDataIndication body in EncryptedExtensions. The canonical requirement uses the direct primary-body structure definition rather than the appendix repetition."
+    },
+    {
+      "pair_id": "pair-77b78efc062c83f7",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules target different extensions and allowed messages, server_name versus psk_key_exchange_modes."
+    },
+    {
+      "pair_id": "pair-b15e110a5c83995b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left check orders a client's CertificateVerify before Finished; the right covers the server's broader Certificate and CertificateVerify flight."
+    },
+    {
+      "pair_id": "pair-ebe506becbdf6f8d",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The dispatch rules map different handshake types to different message bodies, EndOfEarlyData and NewSessionTicket."
+    },
+    {
+      "pair_id": "pair-dd5159c85ee90662",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-9699989453e197951737",
+      "reason": "Both require ClientHello.cipher_suites to list only supported record-protection/AEAD and HKDF-hash pairs. The canonical requirement is the clearer direct field definition."
+    },
+    {
+      "pair_id": "pair-d0919ef27e9933f4",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-43552402d91bd84de150",
+      "reason": "Both constrain ServerHello.legacy_session_id_echo to 0 through 32 octets. The canonical requirement uses the direct primary-body field definition rather than the appendix repetition."
+    },
+    {
+      "pair_id": "pair-0a10c1a9addb457f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The requirements concern different supported primitives, TLS_AES_256_GCM_SHA384 and rsa_pkcs1_sha256 certificate signatures."
+    },
+    {
+      "pair_id": "pair-8e7cc31200ed819b",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Parentheses require early-traffic keys, while braces require the sender's handshake-traffic keys; these are different epochs and figure annotations."
+    },
+    {
+      "pair_id": "pair-108dca5ad34b7f40",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules cover different extensions and allowed messages, cookie versus oid_filters."
+    },
+    {
+      "pair_id": "pair-4ef297f281e2bc6c",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement constraints apply to different extensions and message sets, server_name versus certificate_authorities."
+    },
+    {
+      "pair_id": "pair-0709c67a42a52e25",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "Removing RC4 cipher support and removing MD5 signature support are separate capability checks."
+    },
+    {
+      "pair_id": "pair-170cd84a8a182f6e",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-87a0a5e039279769d7f0",
+      "reason": "Both map ecdsa_secp256r1_sha256 to 0x0403. The canonical requirement cites the direct primary-body SignatureScheme definition rather than the appendix repetition."
+    },
+    {
+      "pair_id": "pair-61f004f10b37bca4",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The enum mappings are for different PskKeyExchangeMode values, psk_dhe_ke at 1 and psk_ke at 0."
+    },
+    {
+      "pair_id": "pair-bb9a62d96e169f69",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules govern different extensions and message sets, use_srtp versus post_handshake_auth."
+    },
+    {
+      "pair_id": "pair-705be66000f92606",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The vector bounds apply to different fields in different messages: ClientHello.extensions and CertificateRequest.extensions."
+    },
+    {
+      "pair_id": "pair-3179ed50d4970b00",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The state transitions differ by endpoint, source state, and trigger: client WAIT_CV after CertificateVerify versus server WAIT_CERT after an empty Certificate."
+    },
+    {
+      "pair_id": "pair-2c83df64758309b0",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The mappings encode different RSA-PSS schemes and code points, rsa_pss_rsae_sha512 at 0x0806 and rsa_pss_pss_sha512 at 0x080b."
+    },
+    {
+      "pair_id": "pair-5ad1245c6d765ab2",
+      "decision": "duplicate",
+      "canonical_requirement_id": "req-ae1f296b84cc39c34eb8",
+      "reason": "Both map rsa_pss_pss_sha512 to 0x080b. The canonical requirement uses the direct primary-body SignatureScheme definition rather than the appendix repetition."
+    },
+    {
+      "pair_id": "pair-ddb8be3b9be8102f",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The placement rules apply to different extensions and message sets, heartbeat versus post_handshake_auth."
+    },
+    {
+      "pair_id": "pair-4b2547a461d7e75e",
+      "decision": "distinct",
+      "canonical_requirement_id": "",
+      "reason": "The left requirement covers the whole RSASSA-PKCS1-v1_5 scheme family with each corresponding hash; the right is narrower and fixes the legacy rsa_pkcs1_sha1 scheme to SHA-1."
+    }
+  ]
+}

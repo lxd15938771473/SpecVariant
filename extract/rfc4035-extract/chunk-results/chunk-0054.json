@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0054",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Security-aware name servers should\n   automatically include any necessary NSEC RRs for signed zones in\n   their responses to security-aware resolvers.",
+      "line_start": 1790,
+      "line_end": 1792,
+      "condition": "When a security-aware name server responds to a security-aware resolver for a signed zone.",
+      "required_behavior": "The name server should automatically include any necessary NSEC RRs in its response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Response construction can be checked for automatic inclusion of the NSEC RRs needed for the signed-zone response; this is advisory.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the requested RR name matches the owner name of an\n      authenticated NSEC RR, then the NSEC RR's type bit map field lists\n      all RR types present at that owner name, and a resolver can prove\n      that the requested RR type does not exist by checking for the RR\n      type in the bit map.",
+      "line_start": 1796,
+      "line_end": 1800,
+      "condition": "When the requested RR name matches the owner name of an authenticated NSEC RR.",
+      "required_behavior": "The NSEC RR's type bit map field lists all RR types present at that owner name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The types represented in an NSEC type bit map can be compared with the RR types at the matching owner name.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the requested RR name matches the owner name of an\n      authenticated NSEC RR, then the NSEC RR's type bit map field lists\n      all RR types present at that owner name, and a resolver can prove\n      that the requested RR type does not exist by checking for the RR\n      type in the bit map.",
+      "line_start": 1796,
+      "line_end": 1800,
+      "condition": "When the requested RR name matches the owner name of an authenticated NSEC RR.",
+      "required_behavior": "A resolver can prove that the requested RR type does not exist by checking that the requested type is absent from the NSEC RR's type bit map.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The exact-name denial decision can be checked with the requested type present versus absent in an authenticated NSEC type bit map.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the requested RR name matches the owner name of an\n      authenticated NSEC RR, then the NSEC RR's type bit map field lists\n      all RR types present at that owner name, and a resolver can prove\n      that the requested RR type does not exist by checking for the RR\n      type in the bit map.  If the number of labels in an authenticated\n      NSEC RR's owner name equals the Labels field of the covering RRSIG\n      RR, then the existence of the NSEC RR proves that wildcard\n      expansion could not have been used to match the request.",
+      "line_start": 1796,
+      "line_end": 1803,
+      "condition": "When the requested RR name matches an authenticated NSEC RR's owner name and the number of labels in that owner name equals the Labels field of the covering RRSIG RR.",
+      "required_behavior": "The existence of that NSEC RR proves that wildcard expansion could not have been used to match the request.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The resolver can be checked for recognizing the wildcard-exclusion proof from an authenticated exact-name NSEC whose owner label count equals the covering RRSIG Labels value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the requested RR name would appear after an authenticated NSEC\n      RR's owner name and before the name listed in that NSEC RR's Next\n      Domain Name field according to the canonical DNS name order\n      defined in [RFC4034], then no RRsets with the requested name exist\n      in the zone.",
+      "line_start": 1805,
+      "line_end": 1809,
+      "condition": "When the requested RR name falls strictly after an authenticated NSEC RR's owner name and strictly before its Next Domain Name, in the canonical DNS name order defined in RFC4034.",
+      "required_behavior": "The authenticated NSEC interval proves that no RRsets with the requested name exist in the zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The name-nonexistence decision and strict interval boundaries can be checked with names inside and outside the authenticated NSEC interval.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In addition, security-aware resolvers MUST authenticate the NSEC\n   RRsets that comprise the non-existence proof as described in Section\n   5.3.",
+      "line_start": 1815,
+      "line_end": 1817,
+      "condition": "When a security-aware resolver uses NSEC RRsets as a non-existence proof.",
+      "required_behavior": "The security-aware resolver MUST authenticate the NSEC RRsets that comprise the proof as described in Section 5.3.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The non-existence proof path can be checked for authentication of every participating NSEC RRset before accepting the proof.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To prove the non-existence of an RRset, the resolver must be able to\n   verify both that the queried RRset does not exist and that no\n   relevant wildcard RRset exists.",
+      "line_start": 1819,
+      "line_end": 1821,
+      "condition": "To prove the non-existence of an RRset.",
+      "required_behavior": "The resolver must be able to verify that the queried RRset does not exist.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The denial-proof acceptance path can be checked for verification of the queried RRset's non-existence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To prove the non-existence of an RRset, the resolver must be able to\n   verify both that the queried RRset does not exist and that no\n   relevant wildcard RRset exists.",
+      "line_start": 1819,
+      "line_end": 1821,
+      "condition": "To prove the non-existence of an RRset.",
+      "required_behavior": "The resolver must be able to verify that no relevant wildcard RRset exists.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The denial-proof acceptance path can be checked for a wildcard non-existence proof, including when an ordinary name-nonexistence proof is already available.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the complete set of necessary NSEC\n   RRsets is not present in a response (perhaps due to message\n   truncation), then a security-aware resolver MUST resend the query in\n   order to attempt to obtain the full collection of NSEC RRs necessary\n   to verify the non-existence of the requested RRset.",
+      "line_start": 1831,
+      "line_end": 1835,
+      "condition": "When a response lacks the complete set of NSEC RRsets necessary to verify the non-existence of the requested RRset, including when the response is truncated.",
+      "required_behavior": "A security-aware resolver MUST resend the query to attempt to obtain the full collection of necessary NSEC RRs.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An incomplete denial response can be supplied and the resolver can be checked for another query attempting to obtain the missing proof records.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As with all DNS\n   operations, however, the resolver MUST bound the work it puts into\n   answering any particular query.",
+      "line_start": 1835,
+      "line_end": 1837,
+      "condition": "When a resolver answers any particular query, including when retrying to obtain a complete NSEC proof.",
+      "required_behavior": "The resolver MUST bound the work it puts into answering that query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The query-processing path can be inspected for a finite work bound and checked against responses that repeatedly leave the denial proof incomplete.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Since a validated NSEC RR proves the existence of both itself and its\n   corresponding RRSIG RR, a validator MUST ignore the settings of the\n   NSEC and RRSIG bits in an NSEC RR.",
+      "line_start": 1839,
+      "line_end": 1841,
+      "condition": "When a validator interprets an NSEC RR.",
+      "required_behavior": "The validator MUST ignore the setting of the NSEC bit in the NSEC RR.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The validator's handling of the NSEC bit can be inspected and compared across otherwise equivalent independently authenticated NSEC RRs with that bit set or clear.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Since a validated NSEC RR proves the existence of both itself and its\n   corresponding RRSIG RR, a validator MUST ignore the settings of the\n   NSEC and RRSIG bits in an NSEC RR.",
+      "line_start": 1839,
+      "line_end": 1841,
+      "condition": "When a validator interprets an NSEC RR.",
+      "required_behavior": "The validator MUST ignore the setting of the RRSIG bit in the NSEC RR.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The validator's handling of the RRSIG bit can be inspected and compared across otherwise equivalent independently authenticated NSEC RRs with that bit set or clear.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0075",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An endpoint can send a PING or another ack-eliciting frame to test the connection for liveness if the peer could time out soon, such as within a PTO; see Section 6.2 of [QUIC-RECOVERY].",
+      "line_start": 3132,
+      "line_end": 3134,
+      "condition": "The peer could time out soon, such as within a PTO, and the endpoint tests the connection for liveness using the described mechanism.",
+      "required_behavior": "The endpoint may send either a PING frame or another ack-eliciting frame as the liveness probe.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can place the peer near its timeout, invoke liveness testing, and verify that the implementation supports sending a PING or another ack-eliciting frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Note that the application determines what data is safe to retry.",
+      "line_start": 3136,
+      "line_end": 3136,
+      "condition": "Data might need to be retried.",
+      "required_behavior": "The application determines whether the data is safe to retry.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The implementation boundary can be inspected or tested to verify that retry-safety classification is supplied or decided by the application.",
+      "eligibility": "eligible"
+    }
+  ]
+}

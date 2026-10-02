@@ -1,0 +1,91 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0020",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "A packet is declared lost if it meets all of the following conditions:\n\n   *  The packet is unacknowledged, in flight, and was sent prior to an acknowledged packet.",
+                             "line_start":  524,
+                             "line_end":  528,
+                             "condition":  "When acknowledgment-based loss detection declares a packet lost",
+                             "required_behavior":  "The packet must be unacknowledged at the time of the loss declaration.",
+                             "forbidden_behavior":  "Declaring an already acknowledged packet lost through acknowledgment-based detection.",
+                             "error_behavior":  "No protocol error is specified; the implementation must avoid the invalid loss declaration.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can acknowledge a packet and verify that the acknowledgment-based detector does not subsequently mark that packet lost.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A packet is declared lost if it meets all of the following conditions:\n\n   *  The packet is unacknowledged, in flight, and was sent prior to an acknowledged packet.",
+                             "line_start":  524,
+                             "line_end":  528,
+                             "condition":  "When acknowledgment-based loss detection declares a packet lost",
+                             "required_behavior":  "The packet must be in flight at the time of the loss declaration.",
+                             "forbidden_behavior":  "Declaring a packet that is not in flight lost through acknowledgment-based detection.",
+                             "error_behavior":  "No protocol error is specified; the implementation must avoid the invalid loss declaration.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can arrange for a packet not to be in flight and observe whether the acknowledgment-based detector incorrectly marks it lost.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A packet is declared lost if it meets all of the following conditions:\n\n   *  The packet is unacknowledged, in flight, and was sent prior to an acknowledged packet.",
+                             "line_start":  524,
+                             "line_end":  528,
+                             "condition":  "When acknowledgment-based loss detection declares a packet lost",
+                             "required_behavior":  "The packet must have been sent before an acknowledged packet.",
+                             "forbidden_behavior":  "Declaring a packet lost when no later-sent packet has been acknowledged.",
+                             "error_behavior":  "No protocol error is specified; the implementation must avoid the invalid loss declaration.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Packet send order and acknowledgment state can be controlled and the detector\u0027s loss decision can be observed.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A packet is declared lost if it meets all of the following conditions:\n\n   *  The packet is unacknowledged, in flight, and was sent prior to an acknowledged packet.\n\n   *  The packet was sent kPacketThreshold packets before an acknowledged packet (Section 6.1.1), or it was sent long enough in the past (Section 6.1.2).",
+                             "line_start":  524,
+                             "line_end":  532,
+                             "condition":  "When an unacknowledged, in-flight packet sent before an acknowledged packet was sent kPacketThreshold packets before that acknowledged packet",
+                             "required_behavior":  "Declare the packet lost under acknowledgment-based loss detection.",
+                             "forbidden_behavior":  "Leaving the packet not lost after all prerequisites and the packet-threshold branch are satisfied.",
+                             "error_behavior":  "No protocol error is specified; the loss detector must transition the packet to lost.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can construct packet send and acknowledgment order at exactly the packet threshold and inspect the resulting loss state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A packet is declared lost if it meets all of the following conditions:\n\n   *  The packet is unacknowledged, in flight, and was sent prior to an acknowledged packet.\n\n   *  The packet was sent kPacketThreshold packets before an acknowledged packet (Section 6.1.1), or it was sent long enough in the past (Section 6.1.2).",
+                             "line_start":  524,
+                             "line_end":  532,
+                             "condition":  "When an unacknowledged, in-flight packet sent before an acknowledged packet was sent long enough in the past to satisfy the time threshold",
+                             "required_behavior":  "Declare the packet lost under acknowledgment-based loss detection.",
+                             "forbidden_behavior":  "Leaving the packet not lost after all prerequisites and the time-threshold branch are satisfied.",
+                             "error_behavior":  "No protocol error is specified; the loss detector must transition the packet to lost.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can control packet age, later-packet acknowledgment, and in-flight state, then inspect the loss state when the time threshold is reached.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The packet was sent kPacketThreshold packets before an acknowledged packet (Section 6.1.1), or it was sent long enough in the past (Section 6.1.2).",
+                             "line_start":  530,
+                             "line_end":  532,
+                             "condition":  "When acknowledgment-based loss detection declares an otherwise eligible packet lost",
+                             "required_behavior":  "At least one loss threshold must be satisfied: the packet threshold or the time threshold.",
+                             "forbidden_behavior":  "Declaring the packet lost when neither the packet threshold nor the time threshold is satisfied.",
+                             "error_behavior":  "No protocol error is specified; the implementation must avoid the premature loss declaration.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A test can keep both threshold predicates false while satisfying the other prerequisites and verify that no loss is declared.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Implementations with adaptive time thresholds MAY choose to start with smaller initial reordering thresholds to minimize recovery latency.",
+                             "line_start":  543,
+                             "line_end":  545,
+                             "condition":  "When an implementation uses adaptive time thresholds",
+                             "required_behavior":  "The implementation is permitted to initialize the adaptive mechanism with smaller reordering thresholds in order to minimize recovery latency.",
+                             "forbidden_behavior":  "Treating the use of smaller initial reordering thresholds as a protocol violation.",
+                             "error_behavior":  "No error is required when smaller initial reordering thresholds are used.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Configuration and initialization tests can verify that an adaptive implementation accepts and uses a smaller initial reordering threshold without reporting a protocol error.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

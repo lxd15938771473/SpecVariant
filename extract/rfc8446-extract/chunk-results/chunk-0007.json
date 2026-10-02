@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0007",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The \"supported_versions\" ClientHello extension can be used to\n      negotiate the version of TLS to use, in preference to the\n      legacy_version field of the ClientHello.",
+      "line_start": 478,
+      "line_end": 480,
+      "condition": "when a ClientHello contains the supported_versions extension",
+      "required_behavior": "use supported_versions to negotiate the TLS version in preference to ClientHello.legacy_version",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Version selection can be tested with conflicting supported_versions and legacy_version values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The \"signature_algorithms_cert\" extension allows a client to\n      indicate which signature algorithms it can validate in X.509\n      certificates.",
+      "line_start": 482,
+      "line_end": 484,
+      "condition": "when a client sends the signature_algorithms_cert extension",
+      "required_behavior": "encode the signature algorithms that the client can validate in X.509 certificates",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Extension construction and certificate-selection behavior can be compared with the client's validation capabilities.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0012",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "At the parental side of a\n   zone cut (that is, at a delegation point), NSEC RRs are REQUIRED at\n   the owner name.",
+      "line_start": 413,
+      "line_end": 415,
+      "condition": "At the parental side of a zone cut (a delegation point).",
+      "required_behavior": "NSEC RRs are required at the owner name of the delegation point.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The parent-zone data at a delegation owner name can be checked for the required NSEC records.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "At the parental side of a\n   zone cut (that is, at a delegation point), NSEC RRs are REQUIRED at\n   the owner name.  A DS RR could also be present if the zone being\n   delegated is signed and seeks to have a chain of authentication to\n   the parent zone.",
+      "line_start": 413,
+      "line_end": 417,
+      "condition": "At the parental side of a zone cut, when the delegated zone is signed and seeks a chain of authentication to the parent zone.",
+      "required_behavior": "A DS RR may be present; its presence is permitted by this clause.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The permitted placement of a DS RR at a delegation point can be checked in zone-data handling without requiring every delegation to contain one.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This specification updates the original DNS specification to allow\n   NSEC and DS RR types at the parent side of a zone cut.  These RRsets\n   are authoritative for the parent when they appear at the parent side\n   of a zone cut.",
+      "line_start": 421,
+      "line_end": 424,
+      "condition": "An NSEC RRset appears at the parent side of a zone cut.",
+      "required_behavior": "Treat the NSEC RRset as authoritative for the parent zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The authority assigned to an NSEC RRset at a delegation point can be inspected in parent-zone data handling.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This specification updates the original DNS specification to allow\n   NSEC and DS RR types at the parent side of a zone cut.  These RRsets\n   are authoritative for the parent when they appear at the parent side\n   of a zone cut.",
+      "line_start": 421,
+      "line_end": 424,
+      "condition": "A DS RRset appears at the parent side of a zone cut.",
+      "required_behavior": "Treat the DS RRset as authoritative for the parent zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The authority assigned to a DS RRset at a delegation point can be inspected in parent-zone data handling.",
+      "eligibility": "eligible"
+    }
+  ]
+}

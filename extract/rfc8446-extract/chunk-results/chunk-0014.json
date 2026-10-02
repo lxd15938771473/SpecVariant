@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0014",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The\n   basic data block size is one byte (i.e., 8 bits).",
+      "line_start": 1039,
+      "line_end": 1040,
+      "condition": "data is represented using the TLS presentation language",
+      "required_behavior": "use an 8-bit byte as the basic data block",
+      "forbidden_behavior": "use a basic data block with a size other than 8 bits",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Serialized field widths and parser byte consumption can be measured.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Multiple-byte data\n   items are concatenations of bytes, from left to right, from top to\n   bottom.  From the byte stream, a multi-byte item (a numeric in the\n   following example) is formed (using C notation) by:\n\n      value = (byte[0] << 8*(n-1)) | (byte[1] << 8*(n-2)) |\n              ... | byte[n-1];\n\n   This byte ordering for multi-byte values is the commonplace network\n   byte order or big-endian format.",
+      "line_start": 1040,
+      "line_end": 1049,
+      "condition": "a data item occupies multiple bytes",
+      "required_behavior": "encode and decode the item in network byte order with the leftmost byte as the most significant byte",
+      "forbidden_behavior": "interpret a multi-byte item in little-endian or reversed byte order",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known multi-byte values have deterministic serialized byte sequences.",
+      "eligibility": "eligible"
+    }
+  ]
+}

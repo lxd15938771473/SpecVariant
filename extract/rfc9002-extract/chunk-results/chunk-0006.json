@@ -1,0 +1,67 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0006",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "   QUIC uses separate packet number spaces for each encryption level,\n   except 0-RTT and all generations of 1-RTT keys use the same packet\n   number space.",
+                             "line_start":  202,
+                             "line_end":  204,
+                             "condition":  "When assigning packet numbers for encryption levels other than the stated 0-RTT/1-RTT exception",
+                             "required_behavior":  "Use a separate packet number space for each encryption level.",
+                             "forbidden_behavior":  "Do not use one shared packet number space for distinct encryption levels outside the stated exception.",
+                             "error_behavior":  "No specific error response is stated.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "An implementation\u0027s packet-number allocation and tracking can be inspected or exercised to verify that non-excepted encryption levels have distinct spaces.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "   QUIC uses separate packet number spaces for each encryption level,\n   except 0-RTT and all generations of 1-RTT keys use the same packet\n   number space.",
+                             "line_start":  202,
+                             "line_end":  204,
+                             "condition":  "When assigning packet numbers to 0-RTT packets or to packets protected with any generation of 1-RTT keys",
+                             "required_behavior":  "Use the same packet number space for 0-RTT and every generation of 1-RTT keys.",
+                             "forbidden_behavior":  "Do not create separate packet number spaces for 0-RTT versus 1-RTT or for different generations of 1-RTT keys.",
+                             "error_behavior":  "No specific error response is stated.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "Packet-number state can be inspected across 0-RTT and successive 1-RTT key generations to confirm that all use one shared space.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "  Separate packet number spaces ensures that the\n   acknowledgment of packets sent with one level of encryption will not\n   cause spurious retransmission of packets sent with a different\n   encryption level.",
+                             "line_start":  204,
+                             "line_end":  207,
+                             "condition":  "When an acknowledgment is processed for packets sent at one encryption level",
+                             "required_behavior":  "Keep acknowledgment and loss-processing state isolated so that packets in a different encryption level are not spuriously treated as requiring retransmission.",
+                             "forbidden_behavior":  "The acknowledgment must not cause spurious retransmission of packets sent with a different encryption level.",
+                             "error_behavior":  "No specific error response is stated.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A trace with outstanding packets in multiple encryption levels can verify that acknowledging one level does not trigger retransmission decisions for another level.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "  Congestion control and round-trip time (RTT)\n   measurement are unified across packet number spaces.",
+                             "line_start":  207,
+                             "line_end":  208,
+                             "condition":  "When congestion-control state is updated for packets belonging to different packet number spaces",
+                             "required_behavior":  "Apply one unified congestion-control regime across all packet number spaces.",
+                             "forbidden_behavior":  "Do not operate independent congestion-control regimes solely because packets belong to different packet number spaces.",
+                             "error_behavior":  "No specific error response is stated.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Congestion-window and bytes-in-flight updates can be traced across packet number spaces to determine whether they feed shared congestion-control state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "  Congestion control and round-trip time (RTT)\n   measurement are unified across packet number spaces.",
+                             "line_start":  207,
+                             "line_end":  208,
+                             "condition":  "When RTT samples are obtained from packets belonging to different packet number spaces",
+                             "required_behavior":  "Maintain unified RTT measurement across all packet number spaces.",
+                             "forbidden_behavior":  "Do not maintain independent RTT estimators solely because samples belong to different packet number spaces.",
+                             "error_behavior":  "No specific error response is stated.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "RTT estimator updates can be traced using acknowledgments from multiple packet number spaces to verify that samples contribute to unified measurement state.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

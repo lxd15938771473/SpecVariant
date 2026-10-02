@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0021",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The selector must be an enumerated\n   type that defines the possible variants the structure defines.",
+      "line_start": 1249,
+      "line_end": 1250,
+      "condition": "when a structure uses a variant selector",
+      "required_behavior": "define the selector as an enumerated type whose values define the structure's possible variants",
+      "forbidden_behavior": "use a non-enumerated selector type",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The variant declaration can be inspected to verify the selector type and its enumerated alternatives.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Each\n   arm of the select (below) specifies the type of that variant's field\n   and an optional field label.",
+      "line_start": 1250,
+      "line_end": 1252,
+      "condition": "for each arm of a select declaration",
+      "required_behavior": "specify the type of the field represented by that variant",
+      "forbidden_behavior": "define a select arm without a variant field type",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Each select arm has concrete syntax that can be parsed and checked for a field type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Each\n   arm of the select (below) specifies the type of that variant's field\n   and an optional field label.",
+      "line_start": 1250,
+      "line_end": 1252,
+      "condition": "for a field label in a select arm",
+      "required_behavior": "permit the field label to be present or omitted",
+      "forbidden_behavior": "require every select arm to have a field label",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A presentation-language parser can be tested with labeled and unlabeled select arms.",
+      "eligibility": "eligible"
+    }
+  ]
+}

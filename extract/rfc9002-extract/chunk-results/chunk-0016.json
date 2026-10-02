@@ -1,0 +1,91 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0016",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "An endpoint generates an RTT sample on receiving an ACK frame that\n   meets the following two conditions:\n\n   *  the largest acknowledged packet number is newly acknowledged, and\n\n   *  at least one of the newly acknowledged packets was ack-eliciting.",
+                             "line_start":  326,
+                             "line_end":  331,
+                             "condition":  "An endpoint receives an ACK frame for which the largest acknowledged packet number is newly acknowledged and at least one newly acknowledged packet was ack-eliciting.",
+                             "required_behavior":  "Generate an RTT sample from the ACK frame.",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can control the acknowledgment history and packet types, deliver an ACK satisfying both predicates, and observe whether an RTT sample is generated.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The RTT sample, latest_rtt, is generated as the time elapsed since\n   the largest acknowledged packet was sent:\n\n   latest_rtt = ack_time - send_time_of_largest_acked",
+                             "line_start":  333,
+                             "line_end":  336,
+                             "condition":  "A qualifying ACK frame causes generation of latest_rtt.",
+                             "required_behavior":  "Set latest_rtt to ack_time minus send_time_of_largest_acked.",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "With controlled send and acknowledgment times, the implementation\u0027s latest_rtt value can be compared directly with the stated formula.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "An RTT sample is generated using only the largest acknowledged packet\n   in the received ACK frame.",
+                             "line_start":  338,
+                             "line_end":  339,
+                             "condition":  "An endpoint generates an RTT sample from a received ACK frame.",
+                             "required_behavior":  "Use only the largest acknowledged packet in that ACK frame to generate the RTT sample.",
+                             "forbidden_behavior":  "Use any other acknowledged packet in the frame as input to that RTT sample.",
+                             "error_behavior":  "",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "A crafted ACK can acknowledge packets with distinct send times, making the selected packet observable from the resulting sample.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "While the reported acknowledgment delay is not used by\n   the RTT sample measurement, it is used to adjust the RTT sample in\n   subsequent computations of smoothed_rtt and rttvar (Section 5.3).",
+                             "line_start":  341,
+                             "line_end":  343,
+                             "condition":  "The endpoint performs the raw RTT sample measurement for an ACK frame that reports an acknowledgment delay.",
+                             "required_behavior":  "Measure the raw RTT sample without using the reported acknowledgment delay.",
+                             "forbidden_behavior":  "Subtract, add, or otherwise incorporate the reported acknowledgment delay into the raw RTT sample measurement.",
+                             "error_behavior":  "",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "Tests can hold send and ACK times constant while varying the reported delay and verify that the raw sample is unchanged.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "While the reported acknowledgment delay is not used by\n   the RTT sample measurement, it is used to adjust the RTT sample in\n   subsequent computations of smoothed_rtt and rttvar (Section 5.3).",
+                             "line_start":  341,
+                             "line_end":  343,
+                             "condition":  "The endpoint subsequently computes smoothed_rtt and rttvar from an RTT sample associated with a reported acknowledgment delay.",
+                             "required_behavior":  "Use the reported acknowledgment delay to adjust the RTT sample in those subsequent computations.",
+                             "forbidden_behavior":  "Ignore the reported acknowledgment delay when the applicable smoothed_rtt and rttvar adjustment is performed.",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Controlled acknowledgment-delay values and timing inputs allow observation of whether later smoothed_rtt and rttvar calculations apply the delay adjustment.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "To avoid generating multiple RTT samples for a single packet, an ACK\n   frame SHOULD NOT be used to update RTT estimates if it does not newly\n   acknowledge the largest acknowledged packet.",
+                             "line_start":  345,
+                             "line_end":  347,
+                             "condition":  "An ACK frame does not newly acknowledge its largest acknowledged packet.",
+                             "required_behavior":  "Do not use that ACK frame to update RTT estimates.",
+                             "forbidden_behavior":  "Use that ACK frame to update RTT estimates.",
+                             "error_behavior":  "No protocol error is prescribed; the frame is excluded from RTT-estimate updates.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A duplicate or otherwise non-new largest acknowledgment can be injected and RTT estimator state checked for an update.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "An RTT sample MUST NOT be generated on receiving an ACK frame that\n   does not newly acknowledge at least one ack-eliciting packet.",
+                             "line_start":  349,
+                             "line_end":  350,
+                             "condition":  "A received ACK frame does not newly acknowledge at least one ack-eliciting packet.",
+                             "required_behavior":  "Do not generate an RTT sample from that ACK frame.",
+                             "forbidden_behavior":  "Generate an RTT sample from that ACK frame.",
+                             "error_behavior":  "No protocol error is prescribed; the frame is ignored for RTT sampling.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can deliver an ACK that newly acknowledges no ack-eliciting packet and verify that no RTT sample is emitted and estimator sampling state does not advance.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

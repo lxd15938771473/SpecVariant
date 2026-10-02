@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0055",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If for whatever reason none of the RRSIGs can be validated, the\n   response SHOULD be considered BAD.",
+      "line_start": 1845,
+      "line_end": 1846,
+      "condition": "None of the RRSIGs can be validated, for whatever reason.",
+      "required_behavior": "The response SHOULD be considered BAD.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The response classification after all RRSIG validation attempts fail can be inspected; this is a SHOULD-level recommendation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If for whatever reason none of the RRSIGs can be validated, the\n   response SHOULD be considered BAD.  If the validation was being done\n   to service a recursive query, the name server MUST return RCODE 2 to\n   the originating client.  However, it MUST return the full response if\n   and only if the original query had the CD bit set.",
+      "line_start": 1845,
+      "line_end": 1849,
+      "condition": "None of the RRSIGs can be validated, validation was being done to service a recursive query, and the original query did not have the CD bit set.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The name server MUST return RCODE 2 to the originating client.",
+      "check_type": "error_handling",
+      "why_checkable": "The response RCODE can be checked when recursive-query signature validation fails and the CD-bit full-response exception does not apply.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If for whatever reason none of the RRSIGs can be validated, the\n   response SHOULD be considered BAD.  If the validation was being done\n   to service a recursive query, the name server MUST return RCODE 2 to\n   the originating client.  However, it MUST return the full response if\n   and only if the original query had the CD bit set.",
+      "line_start": 1845,
+      "line_end": 1849,
+      "condition": "None of the RRSIGs can be validated, validation was being done to service a recursive query, and the original query had the CD bit set.",
+      "required_behavior": "The name server MUST return the full response to the originating client.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The full-response branch can be checked for failed validation of a recursive query with CD set; this captures the if direction of the stated exception.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If for whatever reason none of the RRSIGs can be validated, the\n   response SHOULD be considered BAD.  If the validation was being done\n   to service a recursive query, the name server MUST return RCODE 2 to\n   the originating client.  However, it MUST return the full response if\n   and only if the original query had the CD bit set.",
+      "line_start": 1845,
+      "line_end": 1849,
+      "condition": "None of the RRSIGs can be validated, validation was being done to service a recursive query, and the original query did not have the CD bit set.",
+      "required_behavior": "",
+      "forbidden_behavior": "The name server MUST NOT return the full response to the originating client.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The absence of the full response can be checked for failed recursive-query validation with CD clear; this captures the only-if direction.",
+      "eligibility": "eligible"
+    }
+  ]
+}

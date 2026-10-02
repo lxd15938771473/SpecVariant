@@ -1,0 +1,115 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0012",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "QUIC uses a probe timeout (PTO; see Section 6.2), with a timer based\n   on TCP\u0027s retransmission timeout (RTO) computation; see [RFC6298].",
+                             "line_start":  269,
+                             "line_end":  270,
+                             "condition":  "When QUIC performs timer-based loss recovery",
+                             "required_behavior":  "Use a probe timeout (PTO) mechanism.",
+                             "forbidden_behavior":  "Use no PTO mechanism for timer-based loss recovery.",
+                             "error_behavior":  "Not specified in this chunk.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "An implementation can be inspected or exercised to determine whether its loss-recovery timer is a PTO.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "QUIC uses a probe timeout (PTO; see Section 6.2), with a timer based\n   on TCP\u0027s retransmission timeout (RTO) computation; see [RFC6298].",
+                             "line_start":  269,
+                             "line_end":  270,
+                             "condition":  "When computing the PTO timer",
+                             "required_behavior":  "Base the timer on TCP\u0027s RTO computation in RFC 6298.",
+                             "forbidden_behavior":  "Use a timer computation unrelated to the referenced TCP RTO computation.",
+                             "error_behavior":  "Not specified in this chunk.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "The referenced computation is not stated in the chunk, and the phrase \u0027based on\u0027 does not define which parts must match, so the required behavior is unclear from this evidence alone.",
+                             "eligibility":  "exclude"
+                         },
+                         {
+                             "quote":  "QUIC\u0027s PTO includes the peer\u0027s maximum expected acknowledgment delay\n   instead of using a fixed minimum timeout.",
+                             "line_start":  271,
+                             "line_end":  272,
+                             "condition":  "When computing a PTO duration",
+                             "required_behavior":  "Include the peer\u0027s maximum expected acknowledgment delay in the PTO computation.",
+                             "forbidden_behavior":  "Omit the peer\u0027s maximum expected acknowledgment delay from the PTO computation.",
+                             "error_behavior":  "Not specified in this chunk.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "A focused timer calculation can vary the peer\u0027s maximum expected acknowledgment delay and verify that the PTO duration incorporates it.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "QUIC\u0027s PTO includes the peer\u0027s maximum expected acknowledgment delay\n   instead of using a fixed minimum timeout.",
+                             "line_start":  271,
+                             "line_end":  272,
+                             "condition":  "When computing a PTO duration",
+                             "required_behavior":  "Use the peer\u0027s maximum expected acknowledgment delay rather than a fixed minimum timeout.",
+                             "forbidden_behavior":  "Substitute a fixed minimum timeout for the peer\u0027s maximum expected acknowledgment delay.",
+                             "error_behavior":  "Not specified in this chunk.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "Timer tests can change the peer-advertised delay and distinguish a peer-dependent component from a fixed minimum timeout.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "QUIC does not collapse the congestion window when the PTO expires,\n   since a single packet loss at the tail does not indicate persistent\n   congestion.",
+                             "line_start":  275,
+                             "line_end":  277,
+                             "condition":  "When the PTO expires",
+                             "required_behavior":  "Leave the congestion window uncollapsed solely because of the PTO expiration.",
+                             "forbidden_behavior":  "Collapse the congestion window solely in response to the PTO expiration.",
+                             "error_behavior":  "Not specified in this chunk.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A PTO-expiration test can compare the congestion window immediately before and after the timer event.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "since a single packet loss at the tail does not indicate persistent\n   congestion.",
+                             "line_start":  276,
+                             "line_end":  277,
+                             "condition":  "When the only loss evidence is a single packet loss at the tail",
+                             "required_behavior":  "Do not treat that evidence alone as an indication of persistent congestion.",
+                             "forbidden_behavior":  "Declare persistent congestion solely from one tail packet loss.",
+                             "error_behavior":  "Not specified in this chunk.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A controlled loss trace containing only one tail loss can verify whether the persistent-congestion state is entered.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Instead, QUIC collapses the congestion window when\n   persistent congestion is declared; see Section 7.6.",
+                             "line_start":  277,
+                             "line_end":  278,
+                             "condition":  "When persistent congestion is declared",
+                             "required_behavior":  "Collapse the congestion window.",
+                             "forbidden_behavior":  "Leave the congestion window uncollapsed after declaring persistent congestion.",
+                             "error_behavior":  "Not specified in this chunk.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can trigger a persistent-congestion declaration and observe whether the congestion window is collapsed.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Since QUIC does not collapse the congestion window on a\n   PTO expiration, a QUIC sender is not limited from sending more in-\n   flight packets after a PTO expiration if it still has available\n   congestion window.",
+                             "line_start":  281,
+                             "line_end":  284,
+                             "condition":  "After a PTO expiration, when the sender still has available congestion window",
+                             "required_behavior":  "Permit the sender to send additional in-flight packets subject to the remaining congestion window.",
+                             "forbidden_behavior":  "Prevent additional in-flight packets solely because the PTO expired despite available congestion window.",
+                             "error_behavior":  "Not specified in this chunk.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A sender with remaining congestion-window capacity can be driven through PTO expiration and tested for an artificial post-PTO sending block.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "QUIC allows probe packets to temporarily exceed the congestion window\n   whenever the timer expires.",
+                             "line_start":  289,
+                             "line_end":  290,
+                             "condition":  "When the timer expires and probe packets are to be sent",
+                             "required_behavior":  "Permit probe packets to temporarily exceed the congestion window.",
+                             "forbidden_behavior":  "Block probe packets solely because sending them would temporarily exceed the congestion window.",
+                             "error_behavior":  "Not specified in this chunk.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A timer-expiration test with a full congestion window can observe whether probe packets are exempted temporarily from the congestion-window limit.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

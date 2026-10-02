@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0038",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Endpoints MAY add reserved versions to any field where unknown or unsupported versions are ignored to test that a peer correctly ignores the value.",
+      "line_start": 1691,
+      "line_end": 1693,
+      "condition": "An endpoint is populating a field in which unknown or unsupported versions are ignored.",
+      "required_behavior": "The endpoint is permitted to add a reserved version to the field to test peer handling.",
+      "forbidden_behavior": "Reserved versions must not be added under this permission to fields where unknown or unsupported versions are not ignored.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The field type and inserted version value can be inspected, and the field's defined handling of unknown or unsupported versions can be verified.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints MAY add reserved versions to any field where unknown or unsupported versions are ignored to test that a peer correctly ignores the value.",
+      "line_start": 1691,
+      "line_end": 1693,
+      "condition": "A peer receives a field containing an added reserved version in a context where unknown or unsupported versions are ignored.",
+      "required_behavior": "The peer ignores the reserved version value.",
+      "forbidden_behavior": "The peer must not process the reserved version as a supported version in that field.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can inject a reserved version into such a field and observe whether peer processing ignores that value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints MAY send packets with a reserved version to test that a peer correctly discards the packet.",
+      "line_start": 1695,
+      "line_end": 1696,
+      "condition": "An endpoint is testing a peer's handling of reserved versions.",
+      "required_behavior": "The endpoint is permitted to send a packet carrying a reserved version.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The transmitted packet's version field can be inspected to determine whether it contains a reserved version.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints MAY send packets with a reserved version to test that a peer correctly discards the packet.",
+      "line_start": 1695,
+      "line_end": 1696,
+      "condition": "A peer receives a packet carrying a reserved version.",
+      "required_behavior": "",
+      "forbidden_behavior": "The peer must not continue processing the packet as a supported-version packet.",
+      "error_behavior": "The peer discards the packet.",
+      "check_type": "error_handling",
+      "why_checkable": "A reserved-version packet can be injected and the implementation can be observed to confirm that it is discarded without supported-version processing.",
+      "eligibility": "eligible"
+    }
+  ]
+}

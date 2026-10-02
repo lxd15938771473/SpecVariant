@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0199",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Deployments should limit the ability of an attacker to target a new\n   connection to a particular server instance.  Ideally, routing",
+      "line_start": 7677,
+      "line_end": 7678,
+      "condition": "When deploying servers that receive new connections.",
+      "required_behavior": "Limit an attacker's ability to target a new connection to a particular server instance.",
+      "forbidden_behavior": "Do not allow an attacker unrestricted ability to direct a new connection to a particular server instance.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A deployment's connection-routing behavior can be tested to determine whether attacker-controlled inputs enable selection of a particular server instance.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   connection to a particular server instance.  Ideally, routing\n   decisions are made independently of client-selected values, including\n   addresses.  Once an instance is selected, a connection ID can be",
+      "line_start": 7678,
+      "line_end": 7680,
+      "condition": "When routing a new connection to a server instance.",
+      "required_behavior": "Make routing decisions independently of client-selected values, including addresses.",
+      "forbidden_behavior": "Do not base server-instance routing decisions on client-selected values, including addresses.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests can vary client-selected values and addresses and observe whether they influence the selected server instance, but the word “Ideally” makes this guidance nonbinding.",
+      "eligibility": "exclude"
+    }
+  ]
+}

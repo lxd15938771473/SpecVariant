@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0081",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The traffic keying material is generated from the following input\n   values:\n\n   -  A secret value",
+      "line_start": 5267,
+      "line_end": 5270,
+      "condition": "when generating traffic keying material",
+      "required_behavior": "use a secret value as an input",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The key derivation call can be inspected to verify that it takes a secret input.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "-  A purpose value indicating the specific value being generated",
+      "line_start": 5272,
+      "line_end": 5272,
+      "condition": "when generating traffic keying material",
+      "required_behavior": "use a purpose value identifying the specific value being generated as an input",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The derivation label or purpose argument can be checked at each traffic-key derivation call.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "-  The length of the key being generated",
+      "line_start": 5274,
+      "line_end": 5274,
+      "condition": "when generating traffic keying material",
+      "required_behavior": "use the length of the value being generated as an input",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The requested output-length argument can be checked at the derivation call.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The traffic keying material is generated from an input traffic secret\n   value using:\n\n   [sender]_write_key = HKDF-Expand-Label(Secret, \"key\", \"\", key_length)",
+      "line_start": 5276,
+      "line_end": 5279,
+      "condition": "when deriving a sender write key from a traffic secret",
+      "required_behavior": "compute [sender]_write_key as HKDF-Expand-Label(Secret, \"key\", \"\", key_length)",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The label, empty context, secret, length, and resulting key can be checked against the stated equality.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The traffic keying material is generated from an input traffic secret\n   value using:\n\n   [sender]_write_key = HKDF-Expand-Label(Secret, \"key\", \"\", key_length)\n   [sender]_write_iv  = HKDF-Expand-Label(Secret, \"iv\", \"\", iv_length)",
+      "line_start": 5276,
+      "line_end": 5280,
+      "condition": "when deriving a sender write IV from a traffic secret",
+      "required_behavior": "compute [sender]_write_iv as HKDF-Expand-Label(Secret, \"iv\", \"\", iv_length)",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The label, empty context, secret, length, and resulting IV can be checked against the stated equality.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "[sender] denotes the sending side.",
+      "line_start": 5282,
+      "line_end": 5282,
+      "condition": "when resolving a [sender]-qualified traffic key or secret",
+      "required_behavior": "resolve [sender] to the endpoint that sends the protected records",
+      "forbidden_behavior": "resolve [sender] to the receiving side",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Traffic-secret selection can be checked against the direction in which records are sent.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "| 0-RTT Application | client_early_traffic_secret           |",
+      "line_start": 5288,
+      "line_end": 5288,
+      "condition": "when deriving traffic keying material for 0-RTT Application records",
+      "required_behavior": "use client_early_traffic_secret as Secret",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The selected traffic secret for 0-RTT record protection is directly inspectable and testable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "| Handshake         | [sender]_handshake_traffic_secret     |",
+      "line_start": 5290,
+      "line_end": 5290,
+      "condition": "when deriving traffic keying material for Handshake records",
+      "required_behavior": "use [sender]_handshake_traffic_secret as Secret",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The selected traffic secret for Handshake record protection is directly inspectable and testable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "| Application Data  | [sender]_application_traffic_secret_N |",
+      "line_start": 5292,
+      "line_end": 5292,
+      "condition": "when deriving traffic keying material for Application Data records at generation N",
+      "required_behavior": "use [sender]_application_traffic_secret_N as Secret",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The selected generation-specific application traffic secret is directly inspectable and testable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "All the traffic keying material is recomputed whenever the underlying\n   Secret changes (e.g., when changing from the handshake to Application\n   Data keys or upon a key update).",
+      "line_start": 5295,
+      "line_end": 5297,
+      "condition": "whenever the underlying traffic Secret changes",
+      "required_behavior": "recompute the corresponding write key",
+      "forbidden_behavior": "continue using a write key derived from the previous Secret",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Secret transitions can be observed and the active write key can be compared with a fresh derivation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "All the traffic keying material is recomputed whenever the underlying\n   Secret changes (e.g., when changing from the handshake to Application\n   Data keys or upon a key update).",
+      "line_start": 5295,
+      "line_end": 5297,
+      "condition": "whenever the underlying traffic Secret changes",
+      "required_behavior": "recompute the corresponding write IV",
+      "forbidden_behavior": "continue using a write IV derived from the previous Secret",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Secret transitions can be observed and the active write IV can be compared with a fresh derivation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

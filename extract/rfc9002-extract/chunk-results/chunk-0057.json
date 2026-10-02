@@ -1,0 +1,139 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0057",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "This is invoked when DetectAndRemoveLostPackets deems packets lost.",
+                             "line_start":  1999,
+                             "line_end":  1999,
+                             "condition":  "DetectAndRemoveLostPackets has deemed one or more packets lost.",
+                             "required_behavior":  "Invoke OnPacketsLost with the packets deemed lost.",
+                             "forbidden_behavior":  "Do not omit loss-processing for packets that DetectAndRemoveLostPackets deems lost.",
+                             "error_behavior":  "No separate error behavior is specified.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A test can cause loss detection to classify packets as lost and observe whether OnPacketsLost processing is entered for those packets.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "OnPacketsLost(lost_packets):\n     sent_time_of_last_loss = 0",
+                             "line_start":  2001,
+                             "line_end":  2002,
+                             "condition":  "OnPacketsLost begins processing a lost-packet batch.",
+                             "required_behavior":  "Initialize sent_time_of_last_loss to zero for that invocation.",
+                             "forbidden_behavior":  "Do not carry a sent_time_of_last_loss value over from an earlier invocation.",
+                             "error_behavior":  "No separate error behavior is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Repeated calls with different packet batches can verify that the loss-time accumulator starts from zero each time.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "for lost_packet in lost_packets:\n       if lost_packet.in_flight:\n         bytes_in_flight -= lost_packet.sent_bytes",
+                             "line_start":  2004,
+                             "line_end":  2006,
+                             "condition":  "A packet in lost_packets is marked in_flight.",
+                             "required_behavior":  "Subtract that packet\u0027s sent_bytes from bytes_in_flight.",
+                             "forbidden_behavior":  "Do not subtract the sent_bytes of a lost packet that is not marked in_flight.",
+                             "error_behavior":  "No separate error behavior is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A mixed batch of in-flight and non-in-flight lost packets yields an exact expected change to bytes_in_flight.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "sent_time_of_last_loss =\n           max(sent_time_of_last_loss, lost_packet.time_sent)",
+                             "line_start":  2007,
+                             "line_end":  2008,
+                             "condition":  "An in-flight packet in lost_packets is processed.",
+                             "required_behavior":  "Update sent_time_of_last_loss to the maximum of its current value and that packet\u0027s time_sent.",
+                             "forbidden_behavior":  "Do not let an earlier send time replace a later accumulated send time, and do not include packets outside the in_flight branch.",
+                             "error_behavior":  "No separate error behavior is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Supplying in-flight lost packets with distinct send times allows the final accumulator and downstream argument to be checked against their maximum.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "if (sent_time_of_last_loss != 0):\n       OnCongestionEvent(sent_time_of_last_loss)",
+                             "line_start":  2010,
+                             "line_end":  2011,
+                             "condition":  "After scanning lost_packets, sent_time_of_last_loss is nonzero, indicating that at least one in-flight packet was lost.",
+                             "required_behavior":  "Invoke OnCongestionEvent with sent_time_of_last_loss after the lost packets have been removed from bytes_in_flight.",
+                             "forbidden_behavior":  "Do not invoke OnCongestionEvent from this branch when sent_time_of_last_loss remains zero.",
+                             "error_behavior":  "No separate error behavior is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Tests can vary whether the batch contains in-flight packets and verify both the callback count, its argument, and its ordering after flight accounting.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "// Only consider packets sent after getting an RTT sample.\n     if (first_rtt_sample == 0):\n       return",
+                             "line_start":  2015,
+                             "line_end":  2017,
+                             "condition":  "No first RTT sample has been obtained, represented by first_rtt_sample equal to zero.",
+                             "required_behavior":  "Return before constructing the persistent-congestion candidate set or testing for persistent congestion.",
+                             "forbidden_behavior":  "Do not declare or apply persistent congestion before an RTT sample exists.",
+                             "error_behavior":  "The specified handling is an early return, not an error.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A loss batch processed with first_rtt_sample equal to zero can be checked for absence of persistent-congestion evaluation and window reset.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "pc_lost = []\n     for lost in lost_packets:\n       if lost.time_sent \u003e first_rtt_sample:\n         pc_lost.insert(lost)",
+                             "line_start":  2018,
+                             "line_end":  2021,
+                             "condition":  "At least one RTT sample exists and persistent-congestion candidates are being selected from lost_packets.",
+                             "required_behavior":  "Start with an empty pc_lost collection and insert exactly the lost packets whose time_sent is strictly greater than first_rtt_sample.",
+                             "forbidden_behavior":  "Do not include a lost packet whose time_sent is equal to or earlier than first_rtt_sample, and do not retain candidates from a prior invocation.",
+                             "error_behavior":  "No separate error behavior is specified.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "Boundary-value packets sent before, exactly at, and after first_rtt_sample can verify both fresh initialization and the strict-greater-than filter.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "if (InPersistentCongestion(pc_lost)):\n       congestion_window = kMinimumWindow",
+                             "line_start":  2022,
+                             "line_end":  2023,
+                             "condition":  "InPersistentCongestion(pc_lost) evaluates true.",
+                             "required_behavior":  "Set congestion_window to kMinimumWindow.",
+                             "forbidden_behavior":  "Do not retain a larger congestion window after persistent congestion is identified.",
+                             "error_behavior":  "No separate error behavior is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A candidate loss sequence that satisfies persistent congestion has a deterministic postcondition for congestion_window.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "if (InPersistentCongestion(pc_lost)):\n       congestion_window = kMinimumWindow\n       congestion_recovery_start_time = 0",
+                             "line_start":  2022,
+                             "line_end":  2024,
+                             "condition":  "InPersistentCongestion(pc_lost) evaluates true.",
+                             "required_behavior":  "Reset congestion_recovery_start_time to zero.",
+                             "forbidden_behavior":  "Do not retain the prior congestion recovery start time after persistent congestion is identified.",
+                             "error_behavior":  "No separate error behavior is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A persistent-congestion event has a deterministic postcondition for congestion_recovery_start_time independent of the window update.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When Initial or Handshake keys are discarded, packets sent in that\n   space no longer count toward bytes in flight.",
+                             "line_start":  2028,
+                             "line_end":  2029,
+                             "condition":  "Initial or Handshake keys are discarded.",
+                             "required_behavior":  "Stop counting packets sent in the corresponding discarded packet number space toward bytes in flight.",
+                             "forbidden_behavior":  "Do not leave packets from that discarded space counted in bytes_in_flight.",
+                             "error_behavior":  "No separate error behavior is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can discard each key type and compare bytes_in_flight before and after accounting for packets in its packet number space.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "foreach packet in discarded_packets:\n       if packet.in_flight\n         bytes_in_flight -= size",
+                             "line_start":  2035,
+                             "line_end":  2037,
+                             "condition":  "RemoveFromBytesInFlight processes a discarded packet that is marked in_flight.",
+                             "required_behavior":  "Subtract that packet\u0027s size from bytes_in_flight for every in-flight packet in discarded_packets.",
+                             "forbidden_behavior":  "Do not subtract a discarded packet that is not marked in_flight.",
+                             "error_behavior":  "No separate error behavior is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A discarded-packet set with known sizes and mixed in_flight flags yields an exact expected bytes_in_flight decrement.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0006",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Resolvers answer user queries with information they acquire via queries\nto foreign name servers and the local cache.",
+      "line_start": 212,
+      "line_end": 213,
+      "condition": "A resolver answers a user query using information obtained from foreign name servers.",
+      "required_behavior": "Obtain that information by querying foreign name servers; this does not require a foreign query for every user query.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The resolver query path and the provenance of information returned to the user can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Resolvers answer user queries with information they acquire via queries\nto foreign name servers and the local cache.",
+      "line_start": 212,
+      "line_end": 213,
+      "condition": "A resolver answers a user query using information in its local cache.",
+      "required_behavior": "Use locally cached information as a source for the user response; this does not require every response to be a cache hit.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The cache lookup path and its contribution to user responses can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The queries to foreign name\nservers and the corresponding responses have a standard format described\n\n\n\nMockapetris                                                     [Page 4]\n\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n\nin this memo, and may be datagrams.",
+      "line_start": 218,
+      "line_end": 229,
+      "condition": "A query is sent to a foreign name server.",
+      "required_behavior": "Use the standard query format described in this memo.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The query encoder is checkable against its format definition, but this chunk only refers to that definition and does not supply the encoding constraints.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "The queries to foreign name\nservers and the corresponding responses have a standard format described\n\n\n\nMockapetris                                                     [Page 4]\n\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n\nin this memo, and may be datagrams.",
+      "line_start": 218,
+      "line_end": 229,
+      "condition": "A response corresponds to a query sent to a foreign name server.",
+      "required_behavior": "Use the standard response format described in this memo.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The response encoder is checkable against its format definition, but this chunk only refers to that definition and does not supply the encoding constraints.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "The queries to foreign name\nservers and the corresponding responses have a standard format described\n\n\n\nMockapetris                                                     [Page 4]\n\n\nRFC 1035        Domain Implementation and Specification    November 1987\n\n\nin this memo, and may be datagrams.",
+      "line_start": 218,
+      "line_end": 229,
+      "condition": "Choosing transport for queries to foreign name servers and their corresponding responses.",
+      "required_behavior": "Datagrams are permitted for these queries and responses; datagram transport is optional in this statement.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A transport implementation can be checked for use of the explicitly permitted datagram representation without treating that permission as mandatory support.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Here a primary name server acquires information about one or more zones\nby reading master files from its local file system, and answers queries\nabout those zones that arrive from foreign resolvers.",
+      "line_start": 247,
+      "line_end": 249,
+      "condition": "A primary name server uses the simple master-file configuration described here.",
+      "required_behavior": "Acquire information about one or more zones by reading master files from the local file system.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The configured primary zone-loading path can be inspected for acquisition from local master files.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Here a primary name server acquires information about one or more zones\nby reading master files from its local file system, and answers queries\nabout those zones that arrive from foreign resolvers.",
+      "line_start": 247,
+      "line_end": 249,
+      "condition": "In the described primary-server configuration, a query about one of the server's zones arrives from a foreign resolver.",
+      "required_behavior": "Answer queries about those zones.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The handling of incoming queries for zones loaded by that primary server is observable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The DNS requires that all zones be redundantly supported by more than\none name server.",
+      "line_start": 251,
+      "line_end": 252,
+      "condition": "A zone is supported in the DNS.",
+      "required_behavior": "Support the zone redundantly with more than one name server.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The number of name servers providing a configured zone can be counted; this constrains the deployment configuration rather than a particular replication algorithm.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Designated secondary servers can acquire zones and\ncheck for updates from the primary server using the zone transfer\nprotocol of the DNS.",
+      "line_start": 252,
+      "line_end": 254,
+      "condition": "A designated secondary server chooses the described option for acquiring a zone from its primary server.",
+      "required_behavior": "Zone acquisition may use the DNS zone transfer protocol.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A secondary server's optional zone-acquisition path can be inspected for DNS zone transfer to its primary.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Designated secondary servers can acquire zones and\ncheck for updates from the primary server using the zone transfer\nprotocol of the DNS.",
+      "line_start": 252,
+      "line_end": 254,
+      "condition": "A designated secondary server chooses the described option for checking a zone for updates from its primary server.",
+      "required_behavior": "Update checking may use the DNS zone transfer protocol.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A secondary server's optional update-checking path can be inspected for use of the described protocol with its primary.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In this configuration, the name server periodically establishes a\nvirtual circuit to a foreign name server to acquire a copy of a zone or\nto check that an existing copy has not changed.",
+      "line_start": 274,
+      "line_end": 276,
+      "condition": "A name server operates in the described configuration that acquires or checks a zone copy from a foreign name server.",
+      "required_behavior": "Periodically establish a connection to acquire a copy of the zone or check whether an existing copy has changed; this paragraph supplies no numeric interval.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Maintenance scheduling and repeated connection establishment can be inspected without inventing a refresh interval.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In this configuration, the name server periodically establishes a\nvirtual circuit to a foreign name server to acquire a copy of a zone or\nto check that an existing copy has not changed.",
+      "line_start": 274,
+      "line_end": 276,
+      "condition": "The name server establishes the maintenance connection described here to acquire or check a zone copy from a foreign name server.",
+      "required_behavior": "Use a virtual circuit for that connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The selected transport for the described maintenance connection can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "these maintenance activities follow the same form as queries and\nresponses, but the message sequences are somewhat different.",
+      "line_start": 286,
+      "line_end": 287,
+      "condition": "Messages are sent for the zone-copy acquisition and update-checking maintenance activities described in this configuration.",
+      "required_behavior": "Use the same message form as queries and responses; this constrains message form and does not equate the message sequences.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The maintenance message representation can be compared with the implementation's query and response message representation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

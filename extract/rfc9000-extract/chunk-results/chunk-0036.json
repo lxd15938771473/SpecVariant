@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0036",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If the version selected by the client is not acceptable to the server, the server responds with a Version Negotiation packet; see Section 17.2.1.",
+      "line_start": 1644,
+      "line_end": 1646,
+      "condition": "The version selected by the client is not acceptable to the server.",
+      "required_behavior": "The server sends a Version Negotiation packet in response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can send a packet using a version the server does not accept and verify that the response is a Version Negotiation packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This includes a list of versions that the server will accept.",
+      "line_start": 1646,
+      "line_end": 1647,
+      "condition": "The server sends a Version Negotiation packet.",
+      "required_behavior": "The packet includes a list of versions that the server accepts.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The response packet can be decoded and its advertised version list compared with the versions accepted by the server.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST NOT send a Version Negotiation packet in response to receiving a Version Negotiation packet.",
+      "line_start": 1647,
+      "line_end": 1648,
+      "condition": "An endpoint receives a Version Negotiation packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint sends a Version Negotiation packet as a response.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can deliver a Version Negotiation packet and observe whether the endpoint emits another Version Negotiation packet in response.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Though either the Initial packet or the Version Negotiation packet that is sent in response could be lost, the client will send new packets until it successfully receives a response or it abandons the connection attempt.",
+      "line_start": 1651,
+      "line_end": 1654,
+      "condition": "The client has not successfully received a response and has not abandoned the connection attempt, including when an Initial or responding Version Negotiation packet is lost.",
+      "required_behavior": "The client continues sending new packets until it either successfully receives a response or abandons the connection attempt.",
+      "forbidden_behavior": "The client permanently stops sending packets while the connection attempt remains active and no response has been successfully received.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A loss-injection test can drop Initial or Version Negotiation packets and verify continued client transmissions until one of the stated terminal conditions occurs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A server MAY limit the number of Version Negotiation packets it sends.",
+      "line_start": 1656,
+      "line_end": 1657,
+      "condition": "A server is sending Version Negotiation packets.",
+      "required_behavior": "The implementation permits the server to impose a limit on the number of Version Negotiation packets it sends.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A configured packet limit can be exercised by repeatedly triggering Version Negotiation and checking that transmissions stop at the configured bound.",
+      "eligibility": "eligible"
+    }
+  ]
+}

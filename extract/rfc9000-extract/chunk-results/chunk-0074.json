@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0074",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If a max_idle_timeout is specified by either endpoint in its\n   transport parameters (Section 18.2), the connection is silently\n   closed and its state is discarded when it remains idle for longer\n   than the minimum of the max_idle_timeout value advertised by both\n   endpoints.",
+      "line_start": 3100,
+      "line_end": 3104,
+      "condition": "Either endpoint specifies a max_idle_timeout in its transport parameters, and the connection remains idle longer than the effective minimum timeout.",
+      "required_behavior": "Silently close the connection.",
+      "forbidden_behavior": "Keep the connection open after the idle period exceeds the effective timeout.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can configure advertised idle timeouts, allow the connection to remain idle beyond their minimum, and verify silent closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a max_idle_timeout is specified by either endpoint in its\n   transport parameters (Section 18.2), the connection is silently\n   closed and its state is discarded when it remains idle for longer\n   than the minimum of the max_idle_timeout value advertised by both\n   endpoints.",
+      "line_start": 3100,
+      "line_end": 3104,
+      "condition": "Either endpoint specifies a max_idle_timeout in its transport parameters, and the connection remains idle longer than the effective minimum timeout.",
+      "required_behavior": "Discard the connection state.",
+      "forbidden_behavior": "Retain usable connection state after the idle timeout closes the connection.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Implementation state can be inspected after idle-timeout closure to verify that connection state is discarded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Each endpoint advertises a max_idle_timeout, but the effective value\n   at an endpoint is computed as the minimum of the two advertised\n   values (or the sole advertised value, if only one endpoint advertises\n   a non-zero value).",
+      "line_start": 3106,
+      "line_end": 3109,
+      "condition": "Both endpoints advertise non-zero max_idle_timeout values.",
+      "required_behavior": "Compute the effective idle timeout as the minimum of the two advertised values.",
+      "forbidden_behavior": "Use a value greater than the smaller advertised value as the effective idle timeout.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can supply two different non-zero advertised values and inspect or infer the effective timeout selected by the endpoint.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Each endpoint advertises a max_idle_timeout, but the effective value\n   at an endpoint is computed as the minimum of the two advertised\n   values (or the sole advertised value, if only one endpoint advertises\n   a non-zero value).",
+      "line_start": 3106,
+      "line_end": 3109,
+      "condition": "Only one endpoint advertises a non-zero max_idle_timeout value.",
+      "required_behavior": "Use the sole non-zero advertised value as the effective idle timeout.",
+      "forbidden_behavior": "Compute the effective timeout as zero or substitute another value solely because the peer did not advertise a non-zero value.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can configure exactly one non-zero advertised timeout and verify the effective timeout used by the endpoint.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "By announcing a max_idle_timeout, an endpoint\n   commits to initiating an immediate close (Section 10.2) if it\n   abandons the connection prior to the effective value.",
+      "line_start": 3109,
+      "line_end": 3111,
+      "condition": "An endpoint announced a max_idle_timeout and abandons the connection before the effective idle-timeout period has elapsed.",
+      "required_behavior": "Initiate an immediate close.",
+      "forbidden_behavior": "Silently abandon the connection before the effective timeout without initiating an immediate close.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can cause an endpoint that advertised a timeout to abandon the connection early and observe whether it initiates an immediate close.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint restarts its idle timer when a packet from its peer is\n   received and processed successfully.",
+      "line_start": 3113,
+      "line_end": 3114,
+      "condition": "A packet from the peer is received and processed successfully.",
+      "required_behavior": "Restart the endpoint's idle timer.",
+      "forbidden_behavior": "Allow the prior idle-timer interval to continue unchanged after successful receipt and processing.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Timer state or timeout timing can be observed after successful processing of a peer packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint also restarts its\n   idle timer when sending an ack-eliciting packet if no other ack-\n   eliciting packets have been sent since last receiving and processing\n   a packet.",
+      "line_start": 3114,
+      "line_end": 3117,
+      "condition": "The endpoint sends an ack-eliciting packet and has sent no other ack-eliciting packet since it last received and processed a packet.",
+      "required_behavior": "Restart the endpoint's idle timer.",
+      "forbidden_behavior": "Continue measuring idle time solely from the prior timer start when this first subsequent ack-eliciting packet is sent.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can arrange the specified packet history, send the first subsequent ack-eliciting packet, and verify the timer restart through instrumentation or observed timeout timing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To avoid excessively small idle timeout periods, endpoints MUST\n   increase the idle timeout period to be at least three times the\n   current Probe Timeout (PTO).",
+      "line_start": 3120,
+      "line_end": 3122,
+      "condition": "The otherwise selected idle timeout period is less than three times the current PTO.",
+      "required_behavior": "Increase the idle timeout period to at least three times the current PTO.",
+      "forbidden_behavior": "Use an idle timeout period shorter than three times the current PTO.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Given the current PTO and configured timeout, a test can verify that the applied idle timeout is no less than three times the PTO.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0046",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The KEY_UPDATE_ERROR error code (0x0e) is used to signal errors\n   related to key updates.",
+      "line_start": 1854,
+      "line_end": 1855,
+      "condition": "When signaling an error related to a key update",
+      "required_behavior": "Use the KEY_UPDATE_ERROR error code with numeric value 0x0e.",
+      "forbidden_behavior": "Signal the key-update error under a different error-code value.",
+      "error_behavior": "Report the error as KEY_UPDATE_ERROR (0x0e).",
+      "check_type": "error_handling",
+      "why_checkable": "A key-update failure can be induced and the emitted error-code field compared directly with 0x0e.",
+      "eligibility": "eligible"
+    }
+  ]
+}

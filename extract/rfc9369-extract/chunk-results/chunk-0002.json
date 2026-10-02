@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0002",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Any endpoint that supports two versions needs to implement version\n   negotiation to protect against downgrade attacks.",
+      "line_start": 119,
+      "line_end": 120,
+      "condition": "an endpoint supports two QUIC versions",
+      "required_behavior": "implement version negotiation to protect against downgrade attacks",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The endpoint's multi-version path can be inspected or tested for use of version negotiation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

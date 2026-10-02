@@ -1,0 +1,19 @@
+{
+  "profile_id": "tls13-openssl",
+  "description": "TLS 1.3 OpenSSL adapter profile. The current Python ssl backend supports real TLS 1.3 handshakes; packet-level mutation and early data require a future OpenSSL CLI/C harness backend.",
+  "capabilities": [
+    "send",
+    "observe",
+    "multi_connection"
+  ],
+  "unsupported_until_cli_or_c_harness": [
+    "network_scheduler",
+    "fault_injection",
+    "replay_buffer",
+    "timer_control",
+    "duplicate",
+    "replay",
+    "fragmentation",
+    "early_data"
+  ]
+}

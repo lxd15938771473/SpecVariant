@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0022",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Packet protection keys are not discarded immediately when new keys\n   are available.",
+      "line_start": 909,
+      "line_end": 910,
+      "condition": "When packet-protection keys for a newer encryption level become available.",
+      "required_behavior": "Retain the previous encryption-level keys until their discard conditions are satisfied.",
+      "forbidden_behavior": "Discarding previous keys solely because newer keys became available.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Key-lifecycle instrumentation can verify that installation of newer keys does not itself delete previous keys.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If packets from a lower encryption level contain\n   CRYPTO frames, frames that retransmit that data MUST be sent at the\n   same encryption level.",
+      "line_start": 910,
+      "line_end": 912,
+      "condition": "When retransmitting data from a CRYPTO frame that was sent at a lower encryption level.",
+      "required_behavior": "Send the retransmitted CRYPTO data at the same encryption level as the original data.",
+      "forbidden_behavior": "Retransmitting the CRYPTO data at a different encryption level.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A loss-and-retransmission trace can compare the encryption levels of original and retransmitted CRYPTO data.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Similarly, an endpoint generates\n   acknowledgments for packets at the same encryption level as the\n   packet being acknowledged.",
+      "line_start": 912,
+      "line_end": 914,
+      "condition": "When generating an acknowledgment for a packet.",
+      "required_behavior": "Generate the acknowledgment at the same encryption level as the acknowledged packet.",
+      "forbidden_behavior": "Acknowledging the packet at a different encryption level.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet traces can correlate each ACK with the encryption level of the acknowledged packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint cannot discard keys for a given encryption level unless\n   it has received all the cryptographic handshake messages from its\n   peer at that encryption level and its peer has done the same.",
+      "line_start": 918,
+      "line_end": 920,
+      "condition": "Before an endpoint discards keys for an encryption level.",
+      "required_behavior": "Confirm that it has received all cryptographic handshake messages from its peer at that encryption level.",
+      "forbidden_behavior": "Discarding the keys while peer handshake messages at that level remain unreceived.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A handshake trace can compare key deletion with completion of the peer's CRYPTO byte stream at that level.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint cannot discard keys for a given encryption level unless\n   it has received all the cryptographic handshake messages from its\n   peer at that encryption level and its peer has done the same.",
+      "line_start": 918,
+      "line_end": 920,
+      "condition": "Before an endpoint discards keys for an encryption level.",
+      "required_behavior": "Confirm that its peer has received all cryptographic handshake messages sent at that encryption level.",
+      "forbidden_behavior": "Discarding the keys before the peer has received all handshake messages at that level.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Acknowledgment state for sent CRYPTO data can be compared with the key-discard event.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Though an endpoint might retain older keys, new data MUST be sent at\n   the highest currently available encryption level.",
+      "line_start": 927,
+      "line_end": 928,
+      "condition": "When an endpoint sends new data while multiple encryption levels' keys are retained.",
+      "required_behavior": "Send the new data at the highest currently available encryption level.",
+      "forbidden_behavior": "Sending new data at a lower retained encryption level.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A packet trace can compare new-data sends with the highest keys installed at send time.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Only ACK frames\n   and retransmissions of data in CRYPTO frames are sent at a previous\n   encryption level.  These packets MAY also include PADDING frames.",
+      "line_start": 928,
+      "line_end": 930,
+      "condition": "When sending a packet at a previous encryption level.",
+      "required_behavior": "Limit its substantive content to ACK frames and retransmitted CRYPTO data, while permitting PADDING frames in the packet.",
+      "forbidden_behavior": "Including any other frame or new data at the previous encryption level.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Frame-type inspection can verify the complete allowed set in every packet sent at a previous level.",
+      "eligibility": "eligible"
+    }
+  ]
+}

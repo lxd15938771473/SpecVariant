@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0027",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Connection IDs are independently selected by endpoints; each endpoint selects the connection IDs that its peer uses.",
+      "line_start": 1278,
+      "line_end": 1279,
+      "condition": "When connection IDs are selected for a connection",
+      "required_behavior": "Each endpoint independently selects the connection IDs that its peer uses.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation can be inspected or tested to verify which endpoint selects each connection ID used by its peer.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Each endpoint selects connection IDs using an implementation-specific (and perhaps deployment-specific) method that will allow packets with that connection ID to be routed back to the endpoint and to be identified by the endpoint upon receipt.",
+      "line_start": 1283,
+      "line_end": 1287,
+      "condition": "When an endpoint selects a connection ID",
+      "required_behavior": "The selected connection ID must support routing packets back to the endpoint and identification of the connection by that endpoint upon receipt.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Routing and connection identification can be tested by sending packets bearing a selected connection ID to the endpoint.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Connection IDs MUST NOT contain any information that can be used by an external observer (that is, one that does not cooperate with the issuer) to correlate them with other connection IDs for the same connection.",
+      "line_start": 1293,
+      "line_end": 1296,
+      "condition": "When an endpoint generates or issues connection IDs for the same connection",
+      "required_behavior": "",
+      "forbidden_behavior": "Connection IDs must not expose information enabling a non-cooperating external observer to correlate them as belonging to the same connection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The connection-ID generation and encoding scheme can be analyzed and statistically tested for externally observable correlation signals.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the same connection ID MUST NOT be issued more than once on the same connection.",
+      "line_start": 1296,
+      "line_end": 1297,
+      "condition": "When an endpoint issues connection IDs on a connection",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not issue an identical connection ID more than once on that connection.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A trace of issued connection IDs can be checked for duplicates within each connection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Packets with long headers include Source Connection ID and Destination Connection ID fields.",
+      "line_start": 1299,
+      "line_end": 1300,
+      "condition": "When encoding or parsing a packet with a long header",
+      "required_behavior": "The long header must include both a Source Connection ID field and a Destination Connection ID field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded or parsed long-header field layout can be inspected for the presence of both fields.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "These fields are used to set the connection IDs for new connections; see Section 7.2 for details.",
+      "line_start": 1300,
+      "line_end": 1301,
+      "condition": "When establishing a new connection from a long-header packet",
+      "required_behavior": "Use the Source Connection ID and Destination Connection ID fields to set the connection IDs for the new connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Connection-establishment tests can compare the resulting connection-ID state with the two fields in the initiating long-header packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Packets with short headers (Section 17.3) only include the Destination Connection ID and omit the explicit length.",
+      "line_start": 1303,
+      "line_end": 1304,
+      "condition": "When encoding or parsing a packet with a short header",
+      "required_behavior": "Include the Destination Connection ID without an explicit connection-ID length field.",
+      "forbidden_behavior": "A short header must not include a Source Connection ID or an explicit Destination Connection ID length.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The short-header wire layout can be inspected for the Destination Connection ID and absence of the excluded fields.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The length of the Destination Connection ID field is expected to be known to endpoints.",
+      "line_start": 1304,
+      "line_end": 1306,
+      "condition": "When an endpoint encodes or parses the Destination Connection ID in a short header",
+      "required_behavior": "The endpoint must know the Destination Connection ID length from context because the short header does not encode it explicitly.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Tests can verify that the endpoint determines the field boundary without reading an explicit length from the short header.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A Version Negotiation (Section 17.2.1) packet echoes the connection IDs selected by the client",
+      "line_start": 1312,
+      "line_end": 1313,
+      "condition": "When generating a Version Negotiation packet in response to a client packet",
+      "required_behavior": "Echo the connection IDs selected by the client.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A generated Version Negotiation packet can be compared with the connection IDs in the triggering client packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MUST NOT use the same IP address and port for multiple concurrent connections with zero-length connection IDs, unless it is certain that those protocol features are not in use.",
+      "line_start": 1321,
+      "line_end": 1324,
+      "condition": "When multiple concurrent connections use zero-length connection IDs and peer connection migration, NAT rebinding, or client port reuse might be in use",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not use the same local IP address and port for those concurrent connections.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Runtime connection state can be checked for concurrent zero-length-ID connections sharing a local address and port under the listed protocol features.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When an endpoint uses a non-zero-length connection ID, it needs to ensure that the peer has a supply of connection IDs from which to choose for packets sent to the endpoint.",
+      "line_start": 1326,
+      "line_end": 1328,
+      "condition": "When an endpoint uses a non-zero-length connection ID",
+      "required_behavior": "Ensure that the peer has a supply of connection IDs available for packets sent to the endpoint.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Protocol traces and endpoint state can verify that usable peer-held connection IDs remain available.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "These connection IDs are supplied by the endpoint using the NEW_CONNECTION_ID frame (Section 19.15).",
+      "line_start": 1328,
+      "line_end": 1330,
+      "condition": "When an endpoint supplies the peer with connection IDs for packets sent to that endpoint",
+      "required_behavior": "Supply those connection IDs using NEW_CONNECTION_ID frames.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Frame traces can be inspected to confirm that supplied connection IDs are carried in NEW_CONNECTION_ID frames.",
+      "eligibility": "eligible"
+    }
+  ]
+}

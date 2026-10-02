@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0025",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "LOCAL_PREF is a well-known attribute",
+      "line_start": 1584,
+      "line_end": 1584,
+      "condition": "classifying the LOCAL_PREF path attribute",
+      "required_behavior": "Treat LOCAL_PREF as a well-known attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The path attribute classification identifies whether LOCAL_PREF is well-known.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "LOCAL_PREF is a well-known attribute that SHALL be included in all\n   UPDATE messages that a given BGP speaker sends to other internal\n   peers.",
+      "line_start": 1584,
+      "line_end": 1586,
+      "condition": "a BGP speaker sends an UPDATE message to an internal peer",
+      "required_behavior": "Include LOCAL_PREF in every such UPDATE message.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "UPDATE messages generated for internal peers can be checked for LOCAL_PREF presence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker SHALL calculate the degree of preference for\n   each external route based on the locally-configured policy, and\n   include the degree of preference when advertising a route to its\n   internal peers.",
+      "line_start": 1586,
+      "line_end": 1589,
+      "condition": "a BGP speaker calculates the degree of preference for an external route",
+      "required_behavior": "Calculate the degree of preference for each external route based on locally configured policy.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "External routes and configured policy inputs can be compared with the calculated preference values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker SHALL calculate the degree of preference for\n   each external route based on the locally-configured policy, and\n   include the degree of preference when advertising a route to its\n   internal peers.",
+      "line_start": 1586,
+      "line_end": 1589,
+      "condition": "a BGP speaker advertises an external route to its internal peers",
+      "required_behavior": "Include the calculated degree of preference in the advertisement.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The advertised LOCAL_PREF value can be compared with the locally calculated preference for the route.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The higher degree of preference MUST be preferred.",
+      "line_start": 1589,
+      "line_end": 1589,
+      "condition": "comparing route degrees of preference",
+      "required_behavior": "Prefer the higher degree of preference.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Route preference comparisons can be checked with unequal preference values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker uses the degree of preference learned via LOCAL_PREF in\n   its Decision Process (see Section 9.1.1).",
+      "line_start": 1590,
+      "line_end": 1591,
+      "condition": "a BGP speaker has learned a degree of preference via LOCAL_PREF",
+      "required_behavior": "Use the learned degree of preference in the Decision Process.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The Decision Process inputs can be inspected to verify use of the received LOCAL_PREF value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A BGP speaker MUST NOT include this attribute in UPDATE messages it\n   sends to external peers, except in the case of BGP Confederations\n   [RFC3065].",
+      "line_start": 1593,
+      "line_end": 1595,
+      "condition": "a BGP speaker sends an UPDATE message to an external peer, except in the case of BGP Confederations",
+      "required_behavior": "",
+      "forbidden_behavior": "Include LOCAL_PREF in the UPDATE message.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "UPDATE messages sent to external peers outside the confederation exception can be checked for absence of LOCAL_PREF.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If it is contained in an UPDATE message that is received\n   from an external peer, then this attribute MUST be ignored by the\n   receiving speaker, except in the case of BGP Confederations\n   [RFC3065].",
+      "line_start": 1595,
+      "line_end": 1598,
+      "condition": "an UPDATE message received from an external peer contains LOCAL_PREF, except in the case of BGP Confederations",
+      "required_behavior": "Ignore the received LOCAL_PREF attribute.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An external UPDATE containing LOCAL_PREF can be supplied and its exclusion from receiver preference processing observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

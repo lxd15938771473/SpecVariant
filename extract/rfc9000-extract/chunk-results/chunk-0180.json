@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0180",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   1.  An off-path attacker can race packets and attempt to become a\n       \"limited\" on-path attacker.",
+      "line_start": 7124,
+      "line_end": 7125,
+      "condition": "When an off-path attacker races packets.",
+      "required_behavior": "The implementation permits the attacker to attempt to become a limited on-path attacker.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A packet-racing test can determine whether an off-path attacker can attain only the described limited on-path capability.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   2.  An off-path attacker can cause path validation to succeed for\n       forwarded packets with the source address listed as the off-path\n       attacker as long as it can provide improved connectivity between\n       the client and the server.",
+      "line_start": 7127,
+      "line_end": 7130,
+      "condition": "When an off-path attacker forwards packets using its own source address and provides improved connectivity between the client and server.",
+      "required_behavior": "Path validation can succeed for the forwarded packets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can forward packets through the attacker, vary whether connectivity improves, and observe the path-validation result.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   3.  An off-path attacker cannot cause a connection to close once the\n       handshake has completed.",
+      "line_start": 7132,
+      "line_end": 7133,
+      "condition": "After the handshake has completed.",
+      "required_behavior": "The connection remains open in response to actions available to an off-path attacker.",
+      "forbidden_behavior": "An off-path attacker must not be able to cause the connection to close.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "After completing a handshake, adversarial off-path packet injection can be performed while monitoring whether the connection closes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   4.  An off-path attacker cannot cause migration to a new path to fail\n       if it cannot observe the new path.",
+      "line_start": 7135,
+      "line_end": 7136,
+      "condition": "During migration to a new path that the off-path attacker cannot observe.",
+      "required_behavior": "Migration to the new path remains able to succeed despite the attacker's actions.",
+      "forbidden_behavior": "The off-path attacker must not be able to cause migration to fail.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A migration test can deny the attacker visibility of the new path, inject attacker-controlled traffic, and observe whether migration fails.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   5.  An off-path attacker can become a limited on-path attacker during\n       migration to a new path for which it is also an off-path\n       attacker.",
+      "line_start": 7138,
+      "line_end": 7140,
+      "condition": "During migration to a new path for which the attacker is off-path.",
+      "required_behavior": "The implementation can allow the attacker to become a limited on-path attacker.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A controlled migration and attack simulation can determine whether the attacker obtains the stated limited on-path capability.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   6.  An off-path attacker can become a limited on-path attacker by\n       affecting shared NAT state such that it sends packets to the\n       server from the same IP address and port that the client\n       originally used.",
+      "line_start": 7142,
+      "line_end": 7145,
+      "condition": "When an off-path attacker affects shared NAT state and sends packets from the client's original IP address and port.",
+      "required_behavior": "The implementation can treat the attacker as having limited on-path capability.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A NAT-state test can arrange reuse of the client's original address and port and measure the attacker's resulting protocol capabilities.",
+      "eligibility": "eligible"
+    }
+  ]
+}

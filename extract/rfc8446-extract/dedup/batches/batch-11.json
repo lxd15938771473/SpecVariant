@@ -1,0 +1,2515 @@
+{
+  "schema_version": "speclitmus.dedup-review-batch.v1",
+  "batch_id": "batch-11",
+  "decision_rule": "duplicate only when both entries impose the same implementation check under equivalent conditions and expected outcomes; related or overlapping constraints remain distinct",
+  "pairs": [
+    {
+      "pair_id": "pair-1db57f83b827a289",
+      "similarity": 0.574111,
+      "left": {
+        "requirement_id": "req-76f7faea6e82cb550e10",
+        "condition": "",
+        "required_behavior": "Encode and decode CipherSuite.TLS_AES_128_GCM_SHA256 with numeric value {0x13,0x01}.",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| TLS_AES_128_GCM_SHA256       | {0x13,0x01} |",
+          "line_start": 7431,
+          "line_end": 7431,
+          "verified": true,
+          "chunk_id": "chunk-0104"
+        }
+      },
+      "right": {
+        "requirement_id": "req-b2cd828b0b0541c18671",
+        "condition": "",
+        "required_behavior": "Encode and decode CipherSuite.TLS_AES_256_GCM_SHA384 with numeric value {0x13,0x02}.",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| TLS_AES_256_GCM_SHA384       | {0x13,0x02} |",
+          "line_start": 7433,
+          "line_end": 7433,
+          "verified": true,
+          "chunk_id": "chunk-0104"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-26bd0637ee339a2f",
+      "similarity": 0.574029,
+      "left": {
+        "requirement_id": "req-0be74b4f3e5da22ca51f",
+        "condition": "Handshake.msg_type is server_hello",
+        "required_behavior": "parse and encode the message body as ServerHello",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "case server_hello:          ServerHello;",
+          "line_start": 6920,
+          "line_end": 6920,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      },
+      "right": {
+        "requirement_id": "req-61127627f917326a6ca8",
+        "condition": "Handshake.msg_type is end_of_early_data",
+        "required_behavior": "parse and encode the message body as EndOfEarlyData",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "case end_of_early_data:     EndOfEarlyData;",
+          "line_start": 6921,
+          "line_end": 6921,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-5a60c9febdc75048",
+      "similarity": 0.573925,
+      "left": {
+        "requirement_id": "req-c0041a5b2a844ba230b0",
+        "condition": "when encoding or decoding rsa_pss_pss_sha256",
+        "required_behavior": "map rsa_pss_pss_sha256 to SignatureScheme code point 0x0809",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The enum name-to-wire-value mapping is exact.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "rsa_pss_pss_sha256(0x0809),",
+          "line_start": 2321,
+          "line_end": 2321,
+          "verified": true,
+          "chunk_id": "chunk-0033"
+        }
+      },
+      "right": {
+        "requirement_id": "req-52ae1ac401656af30629",
+        "condition": "when encoding or decoding rsa_pss_pss_sha384",
+        "required_behavior": "map rsa_pss_pss_sha384 to SignatureScheme code point 0x080a",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The enum name-to-wire-value mapping is exact.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "rsa_pss_pss_sha384(0x080a),",
+          "line_start": 2322,
+          "line_end": 2322,
+          "verified": true,
+          "chunk_id": "chunk-0033"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-a8d488b0cc4bae47",
+      "similarity": 0.573865,
+      "left": {
+        "requirement_id": "req-387e1eddad67010621a7",
+        "condition": "the server constructs a TLS 1.3 ServerHello",
+        "required_behavior": "set legacy_version to 0x0303",
+        "forbidden_behavior": "put another version value in legacy_version",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The fixed legacy_version bytes can be read directly from ServerHello.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "In TLS 1.3, the TLS server indicates\n      its version using the \"supported_versions\" extension\n      (Section 4.2.1), and the legacy_version field MUST be set to\n      0x0303",
+          "line_start": 1701,
+          "line_end": 1704,
+          "verified": true,
+          "chunk_id": "chunk-0027"
+        }
+      },
+      "right": {
+        "requirement_id": "req-48e721fbb187d1537e3c",
+        "condition": "a server negotiates TLS 1.3",
+        "required_behavior": "set ServerHello.legacy_version to 0x0303",
+        "forbidden_behavior": "send another legacy_version value",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The fixed legacy_version wire value can be asserted in a TLS 1.3 ServerHello.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "It MUST set the ServerHello.legacy_version field to\n   0x0303 (TLS 1.2).",
+          "line_start": 2174,
+          "line_end": 2175,
+          "verified": true,
+          "chunk_id": "chunk-0031"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-758a4bd9714cfad6",
+      "similarity": 0.573819,
+      "left": {
+        "requirement_id": "req-9f94d55a3946ac5c67d9",
+        "condition": "when the client sends Certificate and CertificateVerify",
+        "required_behavior": "send Certificate before CertificateVerify",
+        "forbidden_behavior": "send CertificateVerify before Certificate",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "The client authentication message sequence can be asserted directly from a handshake trace.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "namely Certificate and CertificateVerify (if\n   requested), and Finished.",
+          "line_start": 699,
+          "line_end": 700,
+          "verified": true,
+          "chunk_id": "chunk-0009"
+        }
+      },
+      "right": {
+        "requirement_id": "req-e6edfbf62a977ad573e3",
+        "condition": "the server requested client authentication and the client has a certificate",
+        "required_behavior": "send Certificate and CertificateVerify before Finished",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "The handshake state and resulting message, key, or transition can be exercised directly.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| [Send Certificate [+ CertificateVerify]]\n    Can send                  | Send Finished",
+          "line_start": 6701,
+          "line_end": 6702,
+          "verified": true,
+          "chunk_id": "chunk-0101"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-fadd527de16db0b2",
+      "similarity": 0.573769,
+      "left": {
+        "requirement_id": "req-bd9b0e2e356eecade19d",
+        "condition": "max_fragment_length appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place max_fragment_length in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| max_fragment_length [RFC6066]                    |      CH, EE |",
+          "line_start": 2022,
+          "line_end": 2022,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-7600a8cf987bf765205a",
+        "condition": "use_srtp appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place use_srtp in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| use_srtp [RFC5764]                               |      CH, EE |",
+          "line_start": 2030,
+          "line_end": 2030,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-e0976a2e373c80ac",
+      "similarity": 0.57376,
+      "left": {
+        "requirement_id": "req-a07a26f08d51e830851f",
+        "condition": "a MAC is used to compute a PSK binder",
+        "required_behavior": "use a collision-resistant MAC construction",
+        "forbidden_behavior": "use a binder MAC lacking the required collision resistance",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The binder MAC construction and underlying hash are concrete algorithm-selection points.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "This requires that both the KDF used to produce the\nresumption master secret and the MAC used to compute the binder be\ncollision resistant.",
+          "line_start": 8022,
+          "line_end": 8024,
+          "verified": true,
+          "chunk_id": "chunk-0111"
+        }
+      },
+      "right": {
+        "requirement_id": "req-f24e80b070ed2e52ad26",
+        "condition": "a KDF is used to produce the resumption master secret",
+        "required_behavior": "use a collision-resistant KDF",
+        "forbidden_behavior": "use a KDF lacking the required collision resistance",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The configured KDF and its underlying hash can be inspected against the protocol's approved collision-resistant algorithms.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "This requires that both the KDF used to produce the\nresumption master secret and the MAC used to compute the binder be\ncollision resistant.",
+          "line_start": 8022,
+          "line_end": 8024,
+          "verified": true,
+          "chunk_id": "chunk-0111"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-7a7bb10dbebd094d",
+      "similarity": 0.573755,
+      "left": {
+        "requirement_id": "req-2895bbeedcebac315522",
+        "condition": "padding appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello",
+        "forbidden_behavior": "place padding in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the single listed placement.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| padding [RFC7685]                                |          CH |",
+          "line_start": 2042,
+          "line_end": 2042,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-811dcff26454d0c83c9c",
+        "condition": "early_data appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello, EncryptedExtensions, or NewSessionTicket",
+        "forbidden_behavior": "place early_data in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the three listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| early_data (RFC 8446)                            | CH, EE, NST |",
+          "line_start": 2050,
+          "line_end": 2050,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-915fac659fc4bb72",
+      "similarity": 0.573728,
+      "left": {
+        "requirement_id": "req-c1e5943a2bd70aea8c10",
+        "condition": "supported_groups appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place supported_groups in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| supported_groups [RFC7919]                       |      CH, EE |",
+          "line_start": 2026,
+          "line_end": 2026,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-811dcff26454d0c83c9c",
+        "condition": "early_data appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello, EncryptedExtensions, or NewSessionTicket",
+        "forbidden_behavior": "place early_data in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the three listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| early_data (RFC 8446)                            | CH, EE, NST |",
+          "line_start": 2050,
+          "line_end": 2050,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-603ac6fdda6af27d",
+      "similarity": 0.573444,
+      "left": {
+        "requirement_id": "req-56901359a0f3bb67e5b6",
+        "condition": "server_name appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place server_name in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| server_name [RFC6066]                            |      CH, EE |",
+          "line_start": 2020,
+          "line_end": 2020,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-d286da65d2e704c12414",
+        "condition": "cookie appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or HelloRetryRequest",
+        "forbidden_behavior": "place cookie in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| cookie (RFC 8446)                                |     CH, HRR |",
+          "line_start": 2052,
+          "line_end": 2052,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-e7341713dd2e17ec",
+      "similarity": 0.573415,
+      "left": {
+        "requirement_id": "req-113d4e8ec72eb347f5b4",
+        "condition": "",
+        "required_behavior": "Encode and decode SignatureScheme.obsolete_RESERVED with numeric value 0x0000..0x0200.",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "obsolete_RESERVED(0x0000..0x0200),",
+          "line_start": 7201,
+          "line_end": 7201,
+          "verified": true,
+          "chunk_id": "chunk-0103"
+        }
+      },
+      "right": {
+        "requirement_id": "req-5c5527b8e511878c0358",
+        "condition": "",
+        "required_behavior": "Encode and decode SignatureScheme.obsolete_RESERVED with numeric value 0x0604..0x06FF.",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "obsolete_RESERVED(0x0604..0x06FF),",
+          "line_start": 7209,
+          "line_end": 7209,
+          "verified": true,
+          "chunk_id": "chunk-0103"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-b7f7aed766e8a5bb",
+      "similarity": 0.573174,
+      "left": {
+        "requirement_id": "req-426039998e68d672039d",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "support rsa_pss_rsae_sha256 signatures for CertificateVerify",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "CertificateVerify generation or verification can be exercised with rsa_pss_rsae_sha256.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "A TLS-compliant application MUST support digital signatures with\n   rsa_pkcs1_sha256 (for certificates), rsa_pss_rsae_sha256 (for\n   CertificateVerify and certificates), and ecdsa_secp256r1_sha256.",
+          "line_start": 5692,
+          "line_end": 5694,
+          "verified": true,
+          "chunk_id": "chunk-0089"
+        }
+      },
+      "right": {
+        "requirement_id": "req-4ccec1efe326b5acac3c",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "implement the server_name TLS extension",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "Extension registration plus generation and parsing paths can be checked for server_name support.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "In the absence of an application profile standard specifying\n   otherwise, a TLS-compliant application MUST implement the following\n   TLS extensions:\n\n   -  Supported Versions (\"supported_versions\"; Section 4.2.1)\n\n   -  Cookie (\"cookie\"; Section 4.2.2)\n\n   -  Signature Algorithms (\"signature_algorithms\"; Section 4.2.3)\n\n   -  Signature Algorithms Certificate (\"signature_algorithms_cert\";\n      Section 4.2.3)\n\n   -  Negotiated Groups (\"supported_groups\"; Section 4.2.7)\n\n   -  Key Share (\"key_share\"; Section 4.2.8)\n\n   -  Server Name Indication (\"server_name\"; Section 3 of [RFC6066])",
+          "line_start": 5715,
+          "line_end": 5732,
+          "verified": true,
+          "chunk_id": "chunk-0090"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-1bb7955b61033f20",
+      "similarity": 0.573053,
+      "left": {
+        "requirement_id": "req-ff5fed831fcadeadd6cb",
+        "condition": "",
+        "required_behavior": "Represent PskKeyExchangeMode as an enum whose maximum encoded value is 255.",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "enum { psk_ke(0), psk_dhe_ke(1), (255) } PskKeyExchangeMode;",
+          "line_start": 7067,
+          "line_end": 7067,
+          "verified": true,
+          "chunk_id": "chunk-0103"
+        }
+      },
+      "right": {
+        "requirement_id": "req-902b4d78a1c2d4d3a70b",
+        "condition": "",
+        "required_behavior": "Represent NamedGroup as an enum whose maximum encoded value is 0xFFFF.",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "(0xFFFF)",
+          "line_start": 7244,
+          "line_end": 7244,
+          "verified": true,
+          "chunk_id": "chunk-0104"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-ee597e6d13c3b8ca",
+      "similarity": 0.572884,
+      "left": {
+        "requirement_id": "req-bd9b0e2e356eecade19d",
+        "condition": "max_fragment_length appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place max_fragment_length in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| max_fragment_length [RFC6066]                    |      CH, EE |",
+          "line_start": 2022,
+          "line_end": 2022,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-bec8ced0e93940e038a2",
+        "condition": "heartbeat appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place heartbeat in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| heartbeat [RFC6520]                              |      CH, EE |",
+          "line_start": 2032,
+          "line_end": 2032,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-8b4c5eef429b81eb",
+      "similarity": 0.572784,
+      "left": {
+        "requirement_id": "req-7817799a453fac269bb6",
+        "condition": "the subsequent handshake uses the Figure 3 PSK flow",
+        "required_behavior": "send the client Finished after receiving the server Finished",
+        "forbidden_behavior": "send the client Finished before the server Finished",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "The two Finished messages have a testable temporal order.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Subsequent Handshake:\n          ClientHello\n          + key_share*\n          + pre_shared_key          -------->\n                                                          ServerHello\n                                                     + pre_shared_key\n                                                         + key_share*\n                                                {EncryptedExtensions}\n                                                           {Finished}\n                                    <--------     [Application Data*]\n          {Finished}                -------->\n          [Application Data]        <------->      [Application Data]",
+          "line_start": 864,
+          "line_end": 875,
+          "verified": true,
+          "chunk_id": "chunk-0011"
+        }
+      },
+      "right": {
+        "requirement_id": "req-9829e74d76a34f378713",
+        "condition": "the subsequent handshake uses the Figure 3 PSK flow",
+        "required_behavior": "send ServerHello before EncryptedExtensions and send the server Finished after EncryptedExtensions",
+        "forbidden_behavior": "reorder these server-flight messages",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "Handshake traces expose the order of ServerHello, EncryptedExtensions, and Finished.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Subsequent Handshake:\n          ClientHello\n          + key_share*\n          + pre_shared_key          -------->\n                                                          ServerHello\n                                                     + pre_shared_key\n                                                         + key_share*\n                                                {EncryptedExtensions}\n                                                           {Finished}\n                                    <--------     [Application Data*]\n          {Finished}                -------->\n          [Application Data]        <------->      [Application Data]",
+          "line_start": 864,
+          "line_end": 875,
+          "verified": true,
+          "chunk_id": "chunk-0011"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-120cfb973a96e6d5",
+      "similarity": 0.572598,
+      "left": {
+        "requirement_id": "req-5aa83d6aa0d4af237e28",
+        "condition": "when a server evaluates offered PSKs",
+        "required_behavior": "limit binder validation to the selected PSK",
+        "forbidden_behavior": "attempt to validate multiple binders",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "Binder-verification invocations can be counted for a multi-identity offer.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Servers SHOULD NOT attempt to validate multiple binders;",
+          "line_start": 3167,
+          "line_end": 3167,
+          "verified": true,
+          "chunk_id": "chunk-0045"
+        }
+      },
+      "right": {
+        "requirement_id": "req-a35ef042fa98d0278355",
+        "condition": "when a server evaluates offered PSKs",
+        "required_behavior": "select a single PSK before binder validation",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "The selection state can be checked before the binder-verification call.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "rather, they SHOULD select a single PSK and validate solely the\n   binder that corresponds to that PSK.",
+          "line_start": 3168,
+          "line_end": 3169,
+          "verified": true,
+          "chunk_id": "chunk-0045"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-ef32c2ac9fb43b5a",
+      "similarity": 0.572555,
+      "left": {
+        "requirement_id": "req-c1e5943a2bd70aea8c10",
+        "condition": "supported_groups appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place supported_groups in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| supported_groups [RFC7919]                       |      CH, EE |",
+          "line_start": 2026,
+          "line_end": 2026,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-6a9ff2c89ceed80f5854",
+        "condition": "pre_shared_key appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or ServerHello",
+        "forbidden_behavior": "place pre_shared_key in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| pre_shared_key (RFC 8446)                        |      CH, SH |",
+          "line_start": 2046,
+          "line_end": 2046,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-cbf87af183705561",
+      "similarity": 0.572138,
+      "left": {
+        "requirement_id": "req-426039998e68d672039d",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "support rsa_pss_rsae_sha256 signatures for CertificateVerify",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "CertificateVerify generation or verification can be exercised with rsa_pss_rsae_sha256.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "A TLS-compliant application MUST support digital signatures with\n   rsa_pkcs1_sha256 (for certificates), rsa_pss_rsae_sha256 (for\n   CertificateVerify and certificates), and ecdsa_secp256r1_sha256.",
+          "line_start": 5692,
+          "line_end": 5694,
+          "verified": true,
+          "chunk_id": "chunk-0089"
+        }
+      },
+      "right": {
+        "requirement_id": "req-4663f0e10baa90e5f203",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "implement the signature_algorithms_cert TLS extension",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "Extension registration plus generation and parsing paths can be checked for signature_algorithms_cert support.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "In the absence of an application profile standard specifying\n   otherwise, a TLS-compliant application MUST implement the following\n   TLS extensions:\n\n   -  Supported Versions (\"supported_versions\"; Section 4.2.1)\n\n   -  Cookie (\"cookie\"; Section 4.2.2)\n\n   -  Signature Algorithms (\"signature_algorithms\"; Section 4.2.3)\n\n   -  Signature Algorithms Certificate (\"signature_algorithms_cert\";\n      Section 4.2.3)",
+          "line_start": 5715,
+          "line_end": 5726,
+          "verified": true,
+          "chunk_id": "chunk-0090"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-f9b9bba6cdc8a9f5",
+      "similarity": 0.572136,
+      "left": {
+        "requirement_id": "req-482504cc8fba875f55f7",
+        "condition": "the server in WAIT_CERT receives an empty Certificate",
+        "required_behavior": "enter WAIT_FINISHED without waiting for CertificateVerify",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "The handshake state and resulting message, key, or transition can be exercised directly.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "|             WAIT_CERT\n                       |        Recv |       | Recv Certificate\n                       |       empty |       v\n                       | Certificate |    WAIT_CV\n                       |             |       | Recv\n                       |             v       | CertificateVerify\n                       +-> WAIT_FINISHED <---+",
+          "line_start": 6752,
+          "line_end": 6758,
+          "verified": true,
+          "chunk_id": "chunk-0101"
+        }
+      },
+      "right": {
+        "requirement_id": "req-b9e19f34a20fab4859d2",
+        "condition": "the server in WAIT_CV receives CertificateVerify",
+        "required_behavior": "enter WAIT_FINISHED",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "The handshake state and resulting message, key, or transition can be exercised directly.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| Certificate |    WAIT_CV\n                       |             |       | Recv\n                       |             v       | CertificateVerify\n                       +-> WAIT_FINISHED <---+",
+          "line_start": 6755,
+          "line_end": 6758,
+          "verified": true,
+          "chunk_id": "chunk-0101"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-a5904bd0c8412550",
+      "similarity": 0.572114,
+      "left": {
+        "requirement_id": "req-e8eb301cced09e4d2df0",
+        "condition": "when a client encrypts early data",
+        "required_behavior": "use the first PSK listed in the client's pre_shared_key extension",
+        "forbidden_behavior": "encrypt early data with any later offered PSK",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The early traffic key's source identity can be compared with offer index zero.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "The PSK used to encrypt the\n   early data MUST be the first PSK listed in the client's\n   \"pre_shared_key\" extension.",
+          "line_start": 2932,
+          "line_end": 2934,
+          "verified": true,
+          "chunk_id": "chunk-0043"
+        }
+      },
+      "right": {
+        "requirement_id": "req-72ae27ed7f1ed6e98598",
+        "condition": "when a server accepts early data",
+        "required_behavior": "select the first key offered in the client's pre_shared_key extension",
+        "forbidden_behavior": "accept early data using any later offered key",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The selected_identity can be checked for index zero.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "In order to accept early data, the server MUST have accepted a PSK\n   cipher suite and selected the first key offered in the client's\n   \"pre_shared_key\" extension.",
+          "line_start": 2994,
+          "line_end": 2996,
+          "verified": true,
+          "chunk_id": "chunk-0043"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-ec23090894488aa2",
+      "similarity": 0.571859,
+      "left": {
+        "requirement_id": "req-aad2e73f57c09d536244",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "support ecdsa_secp256r1_sha256 digital signatures",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "Signature generation or verification can be exercised with ecdsa_secp256r1_sha256.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "A TLS-compliant application MUST support digital signatures with\n   rsa_pkcs1_sha256 (for certificates), rsa_pss_rsae_sha256 (for\n   CertificateVerify and certificates), and ecdsa_secp256r1_sha256.",
+          "line_start": 5692,
+          "line_end": 5694,
+          "verified": true,
+          "chunk_id": "chunk-0089"
+        }
+      },
+      "right": {
+        "requirement_id": "req-7d6d3b3c9c09fdb36fba",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "implement the key_share TLS extension",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "Extension registration plus generation and parsing paths can be checked for key_share support.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "In the absence of an application profile standard specifying\n   otherwise, a TLS-compliant application MUST implement the following\n   TLS extensions:\n\n   -  Supported Versions (\"supported_versions\"; Section 4.2.1)\n\n   -  Cookie (\"cookie\"; Section 4.2.2)\n\n   -  Signature Algorithms (\"signature_algorithms\"; Section 4.2.3)\n\n   -  Signature Algorithms Certificate (\"signature_algorithms_cert\";\n      Section 4.2.3)\n\n   -  Negotiated Groups (\"supported_groups\"; Section 4.2.7)\n\n   -  Key Share (\"key_share\"; Section 4.2.8)",
+          "line_start": 5715,
+          "line_end": 5730,
+          "verified": true,
+          "chunk_id": "chunk-0090"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-490474c712af20f5",
+      "similarity": 0.571674,
+      "left": {
+        "requirement_id": "req-a450bc0c604e2ae88ec0",
+        "condition": "the server selects an authentication algorithm from the client's signature_algorithms extension",
+        "required_behavior": "select an end-entity certificate whose public key and restrictions are compatible with that algorithm",
+        "forbidden_behavior": "authenticate with an incompatible certificate key or restriction set",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "Certificate key properties can be checked against the selected signature scheme.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "The server's end-entity certificate's public key (and associated\nrestrictions) MUST be compatible with the selected authentication\nalgorithm from the client's \"signature_algorithms\" extension\n(currently RSA, ECDSA, or EdDSA).",
+          "line_start": 3704,
+          "line_end": 3707,
+          "verified": true,
+          "chunk_id": "chunk-0056"
+        }
+      },
+      "right": {
+        "requirement_id": "req-3723ce4f703caec10dcb",
+        "condition": "an endpoint selects a CertificateVerify signature algorithm",
+        "required_behavior": "select an algorithm compatible with the end-entity certificate key",
+        "forbidden_behavior": "select an algorithm incompatible with the certificate key type or restrictions",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The certificate public-key type and signature-scheme requirements are machine-readable.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "In addition, the signature algorithm MUST be compatible with the key\nin the sender's end-entity certificate.",
+          "line_start": 3906,
+          "line_end": 3907,
+          "verified": true,
+          "chunk_id": "chunk-0059"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-0790989ea14dd287",
+      "similarity": 0.571504,
+      "left": {
+        "requirement_id": "req-aad2e73f57c09d536244",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "support ecdsa_secp256r1_sha256 digital signatures",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "Signature generation or verification can be exercised with ecdsa_secp256r1_sha256.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "A TLS-compliant application MUST support digital signatures with\n   rsa_pkcs1_sha256 (for certificates), rsa_pss_rsae_sha256 (for\n   CertificateVerify and certificates), and ecdsa_secp256r1_sha256.",
+          "line_start": 5692,
+          "line_end": 5694,
+          "verified": true,
+          "chunk_id": "chunk-0089"
+        }
+      },
+      "right": {
+        "requirement_id": "req-b472ca02944cdb2bc915",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "implement the supported_groups TLS extension",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "Extension registration plus generation and parsing paths can be checked for supported_groups support.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "In the absence of an application profile standard specifying\n   otherwise, a TLS-compliant application MUST implement the following\n   TLS extensions:\n\n   -  Supported Versions (\"supported_versions\"; Section 4.2.1)\n\n   -  Cookie (\"cookie\"; Section 4.2.2)\n\n   -  Signature Algorithms (\"signature_algorithms\"; Section 4.2.3)\n\n   -  Signature Algorithms Certificate (\"signature_algorithms_cert\";\n      Section 4.2.3)\n\n   -  Negotiated Groups (\"supported_groups\"; Section 4.2.7)",
+          "line_start": 5715,
+          "line_end": 5728,
+          "verified": true,
+          "chunk_id": "chunk-0090"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-998f998163d01af0",
+      "similarity": 0.571354,
+      "left": {
+        "requirement_id": "req-e5430cd8f5cd16050cd4",
+        "condition": "deriving server_application_traffic_secret_0",
+        "required_behavior": "call Derive-Secret with Master Secret, label 's ap traffic', and the ClientHello-through-server-Finished transcript",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The derivation's secret, label, and transcript boundary can be tested.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "0 -> HKDF-Extract = Master Secret\n             |\n             +-----> Derive-Secret(., \"c ap traffic\",\n             |                     ClientHello...server Finished)\n             |                     = client_application_traffic_secret_0\n             |\n             +-----> Derive-Secret(., \"s ap traffic\",\n             |                     ClientHello...server Finished)\n             |                     = server_application_traffic_secret_0",
+          "line_start": 5183,
+          "line_end": 5191,
+          "verified": true,
+          "chunk_id": "chunk-0078"
+        }
+      },
+      "right": {
+        "requirement_id": "req-1cbf2be07d1e348fe280",
+        "condition": "deriving resumption_master_secret",
+        "required_behavior": "call Derive-Secret with Master Secret, label 'res master', and the ClientHello-through-client-Finished transcript",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The derivation's secret, label, and transcript boundary can be tested.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "0 -> HKDF-Extract = Master Secret\n             |\n             +-----> Derive-Secret(., \"c ap traffic\",\n             |                     ClientHello...server Finished)\n             |                     = client_application_traffic_secret_0\n             |\n             +-----> Derive-Secret(., \"s ap traffic\",\n             |                     ClientHello...server Finished)\n             |                     = server_application_traffic_secret_0\n             |\n             +-----> Derive-Secret(., \"exp master\",\n             |                     ClientHello...server Finished)\n             |                     = exporter_master_secret\n             |\n             +-----> Derive-Secret(., \"res master\",\n                                   ClientHello...client Finished)\n                                   = resumption_master_secret",
+          "line_start": 5183,
+          "line_end": 5199,
+          "verified": true,
+          "chunk_id": "chunk-0078"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-94b6791e94f2c85a",
+      "similarity": 0.57128,
+      "left": {
+        "requirement_id": "req-4f17911a36a810ba38a9",
+        "condition": "the client receives HelloRetryRequest",
+        "required_behavior": "validate cipher_suite using the ServerHello rule in Section 4.1.3",
+        "forbidden_behavior": "skip cipher_suite validation",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "An unoffered retry cipher suite can exercise the reused ServerHello validation.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Upon receipt of a HelloRetryRequest, the client MUST check the\n   legacy_version, legacy_session_id_echo, cipher_suite, and\n   legacy_compression_method as specified in Section 4.1.3",
+          "line_start": 1825,
+          "line_end": 1827,
+          "verified": true,
+          "chunk_id": "chunk-0028"
+        }
+      },
+      "right": {
+        "requirement_id": "req-f26c7801060537320d2d",
+        "condition": "the client receives HelloRetryRequest",
+        "required_behavior": "validate legacy_session_id_echo using the ServerHello rule in Section 4.1.3",
+        "forbidden_behavior": "skip legacy_session_id_echo validation",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "A mismatched retry session-ID echo can exercise the reused ServerHello validation.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Upon receipt of a HelloRetryRequest, the client MUST check the\n   legacy_version, legacy_session_id_echo, cipher_suite, and\n   legacy_compression_method as specified in Section 4.1.3",
+          "line_start": 1825,
+          "line_end": 1827,
+          "verified": true,
+          "chunk_id": "chunk-0028"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-661f83c7efcd4c74",
+      "similarity": 0.570974,
+      "left": {
+        "requirement_id": "req-f67173a58d3923a515d8",
+        "condition": "a server parses an unrecognized ClientHello extension",
+        "required_behavior": "ignore the unrecognized extension",
+        "forbidden_behavior": "reject the ClientHello solely because the extension is unrecognized",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "An unknown extension can be added to an otherwise valid ClientHello and server behavior observed.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Servers MUST ignore unrecognized extensions.",
+          "line_start": 1642,
+          "line_end": 1642,
+          "verified": true,
+          "chunk_id": "chunk-0026"
+        }
+      },
+      "right": {
+        "requirement_id": "req-f29dbb7eefc196c6f0c8",
+        "condition": "a TLS 1.3 client receives a CertificateRequest containing an unrecognized extension",
+        "required_behavior": "ignore the unrecognized extension",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "A CertificateRequest parsing test can include an unknown extension and verify that client processing continues without acting on it.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "In\n       TLS 1.3, a client receiving a CertificateRequest or\n       NewSessionTicket MUST also ignore all unrecognized extensions.",
+          "line_start": 5834,
+          "line_end": 5836,
+          "verified": true,
+          "chunk_id": "chunk-0091"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-3772eec6127cccbc",
+      "similarity": 0.57081,
+      "left": {
+        "requirement_id": "req-3ef6023580749bf8e081",
+        "condition": "Handshake.msg_type is encrypted_extensions",
+        "required_behavior": "parse and encode the message body as EncryptedExtensions",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "case encrypted_extensions:  EncryptedExtensions;",
+          "line_start": 6922,
+          "line_end": 6922,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      },
+      "right": {
+        "requirement_id": "req-710d063b47da4df9956b",
+        "condition": "Handshake.msg_type is certificate_request",
+        "required_behavior": "parse and encode the message body as CertificateRequest",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "case certificate_request:   CertificateRequest;",
+          "line_start": 6923,
+          "line_end": 6923,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-2b9b60a2e860a538",
+      "similarity": 0.570741,
+      "left": {
+        "requirement_id": "req-368c1ce5626624471e55",
+        "condition": "server_certificate_type appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place server_certificate_type in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| server_certificate_type [RFC7250]                |      CH, EE |",
+          "line_start": 2040,
+          "line_end": 2040,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-2895bbeedcebac315522",
+        "condition": "padding appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello",
+        "forbidden_behavior": "place padding in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the single listed placement.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| padding [RFC7685]                                |          CH |",
+          "line_start": 2042,
+          "line_end": 2042,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-46938bdd897eef22",
+      "similarity": 0.570572,
+      "left": {
+        "requirement_id": "req-387e1eddad67010621a7",
+        "condition": "the server constructs a TLS 1.3 ServerHello",
+        "required_behavior": "set legacy_version to 0x0303",
+        "forbidden_behavior": "put another version value in legacy_version",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The fixed legacy_version bytes can be read directly from ServerHello.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "In TLS 1.3, the TLS server indicates\n      its version using the \"supported_versions\" extension\n      (Section 4.2.1), and the legacy_version field MUST be set to\n      0x0303",
+          "line_start": 1701,
+          "line_end": 1704,
+          "verified": true,
+          "chunk_id": "chunk-0027"
+        }
+      },
+      "right": {
+        "requirement_id": "req-55ba61bd8aa3a3e20880",
+        "condition": "",
+        "required_behavior": "Set ServerHello.legacy_version to 0x0303.",
+        "forbidden_behavior": "send another legacy_version value",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "struct {\n        ProtocolVersion legacy_version = 0x0303;    /* TLS v1.2 */\n        Random random;",
+          "line_start": 6961,
+          "line_end": 6963,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-1c6ef8d17052c8b8",
+      "similarity": 0.570445,
+      "left": {
+        "requirement_id": "req-c0041a5b2a844ba230b0",
+        "condition": "when encoding or decoding rsa_pss_pss_sha256",
+        "required_behavior": "map rsa_pss_pss_sha256 to SignatureScheme code point 0x0809",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The enum name-to-wire-value mapping is exact.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "rsa_pss_pss_sha256(0x0809),",
+          "line_start": 2321,
+          "line_end": 2321,
+          "verified": true,
+          "chunk_id": "chunk-0033"
+        }
+      },
+      "right": {
+        "requirement_id": "req-ae1f296b84cc39c34eb8",
+        "condition": "when encoding or decoding rsa_pss_pss_sha512",
+        "required_behavior": "map rsa_pss_pss_sha512 to SignatureScheme code point 0x080b",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The enum name-to-wire-value mapping is exact.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "rsa_pss_pss_sha512(0x080b),",
+          "line_start": 2323,
+          "line_end": 2323,
+          "verified": true,
+          "chunk_id": "chunk-0033"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-218a784d44507625",
+      "similarity": 0.570392,
+      "left": {
+        "requirement_id": "req-ff5fed831fcadeadd6cb",
+        "condition": "",
+        "required_behavior": "Represent PskKeyExchangeMode as an enum whose maximum encoded value is 255.",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "enum { psk_ke(0), psk_dhe_ke(1), (255) } PskKeyExchangeMode;",
+          "line_start": 7067,
+          "line_end": 7067,
+          "verified": true,
+          "chunk_id": "chunk-0103"
+        }
+      },
+      "right": {
+        "requirement_id": "req-c324e98ab4056c38db53",
+        "condition": "",
+        "required_behavior": "Represent SignatureScheme as an enum whose maximum encoded value is 0xFFFF.",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "(0xFFFF)",
+          "line_start": 7211,
+          "line_end": 7211,
+          "verified": true,
+          "chunk_id": "chunk-0103"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-39943edf421e487c",
+      "similarity": 0.569765,
+      "left": {
+        "requirement_id": "req-aad2e73f57c09d536244",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "support ecdsa_secp256r1_sha256 digital signatures",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "Signature generation or verification can be exercised with ecdsa_secp256r1_sha256.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "A TLS-compliant application MUST support digital signatures with\n   rsa_pkcs1_sha256 (for certificates), rsa_pss_rsae_sha256 (for\n   CertificateVerify and certificates), and ecdsa_secp256r1_sha256.",
+          "line_start": 5692,
+          "line_end": 5694,
+          "verified": true,
+          "chunk_id": "chunk-0089"
+        }
+      },
+      "right": {
+        "requirement_id": "req-e6bd6c189cd03f82e43e",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "implement the signature_algorithms TLS extension",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "Extension registration plus generation and parsing paths can be checked for signature_algorithms support.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "In the absence of an application profile standard specifying\n   otherwise, a TLS-compliant application MUST implement the following\n   TLS extensions:\n\n   -  Supported Versions (\"supported_versions\"; Section 4.2.1)\n\n   -  Cookie (\"cookie\"; Section 4.2.2)\n\n   -  Signature Algorithms (\"signature_algorithms\"; Section 4.2.3)",
+          "line_start": 5715,
+          "line_end": 5723,
+          "verified": true,
+          "chunk_id": "chunk-0090"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-05edc79869e1fd7a",
+      "similarity": 0.569758,
+      "left": {
+        "requirement_id": "req-56901359a0f3bb67e5b6",
+        "condition": "server_name appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place server_name in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| server_name [RFC6066]                            |      CH, EE |",
+          "line_start": 2020,
+          "line_end": 2020,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-83c9a26c51f4f73704f9",
+        "condition": "application_layer_protocol_negotiation appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place application_layer_protocol_negotiation in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| application_layer_protocol_negotiation [RFC7301] |      CH, EE |",
+          "line_start": 2034,
+          "line_end": 2034,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-c53f03e46eddf433",
+      "similarity": 0.56957,
+      "left": {
+        "requirement_id": "req-4c444a506de825f2bc66",
+        "condition": "a client receives an unrecognized NewSessionTicket extension",
+        "required_behavior": "ignore the unrecognized extension",
+        "forbidden_behavior": "failing the connection or rejecting the ticket solely because the extension is unrecognized",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "A ticket containing an unknown extension can exercise the parser behavior.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Clients MUST ignore\n      unrecognized extensions.",
+          "line_start": 4150,
+          "line_end": 4151,
+          "verified": true,
+          "chunk_id": "chunk-0063"
+        }
+      },
+      "right": {
+        "requirement_id": "req-fa57715ec609e4862cc7",
+        "condition": "a server receives a ClientHello containing an unrecognized extension",
+        "required_behavior": "ignore the unrecognized extension",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "A parser test can inject an unknown extension type and observe that it is ignored.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "A server receiving a ClientHello MUST correctly ignore all\n       unrecognized cipher suites, extensions, and other parameters.",
+          "line_start": 5832,
+          "line_end": 5833,
+          "verified": true,
+          "chunk_id": "chunk-0091"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-4f9146a8b16acd02",
+      "similarity": 0.56936,
+      "left": {
+        "requirement_id": "req-6b1354bb912ecca00126",
+        "condition": "encoding TLSCiphertext",
+        "required_behavior": "set opaque_type to application_data value 23 as the first field",
+        "forbidden_behavior": "using another outer content type or field order",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The first header octet has a fixed value.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "ContentType opaque_type = application_data; /* 23 */",
+          "line_start": 4451,
+          "line_end": 4451,
+          "verified": true,
+          "chunk_id": "chunk-0069"
+        }
+      },
+      "right": {
+        "requirement_id": "req-288f8c46437545a53840",
+        "condition": "",
+        "required_behavior": "Set TLSCiphertext.opaque_type to application_data (23).",
+        "forbidden_behavior": "emit another outer content type",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "struct {\n          ContentType opaque_type = application_data; /* 23 */\n          ProtocolVersion legacy_record_version = 0x0303; /* TLS v1.2 */",
+          "line_start": 6810,
+          "line_end": 6812,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-aed40cf549c38de7",
+      "similarity": 0.569177,
+      "left": {
+        "requirement_id": "req-3dc189f4a65152a84c8a",
+        "condition": "encoding the synthetic ClientHello1 replacement",
+        "required_behavior": "use Hash(ClientHello1) as the synthetic message body",
+        "forbidden_behavior": "use the raw ClientHello1 or a hash of different bytes as the body",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The body can be compared with a direct hash of the first ClientHello encoding.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Hash(message_hash ||        /* Handshake type */\n     00 00 Hash.length  ||  /* Handshake message length (bytes) */\n     Hash(ClientHello1) ||  /* Hash of ClientHello1 */\n     HelloRetryRequest  || ... || Mn)",
+          "line_start": 3489,
+          "line_end": 3492,
+          "verified": true,
+          "chunk_id": "chunk-0053"
+        }
+      },
+      "right": {
+        "requirement_id": "req-b6b974e55a705b90ac13",
+        "condition": "encoding the synthetic ClientHello1 replacement",
+        "required_behavior": "use handshake type message_hash",
+        "forbidden_behavior": "use ClientHello or another handshake type for the synthetic message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The first byte of the synthetic handshake encoding is directly inspectable.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Hash(message_hash ||        /* Handshake type */\n     00 00 Hash.length  ||  /* Handshake message length (bytes) */\n     Hash(ClientHello1) ||  /* Hash of ClientHello1 */\n     HelloRetryRequest  || ... || Mn)",
+          "line_start": 3489,
+          "line_end": 3492,
+          "verified": true,
+          "chunk_id": "chunk-0053"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-c136a069102c0bd1",
+      "similarity": 0.568615,
+      "left": {
+        "requirement_id": "req-953aeb0a9755f3beb60f",
+        "condition": "a client requests server authentication by certificate",
+        "required_behavior": "send the signature_algorithms extension",
+        "forbidden_behavior": "omit the signature_algorithms extension",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "The client's authentication configuration and emitted ClientHello are inspectable.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Clients which desire the\n   server to authenticate itself via a certificate MUST send the\n   \"signature_algorithms\" extension.",
+          "line_start": 2253,
+          "line_end": 2255,
+          "verified": true,
+          "chunk_id": "chunk-0033"
+        }
+      },
+      "right": {
+        "requirement_id": "req-8eea5fa84200abb8e0e3",
+        "condition": "when performing certificate authentication",
+        "required_behavior": "use the signature_algorithms extension when selecting or validating signature algorithms",
+        "forbidden_behavior": "ignore the signature_algorithms extension during certificate authentication",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "Peer-advertised signature algorithms can be varied to test certificate and CertificateVerify selection or validation.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "All implementations MUST send and use these extensions when offering\n   applicable features:\n\n   -  \"supported_versions\" is REQUIRED for all ClientHello, ServerHello,\n      and HelloRetryRequest messages.\n\n   -  \"signature_algorithms\" is REQUIRED for certificate authentication.",
+          "line_start": 5734,
+          "line_end": 5740,
+          "verified": true,
+          "chunk_id": "chunk-0090"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-07f8ab254ec27c31",
+      "similarity": 0.567886,
+      "left": {
+        "requirement_id": "req-1f093023cb05855e8882",
+        "condition": "a server can produce a valid certificate chain without unsupported algorithms",
+        "required_behavior": "select a CertificateVerify algorithm offered in the client's signature_algorithms extension",
+        "forbidden_behavior": "select an unoffered signature algorithm",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The selected CertificateVerify scheme can be compared with the ClientHello offer.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "If the CertificateVerify message is sent by a server, the signature\nalgorithm MUST be one offered in the client's \"signature_algorithms\"\nextension unless no valid certificate chain can be produced without\nunsupported algorithms",
+          "line_start": 3896,
+          "line_end": 3899,
+          "verified": true,
+          "chunk_id": "chunk-0059"
+        }
+      },
+      "right": {
+        "requirement_id": "req-dedd46e4e72bc3c98044",
+        "condition": "a server selects a CertificateVerify algorithm not offered by the client",
+        "required_behavior": "do so only when no valid certificate chain can be produced without unsupported algorithms",
+        "forbidden_behavior": "use an unoffered algorithm when a valid chain can be produced using supported algorithms",
+        "error_behavior": "",
+        "check_type": "derived_constraint",
+        "why_checkable": "The exception can be checked against the offered algorithms and available valid certificate chains.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "If the CertificateVerify message is sent by a server, the signature\nalgorithm MUST be one offered in the client's \"signature_algorithms\"\nextension unless no valid certificate chain can be produced without\nunsupported algorithms",
+          "line_start": 3896,
+          "line_end": 3899,
+          "verified": true,
+          "chunk_id": "chunk-0059"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-6516d2731294887b",
+      "similarity": 0.567708,
+      "left": {
+        "requirement_id": "req-ec3749922f18da8875dc",
+        "condition": "when the server sends EncryptedExtensions",
+        "required_behavior": "encrypt it with keys derived from server_handshake_traffic_secret",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The record protection epoch for EncryptedExtensions can be traced to its traffic secret.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "These messages are encrypted\n   with keys derived from the server_handshake_traffic_secret.",
+          "line_start": 3285,
+          "line_end": 3286,
+          "verified": true,
+          "chunk_id": "chunk-0049"
+        }
+      },
+      "right": {
+        "requirement_id": "req-a8f751c830d658e4c5f2",
+        "condition": "when the server begins using keys derived from server_handshake_traffic_secret",
+        "required_behavior": "make EncryptedExtensions the first message encrypted under those keys",
+        "forbidden_behavior": "encrypt an earlier message under server_handshake_traffic_secret-derived keys",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "Handshake message order and record protection epochs can be correlated.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "This is the first\n   message that is encrypted under keys derived from the\n   server_handshake_traffic_secret.",
+          "line_start": 3308,
+          "line_end": 3310,
+          "verified": true,
+          "chunk_id": "chunk-0050"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-322e844a51df56f4",
+      "similarity": 0.56767,
+      "left": {
+        "requirement_id": "req-c1e5943a2bd70aea8c10",
+        "condition": "supported_groups appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place supported_groups in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| supported_groups [RFC7919]                       |      CH, EE |",
+          "line_start": 2026,
+          "line_end": 2026,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-d286da65d2e704c12414",
+        "condition": "cookie appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or HelloRetryRequest",
+        "forbidden_behavior": "place cookie in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| cookie (RFC 8446)                                |     CH, HRR |",
+          "line_start": 2052,
+          "line_end": 2052,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-79c4d1c153abc929",
+      "similarity": 0.567566,
+      "left": {
+        "requirement_id": "req-3ef6023580749bf8e081",
+        "condition": "Handshake.msg_type is encrypted_extensions",
+        "required_behavior": "parse and encode the message body as EncryptedExtensions",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "case encrypted_extensions:  EncryptedExtensions;",
+          "line_start": 6922,
+          "line_end": 6922,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      },
+      "right": {
+        "requirement_id": "req-2806fa8309e72057e2cf",
+        "condition": "Handshake.msg_type is key_update",
+        "required_behavior": "parse and encode the message body as KeyUpdate",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "case key_update:            KeyUpdate;",
+          "line_start": 6928,
+          "line_end": 6928,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-ce7560148039359b",
+      "similarity": 0.567386,
+      "left": {
+        "requirement_id": "req-a105553839b3fb928ef4",
+        "condition": "the client constructs a TLS 1.3 ClientHello",
+        "required_behavior": "set legacy_version to 0x0303",
+        "forbidden_behavior": "put another version value in legacy_version",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The fixed legacy_version bytes can be read directly from ClientHello.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "In\n      TLS 1.3, the client indicates its version preferences in the\n      \"supported_versions\" extension (Section 4.2.1) and the\n      legacy_version field MUST be set to 0x0303",
+          "line_start": 1574,
+          "line_end": 1577,
+          "verified": true,
+          "chunk_id": "chunk-0025"
+        }
+      },
+      "right": {
+        "requirement_id": "req-23b080e849de6813150d",
+        "condition": "",
+        "required_behavior": "Set ClientHello.legacy_version to 0x0303.",
+        "forbidden_behavior": "send another legacy_version value",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "struct {\n        ProtocolVersion legacy_version = 0x0303;    /* TLS v1.2 */\n        Random random;",
+          "line_start": 6952,
+          "line_end": 6954,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-3affeaed1b5102e1",
+      "similarity": 0.567018,
+      "left": {
+        "requirement_id": "req-b0a4f088afc720cb5f8f",
+        "condition": "the server uses the psk_ke PskKeyExchangeMode",
+        "required_behavior": "",
+        "forbidden_behavior": "send a KeyShareEntry",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "The selected PSK mode and ServerHello extension presence are observable.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "and MUST NOT send a\n   KeyShareEntry when using the \"psk_ke\" PskKeyExchangeMode.",
+          "line_start": 2764,
+          "line_end": 2765,
+          "verified": true,
+          "chunk_id": "chunk-0039"
+        }
+      },
+      "right": {
+        "requirement_id": "req-c2511b427c327301630f",
+        "condition": "when encoding the psk_ke PskKeyExchangeMode",
+        "required_behavior": "encode psk_ke with numeric value 0",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The enum's wire value is fixed and directly decodable.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "enum { psk_ke(0), psk_dhe_ke(1), (255) } PskKeyExchangeMode;",
+          "line_start": 2869,
+          "line_end": 2869,
+          "verified": true,
+          "chunk_id": "chunk-0042"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-b7898e5e94bdc482",
+      "similarity": 0.566853,
+      "left": {
+        "requirement_id": "req-77b4d9fa0e55155dc527",
+        "condition": "when the endpoint is not authenticating via a certificate",
+        "required_behavior": "omit CertificateVerify",
+        "forbidden_behavior": "send CertificateVerify",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "Non-certificate authentication traces can be checked for absence of CertificateVerify.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "This message is omitted if the endpoint is not\n      authenticating via a certificate.",
+          "line_start": 690,
+          "line_end": 691,
+          "verified": true,
+          "chunk_id": "chunk-0009"
+        }
+      },
+      "right": {
+        "requirement_id": "req-7d51845897f20ce3b446",
+        "condition": "the server authenticates via a certificate",
+        "required_behavior": "send a CertificateVerify message",
+        "forbidden_behavior": "omit the CertificateVerify message",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "The server's certificate-authentication flight can be checked for the CertificateVerify message.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "When authenticating via a certificate, the server will send the\n      Certificate (Section 4.4.2) and CertificateVerify (Section 4.4.3)\n      messages.",
+          "line_start": 1468,
+          "line_end": 1470,
+          "verified": true,
+          "chunk_id": "chunk-0024"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-3d1ebca9d033da91",
+      "similarity": 0.565926,
+      "left": {
+        "requirement_id": "req-3fa20d9e6998942ec528",
+        "condition": "when a ClientHello contains the supported_versions extension",
+        "required_behavior": "use supported_versions to negotiate the TLS version in preference to ClientHello.legacy_version",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "Version selection can be tested with conflicting supported_versions and legacy_version values.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "The \"supported_versions\" ClientHello extension can be used to\n      negotiate the version of TLS to use, in preference to the\n      legacy_version field of the ClientHello.",
+          "line_start": 478,
+          "line_end": 480,
+          "verified": true,
+          "chunk_id": "chunk-0007"
+        }
+      },
+      "right": {
+        "requirement_id": "req-b734289ef60118167f07",
+        "condition": "the ClientHello contains supported_versions",
+        "required_behavior": "",
+        "forbidden_behavior": "use ClientHello.legacy_version for version negotiation",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "Conflicting legacy_version and extension values can reveal which input drives selection.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "If this extension is present in the ClientHello, servers MUST NOT use\n   the ClientHello.legacy_version value for version negotiation",
+          "line_start": 2158,
+          "line_end": 2159,
+          "verified": true,
+          "chunk_id": "chunk-0031"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-c0a56d03cf2b4e7b",
+      "similarity": 0.565915,
+      "left": {
+        "requirement_id": "req-3c5e685589b576f5c030",
+        "condition": "signature_algorithms appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or CertificateRequest",
+        "forbidden_behavior": "place signature_algorithms in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| signature_algorithms (RFC 8446)                  |      CH, CR |",
+          "line_start": 2028,
+          "line_end": 2028,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-d286da65d2e704c12414",
+        "condition": "cookie appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or HelloRetryRequest",
+        "forbidden_behavior": "place cookie in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| cookie (RFC 8446)                                |     CH, HRR |",
+          "line_start": 2052,
+          "line_end": 2052,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-0bd2b05e7af34743",
+      "similarity": 0.565757,
+      "left": {
+        "requirement_id": "req-2c9bf6ece6ab668643a6",
+        "condition": "when encoding or decoding rsa_pss_rsae_sha384",
+        "required_behavior": "map rsa_pss_rsae_sha384 to SignatureScheme code point 0x0805",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The enum name-to-wire-value mapping is exact.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "rsa_pss_rsae_sha384(0x0805),",
+          "line_start": 2313,
+          "line_end": 2313,
+          "verified": true,
+          "chunk_id": "chunk-0033"
+        }
+      },
+      "right": {
+        "requirement_id": "req-d787d5d9611f8ef85c28",
+        "condition": "when encoding or decoding rsa_pss_rsae_sha512",
+        "required_behavior": "map rsa_pss_rsae_sha512 to SignatureScheme code point 0x0806",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The enum name-to-wire-value mapping is exact.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "rsa_pss_rsae_sha512(0x0806),",
+          "line_start": 2314,
+          "line_end": 2314,
+          "verified": true,
+          "chunk_id": "chunk-0033"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-f67657523c1f39a1",
+      "similarity": 0.565626,
+      "left": {
+        "requirement_id": "req-1d62f2d84a4c106c01e2",
+        "condition": "when the server discards records that fail handshake-key deprotection while skipping rejected early data",
+        "required_behavior": "enforce configured max_early_data_size as the discard limit",
+        "forbidden_behavior": "continue discarding failed records beyond configured max_early_data_size",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "The trial-deprotection loop has a concrete configured byte limit.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "The\n      server then skips past early data by attempting to deprotect\n      received records using the handshake traffic key, discarding\n      records which fail deprotection (up to the configured\n      max_early_data_size).",
+          "line_start": 2972,
+          "line_end": 2976,
+          "verified": true,
+          "chunk_id": "chunk-0043"
+        }
+      },
+      "right": {
+        "requirement_id": "req-7815e69e0b3a7860b2b5",
+        "condition": "when the server skips external application_data records after sending HelloRetryRequest",
+        "required_behavior": "enforce configured max_early_data_size as the skip limit",
+        "forbidden_behavior": "continue skipping application_data records beyond configured max_early_data_size",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "The record-skip loop has a concrete configured byte limit.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "The server\n      then ignores early data by skipping all records with an external\n      content type of \"application_data\" (indicating that they are\n      encrypted), up to the configured max_early_data_size.",
+          "line_start": 2982,
+          "line_end": 2985,
+          "verified": true,
+          "chunk_id": "chunk-0043"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-79614693a210387e",
+      "similarity": 0.565532,
+      "left": {
+        "requirement_id": "req-0a3a7f4a53a3a0835aa1",
+        "condition": "when encoding PskIdentity.identity",
+        "required_behavior": "encode identity as an opaque vector containing from 1 through 2^16-1 octets",
+        "forbidden_behavior": "encode an empty identity or an identity longer than 2^16-1 octets",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The identity vector length prefix and payload length are directly parseable.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "struct {\n          opaque identity<1..2^16-1>;\n          uint32 obfuscated_ticket_age;\n      } PskIdentity;",
+          "line_start": 3084,
+          "line_end": 3087,
+          "verified": true,
+          "chunk_id": "chunk-0045"
+        }
+      },
+      "right": {
+        "requirement_id": "req-00bcfc82f772118e7507",
+        "condition": "",
+        "required_behavior": "Limit PskIdentity.identity to 1 through 2^16-1 octets.",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "struct {\n        opaque identity<1..2^16-1>;\n        uint32 obfuscated_ticket_age;",
+          "line_start": 7083,
+          "line_end": 7085,
+          "verified": true,
+          "chunk_id": "chunk-0103"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-92527dea32a6aebd",
+      "similarity": 0.565349,
+      "left": {
+        "requirement_id": "req-ebc465950a886953f131",
+        "condition": "when deriving traffic keying material for 0-RTT Application records",
+        "required_behavior": "use client_early_traffic_secret as Secret",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The selected traffic secret for 0-RTT record protection is directly inspectable and testable.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| 0-RTT Application | client_early_traffic_secret           |",
+          "line_start": 5288,
+          "line_end": 5288,
+          "verified": true,
+          "chunk_id": "chunk-0081"
+        }
+      },
+      "right": {
+        "requirement_id": "req-8f9d41870ec56b1f58e4",
+        "condition": "when deriving traffic keying material for Application Data records at generation N",
+        "required_behavior": "use [sender]_application_traffic_secret_N as Secret",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "The selected generation-specific application traffic secret is directly inspectable and testable.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| Application Data  | [sender]_application_traffic_secret_N |",
+          "line_start": 5292,
+          "line_end": 5292,
+          "verified": true,
+          "chunk_id": "chunk-0081"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-15ca2963bf15a27a",
+      "similarity": 0.565026,
+      "left": {
+        "requirement_id": "req-96a8f89889a458d06986",
+        "condition": "",
+        "required_behavior": "Encode and decode HandshakeType.certificate with numeric value 11.",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "certificate(11),",
+          "line_start": 6900,
+          "line_end": 6900,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      },
+      "right": {
+        "requirement_id": "req-1f043d2e6d2b6a0315f5",
+        "condition": "",
+        "required_behavior": "Encode and decode HandshakeType.certificate_request with numeric value 13.",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "certificate_request(13),",
+          "line_start": 6902,
+          "line_end": 6902,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-c4df91b3f1c78c6b",
+      "similarity": 0.565007,
+      "left": {
+        "requirement_id": "req-6dc5ce32dfd306f22ab8",
+        "condition": "a server sends NewSessionTicket outside the no-client-authentication early-issuance exception",
+        "required_behavior": "wait until it has received the client Finished message",
+        "forbidden_behavior": "sending NewSessionTicket before receiving client Finished",
+        "error_behavior": "",
+        "check_type": "derived_constraint",
+        "why_checkable": "The ticket message position can be compared with receipt of client Finished.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "At any time after the server has received the client Finished\n   message, it MAY send a NewSessionTicket message.",
+          "line_start": 4047,
+          "line_end": 4048,
+          "verified": true,
+          "chunk_id": "chunk-0063"
+        }
+      },
+      "right": {
+        "requirement_id": "req-4c2e1a90c4b844d7a8a7",
+        "condition": "a server uses the no-client-authentication early ticket issuance path",
+        "required_behavior": "send NewSessionTicket no earlier than its own Finished message",
+        "forbidden_behavior": "sending NewSessionTicket before server Finished",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "The two server messages have an observable lower-bound ordering.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "a server which does not request client authentication\n   MAY compute the remainder of the transcript independently and then\n   send a NewSessionTicket immediately upon sending its Finished rather\n   than waiting for the client Finished.",
+          "line_start": 4096,
+          "line_end": 4099,
+          "verified": true,
+          "chunk_id": "chunk-0063"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-f7a2db54b25e0dc4",
+      "similarity": 0.564965,
+      "left": {
+        "requirement_id": "req-5555be9664da2bd13c47",
+        "condition": "when calculating an X25519 or X448 ECDH shared secret",
+        "required_behavior": "use the ECDH scalar-multiplication result as the shared secret",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "Known X25519 and X448 vectors can verify that the scalar-multiplication result is selected as the shared secret.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "The ECDH shared secret is the result of applying the ECDH scalar\n      multiplication function to the secret key (into scalar input) and\n      the peer's public key (into u-coordinate point input).",
+          "line_start": 5347,
+          "line_end": 5349,
+          "verified": true,
+          "chunk_id": "chunk-0083"
+        }
+      },
+      "right": {
+        "requirement_id": "req-c7373d2260cadaf431a2",
+        "condition": "after X25519 or X448 scalar multiplication produces the ECDH shared secret",
+        "required_behavior": "use the scalar-multiplication output directly",
+        "forbidden_behavior": "apply additional processing to the shared-secret output before using it",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The value passed to the TLS key schedule can be compared byte-for-byte with the scalar-multiplication output.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "The output\n      is used raw, with no processing.",
+          "line_start": 5349,
+          "line_end": 5350,
+          "verified": true,
+          "chunk_id": "chunk-0083"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-18353187f7c0b403",
+      "similarity": 0.564717,
+      "left": {
+        "requirement_id": "req-6b7835cb07dce8f2126c",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "implement the TLS_AES_128_GCM_SHA256 cipher suite",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "The application's cipher-suite registry and handshake negotiation can be checked for TLS_AES_128_GCM_SHA256 support.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "A TLS-compliant application MUST implement the TLS_AES_128_GCM_SHA256\n   [GCM] cipher suite and SHOULD implement the TLS_AES_256_GCM_SHA384\n   [GCM] and TLS_CHACHA20_POLY1305_SHA256 [RFC8439] cipher suites (see\n   Appendix B.4).",
+          "line_start": 5687,
+          "line_end": 5690,
+          "verified": true,
+          "chunk_id": "chunk-0089"
+        }
+      },
+      "right": {
+        "requirement_id": "req-8235509f05745c47b981",
+        "condition": "in the absence of an application profile standard specifying otherwise",
+        "required_behavior": "support key exchange with X25519",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "explicit_normative",
+        "why_checkable": "The supported-group registry and an X25519 handshake can verify key-exchange support.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "A\n   TLS-compliant application MUST support key exchange with secp256r1\n   (NIST P-256) and SHOULD support key exchange with X25519 [RFC7748].",
+          "line_start": 5694,
+          "line_end": 5696,
+          "verified": true,
+          "chunk_id": "chunk-0089"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-21636fc20f712caf",
+      "similarity": 0.564709,
+      "left": {
+        "requirement_id": "req-6a9ff2c89ceed80f5854",
+        "condition": "pre_shared_key appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or ServerHello",
+        "forbidden_behavior": "place pre_shared_key in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| pre_shared_key (RFC 8446)                        |      CH, SH |",
+          "line_start": 2046,
+          "line_end": 2046,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-82d56348606727d53999",
+        "condition": "supported_versions appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello, ServerHello, or HelloRetryRequest",
+        "forbidden_behavior": "place supported_versions in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the three listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| supported_versions (RFC 8446)                    | CH, SH, HRR |",
+          "line_start": 2054,
+          "line_end": 2054,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-2b1ce3456039216e",
+      "similarity": 0.564668,
+      "left": {
+        "requirement_id": "req-bd9b0e2e356eecade19d",
+        "condition": "max_fragment_length appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place max_fragment_length in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| max_fragment_length [RFC6066]                    |      CH, EE |",
+          "line_start": 2022,
+          "line_end": 2022,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-368c1ce5626624471e55",
+        "condition": "server_certificate_type appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place server_certificate_type in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| server_certificate_type [RFC7250]                |      CH, EE |",
+          "line_start": 2040,
+          "line_end": 2040,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-159cca7ac0ca8859",
+      "similarity": 0.564515,
+      "left": {
+        "requirement_id": "req-93d2585890e6093ec85d",
+        "condition": "when PreSharedKeyExtension occurs in ClientHello",
+        "required_behavior": "encode extension_data as OfferedPsks",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The extension variant is selected by the containing handshake message type.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "struct {\n          select (Handshake.msg_type) {\n              case client_hello: OfferedPsks;\n              case server_hello: uint16 selected_identity;\n          };\n      } PreSharedKeyExtension;",
+          "line_start": 3096,
+          "line_end": 3101,
+          "verified": true,
+          "chunk_id": "chunk-0045"
+        }
+      },
+      "right": {
+        "requirement_id": "req-6d62ea7cb2812594131f",
+        "condition": "PreSharedKeyExtension appears in ClientHello",
+        "required_behavior": "encode and parse the body as OfferedPsks",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "struct {\n        select (Handshake.msg_type) {\n            case client_hello: OfferedPsks;\n            case server_hello: uint16 selected_identity;",
+          "line_start": 7095,
+          "line_end": 7098,
+          "verified": true,
+          "chunk_id": "chunk-0103"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-a124a7cb06a81aa0",
+      "similarity": 0.564341,
+      "left": {
+        "requirement_id": "req-2895bbeedcebac315522",
+        "condition": "padding appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello",
+        "forbidden_behavior": "place padding in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the single listed placement.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| padding [RFC7685]                                |          CH |",
+          "line_start": 2042,
+          "line_end": 2042,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-c84397c1a473116de912",
+        "condition": "certificate_authorities appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or CertificateRequest",
+        "forbidden_behavior": "place certificate_authorities in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| certificate_authorities (RFC 8446)               |      CH, CR |",
+          "line_start": 2056,
+          "line_end": 2056,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-fbedd1fc48699518",
+      "similarity": 0.564271,
+      "left": {
+        "requirement_id": "req-c1e5943a2bd70aea8c10",
+        "condition": "supported_groups appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place supported_groups in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| supported_groups [RFC7919]                       |      CH, EE |",
+          "line_start": 2026,
+          "line_end": 2026,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      },
+      "right": {
+        "requirement_id": "req-83c9a26c51f4f73704f9",
+        "condition": "application_layer_protocol_negotiation appears in a TLS 1.3 handshake",
+        "required_behavior": "place it only in ClientHello or EncryptedExtensions",
+        "forbidden_behavior": "place application_layer_protocol_negotiation in another TLS 1.3 handshake message",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "Message-specific extension allowlists can enforce the two listed placements.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "| application_layer_protocol_negotiation [RFC7301] |      CH, EE |",
+          "line_start": 2034,
+          "line_end": 2034,
+          "verified": true,
+          "chunk_id": "chunk-0030"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-b3d79c54fe21a4c7",
+      "similarity": 0.564103,
+      "left": {
+        "requirement_id": "req-52ae1ac401656af30629",
+        "condition": "when encoding or decoding rsa_pss_pss_sha384",
+        "required_behavior": "map rsa_pss_pss_sha384 to SignatureScheme code point 0x080a",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The enum name-to-wire-value mapping is exact.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "rsa_pss_pss_sha384(0x080a),",
+          "line_start": 2322,
+          "line_end": 2322,
+          "verified": true,
+          "chunk_id": "chunk-0033"
+        }
+      },
+      "right": {
+        "requirement_id": "req-ae1f296b84cc39c34eb8",
+        "condition": "when encoding or decoding rsa_pss_pss_sha512",
+        "required_behavior": "map rsa_pss_pss_sha512 to SignatureScheme code point 0x080b",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The enum name-to-wire-value mapping is exact.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "rsa_pss_pss_sha512(0x080b),",
+          "line_start": 2323,
+          "line_end": 2323,
+          "verified": true,
+          "chunk_id": "chunk-0033"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-980a2ee649dcb562",
+      "similarity": 0.563437,
+      "left": {
+        "requirement_id": "req-4f17911a36a810ba38a9",
+        "condition": "the client receives HelloRetryRequest",
+        "required_behavior": "validate cipher_suite using the ServerHello rule in Section 4.1.3",
+        "forbidden_behavior": "skip cipher_suite validation",
+        "error_behavior": "",
+        "check_type": "security_consistency",
+        "why_checkable": "An unoffered retry cipher suite can exercise the reused ServerHello validation.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Upon receipt of a HelloRetryRequest, the client MUST check the\n   legacy_version, legacy_session_id_echo, cipher_suite, and\n   legacy_compression_method as specified in Section 4.1.3",
+          "line_start": 1825,
+          "line_end": 1827,
+          "verified": true,
+          "chunk_id": "chunk-0028"
+        }
+      },
+      "right": {
+        "requirement_id": "req-91e47574e453a631aab7",
+        "condition": "the client receives HelloRetryRequest",
+        "required_behavior": "validate legacy_compression_method using the ServerHello rule in Section 4.1.3",
+        "forbidden_behavior": "skip legacy_compression_method validation",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "A nonzero retry compression method can exercise the reused ServerHello validation.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Upon receipt of a HelloRetryRequest, the client MUST check the\n   legacy_version, legacy_session_id_echo, cipher_suite, and\n   legacy_compression_method as specified in Section 4.1.3",
+          "line_start": 1825,
+          "line_end": 1827,
+          "verified": true,
+          "chunk_id": "chunk-0028"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-62d86a455233882b",
+      "similarity": 0.563168,
+      "left": {
+        "requirement_id": "req-22dcb1a2b985b3410257",
+        "condition": "when encoding or decoding rsa_pkcs1_sha256",
+        "required_behavior": "map rsa_pkcs1_sha256 to SignatureScheme code point 0x0401",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The enum name-to-wire-value mapping is exact.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "rsa_pkcs1_sha256(0x0401),",
+          "line_start": 2302,
+          "line_end": 2302,
+          "verified": true,
+          "chunk_id": "chunk-0033"
+        }
+      },
+      "right": {
+        "requirement_id": "req-4fbf4ad29e9b93dbfe38",
+        "condition": "when encoding or decoding rsa_pkcs1_sha1",
+        "required_behavior": "map rsa_pkcs1_sha1 to SignatureScheme code point 0x0201",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The enum name-to-wire-value mapping is exact.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "rsa_pkcs1_sha1(0x0201),",
+          "line_start": 2326,
+          "line_end": 2326,
+          "verified": true,
+          "chunk_id": "chunk-0033"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-552b78077b9eca24",
+      "similarity": 0.562833,
+      "left": {
+        "requirement_id": "req-152b8e9b2aded37aef70",
+        "condition": "when a received record fails handshake-key deprotection while the server skips rejected early data",
+        "required_behavior": "discard the failed record",
+        "forbidden_behavior": "treat the failed record as the start of the client's second flight",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "Failed trial deprotection has a concrete discard branch.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "The\n      server then skips past early data by attempting to deprotect\n      received records using the handshake traffic key, discarding\n      records which fail deprotection (up to the configured\n      max_early_data_size).",
+          "line_start": 2972,
+          "line_end": 2976,
+          "verified": true,
+          "chunk_id": "chunk-0043"
+        }
+      },
+      "right": {
+        "requirement_id": "req-77ddf9de26266564f8d8",
+        "condition": "when a record first deprotects successfully while the server skips rejected early data using the handshake traffic key",
+        "required_behavior": "treat that record as the start of the client's second flight",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "state_machine_invariant",
+        "why_checkable": "The first successful deprotection identifies a concrete flight-boundary transition.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "Once a record is deprotected successfully,\n      it is treated as the start of the client's second flight and the\n      server proceeds as with an ordinary 1-RTT handshake.",
+          "line_start": 2976,
+          "line_end": 2978,
+          "verified": true,
+          "chunk_id": "chunk-0043"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-bcc7b23ee1acf6d1",
+      "similarity": 0.562414,
+      "left": {
+        "requirement_id": "req-3ef6023580749bf8e081",
+        "condition": "Handshake.msg_type is encrypted_extensions",
+        "required_behavior": "parse and encode the message body as EncryptedExtensions",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "case encrypted_extensions:  EncryptedExtensions;",
+          "line_start": 6922,
+          "line_end": 6922,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      },
+      "right": {
+        "requirement_id": "req-92df674c5e1af442a3aa",
+        "condition": "Handshake.msg_type is certificate_verify",
+        "required_behavior": "parse and encode the message body as CertificateVerify",
+        "forbidden_behavior": "",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The serializer and parser can be checked against this fixed type, value, or length rule.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "case certificate_verify:    CertificateVerify;",
+          "line_start": 6925,
+          "line_end": 6925,
+          "verified": true,
+          "chunk_id": "chunk-0102"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-bae9ebce8fb711c4",
+      "similarity": 0.562315,
+      "left": {
+        "requirement_id": "req-fb2847273cbc38bb9840",
+        "condition": "encoding or parsing Certificate",
+        "required_behavior": "encode certificate_request_context before certificate_list",
+        "forbidden_behavior": "reverse, omit, or add fields in the Certificate structure",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The wire parser and serializer expose the declared field order.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "struct {\n    opaque certificate_request_context<0..2^8-1>;\n    CertificateEntry certificate_list<0..2^24-1>;\n} Certificate;",
+          "line_start": 3566,
+          "line_end": 3569,
+          "verified": true,
+          "chunk_id": "chunk-0054"
+        }
+      },
+      "right": {
+        "requirement_id": "req-cef77c7d8ab9456e9adf",
+        "condition": "encoding or parsing CertificateVerify",
+        "required_behavior": "encode algorithm before signature",
+        "forbidden_behavior": "reverse, omit, or add fields in CertificateVerify",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The parser and serializer expose the declared field order.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "struct {\n    SignatureScheme algorithm;\n    opaque signature<0..2^16-1>;\n} CertificateVerify;",
+          "line_start": 3831,
+          "line_end": 3834,
+          "verified": true,
+          "chunk_id": "chunk-0059"
+        }
+      }
+    },
+    {
+      "pair_id": "pair-25d66bde5f76975e",
+      "similarity": 0.562206,
+      "left": {
+        "requirement_id": "req-3e989caa5cb9e4d8dd7a",
+        "condition": "encoding or parsing TLSPlaintext",
+        "required_behavior": "encode type as the first field with ContentType encoding",
+        "forbidden_behavior": "omitting or reordering the type field",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The field type and first position are explicit.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "ContentType type;",
+          "line_start": 4379,
+          "line_end": 4379,
+          "verified": true,
+          "chunk_id": "chunk-0068"
+        }
+      },
+      "right": {
+        "requirement_id": "req-8e368db59129981b82ff",
+        "condition": "encoding or parsing TLSInnerPlaintext",
+        "required_behavior": "encode a ContentType field immediately after content",
+        "forbidden_behavior": "omitting or reordering the inner type field",
+        "error_behavior": "",
+        "check_type": "structural_constraint",
+        "why_checkable": "The field type and ordered position are explicit.",
+        "evidence": {
+          "source_id": "rfc8446",
+          "quote": "ContentType type;",
+          "line_start": 4446,
+          "line_end": 4446,
+          "verified": true,
+          "chunk_id": "chunk-0069"
+        }
+      }
+    }
+  ]
+}

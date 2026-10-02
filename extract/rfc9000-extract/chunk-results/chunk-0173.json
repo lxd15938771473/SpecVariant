@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0173",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Prior to address validation, endpoints are limited in what they are\n   able to send.  Endpoints cannot send data toward an unvalidated\n   address in excess of three times the data received from that address.",
+      "line_start": 6917,
+      "line_end": 6919,
+      "condition": "Prior to validation of the destination address.",
+      "required_behavior": "Limit data sent toward the unvalidated address to no more than three times the data received from that address.",
+      "forbidden_behavior": "Sending data toward the unvalidated address in excess of three times the data received from that address.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "An implementation test can track bytes received from an unvalidated address and verify that bytes sent toward it do not exceed the stated 3:1 amplification limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "      |  Note: The anti-amplification limit only applies when an\n      |  endpoint responds to packets received from an unvalidated\n      |  address.",
+      "line_start": 6921,
+      "line_end": 6923,
+      "condition": "An endpoint is responding to packets received from an unvalidated address.",
+      "required_behavior": "Apply the anti-amplification limit.",
+      "forbidden_behavior": "Applying the anti-amplification limit when the endpoint is not responding to packets received from an unvalidated address.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Tests can distinguish response traffic triggered by packets from an unvalidated address from other transmissions and observe whether the limit is applied only to the response traffic.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "      |  address.  The anti-amplification limit does not apply to\n      |  clients when establishing a new connection or when initiating\n      |  connection migration.",
+      "line_start": 6923,
+      "line_end": 6925,
+      "condition": "A client is establishing a new connection.",
+      "required_behavior": "",
+      "forbidden_behavior": "Applying the anti-amplification limit to the client during establishment of the new connection.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A client connection-establishment test can verify that transmissions are not restricted by this anti-amplification limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "      |  address.  The anti-amplification limit does not apply to\n      |  clients when establishing a new connection or when initiating\n      |  connection migration.",
+      "line_start": 6923,
+      "line_end": 6925,
+      "condition": "A client is initiating connection migration.",
+      "required_behavior": "",
+      "forbidden_behavior": "Applying the anti-amplification limit to the client while it initiates connection migration.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A client migration test can verify that transmissions made while initiating migration are not restricted by this anti-amplification limit.",
+      "eligibility": "eligible"
+    }
+  ]
+}

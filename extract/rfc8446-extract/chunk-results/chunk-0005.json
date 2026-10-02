@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0005",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "client:  The endpoint initiating the TLS connection.",
+      "line_start": 369,
+      "line_end": 369,
+      "condition": "when assigning TLS endpoint roles",
+      "required_behavior": "classify the endpoint that initiates the TLS connection as the client",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Endpoint role assignment can be compared with which endpoint initiated the connection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "server:  The endpoint that did not initiate the TLS connection.",
+      "line_start": 397,
+      "line_end": 397,
+      "condition": "when assigning TLS endpoint roles",
+      "required_behavior": "classify the endpoint that did not initiate the TLS connection as the server",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Endpoint role assignment can be compared with connection initiation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

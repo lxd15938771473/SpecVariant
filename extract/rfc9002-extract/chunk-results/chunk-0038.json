@@ -1,0 +1,91 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0038",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "Handshake and 0-RTT packets cannot be\n   processed until the Initial packets arrive",
+                             "line_start":  1036,
+                             "line_end":  1037,
+                             "condition":  "A Handshake packet arrives before the Initial packets have arrived.",
+                             "required_behavior":  "Processing of the Handshake packet remains unavailable until the Initial packets arrive.",
+                             "forbidden_behavior":  "Process the Handshake packet before the Initial packets arrive.",
+                             "error_behavior":  "No specific error response is prescribed; the packet cannot yet be processed.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can deliver a Handshake packet before any Initial packet and observe whether Handshake processing occurs prematurely.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Handshake and 0-RTT packets cannot be\n   processed until the Initial packets arrive",
+                             "line_start":  1036,
+                             "line_end":  1037,
+                             "condition":  "A 0-RTT packet arrives before the Initial packets have arrived.",
+                             "required_behavior":  "Processing of the 0-RTT packet remains unavailable until the Initial packets arrive.",
+                             "forbidden_behavior":  "Process the 0-RTT packet before the Initial packets arrive.",
+                             "error_behavior":  "No specific error response is prescribed; the packet cannot yet be processed.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can deliver a 0-RTT packet before any Initial packet and observe whether 0-RTT processing occurs prematurely.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "1-RTT packets cannot\n   be processed until the handshake completes.",
+                             "line_start":  1037,
+                             "line_end":  1038,
+                             "condition":  "A 1-RTT packet arrives before the handshake completes.",
+                             "required_behavior":  "Processing of the 1-RTT packet remains unavailable until handshake completion.",
+                             "forbidden_behavior":  "Process the 1-RTT packet before the handshake completes.",
+                             "error_behavior":  "No specific error response is prescribed; the packet cannot yet be processed.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can inject a 1-RTT packet before handshake completion and observe whether 1-RTT processing occurs prematurely.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Endpoints MAY ignore the\n   loss of Handshake, 0-RTT, and 1-RTT packets that might have arrived\n   before the peer had packet protection keys to process those packets.",
+                             "line_start":  1038,
+                             "line_end":  1040,
+                             "condition":  "A lost Handshake packet might have arrived before the peer had the packet protection keys needed to process it.",
+                             "required_behavior":  "The endpoint is permitted to ignore the loss of that Handshake packet.",
+                             "forbidden_behavior":  "Treat ignoring this loss as a protocol violation when the packet might have arrived before the peer had the needed keys.",
+                             "error_behavior":  "No error is required when the endpoint elects to ignore this loss.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Loss recovery can be exercised with a Handshake packet sent before the peer has its processing keys, and ignoring that loss is an allowed observable outcome.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Endpoints MAY ignore the\n   loss of Handshake, 0-RTT, and 1-RTT packets that might have arrived\n   before the peer had packet protection keys to process those packets.",
+                             "line_start":  1038,
+                             "line_end":  1040,
+                             "condition":  "A lost 0-RTT packet might have arrived before the peer had the packet protection keys needed to process it.",
+                             "required_behavior":  "The endpoint is permitted to ignore the loss of that 0-RTT packet.",
+                             "forbidden_behavior":  "Treat ignoring this loss as a protocol violation when the packet might have arrived before the peer had the needed keys.",
+                             "error_behavior":  "No error is required when the endpoint elects to ignore this loss.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Loss recovery can be exercised with a 0-RTT packet sent before the peer has its processing keys, and ignoring that loss is an allowed observable outcome.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Endpoints MAY ignore the\n   loss of Handshake, 0-RTT, and 1-RTT packets that might have arrived\n   before the peer had packet protection keys to process those packets.",
+                             "line_start":  1038,
+                             "line_end":  1040,
+                             "condition":  "A lost 1-RTT packet might have arrived before the peer had the packet protection keys needed to process it.",
+                             "required_behavior":  "The endpoint is permitted to ignore the loss of that 1-RTT packet.",
+                             "forbidden_behavior":  "Treat ignoring this loss as a protocol violation when the packet might have arrived before the peer had the needed keys.",
+                             "error_behavior":  "No error is required when the endpoint elects to ignore this loss.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Loss recovery can be exercised with a 1-RTT packet sent before the peer has its processing keys, and ignoring that loss is an allowed observable outcome.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Endpoints MUST NOT ignore the loss of packets that were sent after\n   the earliest acknowledged packet in a given packet number space.",
+                             "line_start":  1041,
+                             "line_end":  1042,
+                             "condition":  "A packet is declared lost and it was sent after the earliest acknowledged packet in its packet number space.",
+                             "required_behavior":  "The endpoint accounts for the packet\u0027s loss rather than applying the undecryptable-packet loss exception.",
+                             "forbidden_behavior":  "Ignore the loss of such a packet.",
+                             "error_behavior":  "No wire error is specified; the endpoint must not suppress the loss internally.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A loss-recovery trace can establish send order and the earliest acknowledged packet per packet number space, then verify that later sent lost packets are not ignored.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

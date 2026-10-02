@@ -1,0 +1,15 @@
+{
+  "schema_version": "speclitmus.dedup-validation.v2",
+  "ok": true,
+  "source_sha256": "2d0440208bcd02a415243d1f7d42fef99205c6cb065804508433de7e89b2821e",
+  "source_eligible_requirements": 1775,
+  "candidate_pairs_reviewed": 1567,
+  "minimum_similarity_reviewed": 0.45,
+  "final_duplicate_components": 76,
+  "removed_duplicates": 78,
+  "final_eligible_requirements": 1697,
+  "mapping_entries": 1775,
+  "retained_original_records": 1775,
+  "evidence_records_verified": 1775,
+  "errors": []
+}

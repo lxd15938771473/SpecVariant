@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0011",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "For all parts of the DNS that are part of the official protocol, all\ncomparisons between character strings (e.g., labels, domain names, etc.)\nare done in a case-insensitive manner.  At present, this rule is in\nforce throughout the domain system without exception.",
+      "line_start": 488,
+      "line_end": 491,
+      "condition": "For character-string comparisons in all parts of the official DNS protocol.",
+      "required_behavior": "Perform comparisons of character strings, including labels and domain names, in a case-insensitive manner.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Comparison routines and mixed-case labels or names can be inspected and tested for equal treatment.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "However, future\nadditions beyond current usage may need to use the full binary octet\ncapabilities in names, so attempts to store domain names in 7-bit ASCII\nor use of special bytes to terminate labels, etc., should be avoided.",
+      "line_start": 491,
+      "line_end": 494,
+      "condition": "When choosing the internal representation of domain names, allowing for future use of full binary octets.",
+      "required_behavior": "",
+      "forbidden_behavior": "Domain-name storage restricted to 7-bit ASCII should be avoided.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The representation and conversion paths can be inspected for loss of the high bit; this is advisory guidance.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "However, future\nadditions beyond current usage may need to use the full binary octet\ncapabilities in names, so attempts to store domain names in 7-bit ASCII\nor use of special bytes to terminate labels, etc., should be avoided.",
+      "line_start": 491,
+      "line_end": 494,
+      "condition": "When choosing the internal representation of labels, allowing for future use of full binary octets.",
+      "required_behavior": "",
+      "forbidden_behavior": "Use of special bytes to terminate labels should be avoided.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Label representations can be inspected for reserved terminator bytes that prevent preserving arbitrary label octets; this is advisory guidance.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When data enters the domain system, its original case should be\npreserved whenever possible.",
+      "line_start": 496,
+      "line_end": 497,
+      "condition": "When data enters the domain system and preserving its original case is possible.",
+      "required_behavior": "The original character case of incoming data should be preserved.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Insertion and retrieval can compare input and stored character case where no structural name collision requires a shared spelling.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The basic rule is that\ncase can be discarded only when data is used to define structure in a\ndatabase, and two names are identical when compared in a case\ninsensitive manner.",
+      "line_start": 500,
+      "line_end": 503,
+      "condition": "When discarding character-case information.",
+      "required_behavior": "",
+      "forbidden_behavior": "Discard case when the data is not being used to define database structure.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Case-folding or canonicalization paths can be checked to ensure that only structural database data loses case.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The basic rule is that\ncase can be discarded only when data is used to define structure in a\ndatabase, and two names are identical when compared in a case\ninsensitive manner.",
+      "line_start": 500,
+      "line_end": 503,
+      "condition": "When discarding character-case information while using data to define database structure.",
+      "required_behavior": "",
+      "forbidden_behavior": "Discard case unless the two names are identical under a case-insensitive comparison.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Database merging paths can be checked for a case-insensitive identity guard before case information is discarded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For example, if two RRs are stored in a database, one at x.y and\none at X.Y, they are actually stored at the same place in the database,\nand hence only one casing would be preserved.",
+      "line_start": 498,
+      "line_end": 500,
+      "condition": "When storing two resource records whose owner names differ only in character case.",
+      "required_behavior": "Treat the case-equivalent owner names as the same database location.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Inserting records under two case variants of one owner name can verify that the variants share database name identity.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Thus while data for x.y\nand X.Y may both be stored under a single location x.y or X.Y,",
+      "line_start": 514,
+      "line_end": 515,
+      "condition": "When storing data under two names that are identical except for character case, such as x.y and X.Y.",
+      "required_behavior": "The database may store both names at a single location retaining either of their original casings.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A database that coalesces case-equivalent names can be checked to accept either original spelling as its retained representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Loss of case sensitive data must be minimized.  Thus while data for x.y\nand X.Y may both be stored under a single location x.y or X.Y, data for\na.x and B.X would never be stored under A.x, A.X, b.x, or b.X.  In\ngeneral, this preserves the case of the first label of a domain name,\nbut forces standardization of interior node labels.",
+      "line_start": 514,
+      "line_end": 518,
+      "condition": "When storing distinct names such as a.x and B.X that share an interior label modulo case but have distinct first labels.",
+      "required_behavior": "",
+      "forbidden_behavior": "Change the case of the distinct first labels merely to standardize the shared interior node; a.x and B.X must not become A.x, A.X, b.x, or b.X.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Insertion and retrieval of names with a shared interior label can verify preservation of the distinct first-label spellings independently of interior-node standardization.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Systems administrators who enter data into the domain database should\ntake care to represent the data they supply to the domain system in a\ncase-consistent manner if their system is case-sensitive.  The data\ndistribution system in the domain system will ensure that consistent\nrepresentations are preserved.",
+      "line_start": 520,
+      "line_end": 524,
+      "condition": "When the domain system distributes data supplied with consistent character-case representations.",
+      "required_behavior": "Preserve the consistent character-case representations through the data distribution system.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A consistently cased database can be distributed and the resulting character-case representations compared with the supplied data.",
+      "eligibility": "eligible"
+    }
+  ]
+}

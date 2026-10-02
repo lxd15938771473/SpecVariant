@@ -1,0 +1,55 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0027",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "To speed up handshake completion under these conditions, an endpoint\n   MAY, for a limited number of times per connection, send a packet\n   containing unacknowledged CRYPTO data earlier than the PTO expiry,\n   subject to the address validation limits in Section 8.1 of\n   [QUIC-TRANSPORT].",
+                             "line_start":  754,
+                             "line_end":  758,
+                             "condition":  "When the endpoint is attempting to speed handshake completion after observing one of the possible-loss or underestimated-RTT conditions described immediately before this sentence.",
+                             "required_behavior":  "The endpoint is permitted, but not required, to send a packet containing unacknowledged CRYPTO data before the PTO expires.",
+                             "forbidden_behavior":  "The permission does not make an early CRYPTO transmission mandatory.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can induce either stated handshake condition and verify that an implementation supporting this optional optimization can schedule unacknowledged CRYPTO data before its PTO while implementations that omit the optimization remain conformant.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "an endpoint\n   MAY, for a limited number of times per connection, send a packet\n   containing unacknowledged CRYPTO data earlier than the PTO expiry",
+                             "line_start":  754,
+                             "line_end":  756,
+                             "condition":  "When an endpoint uses the pre-PTO transmission optimization for unacknowledged CRYPTO data.",
+                             "required_behavior":  "The endpoint must impose a finite per-connection limit on the number of such early transmissions.",
+                             "forbidden_behavior":  "The endpoint must not perform the optimization an unlimited number of times on one connection.",
+                             "error_behavior":  "After the configured per-connection limit is reached, further unacknowledged CRYPTO transmissions must not be accelerated by this optimization.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Instrumentation can count pre-PTO CRYPTO transmissions for one connection and verify that the implementation stops applying the optimization at a finite configured limit.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "send a packet\n   containing unacknowledged CRYPTO data earlier than the PTO expiry,\n   subject to the address validation limits in Section 8.1 of\n   [QUIC-TRANSPORT].",
+                             "line_start":  755,
+                             "line_end":  758,
+                             "condition":  "When an endpoint sends unacknowledged CRYPTO data before PTO expiry using this optimization and address validation limits apply.",
+                             "required_behavior":  "The early transmission must remain within the applicable address validation limits.",
+                             "forbidden_behavior":  "The optimization must not be used to exceed the applicable address validation limits.",
+                             "error_behavior":  "If sending would exceed an address validation limit, the endpoint must suppress or defer the transmission.",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "A test can place the endpoint at its applicable address-validation sending limit, trigger the optimization, and verify that no excess packet is emitted.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "An endpoint\n   that always retransmits packets in response to receiving packets that\n   it cannot process risks creating an infinite exchange of packets.",
+                             "line_start":  759,
+                             "line_end":  761,
+                             "condition":  "When an endpoint receives packets that it cannot process.",
+                             "required_behavior":  "The endpoint\u0027s response policy must prevent an unbounded retransmission exchange triggered solely by such unprocessable packets.",
+                             "forbidden_behavior":  "The endpoint must not always retransmit a packet for every received packet that it cannot process.",
+                             "error_behavior":  "The endpoint must eventually suppress the retransmission response rather than continue the exchange indefinitely.",
+                             "check_type":  "derived_constraint",
+                             "why_checkable":  "A repeated stream of unprocessable packets can be supplied while observing output, allowing a test to determine whether responses remain unconditionally one-for-one and unbounded.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

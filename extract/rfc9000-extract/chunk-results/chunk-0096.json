@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0096",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A sender sends one or more frames in a QUIC packet; see Section 12.4.",
+      "line_start": 4031,
+      "line_end": 4031,
+      "condition": "When a sender constructs and sends a QUIC packet.",
+      "required_behavior": "The QUIC packet contains one or more frames.",
+      "forbidden_behavior": "Sending a QUIC packet containing zero frames.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet construction or encoded packet contents can be inspected to verify that at least one frame is present.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   MAY wait for a short period of time to collect multiple frames before\n   sending a packet that is not maximally packed, to avoid sending out\n   large numbers of small packets.  An implementation MAY use knowledge",
+      "line_start": 4035,
+      "line_end": 4037,
+      "condition": "Before sending a QUIC packet that is not maximally packed.",
+      "required_behavior": "A sender is permitted to wait for a short period to collect multiple frames.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Sender timing and queued-frame behavior can be observed to verify that a short aggregation delay is permitted before an underfilled packet is sent.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   large numbers of small packets.  An implementation MAY use knowledge\n   about application sending behavior or heuristics to determine whether\n   and for how long to wait.  This waiting period is an implementation",
+      "line_start": 4037,
+      "line_end": 4039,
+      "condition": "When deciding whether to delay packet transmission to collect multiple frames and how long to delay.",
+      "required_behavior": "An implementation is permitted to base the decision and duration on knowledge of application sending behavior or heuristics.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation's delay-decision inputs and timing policy can be inspected or instrumented to determine whether application behavior or heuristics are used.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   decision, and an implementation should be careful to delay\n   conservatively, since any delay is likely to increase application-\n   visible latency.",
+      "line_start": 4040,
+      "line_end": 4042,
+      "condition": "When an implementation waits to collect multiple frames before sending a packet.",
+      "required_behavior": "Delay conservatively.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The term \"conservatively\" supplies no objective delay bound or other measurable acceptance criterion within this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   Stream multiplexing is achieved by interleaving STREAM frames from\n   multiple streams into one or more QUIC packets.  A single QUIC packet\n   can include multiple STREAM frames from one or more streams.",
+      "line_start": 4044,
+      "line_end": 4046,
+      "condition": "When an implementation multiplexes multiple streams.",
+      "required_behavior": "Multiplex streams by interleaving STREAM frames from the streams into one or more QUIC packets; a packet is permitted to contain multiple STREAM frames from one or more streams.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Encoded outgoing packets can be inspected to verify multiplexing through interleaved STREAM frames and acceptance of multiple STREAM frames in one packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   across multiple streams.  When a packet loss occurs, only streams\n   with data in that packet are blocked waiting for a retransmission to\n   be received, while other streams can continue making progress.  Note",
+      "line_start": 4049,
+      "line_end": 4051,
+      "condition": "When a packet containing stream data is lost and retransmission has not yet been received.",
+      "required_behavior": "Only streams with data in the lost packet are blocked waiting for retransmission; other streams remain able to make progress.",
+      "forbidden_behavior": "Blocking progress on streams that have no data in the lost packet solely because that packet was lost.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A loss test with data from selected streams can observe whether only affected streams stall while unaffected streams continue progressing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   that when data from multiple streams is included in a single QUIC\n   packet, loss of that packet blocks all those streams from making\n   progress.  Implementations are advised to include as few streams as",
+      "line_start": 4052,
+      "line_end": 4054,
+      "condition": "When a lost QUIC packet contained data from multiple streams.",
+      "required_behavior": "All streams whose data was included in the lost packet remain blocked from making progress pending recovery.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can place data from multiple streams in one packet, induce loss, and observe the progress state of every included stream.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   progress.  Implementations are advised to include as few streams as\n   necessary in outgoing packets without losing transmission efficiency\n   to underfilled packets.",
+      "line_start": 4054,
+      "line_end": 4056,
+      "condition": "When selecting stream data for outgoing packets.",
+      "required_behavior": "Include as few streams as necessary without reducing transmission efficiency through underfilled packets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The chunk defines neither how many streams are \"necessary\" nor an objective threshold for lost transmission efficiency, so it cannot yield a deterministic implementation verdict.",
+      "eligibility": "exclude"
+    }
+  ]
+}

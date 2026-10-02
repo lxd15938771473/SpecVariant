@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0005",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "To enable\nthe user to request a particular type of information, an appropriate\nquery type is passed to the resolver with the domain name.",
+      "line_start": 138,
+      "line_end": 140,
+      "condition": "When a user requests a particular type of information for a domain name",
+      "required_behavior": "Pass the appropriate query type to the resolver together with the domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The resolver request interface can be checked for the domain name and information-selecting query type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To the user,\nthe domain tree is a single information space; the resolver is\nresponsible for hiding the distribution of data among name servers from\nthe user.",
+      "line_start": 140,
+      "line_end": 143,
+      "condition": "When resolving domain information distributed among name servers",
+      "required_behavior": "Handle the distribution of data within the resolver so the user can use the domain tree as a single information space.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A lookup spanning different name servers can check whether the resolver handles server selection without requiring the user to navigate the distribution.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The\nresolver starts with knowledge of at least one name server.",
+      "line_start": 148,
+      "line_end": 149,
+      "condition": "At resolver startup",
+      "required_behavior": "Have knowledge of at least one name server.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Initial resolver configuration or bootstrap state can be checked for a known name server.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When the\nresolver processes a user query it asks a known name server for the\ninformation; in return, the resolver either receives the desired\ninformation or a referral to another name server.",
+      "line_start": 149,
+      "line_end": 152,
+      "condition": "When processing a user query through the name-server lookup flow described here",
+      "required_behavior": "Ask a known name server for the requested information.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The destination of the resolver lookup can be compared with its known name-server state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Using these\nreferrals, resolvers learn the identities and contents of other name\nservers.",
+      "line_start": 152,
+      "line_end": 154,
+      "condition": "When a resolver receives referrals to other name servers",
+      "required_behavior": "Use the referrals to learn the identities of other name servers.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Referral processing can be checked for discovery of the referred name-server identities.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Using these\nreferrals, resolvers learn the identities and contents of other name\nservers.",
+      "line_start": 152,
+      "line_end": 154,
+      "condition": "When a resolver receives referrals to other name servers",
+      "required_behavior": "Use the referrals to learn the contents available from other name servers.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Referral-directed resolution can be checked for obtaining information from the referred name servers.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Resolvers are responsible for dealing with the distribution of\nthe domain space and dealing with the effects of name server failure by\nconsulting redundant databases in other servers.",
+      "line_start": 154,
+      "line_end": 156,
+      "condition": "When name-server failure affects resolution",
+      "required_behavior": "Consult redundant databases in other servers to deal with the failure.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Resolver failover can be checked by making a selected server fail while another server holds redundant data.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "each zone is the complete database for a particular\n\"pruned\" subtree of the domain space.",
+      "line_start": 159,
+      "line_end": 160,
+      "condition": "For data held as a zone",
+      "required_behavior": "Represent the complete database for the particular pruned subtree of the domain space.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The zone data model and loaded records can be compared with the records belonging to its pruned subtree.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Name servers manage two kinds of data.  The first kind of data held in\nsets called zones; each zone is the complete database for a particular\n\"pruned\" subtree of the domain space.  This data is called\nauthoritative.",
+      "line_start": 158,
+      "line_end": 161,
+      "condition": "For the zone data held by a name server",
+      "required_behavior": "Treat the zone data as authoritative data.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The server can be inspected for the authoritative classification of its zone data.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A name server periodically checks to make sure that its\nzones are up to date, and if not, obtains a new copy of updated zones",
+      "line_start": 161,
+      "line_end": 162,
+      "condition": "While a name server maintains its zones",
+      "required_behavior": "Periodically check whether the zones are up to date.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Zone-maintenance scheduling can be inspected for recurring currency checks without imposing an interval absent from this passage.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A name server periodically checks to make sure that its\nzones are up to date, and if not, obtains a new copy of updated zones",
+      "line_start": 161,
+      "line_end": 162,
+      "condition": "When a name server determines that a zone is not up to date",
+      "required_behavior": "Obtain a new copy of the updated zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An outdated-zone maintenance path can be checked for obtaining a replacement copy.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The second\nkind of data is cached data which was acquired by a local resolver.\nThis data may be incomplete,",
+      "line_start": 172,
+      "line_end": 174,
+      "condition": "For cached data acquired by a local resolver",
+      "required_behavior": "Permit the cached data to be incomplete.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The cache data model can be checked for supporting partial data without requiring a complete zone.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Cached\ndata is eventually discarded by a timeout mechanism.",
+      "line_start": 175,
+      "line_end": 176,
+      "condition": "When data is cached",
+      "required_behavior": "Eventually discard the cached data through a timeout mechanism.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Cache lifetime handling can be checked for timeout-based removal without assuming a duration not stated here.",
+      "eligibility": "eligible"
+    }
+  ]
+}

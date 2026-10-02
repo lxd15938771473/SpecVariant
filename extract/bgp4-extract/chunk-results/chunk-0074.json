@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0074",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Information reduction may imply a reduction in granularity of policy\n   control - after information is collapsed, the same policies will\n   apply to all destinations and paths in the equivalence class.",
+      "line_start": 4769,
+      "line_end": 4771,
+      "condition": "Information has been collapsed into an equivalence class.",
+      "required_behavior": "Apply the same policies to all destinations and paths in the equivalence class.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Policy application to members of a collapsed equivalence class can be compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Decision Process may optionally reduce the amount of information\n   that it will place in the Adj-RIBs-Out by any of the following\n   methods:\n\n      a) Network Layer Reachability Information (NLRI):\n\n         Destination IP addresses can be represented as IP address\n         prefixes.  In cases where there is a correspondence between the\n         address structure and the systems under control of an\n         autonomous system administrator, it will be possible to reduce\n         the size of the NLRI carried in the UPDATE messages.",
+      "line_start": 4773,
+      "line_end": 4783,
+      "condition": "The Decision Process optionally reduces the information placed in Adj-RIBs-Out.",
+      "required_behavior": "May represent destination IP addresses as IP address prefixes to reduce NLRI in UPDATE messages when the address structure corresponds to systems under an autonomous system administrator's control.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The optional reduction can be checked by comparing represented destinations and advertised prefixes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The Decision Process may optionally reduce the amount of information\n   that it will place in the Adj-RIBs-Out by any of the following\n   methods:\n\n      a) Network Layer Reachability Information (NLRI):\n\n         Destination IP addresses can be represented as IP address\n         prefixes.  In cases where there is a correspondence between the\n         address structure and the systems under control of an\n         autonomous system administrator, it will be possible to reduce\n         the size of the NLRI carried in the UPDATE messages.\n\n      b) AS_PATHs:\n\n         AS path information can be represented as ordered AS_SEQUENCEs\n         or unordered AS_SETs.  AS_SETs are used in the route\n         aggregation algorithm described in Section 9.2.2.2.  They\n         reduce the size of the AS_PATH information by listing each AS\n         number only once, regardless of how many times it may have\n         appeared in multiple AS_PATHs that were aggregated.",
+      "line_start": 4773,
+      "line_end": 4792,
+      "condition": "The Decision Process optionally reduces the information placed in Adj-RIBs-Out.",
+      "required_behavior": "May reduce AS path information using AS_SETs in route aggregation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Aggregation output can be inspected for the permitted AS_SET representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "AS path information can be represented as ordered AS_SEQUENCEs\n         or unordered AS_SETs.  AS_SETs are used in the route\n         aggregation algorithm described in Section 9.2.2.2.  They\n         reduce the size of the AS_PATH information by listing each AS\n         number only once, regardless of how many times it may have\n         appeared in multiple AS_PATHs that were aggregated.",
+      "line_start": 4787,
+      "line_end": 4792,
+      "condition": "AS path information is represented using an AS_SEQUENCE.",
+      "required_behavior": "Represent the AS_SEQUENCE as ordered AS path information.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The representation and processing of sequence order can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "AS path information can be represented as ordered AS_SEQUENCEs\n         or unordered AS_SETs.  AS_SETs are used in the route\n         aggregation algorithm described in Section 9.2.2.2.  They\n         reduce the size of the AS_PATH information by listing each AS\n         number only once, regardless of how many times it may have\n         appeared in multiple AS_PATHs that were aggregated.",
+      "line_start": 4787,
+      "line_end": 4792,
+      "condition": "AS path information is represented using an AS_SET.",
+      "required_behavior": "Represent the AS_SET as unordered AS path information.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "AS_SET handling can be checked for set semantics independent of member order.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "AS path information can be represented as ordered AS_SEQUENCEs\n         or unordered AS_SETs.  AS_SETs are used in the route\n         aggregation algorithm described in Section 9.2.2.2.  They\n         reduce the size of the AS_PATH information by listing each AS\n         number only once, regardless of how many times it may have\n         appeared in multiple AS_PATHs that were aggregated.",
+      "line_start": 4787,
+      "line_end": 4792,
+      "condition": "Multiple AS_PATHs are aggregated using an AS_SET.",
+      "required_behavior": "List each AS number only once in the AS_SET, regardless of how often it appeared in the aggregated AS_PATHs.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Aggregating paths with repeated AS numbers permits checking the resulting set for duplicates.",
+      "eligibility": "eligible"
+    }
+  ]
+}

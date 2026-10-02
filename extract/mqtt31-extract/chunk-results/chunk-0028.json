@@ -1,0 +1,152 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "document_id": "mqtt-v3.1.1",
+  "chunk_id": "chunk-0028",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "3. It satisfies all of the MUST level requirements in the following chapters that are identified except for those that only apply to the Client:",
+      "line_start": 1802,
+      "line_end": 1802,
+      "condition": "When evaluating the conformance target referenced by item 3",
+      "required_behavior": "The implementation would satisfy the referenced MUST-level chapter requirements except requirements that apply only to the Client.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The antecedent of “It” and the individual referenced chapter requirements are not contained in this chunk, so complete implementation checks cannot be derived from this evidence alone.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "A conformant Server MUST support the use of one or more underlying transport protocols that provide an ordered, lossless, stream of bytes from the Client to Server and Server to Client [MQTT-7.1.1-1].",
+      "line_start": 1810,
+      "line_end": 1810,
+      "condition": "For an MQTT Server claiming conformance",
+      "required_behavior": "The Server must support at least one underlying transport protocol satisfying all stated transport properties.",
+      "forbidden_behavior": "A conformant Server must not support zero qualifying underlying transport protocols.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The Server's enabled transports can be enumerated and at least one exercised against the stated properties.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A conformant Server MUST support the use of one or more underlying transport protocols that provide an ordered, lossless, stream of bytes from the Client to Server and Server to Client [MQTT-7.1.1-1].",
+      "line_start": 1810,
+      "line_end": 1810,
+      "condition": "For a transport used to satisfy MQTT Server conformance",
+      "required_behavior": "The transport must provide a byte stream from Client to Server.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Client-to-Server transmission can be exercised as a continuous byte stream.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A conformant Server MUST support the use of one or more underlying transport protocols that provide an ordered, lossless, stream of bytes from the Client to Server and Server to Client [MQTT-7.1.1-1].",
+      "line_start": 1810,
+      "line_end": 1810,
+      "condition": "For the Client-to-Server byte stream of a transport used to satisfy MQTT Server conformance",
+      "required_behavior": "The transport must preserve byte order.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A known byte sequence can be sent Client-to-Server and its received ordering compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A conformant Server MUST support the use of one or more underlying transport protocols that provide an ordered, lossless, stream of bytes from the Client to Server and Server to Client [MQTT-7.1.1-1].",
+      "line_start": 1810,
+      "line_end": 1810,
+      "condition": "For the Client-to-Server byte stream of a transport used to satisfy MQTT Server conformance",
+      "required_behavior": "The transport must deliver the byte stream without loss.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The complete sent and received Client-to-Server byte sequences can be compared for missing bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A conformant Server MUST support the use of one or more underlying transport protocols that provide an ordered, lossless, stream of bytes from the Client to Server and Server to Client [MQTT-7.1.1-1].",
+      "line_start": 1810,
+      "line_end": 1810,
+      "condition": "For a transport used to satisfy MQTT Server conformance",
+      "required_behavior": "The transport must provide a byte stream from Server to Client.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Server-to-Client transmission can be exercised as a continuous byte stream.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A conformant Server MUST support the use of one or more underlying transport protocols that provide an ordered, lossless, stream of bytes from the Client to Server and Server to Client [MQTT-7.1.1-1].",
+      "line_start": 1810,
+      "line_end": 1810,
+      "condition": "For the Server-to-Client byte stream of a transport used to satisfy MQTT Server conformance",
+      "required_behavior": "The transport must preserve byte order.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A known byte sequence can be sent Server-to-Client and its received ordering compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A conformant Server MUST support the use of one or more underlying transport protocols that provide an ordered, lossless, stream of bytes from the Client to Server and Server to Client [MQTT-7.1.1-1].",
+      "line_start": 1810,
+      "line_end": 1810,
+      "condition": "For the Server-to-Client byte stream of a transport used to satisfy MQTT Server conformance",
+      "required_behavior": "The transport must deliver the byte stream without loss.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The complete sent and received Server-to-Client byte sequences can be compared for missing bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "However conformance does not depend on it supporting any specific transport protocols.",
+      "line_start": 1810,
+      "line_end": 1810,
+      "condition": "When evaluating MQTT Server transport support",
+      "required_behavior": "Conformance must be independent of the identity of the specific transport protocol, provided the required transport properties are met.",
+      "forbidden_behavior": "A conformance test must not require one named transport protocol solely by identity.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A Server using a nonpreferred but qualifying transport can be evaluated without a name-based conformance failure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A Server MAY support any of the transport protocols listed in Section 4.2, or any other transport protocol that meets the requirements of [MQTT-7.1.1-1].",
+      "line_start": 1810,
+      "line_end": 1810,
+      "condition": "When a Server chooses an underlying transport listed in Section 4.2",
+      "required_behavior": "The Server is permitted to support that listed transport protocol.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The permitted transport list is only referenced and not present in this chunk, so membership in the listed branch cannot be verified from this evidence alone.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "A Server MAY support any of the transport protocols listed in Section 4.2, or any other transport protocol that meets the requirements of [MQTT-7.1.1-1].",
+      "line_start": 1810,
+      "line_end": 1810,
+      "condition": "When a Server supports an underlying transport not listed in Section 4.2",
+      "required_behavior": "That transport is permitted if it meets the ordered, lossless, bidirectional byte-stream requirements of MQTT-7.1.1-1.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An unlisted transport's byte-stream behavior can be tested against each property stated in the preceding normative sentence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An MQTT Client conforms to this specification only if it satisfies all the statements below:",
+      "line_start": 1812,
+      "line_end": 1812,
+      "condition": "When evaluating an MQTT Client's conformance claim",
+      "required_behavior": "The Client would have to satisfy every statement in the referenced following list.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The required list begins after this chunk, so this evidence does not identify the individual behaviors needed for a complete conformance test.",
+      "eligibility": "exclude"
+    }
+  ]
+}

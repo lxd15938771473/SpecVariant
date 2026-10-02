@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0095",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   *  PADDING, PING, and CRYPTO frames MAY appear in any packet number\n      space.",
+      "line_start": 4008,
+      "line_end": 4009,
+      "condition": "When a packet contains a PADDING, PING, or CRYPTO frame.",
+      "required_behavior": "Allow the frame to appear in any packet number space.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet parsing or generation can identify the frame type and packet number space and verify that no number-space restriction is imposed on these frame types.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  CONNECTION_CLOSE frames signaling errors at the QUIC layer (type\n      0x1c) MAY appear in any packet number space.  CONNECTION_CLOSE\n      frames signaling application errors (type 0x1d) MUST only appear\n      in the application data packet number space.",
+      "line_start": 4011,
+      "line_end": 4014,
+      "condition": "When a CONNECTION_CLOSE frame has type 0x1c and signals a QUIC-layer error.",
+      "required_behavior": "Allow the frame to appear in any packet number space.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The frame type and enclosing packet number space are observable and can be tested across all packet number spaces.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  CONNECTION_CLOSE frames signaling errors at the QUIC layer (type\n      0x1c) MAY appear in any packet number space.  CONNECTION_CLOSE\n      frames signaling application errors (type 0x1d) MUST only appear\n      in the application data packet number space.",
+      "line_start": 4011,
+      "line_end": 4014,
+      "condition": "When a CONNECTION_CLOSE frame has type 0x1d and signals an application error.",
+      "required_behavior": "Send or accept the frame only in the application data packet number space.",
+      "forbidden_behavior": "Do not send or accept the frame in any non-application-data packet number space.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation can inspect the CONNECTION_CLOSE type and verify the enclosing packet belongs to the application data packet number space.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  ACK frames MAY appear in any packet number space but can only\n      acknowledge packets that appeared in that packet number space.\n      However, as noted below, 0-RTT packets cannot contain ACK frames.",
+      "line_start": 4016,
+      "line_end": 4018,
+      "condition": "When an ACK frame appears in a packet number space other than a 0-RTT packet.",
+      "required_behavior": "Allow the ACK frame to appear in that packet number space.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The frame type and packet number space can be observed when parsing or constructing a packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  ACK frames MAY appear in any packet number space but can only\n      acknowledge packets that appeared in that packet number space.\n      However, as noted below, 0-RTT packets cannot contain ACK frames.",
+      "line_start": 4016,
+      "line_end": 4018,
+      "condition": "When an ACK frame acknowledges packets.",
+      "required_behavior": "Acknowledge only packets that appeared in the same packet number space as the ACK frame.",
+      "forbidden_behavior": "Do not use an ACK frame to acknowledge a packet from a different packet number space.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "ACK ranges can be correlated with sent packet records and their packet number spaces to detect cross-space acknowledgments.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  ACK frames MAY appear in any packet number space but can only\n      acknowledge packets that appeared in that packet number space.\n      However, as noted below, 0-RTT packets cannot contain ACK frames.",
+      "line_start": 4016,
+      "line_end": 4018,
+      "condition": "When constructing or processing a 0-RTT packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "The 0-RTT packet must not contain an ACK frame.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A packet parser or generator can identify a 0-RTT packet and test whether an ACK frame is present.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  All other frame types MUST only be sent in the application data\n      packet number space.",
+      "line_start": 4020,
+      "line_end": 4021,
+      "condition": "When sending any frame type other than PADDING, PING, CRYPTO, CONNECTION_CLOSE, or ACK.",
+      "required_behavior": "Send the frame only in the application data packet number space.",
+      "forbidden_behavior": "Do not send the frame in Initial or Handshake packet number spaces.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation can classify the frame type and verify the packet number space selected for transmission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Note that it is not possible to send the following frames in 0-RTT\n   packets for various reasons: ACK, CRYPTO, HANDSHAKE_DONE, NEW_TOKEN,\n   PATH_RESPONSE, and RETIRE_CONNECTION_ID.  A server MAY treat receipt\n   of these frames in 0-RTT packets as a connection error of type\n   PROTOCOL_VIOLATION.",
+      "line_start": 4023,
+      "line_end": 4027,
+      "condition": "When constructing or processing a 0-RTT packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "The packet must not contain ACK, CRYPTO, HANDSHAKE_DONE, NEW_TOKEN, PATH_RESPONSE, or RETIRE_CONNECTION_ID frames.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The packet type and contained frame types are directly observable, allowing each prohibited frame to be detected in a 0-RTT packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Note that it is not possible to send the following frames in 0-RTT\n   packets for various reasons: ACK, CRYPTO, HANDSHAKE_DONE, NEW_TOKEN,\n   PATH_RESPONSE, and RETIRE_CONNECTION_ID.  A server MAY treat receipt\n   of these frames in 0-RTT packets as a connection error of type\n   PROTOCOL_VIOLATION.",
+      "line_start": 4023,
+      "line_end": 4027,
+      "condition": "When a server receives an ACK, CRYPTO, HANDSHAKE_DONE, NEW_TOKEN, PATH_RESPONSE, or RETIRE_CONNECTION_ID frame in a 0-RTT packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The server may treat receipt as a connection error of type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can inject each listed frame in a 0-RTT packet and observe whether the server reports a PROTOCOL_VIOLATION connection error.",
+      "eligibility": "eligible"
+    }
+  ]
+}

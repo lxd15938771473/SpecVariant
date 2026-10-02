@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0188",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A client MUST NOT send non-probing frames to a preferred address\n   prior to validating that address; see Section 8.  This greatly",
+      "line_start": 7428,
+      "line_end": 7429,
+      "condition": "Before the client has validated a preferred address",
+      "required_behavior": "",
+      "forbidden_behavior": "The client must not send non-probing frames to that preferred address.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can observe frames sent to a preferred address before address validation and fail if any frame is non-probing.",
+      "eligibility": "eligible"
+    }
+  ]
+}

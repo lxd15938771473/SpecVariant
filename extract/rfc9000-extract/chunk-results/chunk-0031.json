@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0031",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Valid packets sent to clients always include a Destination Connection ID that matches a value the client selects.",
+      "line_start": 1491,
+      "line_end": 1492,
+      "condition": "A valid packet is sent to a client.",
+      "required_behavior": "The packet includes a Destination Connection ID matching a value selected by the client.",
+      "forbidden_behavior": "Treating a packet whose Destination Connection ID does not match a client-selected value as valid.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet validation can inspect the Destination Connection ID and compare it with the values selected by the client.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Packets that do not match an existing connection -- based on Destination Connection ID or, if this value is zero length, local IP address and port -- are discarded.",
+      "line_start": 1494,
+      "line_end": 1496,
+      "condition": "A received packet does not match an existing connection by Destination Connection ID, or by local IP address and port when the Destination Connection ID is zero length.",
+      "required_behavior": "",
+      "forbidden_behavior": "Continuing to process or accept the unmatched packet.",
+      "error_behavior": "Discard the packet.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can deliver a packet that matches neither the applicable connection ID nor the zero-length-ID address-and-port tuple and verify that it is discarded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Due to packet reordering or loss, a client might receive packets for a connection that are encrypted with a key it has not yet computed. The client MAY drop these packets, or it MAY buffer them in anticipation of later packets that allow it to compute the key.",
+      "line_start": 1498,
+      "line_end": 1501,
+      "condition": "A client receives packets for a connection encrypted with a key that it has not yet computed.",
+      "required_behavior": "The client is permitted to drop the packets or buffer them while awaiting later packets that enable computation of the key.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can deliver packets encrypted with a not-yet-computed key and verify that either dropping or buffering is supported as permitted behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a client receives a packet that uses a different version than it initially selected, it MUST discard that packet.",
+      "line_start": 1503,
+      "line_end": 1504,
+      "condition": "A client receives a packet using a version different from the version it initially selected.",
+      "required_behavior": "",
+      "forbidden_behavior": "Accepting or continuing to process the packet.",
+      "error_behavior": "Discard the packet.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can send a packet with a version different from the client's initially selected version and observe whether the packet is discarded.",
+      "eligibility": "eligible"
+    }
+  ]
+}

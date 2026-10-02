@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0054",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Path validation does not validate that a peer can send in the return\n   direction.  Acknowledgments cannot be used for return path validation\n   because they contain insufficient entropy and might be spoofed.",
+      "line_start": 2482,
+      "line_end": 2484,
+      "condition": "When validating reachability in the return direction of a path.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not use acknowledgments as proof of return-path reachability.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test or code inspection can verify that receipt of acknowledgments does not cause the return path to be marked validated.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Endpoints independently determine reachability on each direction of a\n   path, and therefore return reachability can only be established by\n   the peer.",
+      "line_start": 2485,
+      "line_end": 2487,
+      "condition": "When determining whether each direction of a path is reachable.",
+      "required_behavior": "Determine reachability independently for each direction; allow return reachability to be established only by the peer.",
+      "forbidden_behavior": "Do not infer return reachability solely from locally established forward reachability.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Directional path-validation state transitions can be inspected or tested to ensure validation in one direction does not automatically validate the reverse direction.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MAY include other frames with the PATH_CHALLENGE and\n   PATH_RESPONSE frames used for path validation.  In particular, an\n   endpoint can include PADDING frames with a PATH_CHALLENGE frame for\n   Path Maximum Transmission Unit Discovery (PMTUD); see Section 14.2.1.",
+      "line_start": 2500,
+      "line_end": 2503,
+      "condition": "When constructing a packet containing a PATH_CHALLENGE or PATH_RESPONSE frame used for path validation.",
+      "required_behavior": "Permit other frames to be included in the same packet, including PADDING with PATH_CHALLENGE.",
+      "forbidden_behavior": "Do not reject or treat the packet as invalid merely because other frames accompany PATH_CHALLENGE or PATH_RESPONSE.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet construction and parsing tests can verify that these path-validation frames may be coalesced with other frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint can also include its own PATH_CHALLENGE frame when\n   sending a PATH_RESPONSE frame.",
+      "line_start": 2504,
+      "line_end": 2505,
+      "condition": "When sending a PATH_RESPONSE frame.",
+      "required_behavior": "Permit the endpoint to include its own PATH_CHALLENGE frame in the same packet.",
+      "forbidden_behavior": "Do not reject this frame combination merely because PATH_CHALLENGE accompanies PATH_RESPONSE.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A packet parser or generator can be tested with PATH_CHALLENGE and PATH_RESPONSE present together.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint uses a new connection ID for probes sent from a new local\n   address; see Section 9.5.  When probing a new path, an endpoint can\n   ensure that its peer has an unused connection ID available for\n   responses.",
+      "line_start": 2507,
+      "line_end": 2510,
+      "condition": "When an endpoint sends a path probe from a new local address.",
+      "required_behavior": "Use a new connection ID for the probe.",
+      "forbidden_behavior": "Do not reuse a connection ID previously used from another local address for that probe.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Probe generation can be tested or inspected to correlate each newly used local address with a new connection ID.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   responses.  Sending NEW_CONNECTION_ID and PATH_CHALLENGE frames in\n   the same packet, if the peer's active_connection_id_limit permits,\n   ensures that an unused connection ID will be available to the peer\n   when sending a response.",
+      "line_start": 2510,
+      "line_end": 2513,
+      "condition": "When probing a new path and the peer's active_connection_id_limit permits issuance of another connection ID.",
+      "required_behavior": "The endpoint may send NEW_CONNECTION_ID and PATH_CHALLENGE in the same packet so that the peer has an unused connection ID for its response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Packet-generation tests can verify conditional coalescing of NEW_CONNECTION_ID with PATH_CHALLENGE and the resulting availability of an unused connection ID.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint can choose to simultaneously probe multiple paths.  The\n   number of simultaneous paths used for probes is limited by the number\n   of extra connection IDs its peer has previously supplied, since each\n   new local address used for a probe requires a previously unused\n   connection ID.",
+      "line_start": 2515,
+      "line_end": 2519,
+      "condition": "When an endpoint simultaneously probes multiple paths using new local addresses.",
+      "required_behavior": "Keep the number of simultaneously probed paths at or below the number of extra connection IDs previously supplied by the peer, and use a previously unused connection ID for each new local address.",
+      "forbidden_behavior": "Do not simultaneously probe more new-local-address paths than the available extra connection IDs, and do not reuse a connection ID for a new local address.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Runtime tests can vary the number of supplied extra connection IDs and verify both the probe-count bound and unique unused connection-ID assignment.",
+      "eligibility": "eligible"
+    }
+  ]
+}

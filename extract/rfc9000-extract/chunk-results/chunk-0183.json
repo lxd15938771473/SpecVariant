@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0183",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Servers SHOULD provide mitigations for this attack by limiting the\n   usage and lifetime of address validation tokens; see Section 8.1.3.",
+      "line_start": 7267,
+      "line_end": 7268,
+      "condition": "When a server issues or accepts address validation tokens.",
+      "required_behavior": "The server should mitigate amplification attacks by limiting both the usage and lifetime of address validation tokens.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "An implementation can be inspected or tested to verify that address validation tokens have enforced usage restrictions and finite lifetimes.",
+      "eligibility": "eligible"
+    }
+  ]
+}

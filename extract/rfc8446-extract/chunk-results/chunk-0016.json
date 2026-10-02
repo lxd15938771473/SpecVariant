@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0016",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The basic numeric data type is an unsigned byte (uint8).",
+      "line_start": 1081,
+      "line_end": 1081,
+      "condition": "a field has type uint8",
+      "required_behavior": "represent the field as one unsigned byte",
+      "forbidden_behavior": "interpret uint8 as signed or encode it with a width other than one byte",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Boundary values and encoded width for uint8 are directly testable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "All larger\n   numeric data types are constructed from a fixed-length series of\n   bytes concatenated as described in Section 3.1 and are also unsigned.",
+      "line_start": 1081,
+      "line_end": 1083,
+      "condition": "a numeric data type is larger than uint8",
+      "required_behavior": "represent it as an unsigned fixed-length series of bytes",
+      "forbidden_behavior": "use a signed representation or variable-width encoding",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Numeric encoders and decoders expose signedness and exact byte consumption.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "uint8 uint16[2];",
+      "line_start": 1086,
+      "line_end": 1086,
+      "condition": "a field has type uint16",
+      "required_behavior": "encode and decode it as exactly two bytes",
+      "forbidden_behavior": "use a width other than two bytes",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The uint16 wire width is explicit and measurable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "uint8 uint24[3];",
+      "line_start": 1087,
+      "line_end": 1087,
+      "condition": "a field has type uint24",
+      "required_behavior": "encode and decode it as exactly three bytes",
+      "forbidden_behavior": "use a width other than three bytes",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The uint24 wire width is explicit and measurable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "uint8 uint32[4];",
+      "line_start": 1088,
+      "line_end": 1088,
+      "condition": "a field has type uint32",
+      "required_behavior": "encode and decode it as exactly four bytes",
+      "forbidden_behavior": "use a width other than four bytes",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The uint32 wire width is explicit and measurable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "uint8 uint64[8];",
+      "line_start": 1089,
+      "line_end": 1089,
+      "condition": "a field has type uint64",
+      "required_behavior": "encode and decode it as exactly eight bytes",
+      "forbidden_behavior": "use a width other than eight bytes",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The uint64 wire width is explicit and measurable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "All values, here and elsewhere in the specification, are transmitted\n   in network byte (big-endian) order",
+      "line_start": 1091,
+      "line_end": 1092,
+      "condition": "a numeric value is transmitted under this specification",
+      "required_behavior": "transmit it in network byte order with the most significant byte first",
+      "forbidden_behavior": "transmit the value in little-endian order",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Serialized test values have a deterministic byte order.",
+      "eligibility": "eligible"
+    }
+  ]
+}

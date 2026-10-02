@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0166",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   QUIC frames do not use a self-describing encoding.  An endpoint\n   therefore needs to understand the syntax of all frames before it can\n   successfully process a packet.  This allows for efficient encoding of\n   frames, but it means that an endpoint cannot send a frame of a type\n   that is unknown to its peer.",
+      "line_start": 6721,
+      "line_end": 6725,
+      "condition": "When an endpoint sends a QUIC frame to its peer.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not send a frame whose type is unknown to the peer.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can establish the peer's advertised or otherwise known frame-type support and verify that the sender does not emit an unsupported frame type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An extension to QUIC that wishes to use a new type of frame MUST\n   first ensure that a peer is able to understand the frame.  An\n   endpoint can use a transport parameter to signal its willingness to\n   receive extension frame types.  One transport parameter can indicate\n   support for one or more extension frame types.",
+      "line_start": 6727,
+      "line_end": 6731,
+      "condition": "Before a QUIC extension uses a new frame type with a peer.",
+      "required_behavior": "The extension must first ensure that the peer is able to understand the new frame type.",
+      "forbidden_behavior": "The extension must not use the new frame type before ensuring peer support.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can verify that the implementation establishes peer support, such as through transport-parameter signaling, before sending or otherwise using the new frame type.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Extensions that modify or replace core protocol functionality\n   (including frame types) will be difficult to combine with other\n   extensions that modify or replace the same functionality unless the\n   behavior of the combination is explicitly defined.  Such extensions\n   SHOULD define their interaction with previously defined extensions\n   modifying the same protocol components.",
+      "line_start": 6733,
+      "line_end": 6738,
+      "condition": "When an extension modifies or replaces a core protocol component that a previously defined extension also modifies.",
+      "required_behavior": "The extension should define its interaction with the previously defined extension.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Extension specifications or implementation behavior can be inspected for an explicit definition of how extensions affecting the same component interact.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Extension frames MUST be congestion controlled and MUST cause an ACK\n   frame to be sent.  The exception is extension frames that replace or\n   supplement the ACK frame.  Extension frames are not included in flow\n   control unless specified in the extension.",
+      "line_start": 6740,
+      "line_end": 6743,
+      "condition": "When processing or sending an extension frame that does not replace or supplement the ACK frame.",
+      "required_behavior": "The extension frame must be congestion controlled.",
+      "forbidden_behavior": "The implementation must not exempt the extension frame from congestion control merely because it is an extension frame.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A runtime test can send extension frames and verify that their transmission is constrained by the implementation's congestion-control state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Extension frames MUST be congestion controlled and MUST cause an ACK\n   frame to be sent.  The exception is extension frames that replace or\n   supplement the ACK frame.  Extension frames are not included in flow\n   control unless specified in the extension.",
+      "line_start": 6740,
+      "line_end": 6743,
+      "condition": "When an endpoint receives an extension frame that does not replace or supplement the ACK frame.",
+      "required_behavior": "Receipt of the extension frame must cause an ACK frame to be sent.",
+      "forbidden_behavior": "The endpoint must not treat such an extension frame as non-ack-eliciting.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A packet-level test can deliver the extension frame and observe whether the receiving endpoint generates an ACK frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Extension frames MUST be congestion controlled and MUST cause an ACK\n   frame to be sent.  The exception is extension frames that replace or\n   supplement the ACK frame.  Extension frames are not included in flow\n   control unless specified in the extension.",
+      "line_start": 6740,
+      "line_end": 6743,
+      "condition": "When an extension frame replaces or supplements the ACK frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "The generic extension-frame rules do not require that frame to be congestion controlled or to cause an ACK frame to be sent.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The frame's defined role can be classified, and tests can verify that the implementation does not incorrectly impose the two generic requirements as unconditional invariants.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Extension frames MUST be congestion controlled and MUST cause an ACK\n   frame to be sent.  The exception is extension frames that replace or\n   supplement the ACK frame.  Extension frames are not included in flow\n   control unless specified in the extension.",
+      "line_start": 6740,
+      "line_end": 6743,
+      "condition": "When an extension does not explicitly specify that its extension frames are subject to flow control.",
+      "required_behavior": "",
+      "forbidden_behavior": "Extension frames must not be included in flow control.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can exchange extension frames and verify that they do not consume or become blocked by flow-control credit absent an extension-specific rule.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Extension frames MUST be congestion controlled and MUST cause an ACK\n   frame to be sent.  The exception is extension frames that replace or\n   supplement the ACK frame.  Extension frames are not included in flow\n   control unless specified in the extension.",
+      "line_start": 6740,
+      "line_end": 6743,
+      "condition": "When an extension explicitly specifies that its extension frames are included in flow control.",
+      "required_behavior": "The implementation must apply the extension's specified flow-control treatment to those frames.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The extension's specification supplies the condition, and runtime tests can verify that the implementation accounts for the frames under flow control accordingly.",
+      "eligibility": "eligible"
+    }
+  ]
+}

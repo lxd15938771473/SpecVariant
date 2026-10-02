@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0057",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Path validation succeeds when a PATH_RESPONSE frame is received that contains the data that was sent in a previous PATH_CHALLENGE frame.",
+      "line_start": 2590,
+      "line_end": 2592,
+      "condition": "A PATH_RESPONSE frame is received.",
+      "required_behavior": "Declare path validation successful only when the PATH_RESPONSE contains the data sent in a previous PATH_CHALLENGE frame.",
+      "forbidden_behavior": "Do not declare path validation successful based on a PATH_RESPONSE whose data does not match data sent in a previous PATH_CHALLENGE frame.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation test can send matching and nonmatching PATH_RESPONSE data and observe whether path validation transitions to successful.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A PATH_RESPONSE frame received on any network path validates the path on which the PATH_CHALLENGE was sent.",
+      "line_start": 2592,
+      "line_end": 2593,
+      "condition": "A valid PATH_RESPONSE is received on any network path.",
+      "required_behavior": "Mark the network path on which the corresponding PATH_CHALLENGE was sent as validated, regardless of the path on which the PATH_RESPONSE arrived.",
+      "forbidden_behavior": "Do not treat the PATH_RESPONSE arrival path as the validated path merely because the response arrived on it.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A multi-path test can deliver the response on a path different from the challenge path and inspect which path the implementation validates.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If an endpoint sends a PATH_CHALLENGE frame in a datagram that is not expanded to at least 1200 bytes and if the response to it validates the peer address, the path is validated but not the path MTU.",
+      "line_start": 2595,
+      "line_end": 2598,
+      "condition": "A PATH_CHALLENGE is sent in a datagram smaller than 1200 bytes, and its response validates the peer address.",
+      "required_behavior": "Mark the path as validated while leaving the path MTU unvalidated.",
+      "forbidden_behavior": "Do not treat the path MTU as validated by this exchange.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can complete validation using a sub-1200-byte challenge datagram and separately inspect path-validation and MTU-validation state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "However, the endpoint MUST initiate another path validation with an expanded datagram to verify that the path supports the required MTU.",
+      "line_start": 2599,
+      "line_end": 2601,
+      "condition": "The peer address was validated using a PATH_CHALLENGE datagram that was not expanded to at least 1200 bytes.",
+      "required_behavior": "Initiate another path validation using a datagram expanded to at least 1200 bytes to verify support for the required path MTU.",
+      "forbidden_behavior": "Do not omit the additional expanded-datagram path validation.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can validate an address with an undersized challenge datagram and observe whether the endpoint subsequently initiates validation with a datagram of at least 1200 bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Receipt of an acknowledgment for a packet containing a PATH_CHALLENGE frame is not adequate validation, since the acknowledgment can be spoofed by a malicious peer.",
+      "line_start": 2603,
+      "line_end": 2605,
+      "condition": "An acknowledgment is received for a packet containing a PATH_CHALLENGE frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not mark the path as validated solely because that packet was acknowledged.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can acknowledge a packet carrying PATH_CHALLENGE without returning the corresponding PATH_RESPONSE and verify that the path remains unvalidated.",
+      "eligibility": "eligible"
+    }
+  ]
+}

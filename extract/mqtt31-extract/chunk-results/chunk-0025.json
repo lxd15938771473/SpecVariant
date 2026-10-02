@@ -1,0 +1,68 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "document_id": "mqtt-v3.1.1",
+  "chunk_id": "chunk-0025",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An MQTT implementation MAY conform as both an MQTT Client and MQTT Server implementation.",
+      "line_start": 1794,
+      "line_end": 1794,
+      "condition": "When one implementation provides both MQTT endpoint roles",
+      "required_behavior": "The implementation is permitted to claim conformance as both an MQTT Client and an MQTT Server.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation's exposed roles and declared conformance targets can be inspected independently.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A Server that both accepts inbound connections and establishes outbound connections to other Servers MUST conform as both an MQTT Client and MQTT Server [MQTT-7.0.0-1].",
+      "line_start": 1794,
+      "line_end": 1794,
+      "condition": "When a Server both accepts inbound connections and establishes outbound connections to other Servers",
+      "required_behavior": "It must conform to the MQTT Client conformance target for its outbound-connection role.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Client-side behaviors on the Server's outbound connections can be tested against the Client conformance requirements.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A Server that both accepts inbound connections and establishes outbound connections to other Servers MUST conform as both an MQTT Client and MQTT Server [MQTT-7.0.0-1].",
+      "line_start": 1794,
+      "line_end": 1794,
+      "condition": "When a Server both accepts inbound connections and establishes outbound connections to other Servers",
+      "required_behavior": "It must conform to the MQTT Server conformance target for its inbound-connection role.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Server-side behaviors on inbound connections can be tested against the Server conformance requirements.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Conformant implementations MUST NOT require the use of any extensions defined outside of this specification in order to interoperate with any other conformant implementation [MQTT-7.0.0-2].",
+      "line_start": 1796,
+      "line_end": 1796,
+      "condition": "When interoperating with another conformant MQTT implementation",
+      "required_behavior": "The implementation must interoperate using only functionality defined by this specification.",
+      "forbidden_behavior": "It must not require any extension defined outside this specification as a prerequisite for interoperability.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Two conformant implementations can be exercised with all external extensions disabled and successful interoperability observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An MQTT Server conforms to this specification only if it satisfies all the statements below:",
+      "line_start": 1799,
+      "line_end": 1799,
+      "condition": "When evaluating an MQTT Server's conformance claim",
+      "required_behavior": "The Server would have to satisfy every statement in the referenced following list.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The required list begins after this chunk, so this evidence does not identify the individual behaviors needed for a complete conformance test.",
+      "eligibility": "exclude"
+    }
+  ]
+}

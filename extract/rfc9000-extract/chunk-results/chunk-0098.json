@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0098",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Endpoints acknowledge all packets they receive and process.  However,",
+      "line_start": 4077,
+      "line_end": 4077,
+      "condition": "An endpoint receives and processes a packet.",
+      "required_behavior": "The endpoint acknowledges the packet.",
+      "forbidden_behavior": "The endpoint must not leave a received and processed packet unacknowledged.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet receipt and processing can be observed and compared with the endpoint's acknowledgment state or subsequently emitted ACK frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   only ack-eliciting packets cause an ACK frame to be sent within the\n   maximum ack delay.  Packets that are not ack-eliciting are only\n   acknowledged when an ACK frame is sent for other reasons.",
+      "line_start": 4078,
+      "line_end": 4080,
+      "condition": "An endpoint receives and processes an ack-eliciting packet.",
+      "required_behavior": "The endpoint sends an ACK frame within the maximum acknowledgment delay.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can classify an incoming packet as ack-eliciting and measure whether an ACK frame is sent before the maximum acknowledgment delay expires.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   only ack-eliciting packets cause an ACK frame to be sent within the\n   maximum ack delay.  Packets that are not ack-eliciting are only\n   acknowledged when an ACK frame is sent for other reasons.",
+      "line_start": 4078,
+      "line_end": 4080,
+      "condition": "A packet is not ack-eliciting.",
+      "required_behavior": "The packet is acknowledged when an ACK frame is sent for another reason.",
+      "forbidden_behavior": "The non-ack-eliciting packet must not by itself cause an ACK frame to be sent within the maximum acknowledgment delay.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can deliver only a non-ack-eliciting packet, observe that it does not independently trigger an ACK, and verify its acknowledgment when another reason causes an ACK frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When sending a packet for any reason, an endpoint SHOULD attempt to\n   include an ACK frame if one has not been sent recently.  Doing so\n   helps with timely loss detection at the peer.",
+      "line_start": 4082,
+      "line_end": 4084,
+      "condition": "An endpoint is sending a packet for any reason and has not sent an ACK frame recently.",
+      "required_behavior": "The endpoint should attempt to include an ACK frame in the packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet transmission history and the frames included in the outgoing packet can be inspected to determine whether the endpoint attempts ACK inclusion under the stated condition.",
+      "eligibility": "eligible"
+    }
+  ]
+}

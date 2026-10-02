@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0059",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   The design of QUIC relies on endpoints retaining a stable address for\n   the duration of the handshake.  An endpoint MUST NOT initiate\n   connection migration before the handshake is confirmed, as defined in\n   Section 4.1.2 of [QUIC-TLS].",
+      "line_start": 2648,
+      "line_end": 2651,
+      "condition": "Before the handshake is confirmed as defined in Section 4.1.2 of [QUIC-TLS].",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not initiate connection migration.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can attempt migration before handshake confirmation and verify that the endpoint does not initiate it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If the peer sent the disable_active_migration transport parameter, an\n   endpoint also MUST NOT send packets (including probing packets; see\n   Section 9.1) from a different local address to the address the peer\n   used during the handshake, unless the endpoint has acted on a\n   preferred_address transport parameter from the peer.",
+      "line_start": 2653,
+      "line_end": 2657,
+      "condition": "The peer sent disable_active_migration, the destination is the peer address used during the handshake, and the endpoint has not acted on the peer's preferred_address transport parameter.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not send any packet, including a probing packet, from a different local address.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet traces can establish the transport parameters, local source address, destination address, and whether any packet is sent.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   preferred_address transport parameter from the peer.  If the peer\n   violates this requirement, the endpoint MUST either drop the incoming\n   packets on that path without generating a Stateless Reset or proceed\n   with path validation and allow the peer to migrate.",
+      "line_start": 2657,
+      "line_end": 2660,
+      "condition": "The peer violates the disable_active_migration address restriction.",
+      "required_behavior": "The endpoint must either drop incoming packets on that path without generating a Stateless Reset, or perform path validation and allow the peer to migrate.",
+      "forbidden_behavior": "",
+      "error_behavior": "Handling must be one of the two specified alternatives.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can inject packets that violate the restriction and observe whether the endpoint selects one of the specified responses.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   packets on that path without generating a Stateless Reset or proceed\n   with path validation and allow the peer to migrate.  Generating a\n   Stateless Reset or closing the connection would allow third parties\n   in the network to cause connections to close by spoofing or otherwise\n   manipulating observed traffic.",
+      "line_start": 2659,
+      "line_end": 2663,
+      "condition": "Incoming packets violate the disable_active_migration address restriction.",
+      "required_behavior": "",
+      "forbidden_behavior": "The endpoint must not respond by generating a Stateless Reset or closing the connection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "This prohibition follows directly from the exhaustive required handling alternatives and can be checked by observing whether crafted violating traffic triggers a Stateless Reset or connection closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   port or even a new outgoing IP address for a flow.  An endpoint MUST\n   perform path validation (Section 8.2) if it detects any change to a\n   peer's address, unless it has previously validated that address.",
+      "line_start": 2668,
+      "line_end": 2670,
+      "condition": "The endpoint detects any change to the peer's address and has not previously validated that address.",
+      "required_behavior": "The endpoint must perform path validation.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can change the observed peer address, track prior validation state, and verify that path validation begins.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   When an endpoint has no validated path on which to send packets, it\n   MAY discard connection state.",
+      "line_start": 2672,
+      "line_end": 2673,
+      "condition": "The endpoint has no validated path on which to send packets.",
+      "required_behavior": "The endpoint is permitted to discard connection state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The endpoint's validated-path state and any subsequent disposal of connection state can be observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   MAY discard connection state.  An endpoint capable of connection\n   migration MAY wait for a new path to become available before\n   discarding connection state.",
+      "line_start": 2673,
+      "line_end": 2675,
+      "condition": "The endpoint is capable of connection migration and is considering discarding connection state while awaiting a usable path.",
+      "required_behavior": "The endpoint is permitted to wait for a new path to become available before discarding connection state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A stateful test can verify that a migration-capable endpoint retains connection state while waiting for a new path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   addresses, except as described in Section 9.6.  Clients are\n   responsible for initiating all migrations.",
+      "line_start": 2678,
+      "line_end": 2679,
+      "condition": "A connection migration is initiated, subject to the exception described in Section 9.6.",
+      "required_behavior": "The client initiates the migration.",
+      "forbidden_behavior": "The server must not initiate the migration.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation test can identify which endpoint initiates each migration.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   responsible for initiating all migrations.  Servers do not send non-\n   probing packets (see Section 9.1) toward a client address until they\n   see a non-probing packet from that address.",
+      "line_start": 2679,
+      "line_end": 2681,
+      "condition": "A server has not yet received a non-probing packet from a particular client address.",
+      "required_behavior": "",
+      "forbidden_behavior": "The server must not send non-probing packets toward that client address.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet traces can verify that the first server non-probing packet to an address occurs only after a client non-probing packet arrives from it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   see a non-probing packet from that address.  If a client receives\n   packets from an unknown server address, the client MUST discard these\n   packets.",
+      "line_start": 2681,
+      "line_end": 2683,
+      "condition": "A client receives packets from an unknown server address.",
+      "required_behavior": "The client must discard the packets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can send packets from an unknown server address and verify that the client does not process or accept them.",
+      "eligibility": "eligible"
+    }
+  ]
+}

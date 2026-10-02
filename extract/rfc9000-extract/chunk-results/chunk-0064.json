@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0064",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "To protect the connection from failing due to such a spurious migration, an endpoint MUST revert to using the last validated peer address when validation of a new peer address fails.",
+      "line_start": 2787,
+      "line_end": 2789,
+      "condition": "Validation of a new peer address fails.",
+      "required_behavior": "The endpoint must revert to using the last validated peer address.",
+      "forbidden_behavior": "The endpoint must not continue using the failed, unvalidated peer address as its active peer address.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can make validation of a new peer address fail and observe which peer address the endpoint subsequently uses.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Additionally, receipt of packets with higher packet numbers from the legitimate peer address will trigger another connection migration.",
+      "line_start": 2789,
+      "line_end": 2791,
+      "condition": "The endpoint receives packets with higher packet numbers from the legitimate peer address after a spurious migration.",
+      "required_behavior": "The receipt must trigger another connection migration.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can deliver higher-numbered packets from the legitimate address and observe whether the endpoint enters connection migration processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This will cause the validation of the address of the spurious migration to be abandoned",
+      "line_start": 2791,
+      "line_end": 2793,
+      "condition": "Higher-numbered packets from the legitimate peer address trigger another connection migration while the spurious migration address is being validated.",
+      "required_behavior": "The endpoint must abandon validation of the address associated with the spurious migration.",
+      "forbidden_behavior": "The endpoint must not continue validating the spurious migration address after the legitimate-address migration is triggered.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The required state transition follows directly from the adjacent description and can be checked by observing whether validation of the spurious address remains active.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If an endpoint has no state about the last validated peer address, it MUST close the connection silently by discarding all connection state.",
+      "line_start": 2796,
+      "line_end": 2798,
+      "condition": "The endpoint has no state about the last validated peer address.",
+      "required_behavior": "The endpoint must silently close the connection and discard all connection state.",
+      "forbidden_behavior": "The endpoint must not retain the connection as active or emit a connection-close response as part of this silent closure.",
+      "error_behavior": "Close the connection silently by discarding all connection state.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can remove or omit last-validated-address state, induce the relevant failure path, and verify silent closure and complete state removal.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This results in new packets on the connection being handled generically.",
+      "line_start": 2798,
+      "line_end": 2799,
+      "condition": "The endpoint has silently closed the connection by discarding all connection state.",
+      "required_behavior": "Subsequent packets for the former connection must be handled generically rather than as packets belonging to retained connection state.",
+      "forbidden_behavior": "The endpoint must not process subsequent packets using discarded connection-specific state.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The behavior is a directly stated consequence of discarding all connection state and can be tested by sending another packet after closure.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For instance, an endpoint MAY send a Stateless Reset in response to any further incoming packets.",
+      "line_start": 2799,
+      "line_end": 2800,
+      "condition": "Further packets arrive after the endpoint has silently closed the connection and discarded its state.",
+      "required_behavior": "The implementation is permitted to send a Stateless Reset in response to those packets.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A conformance test can verify that sending a Stateless Reset in this condition is treated as permitted behavior rather than a protocol violation.",
+      "eligibility": "eligible"
+    }
+  ]
+}

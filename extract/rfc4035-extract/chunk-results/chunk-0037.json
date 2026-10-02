@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0037",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A security-aware resolver MUST be capable of being configured with at\n   least one trusted public key or DS RR and SHOULD be capable of being\n   configured with multiple trusted public keys or DS RRs.",
+      "line_start": 1163,
+      "line_end": 1165,
+      "condition": "For a security-aware resolver.",
+      "required_behavior": "MUST be capable of being configured with at least one trusted public key or DS RR.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The resolver configuration interface can be checked for support for at least one trusted public key or DS RR.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware resolver MUST be capable of being configured with at\n   least one trusted public key or DS RR and SHOULD be capable of being\n   configured with multiple trusted public keys or DS RRs.",
+      "line_start": 1163,
+      "line_end": 1165,
+      "condition": "For a security-aware resolver.",
+      "required_behavior": "SHOULD be capable of being configured with multiple trusted public keys or DS RRs.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Configuration handling can be checked for the recommended ability to retain multiple trusted public keys or DS RRs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Since a\n   security-aware resolver will not be able to validate signatures\n   without such a configured trust anchor, the resolver SHOULD have some\n   reasonably robust mechanism for obtaining such keys when it boots;\n   examples of such a mechanism would be some form of non-volatile\n   storage (such as a disk drive) or some form of trusted local network\n   configuration mechanism.",
+      "line_start": 1165,
+      "line_end": 1171,
+      "condition": "When a security-aware resolver boots.",
+      "required_behavior": "SHOULD have a reasonably robust mechanism for obtaining trust-anchor keys at boot.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Startup handling can be inspected for a mechanism that obtains trust-anchor keys, including its persistence or trusted configuration path. The source does not prescribe a specific mechanism or quantitative robustness threshold.",
+      "eligibility": "eligible"
+    }
+  ]
+}

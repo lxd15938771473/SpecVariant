@@ -1,0 +1,55 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0037",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "A NewReno sender is in congestion avoidance any time the congestion\n   window is at or above the slow start threshold and not in a recovery\n   period.",
+                             "line_start":  1019,
+                             "line_end":  1021,
+                             "condition":  "For a NewReno sender, whenever the congestion window is at or above the slow start threshold and the sender is not in a recovery period.",
+                             "required_behavior":  "The sender is in congestion avoidance.",
+                             "forbidden_behavior":  "The sender must not be treated as being outside congestion avoidance while both conditions hold.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can set the congestion window and slow start threshold, ensure recovery is inactive, and inspect the sender\u0027s congestion-control state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A sender in congestion avoidance uses an Additive Increase\n   Multiplicative Decrease (AIMD) approach that MUST limit the increase\n   to the congestion window to at most one maximum datagram size for\n   each congestion window that is acknowledged.",
+                             "line_start":  1023,
+                             "line_end":  1026,
+                             "condition":  "While a sender is in congestion avoidance, for each congestion window that is acknowledged.",
+                             "required_behavior":  "Limit the congestion-window increase to no more than one maximum datagram size.",
+                             "forbidden_behavior":  "The sender must not increase the congestion window by more than one maximum datagram size per acknowledged congestion window.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can acknowledge a congestion-window-sized amount and compare the resulting congestion-window increase with the maximum datagram size.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The sender exits congestion avoidance and enters a recovery period\n   when a packet is lost or when the ECN-CE count reported by its peer\n   increases.",
+                             "line_start":  1028,
+                             "line_end":  1030,
+                             "condition":  "When the sender is in congestion avoidance and a packet is lost.",
+                             "required_behavior":  "Exit congestion avoidance and enter a recovery period.",
+                             "forbidden_behavior":  "The sender must not remain in congestion avoidance without entering recovery after detecting the loss.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can induce packet loss during congestion avoidance and observe the resulting state transition.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The sender exits congestion avoidance and enters a recovery period\n   when a packet is lost or when the ECN-CE count reported by its peer\n   increases.",
+                             "line_start":  1028,
+                             "line_end":  1030,
+                             "condition":  "When the sender is in congestion avoidance and the ECN-CE count reported by its peer increases.",
+                             "required_behavior":  "Exit congestion avoidance and enter a recovery period.",
+                             "forbidden_behavior":  "The sender must not remain in congestion avoidance without entering recovery after observing the increased peer-reported ECN-CE count.",
+                             "error_behavior":  "No error behavior is specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can increase the peer-reported ECN-CE count during congestion avoidance and observe the resulting state transition.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

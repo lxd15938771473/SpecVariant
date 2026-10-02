@@ -1,0 +1,139 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0135",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A client MUST accept and process at most one Retry packet for each\n   connection attempt.  After the client has received and processed an\n   Initial or Retry packet from the server, it MUST discard any\n   subsequent Retry packets that it receives.",
+      "line_start": 5402,
+      "line_end": 5405,
+      "condition": "For each connection attempt.",
+      "required_behavior": "The client accepts and processes no more than one Retry packet.",
+      "forbidden_behavior": "The client must not accept and process more than one Retry packet for the same connection attempt.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can send multiple Retry packets during one connection attempt and count how many the client accepts and processes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A client MUST accept and process at most one Retry packet for each\n   connection attempt.  After the client has received and processed an\n   Initial or Retry packet from the server, it MUST discard any\n   subsequent Retry packets that it receives.",
+      "line_start": 5402,
+      "line_end": 5405,
+      "condition": "After the client has received and processed an Initial or Retry packet from the server.",
+      "required_behavior": "The client discards every subsequently received Retry packet.",
+      "forbidden_behavior": "The client must not process a subsequent Retry packet after processing an Initial or Retry packet from the server.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A packet-sequence test can establish the triggering state and verify that every later Retry packet is discarded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Clients MUST discard Retry packets that have a Retry Integrity Tag\n   that cannot be validated; see Section 5.8 of [QUIC-TLS].  This\n   diminishes an attacker's ability to inject a Retry packet and\n   protects against accidental corruption of Retry packets.  A client\n   MUST discard a Retry packet with a zero-length Retry Token field.",
+      "line_start": 5407,
+      "line_end": 5411,
+      "condition": "A received Retry packet has a Retry Integrity Tag that cannot be validated.",
+      "required_behavior": "",
+      "forbidden_behavior": "The client must not accept or process the Retry packet.",
+      "error_behavior": "The client discards the Retry packet.",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can supply a Retry packet with an invalid integrity tag and observe whether the client discards it.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Clients MUST discard Retry packets that have a Retry Integrity Tag\n   that cannot be validated; see Section 5.8 of [QUIC-TLS].  This\n   diminishes an attacker's ability to inject a Retry packet and\n   protects against accidental corruption of Retry packets.  A client\n   MUST discard a Retry packet with a zero-length Retry Token field.",
+      "line_start": 5407,
+      "line_end": 5411,
+      "condition": "A received Retry packet has a zero-length Retry Token field.",
+      "required_behavior": "",
+      "forbidden_behavior": "The client must not accept or process the Retry packet.",
+      "error_behavior": "The client discards the Retry packet.",
+      "check_type": "error_handling",
+      "why_checkable": "A test can supply a Retry packet whose Retry Token field is empty and verify that it is discarded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   The client responds to a Retry packet with an Initial packet that\n   includes the provided Retry token to continue connection\n   establishment.",
+      "line_start": 5413,
+      "line_end": 5415,
+      "condition": "The client processes a Retry packet and continues connection establishment.",
+      "required_behavior": "The client responds with an Initial packet that includes the Retry token provided by the Retry packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can deliver a Retry packet and inspect the client's response packet type and included token.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A client sets the Destination Connection ID field of this Initial\n   packet to the value from the Source Connection ID field in the Retry\n   packet.  Changing the Destination Connection ID field also results in\n   a change to the keys used to protect the Initial packet.  It also\n   sets the Token field to the token provided in the Retry packet.  The\n   client MUST NOT change the Source Connection ID because the server\n   could include the connection ID as part of its token validation\n   logic; see Section 8.1.4.",
+      "line_start": 5417,
+      "line_end": 5424,
+      "condition": "The client constructs the Initial packet sent in response to a Retry packet.",
+      "required_behavior": "The Initial packet's Destination Connection ID equals the Source Connection ID from the Retry packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The two connection ID fields can be captured and compared for exact equality.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A client sets the Destination Connection ID field of this Initial\n   packet to the value from the Source Connection ID field in the Retry\n   packet.  Changing the Destination Connection ID field also results in\n   a change to the keys used to protect the Initial packet.  It also\n   sets the Token field to the token provided in the Retry packet.  The\n   client MUST NOT change the Source Connection ID because the server\n   could include the connection ID as part of its token validation\n   logic; see Section 8.1.4.",
+      "line_start": 5417,
+      "line_end": 5424,
+      "condition": "The Destination Connection ID is changed for the Initial packet sent after Retry.",
+      "required_behavior": "The client changes the keys used to protect the Initial packet consistently with the changed Destination Connection ID.",
+      "forbidden_behavior": "The client must not protect the post-Retry Initial packet using keys derived from the unchanged Destination Connection ID.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can verify that the post-Retry Initial packet is protected with keys corresponding to its changed Destination Connection ID.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A client sets the Destination Connection ID field of this Initial\n   packet to the value from the Source Connection ID field in the Retry\n   packet.  Changing the Destination Connection ID field also results in\n   a change to the keys used to protect the Initial packet.  It also\n   sets the Token field to the token provided in the Retry packet.  The\n   client MUST NOT change the Source Connection ID because the server\n   could include the connection ID as part of its token validation\n   logic; see Section 8.1.4.",
+      "line_start": 5417,
+      "line_end": 5424,
+      "condition": "The client constructs the Initial packet sent in response to a Retry packet.",
+      "required_behavior": "The client sets the Initial packet's Token field to the token provided in the Retry packet.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The Retry token and the Token field of the responsive Initial packet can be compared byte for byte.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A client sets the Destination Connection ID field of this Initial\n   packet to the value from the Source Connection ID field in the Retry\n   packet.  Changing the Destination Connection ID field also results in\n   a change to the keys used to protect the Initial packet.  It also\n   sets the Token field to the token provided in the Retry packet.  The\n   client MUST NOT change the Source Connection ID because the server\n   could include the connection ID as part of its token validation\n   logic; see Section 8.1.4.",
+      "line_start": 5417,
+      "line_end": 5424,
+      "condition": "The client constructs the Initial packet sent in response to a Retry packet.",
+      "required_behavior": "The client preserves the Source Connection ID used before receiving the Retry packet.",
+      "forbidden_behavior": "The client must not change the Source Connection ID in response to the Retry packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A packet trace can compare the client's Source Connection ID before and after processing Retry.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A Retry packet does not include a packet number and cannot be\n   explicitly acknowledged by a client.",
+      "line_start": 5426,
+      "line_end": 5427,
+      "condition": "When encoding or parsing a Retry packet.",
+      "required_behavior": "The Retry packet has no packet number.",
+      "forbidden_behavior": "An implementation must not include a packet number in a Retry packet.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded fields of a Retry packet can be inspected for absence of a packet number.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A Retry packet does not include a packet number and cannot be\n   explicitly acknowledged by a client.",
+      "line_start": 5426,
+      "line_end": 5427,
+      "condition": "After a client receives a Retry packet.",
+      "required_behavior": "",
+      "forbidden_behavior": "The client must not explicitly acknowledge the Retry packet.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can inspect packets sent after Retry and determine whether the client explicitly acknowledges it.",
+      "eligibility": "eligible"
+    }
+  ]
+}

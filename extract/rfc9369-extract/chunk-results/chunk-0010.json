@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0010",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "secret =\n     0xc4dd2484d681aefa4ff4d69c2c20299984a765a5d3c31982f38fc74162155e9f",
+      "line_start": 181,
+      "line_end": 182,
+      "condition": "when obtaining the secret for the version 2 Retry Integrity Tag",
+      "required_behavior": "use the value 0xc4dd2484d681aefa4ff4d69c2c20299984a765a5d3c31982f38fc74162155e9f",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The Retry integrity secret can be compared byte-for-byte with the specified constant.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "key = 0x8fb4b01b56ac48e260fbcbcead7ccc92",
+      "line_start": 183,
+      "line_end": 183,
+      "condition": "when computing the version 2 Retry Integrity Tag",
+      "required_behavior": "use the key value 0x8fb4b01b56ac48e260fbcbcead7ccc92",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The Retry integrity key can be compared byte-for-byte with the specified constant.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "nonce = 0xd86969bc2d7c6d9990efb04a",
+      "line_start": 184,
+      "line_end": 184,
+      "condition": "when computing the version 2 Retry Integrity Tag",
+      "required_behavior": "use the nonce value 0xd86969bc2d7c6d9990efb04a",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The Retry integrity nonce can be compared byte-for-byte with the specified constant.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The secret is the sha256sum of \"QUICv2 retry secret\".",
+      "line_start": 186,
+      "line_end": 186,
+      "condition": "when deriving the secret for the version 2 Retry Integrity Tag",
+      "required_behavior": "compute the secret as the SHA-256 digest of the string \"QUICv2 retry secret\"",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A derivation test can hash the specified input and compare the resulting secret.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The key and\n   nonce are derived from this secret with the labels \"quicv2 key\" and\n   \"quicv2 iv\", respectively.",
+      "line_start": 186,
+      "line_end": 188,
+      "condition": "when deriving the key for the version 2 Retry Integrity Tag",
+      "required_behavior": "derive the key from the specified secret with the label \"quicv2 key\"",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A derivation test can supply the specified secret and verify the key produced with the required label.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The key and\n   nonce are derived from this secret with the labels \"quicv2 key\" and\n   \"quicv2 iv\", respectively.",
+      "line_start": 186,
+      "line_end": 188,
+      "condition": "when deriving the nonce for the version 2 Retry Integrity Tag",
+      "required_behavior": "derive the nonce from the specified secret with the label \"quicv2 iv\"",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A derivation test can supply the specified secret and verify the nonce produced with the required label.",
+      "eligibility": "eligible"
+    }
+  ]
+}

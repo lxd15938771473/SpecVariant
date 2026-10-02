@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0190",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Clients that are able to present a spoofed source address on a packet\n   can cause a server to send a Version Negotiation packet\n   (Section 17.2.1) to that address.",
+      "line_start": 7465,
+      "line_end": 7467,
+      "condition": "A client presents a spoofed source address on a packet that causes Version Negotiation.",
+      "required_behavior": "The server's Version Negotiation packet is sent to the packet's presented source address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A test can inject a packet bearing a controlled source address and verify the destination of the resulting Version Negotiation packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   client controls from the resulting datagram.  The first byte of this\n   packet is not under client control and the next four bytes are zero,",
+      "line_start": 7471,
+      "line_end": 7472,
+      "condition": "A Version Negotiation packet is produced as the resulting datagram.",
+      "required_behavior": "The first byte is generated independently of client-controlled connection ID data.",
+      "forbidden_behavior": "The client controls the first byte of the packet.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Tests can vary all client-controlled input fields and verify that the first byte cannot be selected through those inputs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   client controls from the resulting datagram.  The first byte of this\n   packet is not under client control and the next four bytes are zero,",
+      "line_start": 7471,
+      "line_end": 7472,
+      "condition": "A Version Negotiation packet is produced as the resulting datagram.",
+      "required_behavior": "Bytes two through five are zero.",
+      "forbidden_behavior": "Any of the four bytes immediately following the first byte is nonzero.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The four-byte field immediately after the first packet byte can be inspected and compared with zero.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   packet is not under client control and the next four bytes are zero,\n   but the client is able to control up to 512 bytes starting from the\n   fifth byte.",
+      "line_start": 7472,
+      "line_end": 7474,
+      "condition": "A Version Negotiation packet is generated from a packet of an unknown version with client-selected connection ID fields.",
+      "required_behavior": "The client-controlled region is bounded to at most 512 bytes and begins at the fifth byte.",
+      "forbidden_behavior": "More than 512 bytes starting from the fifth byte are client-controlled.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Boundary tests can vary client-selected connection IDs and measure the offset and maximum extent of bytes reflected into the resulting datagram.",
+      "eligibility": "eligible"
+    }
+  ]
+}

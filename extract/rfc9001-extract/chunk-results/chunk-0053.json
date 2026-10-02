@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0053",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "All of the security considerations that apply to TLS also apply to\n   the use of TLS in QUIC.",
+      "line_start": 1985,
+      "line_end": 1986,
+      "condition": "When integrating TLS with QUIC.",
+      "required_behavior": "Apply the security considerations applicable to TLS.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The statement incorporates an unenumerated set of considerations from all of TLS 1.3 and its appendices; this chunk provides no atomic behavior, condition, or expected result for an implementation test.",
+      "eligibility": "exclude"
+    }
+  ]
+}

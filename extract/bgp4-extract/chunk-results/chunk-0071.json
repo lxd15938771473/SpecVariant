@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0071",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The parameter MinRouteAdvertisementIntervalTimer determines the\n   minimum amount of time that must elapse between an advertisement\n   and/or withdrawal of routes to a particular destination by a BGP\n   speaker to a peer.  This rate limiting procedure applies on a per-\n   destination basis, although the value of\n   MinRouteAdvertisementIntervalTimer is set on a per BGP peer basis.",
+      "line_start": 4715,
+      "line_end": 4720,
+      "condition": "Applying MinRouteAdvertisementIntervalTimer to advertisements and/or withdrawals sent to a peer.",
+      "required_behavior": "Apply the rate limiting procedure on a per-destination basis.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The destination scope of advertisement and withdrawal rate limiting can be inspected and exercised.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The parameter MinRouteAdvertisementIntervalTimer determines the\n   minimum amount of time that must elapse between an advertisement\n   and/or withdrawal of routes to a particular destination by a BGP\n   speaker to a peer.  This rate limiting procedure applies on a per-\n   destination basis, although the value of\n   MinRouteAdvertisementIntervalTimer is set on a per BGP peer basis.",
+      "line_start": 4715,
+      "line_end": 4720,
+      "condition": "Configuring MinRouteAdvertisementIntervalTimer.",
+      "required_behavior": "Set the timer value on a per-BGP-peer basis.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Timer configuration and storage can be checked for peer-specific values.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Two UPDATE messages sent by a BGP speaker to a peer that advertise\n   feasible routes and/or withdrawal of unfeasible routes to some common\n   set of destinations MUST be separated by at least\n   MinRouteAdvertisementIntervalTimer.  This can only be achieved by\n   keeping a separate timer for each common set of destinations.  This\n   would be unwarranted overhead.  Any technique that ensures that the\n   interval between two UPDATE messages sent from a BGP speaker to a\n   peer that advertise feasible routes and/or withdrawal of unfeasible\n   routes to some common set of destinations will be at least\n   MinRouteAdvertisementIntervalTimer, and will also ensure that a\n   constant upper bound on the interval is acceptable.",
+      "line_start": 4722,
+      "line_end": 4732,
+      "condition": "Two UPDATE messages from a BGP speaker to a peer advertise feasible routes and/or withdraw unfeasible routes to a common set of destinations.",
+      "required_behavior": "The messages MUST be separated by at least MinRouteAdvertisementIntervalTimer.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Send timestamps for UPDATE messages with overlapping destinations can be compared against the peer timer value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Two UPDATE messages sent by a BGP speaker to a peer that advertise\n   feasible routes and/or withdrawal of unfeasible routes to some common\n   set of destinations MUST be separated by at least\n   MinRouteAdvertisementIntervalTimer.  This can only be achieved by\n   keeping a separate timer for each common set of destinations.  This\n   would be unwarranted overhead.  Any technique that ensures that the\n   interval between two UPDATE messages sent from a BGP speaker to a\n   peer that advertise feasible routes and/or withdrawal of unfeasible\n   routes to some common set of destinations will be at least\n   MinRouteAdvertisementIntervalTimer, and will also ensure that a\n   constant upper bound on the interval is acceptable.",
+      "line_start": 4722,
+      "line_end": 4732,
+      "condition": "Using a technique to enforce the interval between UPDATE messages to a peer advertising or withdrawing routes to common destinations.",
+      "required_behavior": "An acceptable technique also ensures a constant upper bound on the interval.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The scheduling algorithm can be checked for a finite constant bound on the interval between pending advertisements.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Since fast convergence is needed within an autonomous system, either\n   (a) the MinRouteAdvertisementIntervalTimer used for internal peers\n   SHOULD be shorter than the MinRouteAdvertisementIntervalTimer used\n   for external peers, or (b) the procedure describe in this section\n   SHOULD NOT apply to routes sent to internal peers.",
+      "line_start": 4734,
+      "line_end": 4738,
+      "condition": "Handling routes sent to internal peers.",
+      "required_behavior": "Either the MinRouteAdvertisementIntervalTimer for internal peers SHOULD be shorter than for external peers, or this rate limiting procedure SHOULD NOT apply to routes sent to internal peers.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Internal and external timer values and the internal-peer rate-limiting bypass can be inspected to evaluate the stated alternatives.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This procedure does not limit the rate of route selection, but only\n   the rate of route advertisement.  If new routes are selected multiple\n   times while awaiting the expiration of\n   MinRouteAdvertisementIntervalTimer, the last route selected SHALL be\n   advertised at the end of MinRouteAdvertisementIntervalTimer.",
+      "line_start": 4740,
+      "line_end": 4744,
+      "condition": "Applying the route advertisement rate limiting procedure.",
+      "required_behavior": "",
+      "forbidden_behavior": "Limit the rate of route selection by this procedure.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Route selection can be exercised while the advertisement timer is pending to check that this procedure does not throttle selection.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This procedure does not limit the rate of route selection, but only\n   the rate of route advertisement.  If new routes are selected multiple\n   times while awaiting the expiration of\n   MinRouteAdvertisementIntervalTimer, the last route selected SHALL be\n   advertised at the end of MinRouteAdvertisementIntervalTimer.",
+      "line_start": 4740,
+      "line_end": 4744,
+      "condition": "New routes are selected multiple times while awaiting expiration of MinRouteAdvertisementIntervalTimer.",
+      "required_behavior": "The last route selected SHALL be advertised at the end of MinRouteAdvertisementIntervalTimer.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Multiple selections during a timer interval followed by expiry allow checking the advertised route and its emission time.",
+      "eligibility": "eligible"
+    }
+  ]
+}

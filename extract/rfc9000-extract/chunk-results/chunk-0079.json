@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0079",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   The draining state is entered once an endpoint receives a\n   CONNECTION_CLOSE frame, which indicates that its peer is closing or\n   draining.  While otherwise identical to the closing state, an\n   endpoint in the draining state MUST NOT send any packets.  Retaining",
+      "line_start": 3269,
+      "line_end": 3272,
+      "condition": "An endpoint receives a CONNECTION_CLOSE frame.",
+      "required_behavior": "Enter the draining state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-machine test can deliver a CONNECTION_CLOSE frame and verify that the endpoint transitions to the draining state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   draining.  While otherwise identical to the closing state, an\n   endpoint in the draining state MUST NOT send any packets.  Retaining",
+      "line_start": 3271,
+      "line_end": 3272,
+      "condition": "The endpoint is in the draining state.",
+      "required_behavior": "",
+      "forbidden_behavior": "Sending any packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet output can be monitored after entry into the draining state to verify that no packets are transmitted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint that receives a CONNECTION_CLOSE frame MAY send a single\n   packet containing a CONNECTION_CLOSE frame before entering the\n   draining state, using a NO_ERROR code if appropriate.  An endpoint",
+      "line_start": 3276,
+      "line_end": 3278,
+      "condition": "An endpoint has received a CONNECTION_CLOSE frame but has not yet entered the draining state.",
+      "required_behavior": "Permit sending at most one packet, and require that packet to contain a CONNECTION_CLOSE frame if sent.",
+      "forbidden_behavior": "Sending more than one packet under this pre-draining exception or sending a packet under the exception that does not contain a CONNECTION_CLOSE frame.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A test can count packets sent between receipt of CONNECTION_CLOSE and entry into draining, and inspect the permitted packet for a CONNECTION_CLOSE frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   packet containing a CONNECTION_CLOSE frame before entering the\n   draining state, using a NO_ERROR code if appropriate.  An endpoint\n   MUST NOT send further packets.  Doing so could result in a constant",
+      "line_start": 3277,
+      "line_end": 3279,
+      "condition": "An endpoint has sent the optional single CONNECTION_CLOSE packet after receiving a CONNECTION_CLOSE frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "Sending any further packets.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet output can be monitored after the optional response packet to verify that no additional packets are sent.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MAY enter the draining state from the closing state if it\n   receives a CONNECTION_CLOSE frame, which indicates that the peer is\n   also closing or draining.  In this case, the draining state ends when",
+      "line_start": 3283,
+      "line_end": 3285,
+      "condition": "An endpoint in the closing state receives a CONNECTION_CLOSE frame.",
+      "required_behavior": "Permit a transition from the closing state to the draining state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-machine test can inject CONNECTION_CLOSE while the endpoint is closing and verify that transition to draining is accepted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   also closing or draining.  In this case, the draining state ends when\n   the closing state would have ended.  In other words, the endpoint\n   uses the same end time but ceases transmission of any packets on this\n   connection.",
+      "line_start": 3285,
+      "line_end": 3288,
+      "condition": "An endpoint enters the draining state from the closing state after receiving a CONNECTION_CLOSE frame.",
+      "required_behavior": "End the draining state at the same time the closing state would have ended.",
+      "forbidden_behavior": "Changing the previously applicable closing-state end time because of the transition to draining.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A timed state-transition test can record the closing-state end time, trigger the transition to draining, and verify that the end time remains unchanged.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   the closing state would have ended.  In other words, the endpoint\n   uses the same end time but ceases transmission of any packets on this\n   connection.",
+      "line_start": 3286,
+      "line_end": 3288,
+      "condition": "An endpoint enters the draining state from the closing state.",
+      "required_behavior": "Cease transmission of packets on the connection.",
+      "forbidden_behavior": "Transmitting any packet on the connection after the transition to draining.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet output can be observed following the closing-to-draining transition to verify that transmission ceases.",
+      "eligibility": "eligible"
+    }
+  ]
+}

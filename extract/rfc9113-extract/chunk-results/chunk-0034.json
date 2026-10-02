@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0034",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "      priority signaling scheme from RFC 7540 was not successful.  Using\n      the simpler signaling in [HTTP-PRIORITY] is recommended.",
+      "line_start": 4136,
+      "line_end": 4137,
+      "condition": "When selecting a priority signaling scheme for HTTP/2.",
+      "required_behavior": "Use the simpler signaling defined in [HTTP-PRIORITY].",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "An implementation's selected priority signaling mechanism can be inspected to determine whether it uses the recommended scheme.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  The HTTP/1.1 Upgrade mechanism is deprecated and no longer\n      specified in this document.  It was never widely deployed, with\n      plaintext HTTP/2 users choosing to use the prior-knowledge\n      implementation instead.",
+      "line_start": 4139,
+      "line_end": 4142,
+      "condition": "When establishing plaintext HTTP/2 connections.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The passage identifies prior knowledge as the deployed alternative, but does not clearly require implementations to use it or prohibit the deprecated Upgrade mechanism.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   *  Validation for field names and values has been narrowed.  The\n      validation that is mandatory for intermediaries is precisely\n      defined, and error reporting for requests has been amended to\n      encourage sending 400-series status codes.",
+      "line_start": 4144,
+      "line_end": 4147,
+      "condition": "When an intermediary validates field names or values or reports invalid requests.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "error_handling",
+      "why_checkable": "The passage says validation is mandatory and encourages 400-series responses, but does not state the validation rules or a definite error response requirement within this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   *  The ranges of codepoints for settings and frame types that were\n      reserved for Experimental Use are now available for general use.",
+      "line_start": 4149,
+      "line_end": 4150,
+      "condition": "When processing settings or frame-type codepoints formerly reserved for Experimental Use.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Availability of the codepoints could affect validation, but the applicable ranges and required processing behavior are absent from this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   *  Connection-specific header fields -- which are prohibited -- are\n      more precisely and comprehensively identified.",
+      "line_start": 4152,
+      "line_end": 4153,
+      "condition": "When processing HTTP/2 header fields.",
+      "required_behavior": "",
+      "forbidden_behavior": "Permit connection-specific header fields.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Header-field processing can be tested with connection-specific fields to verify that the implementation does not permit them.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  Host and \":authority\" are no longer permitted to disagree.",
+      "line_start": 4155,
+      "line_end": 4155,
+      "condition": "When both Host and the \":authority\" pseudo-header are present.",
+      "required_behavior": "Ensure that Host and \":authority\" agree.",
+      "forbidden_behavior": "Permit Host and \":authority\" to disagree.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "A request containing both values can be constructed, and implementation behavior can be checked when the values disagree.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   *  Rules for sending Dynamic Table Size Update instructions after\n      changes in settings have been clarified in Section 4.3.1.",
+      "line_start": 4157,
+      "line_end": 4158,
+      "condition": "After settings affecting the dynamic table size change.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The passage indicates that temporal sending rules exist, but does not state those rules within this chunk.",
+      "eligibility": "exclude"
+    }
+  ]
+}

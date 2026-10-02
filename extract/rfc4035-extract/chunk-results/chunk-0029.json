@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0029",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The resolver side of a security-aware recursive name server MUST set\n   the DO bit when sending requests, regardless of the state of the DO\n   bit in the initiating request received by the name server side.",
+      "line_start": 948,
+      "line_end": 950,
+      "condition": "The resolver side of a security-aware recursive name server sends requests, regardless of the DO bit state in the initiating request received by its name server side.",
+      "required_behavior": "The resolver side MUST set the DO bit in the outgoing requests.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Inspect outgoing requests for a set DO bit with each possible initiating-request DO bit state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If\n   the DO bit in an initiating query is not set, the name server side\n   MUST strip any authenticating DNSSEC RRs from the response but MUST\n   NOT strip any DNSSEC RR types that the initiating query explicitly\n   requested.",
+      "line_start": 950,
+      "line_end": 954,
+      "condition": "The DO bit in an initiating query received by a security-aware recursive name server is not set, and an authenticating DNSSEC RR in the response is not of a type explicitly requested by that query.",
+      "required_behavior": "The name server side MUST strip the authenticating DNSSEC RR from the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Inspect response filtering for queries with DO unset and authenticating DNSSEC records of types not explicitly requested.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If\n   the DO bit in an initiating query is not set, the name server side\n   MUST strip any authenticating DNSSEC RRs from the response but MUST\n   NOT strip any DNSSEC RR types that the initiating query explicitly\n   requested.",
+      "line_start": 950,
+      "line_end": 954,
+      "condition": "The DO bit in an initiating query received by a security-aware recursive name server is not set, and the query explicitly requests a DNSSEC RR type.",
+      "required_behavior": "",
+      "forbidden_behavior": "The name server side MUST NOT strip DNSSEC RRs of the explicitly requested type from the response.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Inspect responses to queries with DO unset that explicitly request a DNSSEC RR type and verify that response filtering preserves those records.",
+      "eligibility": "eligible"
+    }
+  ]
+}

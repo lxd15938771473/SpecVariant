@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0028",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "3.3.7. MINFO RDATA format (EXPERIMENTAL)\n\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                    RMAILBX                    /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                    EMAILBX                    /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+",
+      "line_start": 870,
+      "line_end": 876,
+      "condition": "When encoding or decoding the experimental MINFO RDATA format.",
+      "required_behavior": "Represent the RDATA as an RMAILBX field followed by an EMAILBX field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The serializer and parser field layout can be checked for the two fields and their order.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "RMAILBX         A <domain-name> which specifies a mailbox which is\n                responsible for the mailing list or mailbox.",
+      "line_start": 880,
+      "line_end": 881,
+      "condition": "When encoding or decoding RMAILBX in an experimental MINFO record.",
+      "required_behavior": "Encode and interpret RMAILBX as a domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field codec can be inspected and exercised with domain-name encodings.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "RMAILBX         A <domain-name> which specifies a mailbox which is\n                responsible for the mailing list or mailbox.  If this\n                domain name names the root, the owner of the MINFO RR is\n                responsible for itself.",
+      "line_start": 880,
+      "line_end": 883,
+      "condition": "When interpreting an experimental MINFO record whose RMAILBX does not name the root.",
+      "required_behavior": "Interpret RMAILBX as the mailbox responsible for the mailing list or mailbox.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The RMAILBX value can be compared with the responsible-mailbox value exposed to consumers.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "RMAILBX         A <domain-name> which specifies a mailbox which is\n                responsible for the mailing list or mailbox.  If this\n                domain name names the root, the owner of the MINFO RR is\n                responsible for itself.",
+      "line_start": 880,
+      "line_end": 883,
+      "condition": "When RMAILBX in an experimental MINFO record names the root.",
+      "required_behavior": "Interpret the owner of the MINFO RR as responsible for itself.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A root-valued RMAILBX supplies a concrete input for checking the responsible-mailbox interpretation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "EMAILBX         A <domain-name> which specifies a mailbox which is to\n                receive error messages related to the mailing list or\n                mailbox specified by the owner of the MINFO RR (similar\n                to the ERRORS-TO: field which has been proposed).",
+      "line_start": 889,
+      "line_end": 892,
+      "condition": "When encoding or decoding EMAILBX in an experimental MINFO record.",
+      "required_behavior": "Encode and interpret EMAILBX as a domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The EMAILBX codec can be inspected and exercised with domain-name encodings.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "EMAILBX         A <domain-name> which specifies a mailbox which is to\n                receive error messages related to the mailing list or\n                mailbox specified by the owner of the MINFO RR (similar\n                to the ERRORS-TO: field which has been proposed).  If\n                this domain name names the root, errors should be\n                returned to the sender of the message.",
+      "line_start": 889,
+      "line_end": 894,
+      "condition": "When using an experimental MINFO record whose EMAILBX does not name the root to determine where related error messages are sent.",
+      "required_behavior": "Use the mailbox specified by EMAILBX as the recipient of error messages concerning the mailing list or mailbox named by the MINFO RR owner.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A non-root EMAILBX and an error concerning the owner identify a concrete recipient-selection check.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "EMAILBX         A <domain-name> which specifies a mailbox which is to\n                receive error messages related to the mailing list or\n                mailbox specified by the owner of the MINFO RR (similar\n                to the ERRORS-TO: field which has been proposed).  If\n                this domain name names the root, errors should be\n                returned to the sender of the message.",
+      "line_start": 889,
+      "line_end": 894,
+      "condition": "When EMAILBX in an experimental MINFO record names the root and an error concerns the mailing list or mailbox named by the RR owner.",
+      "required_behavior": "Errors should be returned to the sender of the message; this is advisory behavior.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A root-valued EMAILBX gives a concrete case for checking the recommended error recipient.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "MINFO records cause no additional section processing.",
+      "line_start": 896,
+      "line_end": 896,
+      "condition": "When processing an experimental MINFO record.",
+      "required_behavior": "",
+      "forbidden_behavior": "Perform additional section processing as a consequence of the MINFO record.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Response construction can be checked for additional-section processing triggered by MINFO.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Although these\nrecords can be associated with a simple mailbox, they are usually used\nwith a mailing list.",
+      "line_start": 896,
+      "line_end": 898,
+      "condition": "When associating an experimental MINFO record with an owner.",
+      "required_behavior": "The record may be associated with a simple mailbox.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A simple-mailbox owner provides a concrete case for checking the permitted record association.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0037",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A client that supports only this version of QUIC MUST abandon the current connection attempt if it receives a Version Negotiation packet, with the following two exceptions. A client MUST discard any Version Negotiation packet if it has received and successfully processed any other packet, including an earlier Version Negotiation packet. A client MUST discard a Version Negotiation packet that lists the QUIC version selected by the client.",
+      "line_start": 1671,
+      "line_end": 1677,
+      "condition": "A client supports only this version of QUIC, receives a Version Negotiation packet, has not received and successfully processed any other packet, and the packet does not list the QUIC version selected by the client.",
+      "required_behavior": "Abandon the current connection attempt.",
+      "forbidden_behavior": "Continue the current connection attempt.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can deliver a Version Negotiation packet to a single-version client before any other packet is successfully processed, with the client's selected version absent, and observe whether the connection attempt is abandoned.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A client MUST discard any Version Negotiation packet if it has received and successfully processed any other packet, including an earlier Version Negotiation packet.",
+      "line_start": 1673,
+      "line_end": 1676,
+      "condition": "A client receives a Version Negotiation packet after it has received and successfully processed any other packet, including an earlier Version Negotiation packet.",
+      "required_behavior": "Discard the received Version Negotiation packet.",
+      "forbidden_behavior": "Process or act upon the received Version Negotiation packet.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet-processing state and the handling of a subsequently received Version Negotiation packet can be observed in a controlled packet sequence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A client MUST discard a Version Negotiation packet that lists the QUIC version selected by the client.",
+      "line_start": 1676,
+      "line_end": 1677,
+      "condition": "A client receives a Version Negotiation packet whose version list includes the QUIC version selected by that client.",
+      "required_behavior": "Discard the Version Negotiation packet.",
+      "forbidden_behavior": "Process or act upon the Version Negotiation packet as a valid negotiation response.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A crafted Version Negotiation packet can include the client's selected version, and the implementation's decision to discard or process it can be observed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0007",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The shared database holds domain space data for the local name server\nand resolver.",
+      "line_start": 325,
+      "line_end": 326,
+      "condition": "When the local name server and resolver use the described shared-database configuration.",
+      "required_behavior": "The shared database holds domain-space data for both the local name server and the resolver.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The selected configuration can be inspected to establish that both components obtain domain-space data from the shared database.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The structure of the domain data and the necessity for\nsynchronization between name servers and resolvers imply the general\ncharacteristics of this database, but the actual format is up to the\nlocal implementor.",
+      "line_start": 329,
+      "line_end": 332,
+      "condition": "When implementing the shared database for the local name server and resolver.",
+      "required_behavior": "The implementor may choose the actual format of the shared database.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The database representation is an inspectable implementation choice; this permission does not require a particular representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The structure of the domain data and the necessity for\nsynchronization between name servers and resolvers imply the general\ncharacteristics of this database, but the actual format is up to the\nlocal implementor.",
+      "line_start": 329,
+      "line_end": 332,
+      "condition": "When name servers and resolvers share domain data.",
+      "required_behavior": "Synchronize the domain data used by the name server and resolver.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The passage mentions a necessity for synchronization but does not specify its invariant, timing, or mechanism; it does not support a definite implementation check in this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "Information flow can also be tailored so that a group of hosts act\ntogether to optimize activities.  Sometimes this is done to offload less\ncapable hosts so that they do not have to implement a full resolver.\nThis can be appropriate for PCs or hosts which want to minimize the\namount of new network code which is required.  This scheme can also\nallow a group of hosts can share a small number of caches rather than\nmaintaining a large number of separate caches, on the premise that the\ncentralized caches will have a higher hit ratio.  In either case,\nresolvers are replaced with stub resolvers which act as front ends to\nresolvers located in a recursive server in one or more name servers\nknown to perform that service:",
+      "line_start": 343,
+      "line_end": 353,
+      "condition": "When a group of hosts uses the described resolver-offloading configuration.",
+      "required_behavior": "A host may use a stub resolver backed by a recursive server instead of implementing a full resolver locally.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The host resolver role and its use of a remote recursive service can be inspected; choosing this configuration is optional.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This scheme can also\nallow a group of hosts can share a small number of caches rather than\nmaintaining a large number of separate caches, on the premise that the\ncentralized caches will have a higher hit ratio.  In either case,\nresolvers are replaced with stub resolvers which act as front ends to\nresolvers located in a recursive server in one or more name servers\nknown to perform that service:",
+      "line_start": 347,
+      "line_end": 353,
+      "condition": "When a group of hosts uses the described stub-resolver and recursive-server scheme.",
+      "required_behavior": "The hosts may share caches instead of each maintaining a separate cache.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Cache ownership and sharing across the group can be inspected; the passage permits this architecture without imposing a numeric cache-count bound.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Information flow can also be tailored so that a group of hosts act\ntogether to optimize activities.  Sometimes this is done to offload less\ncapable hosts so that they do not have to implement a full resolver.\nThis can be appropriate for PCs or hosts which want to minimize the\namount of new network code which is required.  This scheme can also\nallow a group of hosts can share a small number of caches rather than\nmaintaining a large number of separate caches, on the premise that the\ncentralized caches will have a higher hit ratio.  In either case,\nresolvers are replaced with stub resolvers which act as front ends to\nresolvers located in a recursive server in one or more name servers\nknown to perform that service:",
+      "line_start": 343,
+      "line_end": 353,
+      "condition": "When full resolvers are replaced with stub resolvers for either offloading or cache sharing.",
+      "required_behavior": "The stub resolvers act as front ends to resolvers in recursive servers in one or more name servers known to perform recursive resolution.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Stub delegation and the configured upstream servers can be inspected to establish that the upstreams are known recursive-service providers.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Information flow can also be tailored so that a group of hosts act\ntogether to optimize activities.  Sometimes this is done to offload less\ncapable hosts so that they do not have to implement a full resolver.\nThis can be appropriate for PCs or hosts which want to minimize the\namount of new network code which is required.  This scheme can also\nallow a group of hosts can share a small number of caches rather than\nmaintaining a large number of separate caches, on the premise that the\ncentralized caches will have a higher hit ratio.  In either case,\nresolvers are replaced with stub resolvers which act as front ends to\nresolvers located in a recursive server in one or more name servers\nknown to perform that service:\n\n                   Local Hosts                     |  Foreign\n                                                   |\n    +---------+                                    |\n    |         | responses                          |\n    | Stub    |<--------------------+              |\n    | Resolver|                     |              |\n    |         |----------------+    |              |\n    +---------+ recursive      |    |              |\n                queries        |    |              |\n                               V    |              |\n    +---------+ recursive     +----------+         |  +--------+\n    |         | queries       |          |queries  |  |        |\n    | Stub    |-------------->| Recursive|---------|->|Foreign |\n    | Resolver|               | Server   |         |  |  Name  |\n    |         |<--------------|          |<--------|--| Server |\n    +---------+ responses     |          |responses|  |        |\n                              +----------+         |  +--------+\n                              |  Central |         |\n                              |   cache  |         |\n                              +----------+         |",
+      "line_start": 343,
+      "line_end": 374,
+      "condition": "When using the illustrated stub-resolver and recursive-server configuration.",
+      "required_behavior": "The stub resolver sends recursive queries to the recursive server.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Queries emitted by the stub can be captured to check that they request recursion and are sent to the configured recursive server.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In any case, note that domain components are always replicated for\nreliability whenever possible.",
+      "line_start": 376,
+      "line_end": 377,
+      "condition": "Whenever replication of domain components is possible.",
+      "required_behavior": "Replicate domain components for reliability whenever possible.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Replication can be observed, but this chunk does not define which domain components are covered or how feasibility is determined, so the applicability is insufficient for a definite implementation check.",
+      "eligibility": "exclude"
+    }
+  ]
+}

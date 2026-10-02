@@ -1,0 +1,55 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0039",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A security-aware resolver MAY set a query's CD bit in order to\n   indicate that the resolver takes responsibility for performing\n   whatever authentication its local policy requires on the RRsets in\n   the response.",
+      "line_start": 1225,
+      "line_end": 1228,
+      "condition": "A security-aware resolver is composing a query and takes responsibility for performing the authentication required by its local policy on the response RRsets.",
+      "required_behavior": "The resolver MAY set the query's CD bit to indicate that responsibility.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The query CD bit and the resolver's locally configured authentication responsibility provide a concrete check of this permitted behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware resolver MUST clear the AD bit when composing query\n   messages to protect against buggy name servers that blindly copy\n   header bits that they do not understand from the query message to the\n   response message.",
+      "line_start": 1231,
+      "line_end": 1234,
+      "condition": "A security-aware resolver is composing query messages.",
+      "required_behavior": "The resolver MUST clear the AD bit in the query messages.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Inspecting the AD bit in emitted queries directly checks this requirement.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A resolver MUST disregard the meaning of the CD and AD bits in a\n   response unless the response was obtained by using a secure channel\n   or the resolver was specifically configured to regard the message\n   header bits without using a secure channel.",
+      "line_start": 1236,
+      "line_end": 1239,
+      "condition": "A resolver receives a response that was not obtained using a secure channel, and the resolver was not specifically configured to regard the message header bits without using a secure channel.",
+      "required_behavior": "The resolver MUST disregard the meaning of the CD bit in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Response handling can be checked under the stated channel and configuration conditions to verify that the CD bit carries no interpreted meaning.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A resolver MUST disregard the meaning of the CD and AD bits in a\n   response unless the response was obtained by using a secure channel\n   or the resolver was specifically configured to regard the message\n   header bits without using a secure channel.",
+      "line_start": 1236,
+      "line_end": 1239,
+      "condition": "A resolver receives a response that was not obtained using a secure channel, and the resolver was not specifically configured to regard the message header bits without using a secure channel.",
+      "required_behavior": "The resolver MUST disregard the meaning of the AD bit in the response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Response handling can be checked under the stated channel and configuration conditions to verify that the AD bit carries no interpreted meaning.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0100",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A receiver SHOULD send an ACK frame after receiving at least two ack-\n   eliciting packets.  This recommendation is general in nature and\n   consistent with recommendations for TCP endpoint behavior [RFC5681].\n   Knowledge of network conditions, knowledge of the peer's congestion\n   controller, or further research and experimentation might suggest\n   alternative acknowledgment strategies with better performance\n   characteristics.",
+      "line_start": 4179,
+      "line_end": 4185,
+      "condition": "After the receiver has received at least two ack-eliciting packets, unless an alternative acknowledgment strategy is justified by relevant network conditions, knowledge of the peer's congestion controller, or research and experimentation.",
+      "required_behavior": "The receiver should send an ACK frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet reception and ACK-frame emission can be observed, and the implementation's justification for deviating from the recommended threshold can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A receiver MAY process multiple available packets before determining\n   whether to send an ACK frame in response.",
+      "line_start": 4187,
+      "line_end": 4188,
+      "condition": "When multiple packets are available for processing before the receiver decides whether to acknowledge them.",
+      "required_behavior": "The receiver is permitted to process multiple available packets before determining whether to send an ACK frame.",
+      "forbidden_behavior": "An implementation must not treat immediate ACK determination after each individual packet as mandatory.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The receiver's packet-processing and ACK-decision ordering can be observed or inspected to verify that batched processing is allowed.",
+      "eligibility": "eligible"
+    }
+  ]
+}

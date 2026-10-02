@@ -1,0 +1,127 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0033",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "QUIC begins every connection in slow start with the congestion window\n   set to an initial value.",
+                             "line_start":  913,
+                             "line_end":  914,
+                             "condition":  "When a QUIC connection begins.",
+                             "required_behavior":  "Enter slow start and initialize the congestion window to an initial value.",
+                             "forbidden_behavior":  "Begin the connection outside slow start or without an initialized congestion window.",
+                             "error_behavior":  "No protocol error is specified for violation.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A connection-start test can inspect the congestion-control state and congestion-window initialization before normal transmission proceeds.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Endpoints SHOULD use an initial congestion\n   window of ten times the maximum datagram size (max_datagram_size),\n   while limiting the window to the larger of 14,720 bytes or twice the\n   maximum datagram size.",
+                             "line_start":  914,
+                             "line_end":  917,
+                             "condition":  "When an endpoint computes the initial congestion window from max_datagram_size.",
+                             "required_behavior":  "Unless there is a justified exception to the SHOULD, compute the initial congestion window as min(10 * max_datagram_size, max(14,720 bytes, 2 * max_datagram_size)).",
+                             "forbidden_behavior":  "Without a justified exception, use an initial-window value that does not apply both the ten-datagram target and the stated byte-or-two-datagram upper limit.",
+                             "error_behavior":  "No protocol error is specified for using a non-recommended initial value.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Parameterized tests can supply maximum datagram sizes on both sides of the formula thresholds and compare the initialized window with the stated expression.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "If the maximum datagram size changes during the connection, the\n   initial congestion window SHOULD be recalculated with the new size.",
+                             "line_start":  921,
+                             "line_end":  922,
+                             "condition":  "If max_datagram_size changes during an established connection.",
+                             "required_behavior":  "Unless there is a justified exception to the SHOULD, recalculate the initial congestion-window value using the new max_datagram_size.",
+                             "forbidden_behavior":  "Without a justified exception, retain an initial congestion-window calculation based only on the old max_datagram_size.",
+                             "error_behavior":  "No protocol error is specified for failing to recalculate.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can change max_datagram_size and inspect whether the stored or computed initial-window value is updated from the new size.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "If the maximum datagram size is decreased in order to complete the\n   handshake, the congestion window SHOULD be set to the new initial\n   congestion window.",
+                             "line_start":  923,
+                             "line_end":  925,
+                             "condition":  "If max_datagram_size is decreased in order to complete the handshake.",
+                             "required_behavior":  "Unless there is a justified exception to the SHOULD, set the current congestion window to the newly calculated initial congestion window.",
+                             "forbidden_behavior":  "Without a justified exception, continue using the prior current congestion window instead of setting it to the new initial congestion window.",
+                             "error_behavior":  "No protocol error is specified for failing to reset the congestion window.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A handshake test can force a maximum-datagram-size decrease and compare the current congestion window with the recalculated initial value.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Prior to validating the client\u0027s address, the server can be further\n   limited by the anti-amplification limit as specified in Section 8.1\n   of [QUIC-TRANSPORT].",
+                             "line_start":  927,
+                             "line_end":  929,
+                             "condition":  "While a server has not yet validated the client\u0027s address.",
+                             "required_behavior":  "Apply the anti-amplification sending limit as an additional possible bound even when the congestion window would permit more sending.",
+                             "forbidden_behavior":  "Treat congestion-window availability as sufficient authorization to exceed the applicable anti-amplification limit before address validation.",
+                             "error_behavior":  "The chunk does not specify a local error response; transmission remains bounded by the anti-amplification rule.",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "A pre-validation server test can provide unused congestion-window capacity and verify that sending is still capped by the independently applicable amplification allowance.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Though the anti-amplification limit can prevent\n   the congestion window from being fully utilized and therefore slow\n   down the increase in congestion window, it does not directly affect\n   the congestion window.",
+                             "line_start":  929,
+                             "line_end":  932,
+                             "condition":  "When the anti-amplification limit restricts sending below what the congestion window permits.",
+                             "required_behavior":  "Keep the anti-amplification allowance separate from the congestion-window value; reduced utilization may slow later window growth but must not directly rewrite the congestion window.",
+                             "forbidden_behavior":  "Directly reduce or otherwise change the congestion-window value merely because the anti-amplification limit is tighter.",
+                             "error_behavior":  "No protocol error is specified for this internal state inconsistency.",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "A test can activate a tighter amplification limit and assert that send eligibility changes while the stored congestion-window value does not change directly for that reason.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The minimum congestion window is the smallest value the congestion\n   window can attain in response to loss, an increase in the peer-\n   reported ECN-CE count, or persistent congestion.",
+                             "line_start":  934,
+                             "line_end":  936,
+                             "condition":  "When congestion-window reduction is performed in response to loss.",
+                             "required_behavior":  "Clamp the resulting congestion window so that it is not smaller than the configured minimum congestion window.",
+                             "forbidden_behavior":  "Reduce the congestion window below the minimum congestion window in response to loss.",
+                             "error_behavior":  "No protocol error is specified; the local congestion-control state must preserve the lower bound.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A loss-response test can drive a reduction near the floor and compare the resulting congestion window with the configured minimum.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The minimum congestion window is the smallest value the congestion\n   window can attain in response to loss, an increase in the peer-\n   reported ECN-CE count, or persistent congestion.",
+                             "line_start":  934,
+                             "line_end":  936,
+                             "condition":  "When congestion-window reduction is performed in response to an increase in the peer-reported ECN-CE count.",
+                             "required_behavior":  "Clamp the resulting congestion window so that it is not smaller than the configured minimum congestion window.",
+                             "forbidden_behavior":  "Reduce the congestion window below the minimum congestion window in response to an increased peer-reported ECN-CE count.",
+                             "error_behavior":  "No protocol error is specified; the local congestion-control state must preserve the lower bound.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "An ECN test can increase the peer-reported ECN-CE count, trigger congestion response, and compare the resulting window with the configured minimum.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The minimum congestion window is the smallest value the congestion\n   window can attain in response to loss, an increase in the peer-\n   reported ECN-CE count, or persistent congestion.",
+                             "line_start":  934,
+                             "line_end":  936,
+                             "condition":  "When congestion-window reduction is performed in response to persistent congestion.",
+                             "required_behavior":  "Clamp the resulting congestion window so that it is not smaller than the configured minimum congestion window.",
+                             "forbidden_behavior":  "Reduce the congestion window below the minimum congestion window in response to persistent congestion.",
+                             "error_behavior":  "No protocol error is specified; the local congestion-control state must preserve the lower bound.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A persistent-congestion test can trigger the reduction and verify that the result equals or exceeds the configured minimum.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "The RECOMMENDED\n   value is 2 * max_datagram_size.",
+                             "line_start":  936,
+                             "line_end":  937,
+                             "condition":  "When choosing the minimum congestion-window value.",
+                             "required_behavior":  "Unless there is a justified exception to the recommendation, set the minimum congestion window to 2 * max_datagram_size.",
+                             "forbidden_behavior":  "Without a justified exception, configure a different minimum congestion-window value.",
+                             "error_behavior":  "No protocol error is specified for using a non-recommended minimum.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A configuration or initialization test can compare the minimum congestion-window value with twice max_datagram_size.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

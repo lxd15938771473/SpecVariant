@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0030",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    |                  PREFERENCE                   |\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+\n    /                   EXCHANGE                    /\n    /                                               /\n    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+",
+      "line_start": 931,
+      "line_end": 936,
+      "condition": "When encoding or decoding MX RDATA.",
+      "required_behavior": "Place the PREFERENCE field first, followed by the EXCHANGE field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "MX RDATA serialization and parsing can be checked for the field sequence shown in the format diagram.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "PREFERENCE      A 16 bit integer which specifies the preference given to\n                this RR among others at the same owner.  Lower values\n                are preferred.",
+      "line_start": 940,
+      "line_end": 942,
+      "condition": "When encoding or decoding the PREFERENCE field of an MX RR.",
+      "required_behavior": "Represent PREFERENCE as a 16-bit integer.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field width and integer representation can be inspected in the codec and checked using encoded records.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "PREFERENCE      A 16 bit integer which specifies the preference given to\n                this RR among others at the same owner.  Lower values\n                are preferred.",
+      "line_start": 940,
+      "line_end": 942,
+      "condition": "When comparing MX RRs at the same owner using their PREFERENCE values.",
+      "required_behavior": "Prefer an MX RR with a lower PREFERENCE value over one with a higher value.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A pair of MX records sharing an owner and having different preference values gives a concrete ordering check.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "EXCHANGE        A <domain-name> which specifies a host willing to act as\n                a mail exchange for the owner name.",
+      "line_start": 944,
+      "line_end": 945,
+      "condition": "When encoding or decoding the EXCHANGE field of an MX RR.",
+      "required_behavior": "Represent EXCHANGE as a domain name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The EXCHANGE encoder and parser can be checked for use of the domain-name representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "EXCHANGE        A <domain-name> which specifies a host willing to act as\n                a mail exchange for the owner name.",
+      "line_start": 944,
+      "line_end": 945,
+      "condition": "When interpreting the EXCHANGE field of an MX RR.",
+      "required_behavior": "Interpret EXCHANGE as identifying a host willing to act as a mail exchange for the RR owner name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The record interpretation can be checked for mapping the owner name to the exchange host named by EXCHANGE.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "MX records cause type A additional section processing for the host\nspecified by EXCHANGE.",
+      "line_start": 947,
+      "line_end": 948,
+      "condition": "When performing additional-section processing for an MX record.",
+      "required_behavior": "Perform type A additional-section processing for the host specified by EXCHANGE.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The MX additional-processing path can be checked for its requested RR type and its EXCHANGE-derived target name.",
+      "eligibility": "eligible"
+    }
+  ]
+}

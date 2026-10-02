@@ -1,0 +1,151 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0048",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Messages sent using UDP user server port 53 (decimal).",
+      "line_start": 1785,
+      "line_end": 1785,
+      "condition": "DNS messages are sent using UDP.",
+      "required_behavior": "Use decimal port 53 as the server UDP port.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The configured server port and the UDP server endpoint in transmitted packets can be checked.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Messages carried by UDP are restricted to 512 bytes (not counting the IP\nor UDP headers).  Longer messages are truncated and the TC bit is set in\nthe header.",
+      "line_start": 1787,
+      "line_end": 1789,
+      "condition": "A DNS message is carried by UDP.",
+      "required_behavior": "Limit the DNS message to 512 bytes, excluding the IP and UDP headers.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded DNS payload length can be measured independently of the transport headers.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Messages carried by UDP are restricted to 512 bytes (not counting the IP\nor UDP headers).  Longer messages are truncated and the TC bit is set in\nthe header.",
+      "line_start": 1787,
+      "line_end": 1789,
+      "condition": "A DNS message to be carried by UDP would exceed 512 bytes, excluding the IP and UDP headers.",
+      "required_behavior": "Truncate the message.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The UDP message construction path can be exercised with a message exceeding the stated size limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Messages carried by UDP are restricted to 512 bytes (not counting the IP\nor UDP headers).  Longer messages are truncated and the TC bit is set in\nthe header.",
+      "line_start": 1787,
+      "line_end": 1789,
+      "condition": "A DNS message to be carried by UDP would exceed 512 bytes, excluding the IP and UDP headers, and is truncated.",
+      "required_behavior": "Set the TC bit in the message header.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The TC header bit can be inspected in a UDP message truncated because of the size limit.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "UDP is not acceptable for zone transfers, but is the recommended method\nfor standard queries in the Internet.  Queries sent using UDP may be",
+      "line_start": 1791,
+      "line_end": 1792,
+      "condition": "A zone transfer is being performed.",
+      "required_behavior": "",
+      "forbidden_behavior": "Use UDP for the zone transfer.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The permitted transport for zone-transfer operations can be inspected and exercised.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "UDP is not acceptable for zone transfers, but is the recommended method\nfor standard queries in the Internet.  Queries sent using UDP may be",
+      "line_start": 1791,
+      "line_end": 1792,
+      "condition": "Standard DNS queries are performed in the Internet.",
+      "required_behavior": "UDP is the recommended transport for standard queries.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The transport selected for standard Internet queries can be checked against this recommendation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "UDP is not acceptable for zone transfers, but is the recommended method\nfor standard queries in the Internet.  Queries sent using UDP may be\nlost, and hence a retransmission strategy is required.  Queries or their\nresponses may be reordered by the network, or by processing in name\nservers, so resolvers should not depend on them being returned in order.",
+      "line_start": 1791,
+      "line_end": 1795,
+      "condition": "Queries are sent using UDP.",
+      "required_behavior": "Provide a retransmission strategy for UDP queries that may be lost.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The query retry policy and behavior after loss can be inspected and exercised.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "UDP is not acceptable for zone transfers, but is the recommended method\nfor standard queries in the Internet.  Queries sent using UDP may be\nlost, and hence a retransmission strategy is required.  Queries or their\nresponses may be reordered by the network, or by processing in name\nservers, so resolvers should not depend on them being returned in order.",
+      "line_start": 1791,
+      "line_end": 1795,
+      "condition": "A resolver uses UDP queries, whose queries or responses may be reordered.",
+      "required_behavior": "",
+      "forbidden_behavior": "A resolver should not depend on query responses being returned in order.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Response association and resolver progress can be checked when responses arrive in a different order from the queries.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- The client should try other servers and server addresses\n     before repeating a query to a specific address of a server.",
+      "line_start": 1800,
+      "line_end": 1801,
+      "condition": "A UDP client is about to repeat a query to a specific server address.",
+      "required_behavior": "The client should try other servers before repeating the query to that server address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The server-selection sequence before a retry to an already queried address can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- The client should try other servers and server addresses\n     before repeating a query to a specific address of a server.",
+      "line_start": 1800,
+      "line_end": 1801,
+      "condition": "A UDP client is about to repeat a query to a specific server address.",
+      "required_behavior": "The client should try other server addresses before repeating the query to that server address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The address-selection sequence before a retry to an already queried address can be inspected.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- The retransmission interval should be based on prior\n     statistics if possible.  Too aggressive retransmission can\n     easily slow responses for the community at large.  Depending\n     on how well connected the client is to its expected servers,\n     the minimum retransmission interval should be 2-5 seconds.",
+      "line_start": 1803,
+      "line_end": 1807,
+      "condition": "A UDP query retransmission interval is selected and using prior statistics is possible.",
+      "required_behavior": "The retransmission interval should be based on prior statistics.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The interval-selection inputs can be inspected to determine whether prior observations inform the retry interval.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "- The retransmission interval should be based on prior\n     statistics if possible.  Too aggressive retransmission can\n     easily slow responses for the community at large.  Depending\n     on how well connected the client is to its expected servers,\n     the minimum retransmission interval should be 2-5 seconds.",
+      "line_start": 1803,
+      "line_end": 1807,
+      "condition": "A client selects its minimum UDP query retransmission interval, considering how well connected it is to its expected servers.",
+      "required_behavior": "The minimum retransmission interval should be 2 to 5 seconds, depending on the client connectivity to its expected servers.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The configured or calculated minimum retry interval can be measured and its selection logic inspected.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Risk Test Generator"
+  short_description: "Generate high-risk tests and protocol variants"
+  default_prompt: "Use $speclitmus-test-generator to generate one base test and the 2-3 highest-value variants for verified requirements."

@@ -1,0 +1,163 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0078",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   An endpoint enters the closing state after initiating an immediate\n   close.",
+      "line_start": 3214,
+      "line_end": 3215,
+      "condition": "An endpoint has initiated an immediate close.",
+      "required_behavior": "Enter the closing state.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A state-transition test can verify that initiating an immediate close changes the endpoint state to closing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   In the closing state, an endpoint retains only enough information to\n   generate a packet containing a CONNECTION_CLOSE frame and to identify\n   packets as belonging to the connection.  An endpoint in the closing\n   state sends a packet containing a CONNECTION_CLOSE frame in response\n   to any incoming packet that it attributes to the connection.",
+      "line_start": 3217,
+      "line_end": 3221,
+      "condition": "The endpoint is in the closing state.",
+      "required_behavior": "Retain enough information to generate a packet containing a CONNECTION_CLOSE frame and identify packets as belonging to the connection.",
+      "forbidden_behavior": "Retain connection information beyond what is needed for those purposes.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "State inspection can determine whether the closing-state data is sufficient for both specified operations, though the precise maximum information allowed by “only enough” is implementation-dependent.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "   In the closing state, an endpoint retains only enough information to\n   generate a packet containing a CONNECTION_CLOSE frame and to identify\n   packets as belonging to the connection.  An endpoint in the closing\n   state sends a packet containing a CONNECTION_CLOSE frame in response\n   to any incoming packet that it attributes to the connection.",
+      "line_start": 3217,
+      "line_end": 3221,
+      "condition": "An endpoint in the closing state receives a packet that it attributes to the connection.",
+      "required_behavior": "Send a packet containing a CONNECTION_CLOSE frame in response.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A focused runtime test can inject an attributed incoming packet and inspect the response for a CONNECTION_CLOSE frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint SHOULD limit the rate at which it generates packets in\n   the closing state.  For instance, an endpoint could wait for a\n   progressively increasing number of received packets or amount of time\n   before responding to received packets.",
+      "line_start": 3223,
+      "line_end": 3226,
+      "condition": "An endpoint generates packets while in the closing state.",
+      "required_behavior": "Limit the packet-generation rate; progressively increasing the received-packet threshold or response delay is one possible mechanism.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Runtime traffic tests can determine whether closing-state responses are rate-limited, although the text does not prescribe a single limiting algorithm.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint's selected connection ID and the QUIC version are\n   sufficient information to identify packets for a closing connection;\n   the endpoint MAY discard all other connection state.  An endpoint\n   that is closing is not required to process any received frame.  An\n   endpoint MAY retain packet protection keys for incoming packets to\n   allow it to read and process a CONNECTION_CLOSE frame.",
+      "line_start": 3228,
+      "line_end": 3233,
+      "condition": "The endpoint is maintaining a closing connection and retains the selected connection ID and QUIC version.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "It is permitted to discard all other connection state.",
+      "check_type": "explicit_normative",
+      "why_checkable": "State inspection can verify that an implementation discarding other state still retains the selected connection ID and QUIC version.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint's selected connection ID and the QUIC version are\n   sufficient information to identify packets for a closing connection;\n   the endpoint MAY discard all other connection state.  An endpoint\n   that is closing is not required to process any received frame.  An\n   endpoint MAY retain packet protection keys for incoming packets to\n   allow it to read and process a CONNECTION_CLOSE frame.",
+      "line_start": 3228,
+      "line_end": 3233,
+      "condition": "An endpoint is closing and receives a frame.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "It is permitted to leave the received frame unprocessed.",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A runtime test can verify that a closing endpoint remains conformant when it does not process received frames.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint's selected connection ID and the QUIC version are\n   sufficient information to identify packets for a closing connection;\n   the endpoint MAY discard all other connection state.  An endpoint\n   that is closing is not required to process any received frame.  An\n   endpoint MAY retain packet protection keys for incoming packets to\n   allow it to read and process a CONNECTION_CLOSE frame.",
+      "line_start": 3228,
+      "line_end": 3233,
+      "condition": "An endpoint is closing.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "It is permitted to retain incoming packet protection keys so that a received CONNECTION_CLOSE frame can be read and processed.",
+      "check_type": "explicit_normative",
+      "why_checkable": "State and packet-processing tests can verify retention and use of incoming packet protection keys for CONNECTION_CLOSE processing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MAY drop packet protection keys when entering the closing\n   state and send a packet containing a CONNECTION_CLOSE frame in\n   response to any UDP datagram that is received.  However, an endpoint\n   that discards packet protection keys cannot identify and discard\n   invalid packets.  To avoid being used for an amplification attack,\n   such endpoints MUST limit the cumulative size of packets it sends to\n   three times the cumulative size of the packets that are received and\n   attributed to the connection.  To minimize the state that an endpoint\n   maintains for a closing connection, endpoints MAY send the exact same\n   packet in response to any received packet.",
+      "line_start": 3235,
+      "line_end": 3244,
+      "condition": "An endpoint enters the closing state.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "It is permitted to drop packet protection keys and respond to every received UDP datagram with a packet containing a CONNECTION_CLOSE frame.",
+      "check_type": "explicit_normative",
+      "why_checkable": "A runtime test can observe key disposal and verify the contents of responses to received UDP datagrams.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MAY drop packet protection keys when entering the closing\n   state and send a packet containing a CONNECTION_CLOSE frame in\n   response to any UDP datagram that is received.  However, an endpoint\n   that discards packet protection keys cannot identify and discard\n   invalid packets.  To avoid being used for an amplification attack,\n   such endpoints MUST limit the cumulative size of packets it sends to\n   three times the cumulative size of the packets that are received and\n   attributed to the connection.  To minimize the state that an endpoint\n   maintains for a closing connection, endpoints MAY send the exact same\n   packet in response to any received packet.",
+      "line_start": 3235,
+      "line_end": 3244,
+      "condition": "A closing endpoint has discarded packet protection keys.",
+      "required_behavior": "Keep the cumulative size of sent packets at or below three times the cumulative size of packets received and attributed to the connection.",
+      "forbidden_behavior": "Send cumulative packet bytes exceeding three times the cumulative bytes of packets received and attributed to the connection.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Traffic accounting can compare cumulative sent and attributed-received byte counts and enforce the exact 3:1 amplification bound.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint MAY drop packet protection keys when entering the closing\n   state and send a packet containing a CONNECTION_CLOSE frame in\n   response to any UDP datagram that is received.  However, an endpoint\n   that discards packet protection keys cannot identify and discard\n   invalid packets.  To avoid being used for an amplification attack,\n   such endpoints MUST limit the cumulative size of packets it sends to\n   three times the cumulative size of the packets that are received and\n   attributed to the connection.  To minimize the state that an endpoint\n   maintains for a closing connection, endpoints MAY send the exact same\n   packet in response to any received packet.",
+      "line_start": 3235,
+      "line_end": 3244,
+      "condition": "An endpoint maintains a closing connection and responds to received packets.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "It is permitted to send the exact same packet in response to multiple received packets.",
+      "check_type": "explicit_normative",
+      "why_checkable": "Captured responses can be compared byte-for-byte to verify reuse of the exact same packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "      |  Note: Allowing retransmission of a closing packet is an\n      |  exception to the requirement that a new packet number be used\n      |  for each packet; see Section 12.3.  Sending new packet numbers\n      |  is primarily of advantage to loss recovery and congestion\n      |  control, which are not expected to be relevant for a closed\n      |  connection.  Retransmitting the final packet requires less\n      |  state.",
+      "line_start": 3246,
+      "line_end": 3252,
+      "condition": "A closing packet is retransmitted.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The retransmitted closing packet is permitted to reuse its packet number instead of using a new packet number.",
+      "check_type": "derived_constraint",
+      "why_checkable": "Packet traces can verify that packet-number reuse occurs only for retransmission of a closing packet under the stated exception.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   While in the closing state, an endpoint could receive packets from a\n   new source address, possibly indicating a connection migration; see\n   Section 9.  An endpoint in the closing state MUST either discard\n   packets received from an unvalidated address or limit the cumulative\n   size of packets it sends to an unvalidated address to three times the\n   size of packets it receives from that address.",
+      "line_start": 3254,
+      "line_end": 3259,
+      "condition": "An endpoint in the closing state receives packets from an unvalidated address.",
+      "required_behavior": "Either discard those packets or keep the cumulative size of packets sent to that address at or below three times the size of packets received from that address.",
+      "forbidden_behavior": "Both accept packets from the unvalidated address and send cumulative bytes to it exceeding three times the bytes received from it.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Per-address packet traces can verify either complete discard or compliance with the exact 3:1 cumulative amplification bound.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint is not expected to handle key updates when it is closing\n   (Section 6 of [QUIC-TLS]).  A key update might prevent the endpoint\n   from moving from the closing state to the draining state, as the\n   endpoint will not be able to process subsequently received packets,\n   but it otherwise has no impact.",
+      "line_start": 3261,
+      "line_end": 3265,
+      "condition": "An endpoint is closing and a key update occurs.",
+      "required_behavior": "",
+      "forbidden_behavior": "",
+      "error_behavior": "The endpoint is not expected to handle the key update, and failure to do so might prevent transition from closing to draining.",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The passage describes an expectation and a possible consequence but does not impose a clear required behavior or deterministic transition outcome.",
+      "eligibility": "exclude"
+    }
+  ]
+}

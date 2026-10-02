@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0011",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If a CNAME RRset is present at a name in a signed zone, appropriate\n   RRSIG and NSEC RRsets are REQUIRED at that name.",
+      "line_start": 389,
+      "line_end": 390,
+      "condition": "A CNAME RRset is present at a name in a signed zone.",
+      "required_behavior": "An appropriate RRSIG RRset is required at that name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The signed-zone contents at a CNAME owner name can be checked for an appropriate RRSIG RRset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a CNAME RRset is present at a name in a signed zone, appropriate\n   RRSIG and NSEC RRsets are REQUIRED at that name.",
+      "line_start": 389,
+      "line_end": 390,
+      "condition": "A CNAME RRset is present at a name in a signed zone.",
+      "required_behavior": "An appropriate NSEC RRset is required at that name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The signed-zone contents at a CNAME owner name can be checked for an appropriate NSEC RRset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a CNAME RRset is present at a name in a signed zone, appropriate\n   RRSIG and NSEC RRsets are REQUIRED at that name.  A KEY RRset at that\n   name for secure dynamic update purposes is also allowed ([RFC3007]).",
+      "line_start": 389,
+      "line_end": 391,
+      "condition": "A CNAME RRset is present at a name in a signed zone, and a KEY RRset at that name is used for secure dynamic update purposes.",
+      "required_behavior": "A KEY RRset is allowed at that name for secure dynamic update purposes; its presence is optional.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The allowed RRset combinations at a signed-zone CNAME owner name can be checked to include an optional KEY RRset for secure dynamic update.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If a CNAME RRset is present at a name in a signed zone, appropriate\n   RRSIG and NSEC RRsets are REQUIRED at that name.  A KEY RRset at that\n   name for secure dynamic update purposes is also allowed ([RFC3007]).\n   Other types MUST NOT be present at that name.",
+      "line_start": 389,
+      "line_end": 392,
+      "condition": "A CNAME RRset is present at a name in a signed zone.",
+      "required_behavior": "",
+      "forbidden_behavior": "Resource record types other than CNAME, RRSIG, NSEC, and a KEY RRset for secure dynamic update purposes must not be present at that name.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The RR types at a signed-zone CNAME owner name can be enumerated and checked against the permitted coexistence types and the KEY purpose condition.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "a signed zone\n\n\n\nArends, et al.              Standards Track                     [Page 7]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   requires NSEC and RRSIG RRs for every authoritative name.",
+      "line_start": 396,
+      "line_end": 406,
+      "condition": "A name is authoritative in a signed zone.",
+      "required_behavior": "NSEC RRs are required for that authoritative name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The signed-zone data can be checked for NSEC RRs at each authoritative name.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "a signed zone\n\n\n\nArends, et al.              Standards Track                     [Page 7]\n\n\nRFC 4035             DNSSEC Protocol Modifications            March 2005\n\n\n   requires NSEC and RRSIG RRs for every authoritative name.",
+      "line_start": 396,
+      "line_end": 406,
+      "condition": "A name is authoritative in a signed zone.",
+      "required_behavior": "RRSIG RRs are required for that authoritative name.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The signed-zone data can be checked for RRSIG RRs at each authoritative name.",
+      "eligibility": "eligible"
+    }
+  ]
+}

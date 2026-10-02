@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0019",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "struct {\n          T1 f1;\n          T2 f2;\n          ...\n          Tn fn;\n      } T;",
+      "line_start": 1215,
+      "line_end": 1220,
+      "condition": "a constructed type T is encoded or decoded",
+      "required_behavior": "process its fields in declaration order from f1 through fn using each field's declared type",
+      "forbidden_behavior": "reorder the fields or decode a field using a different declared type",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The structure declaration provides a deterministic field sequence and type for serialization.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Fixed- and variable-length vector fields are allowed using the\n   standard vector syntax.",
+      "line_start": 1222,
+      "line_end": 1223,
+      "condition": "a structure field is declared using fixed- or variable-length vector syntax",
+      "required_behavior": "encode and decode the field using the corresponding standard vector rules",
+      "forbidden_behavior": "apply a structure-specific vector encoding that contradicts the standard vector syntax",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A vector-valued structure field can be compared directly with the Section 3.4 encoding rules.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0023",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The successful use of Handshake packets indicates that no more\n   Initial packets need to be exchanged, as these keys can only be\n   produced after receiving all CRYPTO frames from Initial packets.",
+      "line_start": 940,
+      "line_end": 942,
+      "condition": "Before producing the keys used for Handshake packets.",
+      "required_behavior": "Receive all CRYPTO-frame data sent in Initial packets.",
+      "forbidden_behavior": "Do not produce Handshake packet keys while required Initial-level CRYPTO data remains unreceived.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can withhold Initial CRYPTO ranges and verify that Handshake keys and Handshake packet use do not become available prematurely.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Thus, a client MUST discard Initial keys when it first sends a\n   Handshake packet and a server MUST discard Initial keys when it first\n   successfully processes a Handshake packet.",
+      "line_start": 943,
+      "line_end": 945,
+      "condition": "When a client first sends a Handshake packet.",
+      "required_behavior": "Discard the client's Initial keys at that point.",
+      "forbidden_behavior": "Do not retain usable Initial keys after first sending a Handshake packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Instrumentation can trigger the first client Handshake transmission and verify that Initial keys are immediately removed or made unusable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Thus, a client MUST discard Initial keys when it first sends a\n   Handshake packet and a server MUST discard Initial keys when it first\n   successfully processes a Handshake packet.",
+      "line_start": 943,
+      "line_end": 945,
+      "condition": "When a server first successfully processes a Handshake packet.",
+      "required_behavior": "Discard the server's Initial keys at that point.",
+      "forbidden_behavior": "Do not retain usable Initial keys after first successfully processing a Handshake packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Instrumentation can deliver the first valid Handshake packet and verify that successful processing immediately removes or disables Initial keys.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints MUST NOT send\n   Initial packets after this point.",
+      "line_start": 945,
+      "line_end": 946,
+      "condition": "After a client first sends a Handshake packet.",
+      "required_behavior": "Stop sending Initial packets.",
+      "forbidden_behavior": "Do not send any further Initial packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A client packet trace can be checked for any Initial packet after its first Handshake transmission.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints MUST NOT send\n   Initial packets after this point.",
+      "line_start": 945,
+      "line_end": 946,
+      "condition": "After a server first successfully processes a Handshake packet.",
+      "required_behavior": "Stop sending Initial packets.",
+      "forbidden_behavior": "Do not send any further Initial packet.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A server packet trace can be checked for any Initial packet after it first successfully processes a Handshake packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This results in abandoning loss recovery state for the Initial\n   encryption level and ignoring any outstanding Initial packets.",
+      "line_start": 948,
+      "line_end": 949,
+      "condition": "When an endpoint discards its Initial keys at the specified transition.",
+      "required_behavior": "Abandon loss recovery state for the Initial encryption level.",
+      "forbidden_behavior": "Do not continue Initial-level loss detection, acknowledgment tracking, or retransmission recovery after the state is abandoned.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Internal recovery state and subsequent recovery actions can be inspected after the Initial-key discard event.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This results in abandoning loss recovery state for the Initial\n   encryption level and ignoring any outstanding Initial packets.",
+      "line_start": 948,
+      "line_end": 949,
+      "condition": "When an outstanding Initial packet arrives after the endpoint has discarded Initial keys.",
+      "required_behavior": "Ignore the outstanding Initial packet.",
+      "forbidden_behavior": "Do not process the packet as valid Initial-level input or restore discarded Initial state because of it.",
+      "error_behavior": "Silently ignore the outstanding Initial packet.",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A delayed Initial packet can be injected after key discard and the endpoint can be observed for any processing or state change.",
+      "eligibility": "eligible"
+    }
+  ]
+}

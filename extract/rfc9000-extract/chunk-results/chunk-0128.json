@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0128",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   Packet Number Length:  In packet types that contain a Packet Number\n      field, the least significant two bits (those with a mask of 0x03)\n      of byte 0 contain the length of the Packet Number field, encoded\n      as an unsigned two-bit integer that is one less than the length of\n      the Packet Number field in bytes.  That is, the length of the\n      Packet Number field is the value of this field plus one.  These\n      bits are protected using header protection; see Section 5.4 of\n      [QUIC-TLS].",
+      "line_start": 5060,
+      "line_end": 5067,
+      "condition": "For a packet type that contains a Packet Number field.",
+      "required_behavior": "Use the least significant two bits of byte 0, selected by mask 0x03, as the Packet Number Length field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A packet parser or encoder can inspect byte 0 and verify that the Packet Number Length field occupies exactly bits selected by 0x03.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Packet Number Length:  In packet types that contain a Packet Number\n      field, the least significant two bits (those with a mask of 0x03)\n      of byte 0 contain the length of the Packet Number field, encoded\n      as an unsigned two-bit integer that is one less than the length of\n      the Packet Number field in bytes.  That is, the length of the\n      Packet Number field is the value of this field plus one.  These\n      bits are protected using header protection; see Section 5.4 of\n      [QUIC-TLS].",
+      "line_start": 5060,
+      "line_end": 5067,
+      "condition": "For a packet type that contains a Packet Number field.",
+      "required_behavior": "Encode the Packet Number Length bits as an unsigned two-bit integer equal to the Packet Number field length in bytes minus one; decode the field length as the encoded value plus one.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "For each encoded packet, the two-bit value and actual Packet Number field byte length can be compared using the stated arithmetic relationship.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Packet Number Length:  In packet types that contain a Packet Number\n      field, the least significant two bits (those with a mask of 0x03)\n      of byte 0 contain the length of the Packet Number field, encoded\n      as an unsigned two-bit integer that is one less than the length of\n      the Packet Number field in bytes.  That is, the length of the\n      Packet Number field is the value of this field plus one.  These\n      bits are protected using header protection; see Section 5.4 of\n      [QUIC-TLS].",
+      "line_start": 5060,
+      "line_end": 5067,
+      "condition": "When transmitting or receiving Packet Number Length bits.",
+      "required_behavior": "Protect and unprotect the Packet Number Length bits using header protection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet-processing tests can verify that header protection is applied to these bits and removed before interpreting their value.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Length:  This is the length of the remainder of the packet (that is,\n      the Packet Number and Payload fields) in bytes, encoded as a\n      variable-length integer (Section 16).",
+      "line_start": 5069,
+      "line_end": 5071,
+      "condition": "When encoding or decoding the Length field.",
+      "required_behavior": "Represent, in bytes, the combined length of the Packet Number and Payload fields.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The decoded Length value can be compared with the actual combined byte length of the Packet Number and Payload fields.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Length:  This is the length of the remainder of the packet (that is,\n      the Packet Number and Payload fields) in bytes, encoded as a\n      variable-length integer (Section 16).",
+      "line_start": 5069,
+      "line_end": 5071,
+      "condition": "When encoding the Length field.",
+      "required_behavior": "Encode the Length field as a variable-length integer.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field's wire encoding can be inspected to determine whether it uses the variable-length integer representation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Packet Number:  This field is 1 to 4 bytes long.  The packet number\n      is protected using header protection; see Section 5.4 of\n      [QUIC-TLS].  The length of the Packet Number field is encoded in\n      the Packet Number Length bits of byte 0; see above.",
+      "line_start": 5073,
+      "line_end": 5076,
+      "condition": "When a Packet Number field is present.",
+      "required_behavior": "Encode the Packet Number field with a length from 1 through 4 bytes inclusive.",
+      "forbidden_behavior": "Do not encode a zero-length Packet Number field or one longer than 4 bytes.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The field's byte length is directly measurable and can be checked against the inclusive 1-to-4-byte bound.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Packet Number:  This field is 1 to 4 bytes long.  The packet number\n      is protected using header protection; see Section 5.4 of\n      [QUIC-TLS].  The length of the Packet Number field is encoded in\n      the Packet Number Length bits of byte 0; see above.",
+      "line_start": 5073,
+      "line_end": 5076,
+      "condition": "When transmitting or receiving a Packet Number field.",
+      "required_behavior": "Protect and unprotect the packet number using header protection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet-processing tests can verify that header protection is applied to the packet number and removed for packet-number recovery.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Packet Number:  This field is 1 to 4 bytes long.  The packet number\n      is protected using header protection; see Section 5.4 of\n      [QUIC-TLS].  The length of the Packet Number field is encoded in\n      the Packet Number Length bits of byte 0; see above.",
+      "line_start": 5073,
+      "line_end": 5076,
+      "condition": "When a Packet Number field is present.",
+      "required_behavior": "Encode its byte length in the Packet Number Length bits of byte 0.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The actual Packet Number field length can be compared with the value carried in byte 0's Packet Number Length bits.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Packet Payload:  This is the payload of the packet -- containing a\n      sequence of frames -- that is protected using packet protection.",
+      "line_start": 5078,
+      "line_end": 5079,
+      "condition": "When constructing or parsing the Packet Payload.",
+      "required_behavior": "Treat the Packet Payload as a sequence of frames.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The payload can be parsed and verified to consist of a sequence of frame encodings.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Packet Payload:  This is the payload of the packet -- containing a\n      sequence of frames -- that is protected using packet protection.",
+      "line_start": 5078,
+      "line_end": 5079,
+      "condition": "When transmitting or receiving the Packet Payload.",
+      "required_behavior": "Protect and unprotect the Packet Payload using packet protection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Packet-processing tests can verify that packet protection is applied to the payload on transmission and removed before frame parsing.",
+      "eligibility": "eligible"
+    }
+  ]
+}

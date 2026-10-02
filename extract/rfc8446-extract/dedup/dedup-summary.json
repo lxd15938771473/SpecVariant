@@ -1,0 +1,15 @@
+{
+  "schema_version": "speclitmus.dedup-summary.v2",
+  "source_eligible_requirements": 1775,
+  "candidate_pairs_reviewed": 1567,
+  "primary_candidate_pairs": 792,
+  "recall_candidate_pairs": 775,
+  "initial_duplicate_pair_votes": 104,
+  "final_duplicate_components": 76,
+  "primary_duplicate_components": 29,
+  "recall_duplicate_components": 47,
+  "requirements_removed_as_duplicates": 78,
+  "final_eligible_requirements": 1697,
+  "excluded_requirements_retained": 14,
+  "all_original_records_preserved": true
+}

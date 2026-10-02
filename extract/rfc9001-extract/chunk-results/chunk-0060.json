@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0060",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "QUIC depends on endpoints being able to generate secure random\n   numbers, both directly for protocol values such as the connection ID",
+      "line_start": 2161,
+      "line_end": 2162,
+      "condition": "When an endpoint generates a QUIC protocol value that requires randomness, including a randomly selected connection ID",
+      "required_behavior": "Generate the value using a secure random-number generator.",
+      "forbidden_behavior": "Use predictable or non-secure randomness for a protocol value that requires secure random generation.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The value-generation path can be inspected for a cryptographically secure random source and tested for deterministic or trivially predictable outputs.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "QUIC depends on endpoints being able to generate secure random\n   numbers, both directly for protocol values such as the connection ID,\n   and transitively via TLS.",
+      "line_start": 2161,
+      "line_end": 2163,
+      "condition": "When TLS operations used by QUIC require random numbers",
+      "required_behavior": "Ensure that the TLS component obtains securely generated random numbers.",
+      "forbidden_behavior": "Supply or configure predictable, non-secure randomness for the TLS component used by QUIC.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The TLS random-source configuration and calls can be traced to verify use of an approved cryptographically secure generator.",
+      "eligibility": "eligible"
+    }
+  ]
+}

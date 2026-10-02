@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0007",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "For each private key used to\n   create RRSIG RRs in a zone, the zone SHOULD include a zone DNSKEY RR\n   containing the corresponding public key.",
+      "line_start": 239,
+      "line_end": 241,
+      "condition": "For each private key used to create RRSIG RRs in a zone.",
+      "required_behavior": "The zone SHOULD include a zone DNSKEY RR containing the public key corresponding to that private key.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Compare the private keys used by the zone signer with the public keys published in zone DNSKEY RRs; this checks the stated recommendation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A zone key DNSKEY RR MUST\n   have the Zone Key bit of the flags RDATA field set (see Section 2.1.1\n   of [RFC4034]).",
+      "line_start": 241,
+      "line_end": 243,
+      "condition": "A DNSKEY RR is a zone key DNSKEY RR.",
+      "required_behavior": "The DNSKEY RR MUST have the Zone Key bit set in the flags RDATA field.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Inspect the flags RDATA field of each DNSKEY RR designated as a zone key.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Public keys associated with other DNS operations MAY\n   be stored in DNSKEY RRs that are not marked as zone keys but MUST NOT\n   be used to verify RRSIGs.",
+      "line_start": 243,
+      "line_end": 245,
+      "condition": "A public key is associated with other DNS operations.",
+      "required_behavior": "Such a public key MAY be stored in a DNSKEY RR that is not marked as a zone key.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Inspect whether a DNSKEY RR can represent a key for another DNS operation with the zone-key marking absent; this is a permitted representation, not a storage obligation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Public keys associated with other DNS operations MAY\n   be stored in DNSKEY RRs that are not marked as zone keys but MUST NOT\n   be used to verify RRSIGs.",
+      "line_start": 243,
+      "line_end": 245,
+      "condition": "A public key is associated with other DNS operations.",
+      "required_behavior": "",
+      "forbidden_behavior": "Such a public key MUST NOT be used to verify RRSIGs.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Inspect RRSIG verification key selection to ensure that keys associated with other DNS operations are not used.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the zone administrator intends a signed zone to be usable other\n   than as an island of security, the zone apex MUST contain at least\n   one DNSKEY RR to act as a secure entry point into the zone.",
+      "line_start": 247,
+      "line_end": 249,
+      "condition": "The zone administrator intends a signed zone to be usable other than as an island of security.",
+      "required_behavior": "The zone apex MUST contain at least one DNSKEY RR to act as a secure entry point into the zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "For a signed zone intended to be usable beyond an island of security, inspect the apex for at least one DNSKEY RR serving as a secure entry point.",
+      "eligibility": "eligible"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0056",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The certificate type MUST be X.509v3 [RFC5280], unless explicitly\nnegotiated otherwise (e.g., [RFC7250]).",
+      "line_start": 3701,
+      "line_end": 3702,
+      "condition": "the server and client did not explicitly negotiate another certificate type",
+      "required_behavior": "send an X.509v3 server certificate",
+      "forbidden_behavior": "send another certificate type",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Negotiation state and the encoded server certificate type can be compared.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The server's end-entity certificate's public key (and associated\nrestrictions) MUST be compatible with the selected authentication\nalgorithm from the client's \"signature_algorithms\" extension\n(currently RSA, ECDSA, or EdDSA).",
+      "line_start": 3704,
+      "line_end": 3707,
+      "condition": "the server selects an authentication algorithm from the client's signature_algorithms extension",
+      "required_behavior": "select an end-entity certificate whose public key and restrictions are compatible with that algorithm",
+      "forbidden_behavior": "authenticate with an incompatible certificate key or restriction set",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Certificate key properties can be checked against the selected signature scheme.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The certificate MUST allow the key to be used for signing (i.e.,\nthe digitalSignature bit MUST be set if the Key Usage extension is\npresent) with a signature scheme indicated in the client's\n\"signature_algorithms\"/\"signature_algorithms_cert\" extensions",
+      "line_start": 3709,
+      "line_end": 3713,
+      "condition": "the server selects a certificate for a signature scheme indicated by the client",
+      "required_behavior": "select a certificate that permits its key to be used for signing with that scheme",
+      "forbidden_behavior": "select a certificate whose restrictions prohibit the required signing use",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Certificate constraints and the selected signature scheme are machine-readable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the digitalSignature bit MUST be set if the Key Usage extension is\npresent",
+      "line_start": 3710,
+      "line_end": 3711,
+      "condition": "the selected server certificate contains a Key Usage extension",
+      "required_behavior": "require the digitalSignature bit to be set",
+      "forbidden_behavior": "use a certificate whose Key Usage omits digitalSignature",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The Key Usage bit string is directly available from certificate parsing.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As servers\nMAY require the presence of the \"server_name\" extension, clients\nSHOULD send this extension, when applicable.",
+      "line_start": 3716,
+      "line_end": 3718,
+      "condition": "server_name is applicable to the connection",
+      "required_behavior": "send the server_name extension",
+      "forbidden_behavior": "omit server_name without a reason to depart from the recommendation",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A hostname-based client connection can be checked for ClientHello SNI presence.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "All certificates provided by the server MUST be signed by a signature\nalgorithm advertised by the client if it is able to provide such a\nchain (see Section 4.2.3).  Certificates that are self-signed or\ncertificates that are expected to be trust anchors are not validated\nas part of the chain and therefore MAY be signed with any algorithm.",
+      "line_start": 3720,
+      "line_end": 3724,
+      "condition": "the server can provide such a chain and the certificate is validated as part of that chain",
+      "required_behavior": "use a certificate signed with a signature algorithm advertised by the client",
+      "forbidden_behavior": "include a validated chain certificate signed only with an unadvertised algorithm",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Each chain signature algorithm can be compared with the client's advertised set.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the server cannot produce a certificate chain that is signed only\nvia the indicated supported algorithms, then it SHOULD continue the\nhandshake by sending the client a certificate chain of its choice\nthat may include algorithms that are not known to be supported by the\nclient.",
+      "line_start": 3726,
+      "line_end": 3730,
+      "condition": "the server cannot produce a chain signed only with client-indicated supported algorithms",
+      "required_behavior": "continue the handshake by sending a fallback certificate chain",
+      "forbidden_behavior": "abort solely because no fully advertised-algorithm chain is available",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Server behavior can be tested with certificate inventory lacking a fully compatible chain.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This fallback chain SHOULD NOT use the deprecated SHA-1 hash\nalgorithm in general, but MAY do so if the client's advertisement\npermits it, and MUST NOT do so otherwise.",
+      "line_start": 3730,
+      "line_end": 3732,
+      "condition": "the server sends a fallback certificate chain",
+      "required_behavior": "prefer a fallback chain that does not use SHA-1",
+      "forbidden_behavior": "use SHA-1 without a justified departure from the recommendation",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Certificate signature hashes in the fallback chain are inspectable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This fallback chain SHOULD NOT use the deprecated SHA-1 hash\nalgorithm in general, but MAY do so if the client's advertisement\npermits it, and MUST NOT do so otherwise.",
+      "line_start": 3730,
+      "line_end": 3732,
+      "condition": "the client's signature-algorithm advertisement does not permit SHA-1",
+      "required_behavior": "",
+      "forbidden_behavior": "send a fallback chain that uses SHA-1",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The offered algorithms and fallback-chain signature hashes can be compared directly.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the client cannot construct an acceptable chain using the provided\ncertificates and decides to abort the handshake, then it MUST abort\nthe handshake with an appropriate certificate-related alert (by\ndefault, \"unsupported_certificate\"; see Section 6.2 for more\ninformation).",
+      "line_start": 3734,
+      "line_end": 3738,
+      "condition": "the client cannot construct an acceptable chain and chooses to abort",
+      "required_behavior": "abort the handshake with an appropriate certificate-related alert, defaulting to unsupported_certificate",
+      "forbidden_behavior": "abort without a certificate-related alert",
+      "error_behavior": "send an appropriate certificate-related alert; use unsupported_certificate by default",
+      "check_type": "error_handling",
+      "why_checkable": "A deliberately unacceptable chain can expose the emitted alert.",
+      "eligibility": "eligible"
+    }
+  ]
+}

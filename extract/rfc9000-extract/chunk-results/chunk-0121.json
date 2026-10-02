@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0121",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   PMTU probes are ack-eliciting packets.",
+      "line_start": 4786,
+      "line_end": 4786,
+      "condition": "When an endpoint sends a PMTU probe.",
+      "required_behavior": "The PMTU probe is ack-eliciting.",
+      "forbidden_behavior": "The PMTU probe must not be treated as non-ack-eliciting.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet construction and acknowledgment logic can verify that every PMTU probe has ack-eliciting semantics.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Endpoints could limit the content of PMTU probes to PING and PADDING\n   frames, since packets that are larger than the current maximum\n   datagram size are more likely to be dropped by the network.  Loss of\n   a QUIC packet that is carried in a PMTU probe is therefore not a\n   reliable indication of congestion and SHOULD NOT trigger a congestion\n   control reaction; see Item 7 in Section 3 of [DPLPMTUD].  However,",
+      "line_start": 4788,
+      "line_end": 4793,
+      "condition": "When a QUIC packet carried in a PMTU probe is lost.",
+      "required_behavior": "",
+      "forbidden_behavior": "The loss should not trigger a congestion-control reaction.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A focused loss test can verify whether loss of a PMTU probe causes the congestion controller to react.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   PMTU probes consume congestion window, which could delay subsequent\n   transmission by an application.",
+      "line_start": 4794,
+      "line_end": 4795,
+      "condition": "When an endpoint sends a PMTU probe.",
+      "required_behavior": "The PMTU probe consumes congestion-window capacity.",
+      "forbidden_behavior": "The PMTU probe must not bypass congestion-window accounting.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Congestion-window accounting can be inspected before and after sending a PMTU probe to verify that the probe is charged against the window.",
+      "eligibility": "eligible"
+    }
+  ]
+}

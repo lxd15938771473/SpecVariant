@@ -1,0 +1,19 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0079",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "Implementations MUST support TCP MD5 [RFC2385] for authentication.",
+                             "line_start":  5140,
+                             "line_end":  5140,
+                             "condition":  "BGP implementation authentication support",
+                             "required_behavior":  "MUST support TCP MD5 [RFC2385] for authentication.",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The implementation can be checked for support of TCP MD5 authentication on BGP transport connections.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

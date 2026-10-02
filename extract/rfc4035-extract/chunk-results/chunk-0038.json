@@ -1,0 +1,79 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0038",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A security-aware resolver SHOULD cache each response as a single\n   atomic entry containing the entire answer, including the named RRset\n   and any associated DNSSEC RRs.",
+      "line_start": 1179,
+      "line_end": 1181,
+      "condition": "A security-aware resolver caches a response.",
+      "required_behavior": "The security-aware resolver SHOULD cache the response as one atomic entry containing the entire answer, including the named RRset and any associated DNSSEC RRs.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The cache insertion path and stored entry can be checked for atomic grouping of the complete answer and its DNSSEC records.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware resolver SHOULD cache each response as a single\n   atomic entry containing the entire answer, including the named RRset\n   and any associated DNSSEC RRs.  The resolver SHOULD discard the\n   entire atomic entry when any of the RRs contained in it expire.",
+      "line_start": 1179,
+      "line_end": 1182,
+      "condition": "Any RR contained in a response cached as an atomic entry by a security-aware resolver expires.",
+      "required_behavior": "The resolver SHOULD discard the entire atomic cache entry.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Expire one constituent RR while other RRs remain unexpired and inspect whether the complete entry is discarded.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware resolver SHOULD cache each response as a single\n   atomic entry containing the entire answer, including the named RRset\n   and any associated DNSSEC RRs.  The resolver SHOULD discard the\n   entire atomic entry when any of the RRs contained in it expire.  In\n   most cases the appropriate cache index for the atomic entry will be\n   the triple <QNAME, QTYPE, QCLASS>, but in cases such as the response\n   form described in Section 3.1.3.2 the appropriate cache index will be\n   the double <QNAME,QCLASS>.",
+      "line_start": 1179,
+      "line_end": 1186,
+      "condition": "A security-aware resolver indexes an atomic response cache entry in one of the unspecified most cases.",
+      "required_behavior": "The appropriate cache index is described as the triple <QNAME, QTYPE, QCLASS> in most cases.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Cache-key fields are inspectable, but this chunk does not delimit which response cases use this triple; applicability is incomplete.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "A security-aware resolver SHOULD cache each response as a single\n   atomic entry containing the entire answer, including the named RRset\n   and any associated DNSSEC RRs.  The resolver SHOULD discard the\n   entire atomic entry when any of the RRs contained in it expire.  In\n   most cases the appropriate cache index for the atomic entry will be\n   the triple <QNAME, QTYPE, QCLASS>, but in cases such as the response\n   form described in Section 3.1.3.2 the appropriate cache index will be\n   the double <QNAME,QCLASS>.",
+      "line_start": 1179,
+      "line_end": 1186,
+      "condition": "A security-aware resolver indexes an atomic response cache entry for a case such as the response form described in Section 3.1.3.2.",
+      "required_behavior": "The appropriate cache index is described as the double <QNAME,QCLASS> for such response cases.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Cache-key fields are inspectable, but the referenced response form and the full class of applicable cases are not defined in this chunk.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "In theory, a resolver could use wildcards or NSEC RRs to generate\n   positive and negative responses (respectively) until the TTL or\n   signatures on the records in question expire.  However, it seems\n   prudent for resolvers to avoid blocking new authoritative data or\n   synthesizing new data on their own.  Resolvers that follow this\n   recommendation will have a more consistent view of the namespace.",
+      "line_start": 1216,
+      "line_end": 1221,
+      "condition": "A resolver considers generating responses using cached wildcard data or NSEC RRs before the records' TTL or signatures expire.",
+      "required_behavior": "",
+      "forbidden_behavior": "Resolvers are advised to avoid synthesizing new data on their own.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Response generation from cached wildcard or NSEC records can be inspected to determine whether the resolver follows this advisory recommendation.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "In theory, a resolver could use wildcards or NSEC RRs to generate\n   positive and negative responses (respectively) until the TTL or\n   signatures on the records in question expire.  However, it seems\n   prudent for resolvers to avoid blocking new authoritative data or\n   synthesizing new data on their own.  Resolvers that follow this\n   recommendation will have a more consistent view of the namespace.",
+      "line_start": 1216,
+      "line_end": 1221,
+      "condition": "A resolver considers using cached wildcard data or NSEC RRs to generate responses.",
+      "required_behavior": "",
+      "forbidden_behavior": "Resolvers are advised to avoid blocking new authoritative data.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The passage gives an advisory objective, but does not define a concrete blocking condition or update-discovery behavior that could be checked independently.",
+      "eligibility": "exclude"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0008",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The salt used to derive Initial keys in Section 5.2 of [QUIC-TLS]\n   changes to:\n\n   initial_salt = 0x0dede3def700a6db819381be6e269dcbf9bd2ed9",
+      "line_start": 160,
+      "line_end": 163,
+      "condition": "when deriving QUIC version 2 Initial keys according to Section 5.2 of [QUIC-TLS]",
+      "required_behavior": "use the salt 0x0dede3def700a6db819381be6e269dcbf9bd2ed9",
+      "forbidden_behavior": "use a different salt for QUIC version 2 Initial-key derivation",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The fixed salt supplied to Initial-key derivation can be inspected or compared against the specified 20-byte value in a test vector.",
+      "eligibility": "eligible"
+    }
+  ]
+}

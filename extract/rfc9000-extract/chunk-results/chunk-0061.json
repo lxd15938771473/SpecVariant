@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0061",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "An endpoint can migrate a connection to a new local address by sending packets containing non-probing frames from that address.",
+      "line_start": 2701,
+      "line_end": 2702,
+      "condition": "An endpoint migrates a connection to a new local address.",
+      "required_behavior": "The endpoint sends packets containing non-probing frames from the new local address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet traces can verify that migration to a new local address is initiated by non-probing frames sent from that address.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Thus, an endpoint can migrate to a new local address without first validating the peer's address.",
+      "line_start": 2707,
+      "line_end": 2708,
+      "condition": "An endpoint migrates to a new local address while sending to the peer's current address established during connection setup.",
+      "required_behavior": "The implementation may migrate without first revalidating the peer's address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A migration test can verify that lack of a new peer-address validation does not prevent migration.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "To establish reachability on the new path, an endpoint initiates path validation (Section 8.2) on the new path.",
+      "line_start": 2710,
+      "line_end": 2711,
+      "condition": "An endpoint needs to establish reachability after migrating to a new path.",
+      "required_behavior": "The endpoint initiates path validation on the new path.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Packet and state traces can verify initiation of path validation for the new path.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MAY defer path validation until after a peer sends the next non-probing frame to its new address.",
+      "line_start": 2711,
+      "line_end": 2713,
+      "condition": "An endpoint has migrated to a new address and has not yet received the peer's next non-probing frame at that address.",
+      "required_behavior": "The endpoint may defer path validation until after receipt of that next non-probing frame.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can delay the peer's next non-probing frame and observe whether path validation is permissibly deferred to the stated event.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When migrating, the new path might not support the endpoint's current sending rate. Therefore, the endpoint resets its congestion controller and RTT estimate, as described in Section 9.4.",
+      "line_start": 2715,
+      "line_end": 2717,
+      "condition": "The endpoint migrates to a new path.",
+      "required_behavior": "The endpoint resets its congestion controller.",
+      "forbidden_behavior": "The endpoint must not retain the prior path's congestion-controller state unchanged for use on the new path.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Internal state or controlled sending behavior can demonstrate whether congestion-control state is reset upon migration.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "When migrating, the new path might not support the endpoint's current sending rate. Therefore, the endpoint resets its congestion controller and RTT estimate, as described in Section 9.4.",
+      "line_start": 2715,
+      "line_end": 2717,
+      "condition": "The endpoint migrates to a new path.",
+      "required_behavior": "The endpoint resets its RTT estimate.",
+      "forbidden_behavior": "The endpoint must not retain the prior path's RTT estimate unchanged for use on the new path.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Implementation state or timing behavior can be inspected to verify that the RTT estimate is reset on migration.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The new path might not have the same ECN capability. Therefore, the endpoint validates ECN capability as described in Section 13.4.",
+      "line_start": 2719,
+      "line_end": 2720,
+      "condition": "The endpoint uses a new path after migration.",
+      "required_behavior": "The endpoint validates ECN capability on the new path.",
+      "forbidden_behavior": "The endpoint must not assume that the previous path's ECN capability applies unchanged to the new path.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Traffic and ECN state transitions can verify that ECN capability is validated independently for the new path.",
+      "eligibility": "eligible"
+    }
+  ]
+}

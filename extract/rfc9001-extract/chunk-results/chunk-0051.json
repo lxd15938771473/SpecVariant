@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0051",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The TLS EndOfEarlyData message is not used with QUIC.  QUIC does not\n   rely on this message to mark the end of 0-RTT data or to signal the\n   change to Handshake keys.",
+      "line_start": 1956,
+      "line_end": 1958,
+      "condition": "When QUIC determines that the peer has finished sending 0-RTT data.",
+      "required_behavior": "Determine the end of 0-RTT without an EndOfEarlyData message.",
+      "forbidden_behavior": "Do not wait for or rely on EndOfEarlyData to mark the end of 0-RTT data.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A handshake trace with 0-RTT but no EndOfEarlyData can verify that QUIC still transitions beyond the 0-RTT sending period.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The TLS EndOfEarlyData message is not used with QUIC.  QUIC does not\n   rely on this message to mark the end of 0-RTT data or to signal the\n   change to Handshake keys.",
+      "line_start": 1956,
+      "line_end": 1958,
+      "condition": "When QUIC changes from early-data keys to Handshake keys.",
+      "required_behavior": "Perform the key-level transition without an EndOfEarlyData signal.",
+      "forbidden_behavior": "Do not wait for or rely on EndOfEarlyData to signal use of Handshake keys.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A normal QUIC handshake omitting EndOfEarlyData can be observed for timely installation and use of Handshake keys.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Clients MUST NOT send the EndOfEarlyData message.",
+      "line_start": 1960,
+      "line_end": 1960,
+      "condition": "During any TLS handshake carried by a QUIC client.",
+      "required_behavior": "Omit the TLS EndOfEarlyData message.",
+      "forbidden_behavior": "Do not send an EndOfEarlyData message.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Decrypted client CRYPTO streams can be parsed for TLS handshake message types and checked for absence of EndOfEarlyData.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A server MUST\n   treat receipt of a CRYPTO frame in a 0-RTT packet as a connection\n   error of type PROTOCOL_VIOLATION.",
+      "line_start": 1960,
+      "line_end": 1962,
+      "condition": "When a server receives a CRYPTO frame in a 0-RTT packet.",
+      "required_behavior": "Classify the frame placement as PROTOCOL_VIOLATION.",
+      "forbidden_behavior": "Do not accept or process the CRYPTO frame as valid 0-RTT content.",
+      "error_behavior": "Close the connection with error type PROTOCOL_VIOLATION.",
+      "check_type": "error_handling",
+      "why_checkable": "A crafted 0-RTT packet containing CRYPTO can be sent and the server's connection-close error type observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As a result, EndOfEarlyData does not appear in the TLS handshake\n   transcript.",
+      "line_start": 1964,
+      "line_end": 1965,
+      "condition": "When constructing or verifying the TLS handshake transcript for QUIC.",
+      "required_behavior": "Exclude EndOfEarlyData from the transcript.",
+      "forbidden_behavior": "Do not insert a synthetic or received EndOfEarlyData message into the transcript hash.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Transcript instrumentation or Finished verification vectors can reveal whether EndOfEarlyData bytes were included in the transcript hash.",
+      "eligibility": "eligible"
+    }
+  ]
+}

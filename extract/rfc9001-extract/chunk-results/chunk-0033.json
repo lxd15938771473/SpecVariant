@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0033",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "AEAD_AES_128_GCM and AEAD_AES_128_CCM use 128-bit AES in Electronic\n   Codebook (ECB) mode.",
+      "line_start": 1327,
+      "line_end": 1328,
+      "condition": "When applying header protection for AEAD_AES_128_GCM.",
+      "required_behavior": "Use 128-bit AES in Electronic Codebook mode.",
+      "forbidden_behavior": "Do not use a different AES key width or block-cipher mode.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known header-protection vectors distinguish AES-128-ECB from other key widths and modes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "AEAD_AES_128_GCM and AEAD_AES_128_CCM use 128-bit AES in Electronic\n   Codebook (ECB) mode.",
+      "line_start": 1327,
+      "line_end": 1328,
+      "condition": "When applying header protection for AEAD_AES_128_CCM.",
+      "required_behavior": "Use 128-bit AES in Electronic Codebook mode.",
+      "forbidden_behavior": "Do not use a different AES key width or block-cipher mode.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known header-protection vectors distinguish AES-128-ECB from other key widths and modes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "AEAD_AES_256_GCM uses 256-bit AES in ECB mode.",
+      "line_start": 1328,
+      "line_end": 1328,
+      "condition": "When applying header protection for AEAD_AES_256_GCM.",
+      "required_behavior": "Use 256-bit AES in Electronic Codebook mode.",
+      "forbidden_behavior": "Do not use a different AES key width or block-cipher mode.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Known header-protection vectors distinguish AES-256-ECB from other key widths and modes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This algorithm samples 16 bytes from the packet ciphertext.",
+      "line_start": 1331,
+      "line_end": 1331,
+      "condition": "When constructing the input sample for AES-based QUIC header protection.",
+      "required_behavior": "Take exactly 16 bytes from the packet ciphertext.",
+      "forbidden_behavior": "Do not use a sample of another length or bytes outside the packet ciphertext.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The sample passed to the header-protection primitive can be inspected for exact length and correspondence to ciphertext bytes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "This\n   value is used as the input to AES-ECB.  In pseudocode, the header\n   protection function is defined as:\n\n   header_protection(hp_key, sample):\n     mask = AES-ECB(hp_key, sample)",
+      "line_start": 1331,
+      "line_end": 1336,
+      "condition": "When computing the AES-based header-protection mask from hp_key and the 16-byte sample.",
+      "required_behavior": "Compute the mask as AES-ECB with hp_key as the AES key and sample as the input block.",
+      "forbidden_behavior": "Do not transform the sample with another cipher mode, key, or input before producing the mask.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "For known hp_key and sample values, the resulting mask can be compared directly with AES-ECB(hp_key, sample).",
+      "eligibility": "eligible"
+    }
+  ]
+}

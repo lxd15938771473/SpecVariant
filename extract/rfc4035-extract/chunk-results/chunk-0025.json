@@ -1,0 +1,67 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0025",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "The DS resource record type is unusual in that it appears only on the\n   parent zone's side of a zone cut.",
+      "line_start": 789,
+      "line_end": 790,
+      "condition": "A DS RRset is present for a delegation at a zone cut.",
+      "required_behavior": "Place the DS RRset only on the parent zone's side of the zone cut.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Zone contents can be checked to determine which side of the delegation contains its DS RRset.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "A security-aware resolver sends queries to the parent zone when\n   looking for a needed DS RR at a delegation point (see Section 4.2).",
+      "line_start": 805,
+      "line_end": 806,
+      "condition": "A security-aware resolver is looking for a needed DS RR at a delegation point.",
+      "required_behavior": "Send the DS query to the parent zone.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The resolver destination selection for a needed delegation DS lookup can be inspected and observed.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The need for special processing by a security-aware name server only\n   arises when all the following conditions are met:\n\n   o  The name server has received a query for the DS RRset at a zone\n      cut.\n\n   o  The name server is authoritative for the child zone.\n\n   o  The name server is not authoritative for the parent zone.\n\n   o  The name server does not offer recursion.\n\n   In all other cases, the name server either has some way of obtaining\n   the DS RRset or could not have been expected to have the DS RRset\n   even by the pre-DNSSEC processing rules, so the name server can\n   return either the DS RRset or an error response according to the\n   normal processing rules.",
+      "line_start": 815,
+      "line_end": 831,
+      "condition": "A security-aware name server processes a DS query and at least one of these conditions is false: the query requests the DS RRset at a zone cut; the server is authoritative for the child zone; the server is not authoritative for the parent zone; the server does not offer recursion.",
+      "required_behavior": "The name server may return either the DS RRset or an error response according to the normal processing rules.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The DS-query dispatch can be checked for permission to use ordinary response processing outside the conjunction of the four special-case conditions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The need for special processing by a security-aware name server only\n   arises when all the following conditions are met:\n\n   o  The name server has received a query for the DS RRset at a zone\n      cut.\n\n   o  The name server is authoritative for the child zone.\n\n   o  The name server is not authoritative for the parent zone.\n\n   o  The name server does not offer recursion.\n\n   In all other cases, the name server either has some way of obtaining\n   the DS RRset or could not have been expected to have the DS RRset\n   even by the pre-DNSSEC processing rules, so the name server can\n   return either the DS RRset or an error response according to the\n   normal processing rules.\n\n   If all the above conditions are met, however, the name server is\n   authoritative for SNAME but cannot supply the requested RRset.  In\n   this case, the name server MUST return an authoritative \"no data\"\n   response showing that the DS RRset does not exist in the child zone's\n   apex.  See Appendix B.8 for an example of such a response.",
+      "line_start": 815,
+      "line_end": 837,
+      "condition": "A security-aware name server receives a query for the DS RRset at a zone cut, is authoritative for the child zone, is not authoritative for the parent zone, and does not offer recursion.",
+      "required_behavior": "Return a no-data response showing that the DS RRset does not exist at the child zone's apex.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A DS query to a server configured with all four conditions can be checked for the required negative answer and its child-apex DS nonexistence meaning.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The need for special processing by a security-aware name server only\n   arises when all the following conditions are met:\n\n   o  The name server has received a query for the DS RRset at a zone\n      cut.\n\n   o  The name server is authoritative for the child zone.\n\n   o  The name server is not authoritative for the parent zone.\n\n   o  The name server does not offer recursion.\n\n   In all other cases, the name server either has some way of obtaining\n   the DS RRset or could not have been expected to have the DS RRset\n   even by the pre-DNSSEC processing rules, so the name server can\n   return either the DS RRset or an error response according to the\n   normal processing rules.\n\n   If all the above conditions are met, however, the name server is\n   authoritative for SNAME but cannot supply the requested RRset.  In\n   this case, the name server MUST return an authoritative \"no data\"\n   response showing that the DS RRset does not exist in the child zone's\n   apex.  See Appendix B.8 for an example of such a response.",
+      "line_start": 815,
+      "line_end": 837,
+      "condition": "A security-aware name server receives a query for the DS RRset at a zone cut, is authoritative for the child zone, is not authoritative for the parent zone, and does not offer recursion.",
+      "required_behavior": "Make the required no-data response authoritative.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The authority status of the no-data response can be inspected when the server satisfies all four special-case conditions.",
+      "eligibility": "eligible"
+    }
+  ]
+}

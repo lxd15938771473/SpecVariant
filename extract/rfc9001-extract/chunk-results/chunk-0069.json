@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0069",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Theorem 1 establishes that an attacker gains an advantage over an\n   ideal PRP of no more than the following:\n\n   v / 2^t + (2l * (v + q))^2 / 2^n",
+      "line_start": 2695,
+      "line_end": 2698,
+      "condition": "When calculating the Theorem 1 integrity advantage for the analyzed AEAD construction.",
+      "required_behavior": "Bound the advantage by v / 2^t + (2l * (v + q))^2 / 2^n.",
+      "forbidden_behavior": "Using a larger claimed upper bound without accounting for the theorem's terms.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Given numeric v, q, l, t, and n, the formula can be evaluated exactly.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As \"t\" and \"n\" are both 128",
+      "line_start": 2700,
+      "line_end": 2700,
+      "condition": "When evaluating the stated integrity-advantage formula for this construction.",
+      "required_behavior": "Set t to 128.",
+      "forbidden_behavior": "Using another authentication-tag bit length in this analysis.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The formula parameter t is an exact numeric constant.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "As \"t\" and \"n\" are both 128",
+      "line_start": 2700,
+      "line_end": 2700,
+      "condition": "When evaluating the stated integrity-advantage formula for this construction.",
+      "required_behavior": "Set n to 128.",
+      "forbidden_behavior": "Using another PRP block-size bit value in this analysis.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The formula parameter n is an exact numeric constant.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the first term is negligible relative to\n   the second, so that term can be removed without a significant effect\n   on the result.",
+      "line_start": 2700,
+      "line_end": 2702,
+      "condition": "When applying the stated t = n = 128 approximation to the advantage formula.",
+      "required_behavior": "Remove the first term v / 2^t and retain (2l * (v + q))^2 / 2^n for the simplified calculation.",
+      "forbidden_behavior": "Removing the second term instead of the negligible first term.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The simplified symbolic expression can be compared with the original formula after deleting its first term.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "For a target advantage of 2^-57, this results\n   in the following:\n\n   v + q <= 2^34.5 / l",
+      "line_start": 2706,
+      "line_end": 2709,
+      "condition": "When enforcing a target attacker advantage of 2^-57.",
+      "required_behavior": "Keep the combined decryption and encryption attempts within v + q <= 2^34.5 / l.",
+      "forbidden_behavior": "Allowing v + q to exceed 2^34.5 / l under that target.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "Runtime counters v and q and the packet-length parameter l can be checked against the explicit inequality.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "By setting \"q = v\", values for both confidentiality and integrity\n   limits can be produced.",
+      "line_start": 2711,
+      "line_end": 2712,
+      "condition": "When deriving equal per-direction confidentiality and integrity limits from the combined bound.",
+      "required_behavior": "Set q equal to v for the derivation.",
+      "forbidden_behavior": "Claiming the following equal limits from a derivation that uses unequal q and v.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The symbolic substitution q = v can be verified before evaluating the numeric limits.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints that limit packets to 2^11 bytes\n   therefore have both confidentiality and integrity limits of 2^26.5\n   packets.",
+      "line_start": 2712,
+      "line_end": 2714,
+      "condition": "When packet size is limited to 2^11 bytes.",
+      "required_behavior": "Apply a confidentiality limit of 2^26.5 packets.",
+      "forbidden_behavior": "Using a larger confidentiality packet limit for this analysis target.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The encryption packet counter can be compared with the exact 2^26.5 boundary.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints that limit packets to 2^11 bytes\n   therefore have both confidentiality and integrity limits of 2^26.5\n   packets.",
+      "line_start": 2712,
+      "line_end": 2714,
+      "condition": "When packet size is limited to 2^11 bytes.",
+      "required_behavior": "Apply an integrity limit of 2^26.5 packets.",
+      "forbidden_behavior": "Using a larger integrity packet limit for this analysis target.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The forgery/decryption-attempt counter can be compared with the exact 2^26.5 boundary.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints that do not restrict packet size have a limit of\n   2^21.5.",
+      "line_start": 2714,
+      "line_end": 2715,
+      "condition": "When an endpoint does not restrict packet size.",
+      "required_behavior": "Apply a confidentiality limit of 2^21.5 packets.",
+      "forbidden_behavior": "Using a larger confidentiality packet limit for this analysis target.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The encryption packet counter can be compared with the exact 2^21.5 boundary.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Endpoints that do not restrict packet size have a limit of\n   2^21.5.",
+      "line_start": 2714,
+      "line_end": 2715,
+      "condition": "When an endpoint does not restrict packet size.",
+      "required_behavior": "Apply an integrity limit of 2^21.5 packets.",
+      "forbidden_behavior": "Using a larger integrity packet limit for this analysis target.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The forgery/decryption-attempt counter can be compared with the exact 2^21.5 boundary.",
+      "eligibility": "eligible"
+    }
+  ]
+}

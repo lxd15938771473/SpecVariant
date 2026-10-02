@@ -1,0 +1,31 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0015",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Optional components are denoted by enclosing them in \"[[ ]]\" (double\n   brackets).",
+      "line_start": 1069,
+      "line_end": 1070,
+      "condition": "a component is enclosed in double brackets in a presentation-language definition",
+      "required_behavior": "treat the component as optional",
+      "forbidden_behavior": "treat a double-bracketed component as unconditionally required",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Parsers and serializers generated from a definition can be checked for permitted omission of the marked component.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Single-byte entities containing uninterpreted data are of\n   type opaque.",
+      "line_start": 1072,
+      "line_end": 1073,
+      "condition": "an entity has type opaque",
+      "required_behavior": "represent it as one byte of uninterpreted data",
+      "forbidden_behavior": "assign numeric interpretation or a multi-byte width to a scalar opaque entity",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Opaque scalar serialization has a fixed one-byte width and no numeric decoding step.",
+      "eligibility": "eligible"
+    }
+  ]
+}

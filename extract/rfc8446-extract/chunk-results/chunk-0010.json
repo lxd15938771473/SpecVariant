@@ -1,0 +1,91 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0010",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "If the client has not provided a sufficient \"key_share\" extension\n   (e.g., it includes only DHE or ECDHE groups unacceptable to or\n   unsupported by the server), the server corrects the mismatch with a\n   HelloRetryRequest",
+      "line_start": 731,
+      "line_end": 734,
+      "condition": "when the client's key_share extension has no share acceptable to and supported by the server",
+      "required_behavior": "send HelloRetryRequest to correct the mismatch",
+      "forbidden_behavior": "proceed directly with ServerHello using an unacceptable or unsupported client share",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A server can be given only unacceptable key shares and its next handshake message can be asserted.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the client needs to restart the handshake with\n   an appropriate \"key_share\" extension,",
+      "line_start": 734,
+      "line_end": 735,
+      "condition": "when the client receives HelloRetryRequest correcting a key-share mismatch",
+      "required_behavior": "restart the handshake by sending a new ClientHello",
+      "forbidden_behavior": "continue the original handshake flight without a new ClientHello",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The client's post-HelloRetryRequest message sequence can be checked for a second ClientHello.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "the client needs to restart the handshake with\n   an appropriate \"key_share\" extension,",
+      "line_start": 734,
+      "line_end": 735,
+      "condition": "when the client restarts after HelloRetryRequest for a key-share mismatch",
+      "required_behavior": "include an appropriate key_share extension in the new ClientHello",
+      "forbidden_behavior": "repeat the insufficient key_share offer without the requested correction",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "The second ClientHello key_share can be decoded and compared with the HelloRetryRequest request.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If no\n   common cryptographic parameters can be negotiated, the server MUST\n   abort the handshake with an appropriate alert.",
+      "line_start": 735,
+      "line_end": 737,
+      "condition": "when the client and server have no negotiable common cryptographic parameters",
+      "required_behavior": "abort the handshake",
+      "forbidden_behavior": "continue the handshake",
+      "error_behavior": "send an appropriate alert and abort the handshake",
+      "check_type": "explicit_normative",
+      "why_checkable": "Disjoint parameter offers can verify both the emitted alert and terminal handshake state.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "ClientHello\n        + key_share             -------->\n                                                  HelloRetryRequest\n                                <--------               + key_share\n        ClientHello\n        + key_share             -------->",
+      "line_start": 741,
+      "line_end": 746,
+      "condition": "when HelloRetryRequest is used to correct an insufficient key share",
+      "required_behavior": "include key_share in HelloRetryRequest and in the client's second ClientHello",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The retry flight can be decoded to verify key_share extension placement in both messages.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "ClientHello\n        + key_share             -------->\n                                                        ServerHello\n                                                        + key_share",
+      "line_start": 745,
+      "line_end": 748,
+      "condition": "after the client sends the corrected ClientHello in this (EC)DHE retry flow",
+      "required_behavior": "respond with ServerHello containing key_share",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "The post-retry ServerHello can be decoded and checked for its key_share extension.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "The handshake transcript incorporates the initial\n   ClientHello/HelloRetryRequest exchange; it is not reset with the\n   new ClientHello.",
+      "line_start": 763,
+      "line_end": 765,
+      "condition": "when a handshake continues with a new ClientHello after HelloRetryRequest",
+      "required_behavior": "incorporate the initial ClientHello and HelloRetryRequest exchange into the handshake transcript",
+      "forbidden_behavior": "reset the transcript at the new ClientHello",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "Transcript hashes and Finished verification can be compared with vectors that include or omit the initial retry exchange.",
+      "eligibility": "eligible"
+    }
+  ]
+}

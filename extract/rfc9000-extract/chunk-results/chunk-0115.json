@@ -1,0 +1,127 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0115",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   The PMTU is the maximum size of the entire IP packet, including the\n   IP header, UDP header, and UDP payload.  The UDP payload includes one\n   or more QUIC packet headers and protected payloads.  The PMTU can",
+      "line_start": 4672,
+      "line_end": 4674,
+      "condition": "When calculating or representing the path maximum transmission unit and its UDP payload",
+      "required_behavior": "Treat the PMTU as the size of the entire IP packet, including the IP header, UDP header, and UDP payload; treat the UDP payload as containing one or more QUIC packet headers and protected payloads.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "Packet-size accounting and the number and composition of QUIC packets in a UDP payload can be inspected in implementation logic and emitted datagrams.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   An endpoint SHOULD use DPLPMTUD (Section 14.3) or PMTUD\n   (Section 14.2.1) to determine whether the path to a destination will\n   support a desired maximum datagram size without fragmentation.  In",
+      "line_start": 4679,
+      "line_end": 4681,
+      "condition": "When determining whether a destination path supports a desired maximum datagram size without fragmentation",
+      "required_behavior": "Use DPLPMTUD or PMTUD to make the determination.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The implementation can be inspected or instrumented to determine whether either specified discovery mechanism is used for this path-size decision.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   the absence of these mechanisms, QUIC endpoints SHOULD NOT send\n   datagrams larger than the smallest allowed maximum datagram size.",
+      "line_start": 4682,
+      "line_end": 4683,
+      "condition": "When neither DPLPMTUD nor PMTUD is used",
+      "required_behavior": "",
+      "forbidden_behavior": "Send datagrams larger than the smallest allowed maximum datagram size.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Tests can disable both discovery mechanisms and measure the size of every transmitted datagram.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   the absence of these mechanisms, QUIC endpoints SHOULD NOT send\n   datagrams larger than the smallest allowed maximum datagram size.",
+      "line_start": 4682,
+      "line_end": 4683,
+      "condition": "When neither DPLPMTUD nor PMTUD is used",
+      "required_behavior": "",
+      "forbidden_behavior": "Send datagrams larger than 1200 bytes.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "This chunk later identifies the smallest allowed maximum datagram size as 1200 bytes, making the size ceiling directly testable.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   Both DPLPMTUD and PMTUD send datagrams that are larger than the\n   current maximum datagram size, referred to as PMTU probes.  All QUIC",
+      "line_start": 4685,
+      "line_end": 4686,
+      "condition": "When a datagram is sent as a DPLPMTUD or PMTUD PMTU probe",
+      "required_behavior": "Make the probe datagram larger than the current maximum datagram size.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "A runtime test can compare each probe datagram's encoded size with the current maximum datagram size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   packets that are not sent in a PMTU probe SHOULD be sized to fit\n   within the maximum datagram size to avoid the datagram being\n   fragmented or dropped [RFC8085].",
+      "line_start": 4687,
+      "line_end": 4689,
+      "condition": "When a QUIC packet is not sent in a PMTU probe",
+      "required_behavior": "Size the packet so that it fits within the maximum datagram size.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Non-probe packet sizes can be measured and compared with the implementation's current maximum datagram size.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   If a QUIC endpoint determines that the PMTU between any pair of local\n   and remote IP addresses cannot support the smallest allowed maximum\n   datagram size of 1200 bytes, it MUST immediately cease sending QUIC\n   packets, except for those in PMTU probes or those containing\n   CONNECTION_CLOSE frames, on the affected path.  An endpoint MAY",
+      "line_start": 4691,
+      "line_end": 4695,
+      "condition": "If the endpoint determines that the PMTU for a local and remote IP-address pair cannot support 1200 bytes",
+      "required_behavior": "Immediately cease sending QUIC packets on the affected path, except packets in PMTU probes and packets containing CONNECTION_CLOSE frames.",
+      "forbidden_behavior": "Continue sending any other QUIC packets on the affected path.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can force a below-1200-byte PMTU determination and verify that subsequent transmissions on that path are limited immediately to the two stated exceptions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   CONNECTION_CLOSE frames, on the affected path.  An endpoint MAY\n   terminate the connection if an alternative path cannot be found.",
+      "line_start": 4695,
+      "line_end": 4696,
+      "condition": "If an alternative path cannot be found after the affected path is determined unable to support the minimum size",
+      "required_behavior": "The endpoint is permitted to terminate the connection.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "error_handling",
+      "why_checkable": "A test can make all alternative-path searches fail and verify that connection termination is accepted as permitted behavior.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   QUIC implementations that implement any kind of PMTU discovery\n   therefore SHOULD maintain a maximum datagram size for each\n   combination of local and remote IP addresses.",
+      "line_start": 4699,
+      "line_end": 4701,
+      "condition": "When a QUIC implementation implements any kind of PMTU discovery",
+      "required_behavior": "Maintain a separate maximum datagram size for each combination of local and remote IP addresses.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "State inspection or tests using multiple local/remote address pairs can verify that the size value is keyed by each address combination.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   A QUIC implementation MAY be more conservative in computing the\n   maximum datagram size to allow for unknown tunnel overheads or IP\n   header options/extensions.",
+      "line_start": 4703,
+      "line_end": 4705,
+      "condition": "When computing the maximum datagram size to account for unknown tunnel overheads or IP header options or extensions",
+      "required_behavior": "The implementation is permitted to compute a more conservative maximum datagram size.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The computed value and allowance applied for possible overhead can be inspected or tested against the known path-size bound.",
+      "eligibility": "eligible"
+    }
+  ]
+}

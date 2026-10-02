@@ -1,0 +1,19 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0052",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "The Event numbers (1-28) utilized in this state machine description\n   aid in specifying the behavior of the BGP state machine.\n   Implementations MAY use these numbers to provide network management\n   information.",
+                             "line_start":  2919,
+                             "line_end":  2922,
+                             "condition":  "when providing network management information about BGP FSM events",
+                             "required_behavior":  "MAY use the event numbers 1-28 from this state machine description to provide network management information; use of these numbers is optional",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "Management event reporting can be inspected to determine whether it uses the permitted FSM event numbers, without requiring implementations to use them.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

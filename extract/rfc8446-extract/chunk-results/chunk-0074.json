@@ -1,0 +1,79 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0074",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "close_notify:  This alert notifies the recipient that the sender will\n      not send any more messages on this connection.  Any data received\n      after a closure alert has been received MUST be ignored.",
+                             "line_start":  4822,
+                             "line_end":  4824,
+                             "condition":  "a sender has sent close_notify",
+                             "required_behavior":  "send no more messages on that connection",
+                             "forbidden_behavior":  "send messages after close_notify",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "The sender\u0027s post-alert state can reject subsequent message writes.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "close_notify:  This alert notifies the recipient that the sender will\n      not send any more messages on this connection.  Any data received\n      after a closure alert has been received MUST be ignored.",
+                             "line_start":  4822,
+                             "line_end":  4824,
+                             "condition":  "data is received after a closure alert",
+                             "required_behavior":  "ignore the data",
+                             "forbidden_behavior":  "deliver or process data received after the closure alert",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Injected post-closure records can be checked for non-delivery and non-processing.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "user_canceled:  This alert notifies the recipient that the sender is\n      canceling the handshake for some reason unrelated to a protocol\n      failure.  If a user cancels an operation after the handshake is\n      complete, just closing the connection by sending a \"close_notify\"\n      is more appropriate.  This alert SHOULD be followed by a\n      \"close_notify\".  This alert generally has AlertLevel=warning.",
+                             "line_start":  4826,
+                             "line_end":  4831,
+                             "condition":  "sending a user_canceled alert",
+                             "required_behavior":  "follow it with close_notify",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The emitted alert sequence can be inspected.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Each party MUST send a \"close_notify\" alert before closing its write\n   side of the connection, unless it has already sent some error alert.\n   This does not have any effect on its read side of the connection.",
+                             "line_start":  4839,
+                             "line_end":  4841,
+                             "condition":  "closing the write side without having sent an error alert",
+                             "required_behavior":  "send close_notify before closing the write side",
+                             "forbidden_behavior":  "close the write side before close_notify",
+                             "error_behavior":  "",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "The transport-close and alert ordering is observable.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "Each party MUST send a \"close_notify\" alert before closing its write\n   side of the connection, unless it has already sent some error alert.\n   This does not have any effect on its read side of the connection.",
+                             "line_start":  4839,
+                             "line_end":  4841,
+                             "condition":  "close_notify is sent and the read side remains open",
+                             "required_behavior":  "leave the read side unaffected",
+                             "forbidden_behavior":  "",
+                             "error_behavior":  "",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "Reads can be verified to remain available after write-side closure.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "If the application protocol using TLS provides that any data may be\n   carried over the underlying transport after the TLS connection is\n   closed, the TLS implementation MUST receive a \"close_notify\" alert\n   before indicating end-of-data to the application layer.  No part of",
+                             "line_start":  4851,
+                             "line_end":  4854,
+                             "condition":  "the application protocol permits transport data after TLS closure",
+                             "required_behavior":  "receive close_notify before indicating end-of-data to the application",
+                             "forbidden_behavior":  "signal end-of-data before receiving close_notify",
+                             "error_behavior":  "",
+                             "check_type":  "security_consistency",
+                             "why_checkable":  "The close-alert and application EOF ordering can be tested to detect truncation.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

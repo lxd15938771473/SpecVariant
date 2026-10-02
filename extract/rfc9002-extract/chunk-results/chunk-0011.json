@@ -1,0 +1,19 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0011",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "   QUIC endpoints measure the delay incurred between when a packet is\n   received and when the corresponding acknowledgment is sent, allowing\n   a peer to maintain a more accurate RTT estimate; see Section 13.2 of\n   [QUIC-TRANSPORT].",
+                             "line_start":  262,
+                             "line_end":  265,
+                             "condition":  "When a QUIC endpoint sends an acknowledgment corresponding to a received packet.",
+                             "required_behavior":  "The endpoint measures the delay between receiving the packet and sending the corresponding acknowledgment so that the peer can maintain a more accurate RTT estimate.",
+                             "forbidden_behavior":  "The endpoint does not send the corresponding acknowledgment without measuring the delay between packet receipt and acknowledgment transmission.",
+                             "error_behavior":  "No error behavior is specified in this chunk.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can record packet-receipt and acknowledgment-send times and verify that the endpoint computes the elapsed delay for the corresponding acknowledgment.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0064",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "It is RECOMMENDED that\n   implementations place limits on the total lifetime of such keying\n   material",
+      "line_start": 4179,
+      "line_end": 4181,
+      "condition": "new tickets can extend keying material originating from an initial non-PSK handshake",
+      "required_behavior": "enforce a finite limit on the total lifetime of that keying material",
+      "forbidden_behavior": "allowing ticket issuance to extend the keying material indefinitely",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Ticket policy can be inspected for an effective finite lifetime cap.",
+      "eligibility": "eligible"
+    }
+  ]
+}

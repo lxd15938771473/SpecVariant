@@ -1,0 +1,115 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0062",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "Receiving a packet from a new peer address containing a non-probing frame indicates that the peer has migrated to that address.",
+      "line_start": 2724,
+      "line_end": 2725,
+      "condition": "A packet containing a non-probing frame is received from a new peer address.",
+      "required_behavior": "Treat the peer as having migrated to the new address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can deliver such a packet and verify that the implementation recognizes the new address as the peer's migrated address.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the recipient permits the migration, it MUST send subsequent packets to the new peer address",
+      "line_start": 2727,
+      "line_end": 2728,
+      "condition": "The recipient permits the peer's migration.",
+      "required_behavior": "Send subsequent packets to the new peer address.",
+      "forbidden_behavior": "Do not continue sending subsequent packets to the prior peer address as the active destination.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "Packet destination addresses can be observed after the implementation accepts a migration.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the recipient permits the migration, it MUST send subsequent packets to the new peer address and MUST initiate path validation (Section 8.2) to verify the peer's ownership of the address if validation is not already underway.",
+      "line_start": 2727,
+      "line_end": 2730,
+      "condition": "The recipient permits the migration and path validation for the new peer address is not already underway.",
+      "required_behavior": "Initiate path validation for the new peer address to verify the peer's ownership of it.",
+      "forbidden_behavior": "Do not accept the migration without initiating path validation when validation is not already underway.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can accept migration with no validation in progress and observe whether path validation is initiated.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "If the recipient has no unused connection IDs from the peer, it will not be able to send anything on the new path until the peer provides one",
+      "line_start": 2730,
+      "line_end": 2732,
+      "condition": "The recipient has no unused connection ID supplied by the peer for the new path.",
+      "required_behavior": "",
+      "forbidden_behavior": "Do not send anything on the new path until the peer provides an unused connection ID.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can exhaust peer-supplied connection IDs, trigger migration, and verify that no packet is sent on the new path before another connection ID arrives.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint only changes the address to which it sends packets in response to the highest-numbered non-probing packet.",
+      "line_start": 2734,
+      "line_end": 2735,
+      "condition": "Packets that could affect the peer destination address have been received, including reordered packets.",
+      "required_behavior": "Base a change of the packet destination address only on the highest-numbered non-probing packet.",
+      "forbidden_behavior": "Do not change the sending address in response to a probing packet or a non-probing packet superseded by a higher-numbered non-probing packet.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can deliver probing and reordered non-probing packets with controlled packet numbers and observe destination-address changes.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "An endpoint MAY send data to an unvalidated peer address, but it MUST protect against potential attacks as described in Sections 9.3.1 and 9.3.2.",
+      "line_start": 2739,
+      "line_end": 2741,
+      "condition": "The endpoint sends data to an unvalidated peer address.",
+      "required_behavior": "Apply the protections against potential attacks described in Sections 9.3.1 and 9.3.2.",
+      "forbidden_behavior": "Do not send data to an unvalidated peer address without the required attack protections.",
+      "error_behavior": "",
+      "check_type": "security_consistency",
+      "why_checkable": "The obligation is implementation-facing, but the concrete protections are defined only in sections not included in this chunk, so compliance cannot be determined from the supplied evidence.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "An endpoint MAY skip validation of a peer address if that address has been seen recently.",
+      "line_start": 2741,
+      "line_end": 2742,
+      "condition": "The peer address has been seen recently.",
+      "required_behavior": "The endpoint is permitted to skip validation of that peer address.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The permission concerns observable validation behavior, but this chunk does not define what qualifies as \"recently,\" preventing a determinate implementation check.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "After changing the address to which it sends non-probing packets, an endpoint can abandon any path validation for other addresses.",
+      "line_start": 2748,
+      "line_end": 2749,
+      "condition": "The endpoint has changed the address to which it sends non-probing packets.",
+      "required_behavior": "The endpoint is permitted to abandon path validation for other addresses.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "Whether validation for other addresses is abandoned is observable, but the statement grants an option and imposes no required or forbidden implementation behavior.",
+      "eligibility": "exclude"
+    },
+    {
+      "quote": "After verifying a new client address, the server SHOULD send new address validation tokens (Section 8) to the client.",
+      "line_start": 2754,
+      "line_end": 2755,
+      "condition": "A server has verified a new client address.",
+      "required_behavior": "Send new address validation tokens to the client unless there is a justified reason not to do so.",
+      "forbidden_behavior": "",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "A test can complete verification of a new client address and observe whether the server sends new address validation tokens.",
+      "eligibility": "eligible"
+    }
+  ]
+}

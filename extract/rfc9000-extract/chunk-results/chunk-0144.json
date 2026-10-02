@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0144",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "   A PADDING frame (type=0x00) has no semantic value.  PADDING frames",
+      "line_start": 5857,
+      "line_end": 5857,
+      "condition": "When processing a PADDING frame.",
+      "required_behavior": "Treat the frame as having no semantic effect.",
+      "forbidden_behavior": "Do not change protocol semantics or state merely because a PADDING frame was received.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "A test can compare protocol state and behavior before and after processing a PADDING frame.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   PADDING frames are formatted as shown in Figure 23, which shows that\n   PADDING frames have no content.  That is, a PADDING frame consists of\n   the single byte that identifies the frame as a PADDING frame.",
+      "line_start": 5862,
+      "line_end": 5864,
+      "condition": "When encoding or parsing a PADDING frame.",
+      "required_behavior": "Represent the frame as exactly one identifying byte with no content fields.",
+      "forbidden_behavior": "Do not encode or interpret content following the identifying byte as part of that PADDING frame.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The encoded frame length and absence of content fields can be directly validated.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "   PADDING Frame {\n     Type (i) = 0x00,\n   }",
+      "line_start": 5866,
+      "line_end": 5868,
+      "condition": "When encoding or recognizing a PADDING frame.",
+      "required_behavior": "Use the fixed frame type value 0x00.",
+      "forbidden_behavior": "Do not identify a frame with any other type value as a PADDING frame.",
+      "error_behavior": "",
+      "check_type": "structural_constraint",
+      "why_checkable": "The frame's sole encoded type byte can be checked for the exact value 0x00.",
+      "eligibility": "eligible"
+    }
+  ]
+}

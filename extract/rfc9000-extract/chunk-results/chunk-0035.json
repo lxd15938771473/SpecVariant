@@ -1,0 +1,43 @@
+{
+  "schema_version": "speclitmus.chunk-extraction.v1",
+  "chunk_id": "chunk-0035",
+  "status": "complete",
+  "requirements": [
+    {
+      "quote": "A server sends a Version Negotiation packet in response to each packet that might initiate a new connection; see Section 5.2 for details.",
+      "line_start": 1628,
+      "line_end": 1630,
+      "condition": "A server receives a packet that might initiate a new connection using a version the server does not support.",
+      "required_behavior": "Send a Version Negotiation packet in response to each such packet.",
+      "forbidden_behavior": "Do not omit the Version Negotiation response for any such packet.",
+      "error_behavior": "",
+      "check_type": "state_machine_invariant",
+      "why_checkable": "An implementation can be tested with packets that might initiate new connections and checked for one Version Negotiation response to each packet.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Clients that support multiple QUIC versions SHOULD ensure that the first UDP datagram they send is sized to the largest of the minimum datagram sizes from all versions they support, using PADDING frames (Section 19.1) as necessary.",
+      "line_start": 1633,
+      "line_end": 1637,
+      "condition": "A client supports multiple QUIC versions and sends its first UDP datagram.",
+      "required_behavior": "Size the first UDP datagram to at least the largest minimum datagram size among all QUIC versions the client supports.",
+      "forbidden_behavior": "Do not size the first UDP datagram below the largest minimum datagram size among the supported versions, absent a justified exception to the SHOULD.",
+      "error_behavior": "",
+      "check_type": "explicit_normative",
+      "why_checkable": "The datagram length can be compared with the maximum of the minimum sizes associated with the client's supported versions.",
+      "eligibility": "eligible"
+    },
+    {
+      "quote": "Clients that support multiple QUIC versions SHOULD ensure that the first UDP datagram they send is sized to the largest of the minimum datagram sizes from all versions they support, using PADDING frames (Section 19.1) as necessary.",
+      "line_start": 1633,
+      "line_end": 1637,
+      "condition": "A multi-version client's first UDP datagram would otherwise be smaller than the largest minimum datagram size among its supported versions.",
+      "required_behavior": "Use PADDING frames as necessary to make the first UDP datagram reach the required size.",
+      "forbidden_behavior": "Do not leave the first UDP datagram undersized when PADDING frames are necessary to reach the required size, absent a justified exception to the SHOULD.",
+      "error_behavior": "",
+      "check_type": "derived_constraint",
+      "why_checkable": "A test can inspect the first datagram and verify that padding is added when its unpadded contents do not reach the required maximum minimum size.",
+      "eligibility": "eligible"
+    }
+  ]
+}

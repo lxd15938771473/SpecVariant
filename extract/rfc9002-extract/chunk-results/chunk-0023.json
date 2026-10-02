@@ -1,0 +1,67 @@
+{
+    "schema_version":  "speclitmus.chunk-extraction.v1",
+    "chunk_id":  "chunk-0023",
+    "status":  "complete",
+    "requirements":  [
+                         {
+                             "quote":  "A Probe Timeout (PTO) triggers the sending of one or two probe\n   datagrams when ack-eliciting packets are not acknowledged within the\n   expected period of time or the server may not have validated the\n   client\u0027s address.",
+                             "line_start":  604,
+                             "line_end":  607,
+                             "condition":  "When a PTO is triggered because ack-eliciting packets have not been acknowledged within the expected period or because the server may not have validated the client\u0027s address.",
+                             "required_behavior":  "Send one or two probe datagrams.",
+                             "forbidden_behavior":  "Complete the PTO action without sending a probe datagram, or send more than two probe datagrams as that PTO action.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can trigger the PTO under either stated circumstance and count the probe datagrams emitted by the endpoint.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "As with loss detection, the PTO is per packet number space.  That is,\n   a PTO value is computed per packet number space.",
+                             "line_start":  610,
+                             "line_end":  611,
+                             "condition":  "When PTO values are maintained for a connection with packet number spaces.",
+                             "required_behavior":  "Compute and maintain a PTO value per packet number space.",
+                             "forbidden_behavior":  "Use only one undifferentiated PTO value shared across packet number spaces.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "structural_constraint",
+                             "why_checkable":  "State inspection or timers driven with distinct packet-number-space histories can verify that PTO computation is scoped per space.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A PTO timer expiration event does not indicate packet loss",
+                             "line_start":  613,
+                             "line_end":  613,
+                             "condition":  "When a PTO timer expires, absent separate packet- or time-threshold evidence of loss.",
+                             "required_behavior":  "Do not treat the expiration event itself as an indication that packets were lost.",
+                             "forbidden_behavior":  "Infer packet loss solely from PTO timer expiration.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can expire the PTO while withholding any independent loss signal and inspect whether the implementation enters a loss-indicated state.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "A PTO timer expiration event does not indicate packet loss and MUST\n   NOT cause prior unacknowledged packets to be marked as lost.",
+                             "line_start":  613,
+                             "line_end":  614,
+                             "condition":  "When a PTO timer expiration event occurs and previously sent packets remain unacknowledged.",
+                             "required_behavior":  "Leave prior unacknowledged packets unmarked as lost solely because of the PTO expiration.",
+                             "forbidden_behavior":  "Mark any prior unacknowledged packet as lost as a consequence of the PTO expiration event alone.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "explicit_normative",
+                             "why_checkable":  "A test can expire the PTO with outstanding packets and inspect their loss classification before any other loss-detection event occurs.",
+                             "eligibility":  "eligible"
+                         },
+                         {
+                             "quote":  "When an\n   acknowledgment is received that newly acknowledges packets, loss\n   detection proceeds as dictated by the packet and time threshold\n   mechanisms; see Section 6.1.",
+                             "line_start":  614,
+                             "line_end":  617,
+                             "condition":  "When an acknowledgment is received that newly acknowledges one or more packets.",
+                             "required_behavior":  "Run loss detection according to the packet-threshold and time-threshold mechanisms.",
+                             "forbidden_behavior":  "Bypass the packet- and time-threshold mechanisms when performing loss detection after the newly acknowledging acknowledgment.",
+                             "error_behavior":  "None specified.",
+                             "check_type":  "state_machine_invariant",
+                             "why_checkable":  "A test can deliver a newly acknowledging ACK and compare resulting loss declarations with the packet- and time-threshold predicates.",
+                             "eligibility":  "eligible"
+                         }
+                     ]
+}
