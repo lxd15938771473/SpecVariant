@@ -156,12 +156,6 @@ Run all agent self-tests:
 python .\opt\scripts\run_all_self_tests.py
 ```
 
-Run the native toolchain discovery tests:
-
-```powershell
-python -m unittest discover -s tests -v
-```
-
 Machine-readable outputs are written to `opt/test-results/`. Detailed workflow contracts and the reusable-requirement run configuration are documented in [`opt/README.md`](opt/README.md) and [`opt/agents/speclitmus-coordinator/SKILL.md`](opt/agents/speclitmus-coordinator/SKILL.md).
 
 ## Report Collection
