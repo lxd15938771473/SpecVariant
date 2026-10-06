@@ -46,8 +46,6 @@ The included artifacts cover 11 protocol standards and 11 implementation subject
 \- README.md
 ```
 
-The `*_parallel.py` scripts provide parallel forms of the corresponding extraction or generation stages. Some existing internal paths and identifiers may still use the earlier name `SpecLitmus`.
-
 ## Environment Setup
 
 Python **3.11 or later** is recommended. The OpenSSL TLS 1.3 adapter uses the dependency pinned in `requirements.txt`.
