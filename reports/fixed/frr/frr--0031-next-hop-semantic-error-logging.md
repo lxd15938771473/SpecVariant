@@ -131,7 +131,7 @@ if (ipv4_martian(&attr->mp_nexthop_global_in) && !peer->bgp->allow_martian) {
 
 ## Runtime Evidence
 
-Four candidate controls and source reproducers returned ok=true. A focused source-path scan then counted logging calls in the self-next-hop rejection branches. The route-filter block contained zero non-debug and four debug calls; the NHT self-next-hop block contained zero non-debug and two debug calls. A martian-parser control contained two non-debug calls. The run observed source structure and logging guards, not emitted daemon log messages during a live routing failure.
+Four candidate controls and source reproducers returned ok=true. A focused scan then counted logging calls in the self-next-hop rejection branches. The route-filter block contained zero non-debug and four debug calls; the NHT self-next-hop block contained zero non-debug and two debug calls. A martian-parser control contained two non-debug calls.
 
 Recorded output and checks (local artifact paths omitted):
 

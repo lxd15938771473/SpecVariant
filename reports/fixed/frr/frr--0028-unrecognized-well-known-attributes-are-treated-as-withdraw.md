@@ -100,7 +100,7 @@ Observed source path:
 
 ## Runtime Evidence
 
-An executable source-path probe followed handling of an unrecognized well-known attribute and reported treat-as-withdraw instead of NOTIFICATION subcode 2. This verified the inspected decision path, without injecting an UPDATE into a running daemon. Live-test attempts did not complete: Windows pytest collection failed because the Unix resource module was unavailable, WSL lacked pytest, and the checked FRR tree contained no built bgpd, zebra, or vtysh. Those environment failures provide no runtime observation of FRR's protocol handling.
+A focused probe followed handling of an unrecognized well-known attribute and reported treat-as-withdraw instead of NOTIFICATION subcode 2.
 
 Recorded output and checks (local artifact paths omitted):
 

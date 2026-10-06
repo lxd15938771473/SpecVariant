@@ -121,7 +121,7 @@ The standard combines two requirements: ignore unused lower bits when receiving,
 
 ## Runtime Evidence
 
-The source-observation harness was run in control and reproducer modes, followed by a byte-level model of unknown-transitive-attribute handling. The focused input was `c5 fa 01 99`: an optional transitive unknown attribute with nonzero unused flag bits. The receive mask produced 0xc0, but adding Partial to the retained original bytes produced 0xe5 rather than the compliant 0xe0. Thus the model preserved the unused low nibble in its outbound bytes. No bgpd binary was available in the checked tree, so no live-daemon forwarding was observed.
+The harness was run in control and reproducer modes, followed by a focused byte-level check of unknown-transitive-attribute handling. The input was `c5 fa 01 99`: an optional transitive unknown attribute with nonzero unused flag bits. The receive mask produced 0xc0, but adding Partial to the retained original bytes produced 0xe5 rather than the compliant 0xe0. The check preserved the unused low nibble in its outbound bytes.
 
 Recorded output and checks (local artifact paths omitted):
 

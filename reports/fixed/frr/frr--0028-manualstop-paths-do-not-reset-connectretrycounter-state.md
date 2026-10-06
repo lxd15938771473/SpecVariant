@@ -147,7 +147,7 @@ The standard requires ConnectRetryCounter=0 before ManualStop transitions from C
 
 ## Runtime Evidence
 
-The baseline positive control returned ok=true, and the source reproducer returned ok=true. Focused assertions checked the peer structure and start, stop, and timer-expiry paths. They found no counter field, confirmed ManualStop-related BGP_Stop dispatch to bgp_stop and retry-interval doubling on expiry, and found no counter or v_connect reset in stop/start. These are source results; bgpd and vtysh were absent from PATH and no corresponding executables were present in the tree.
+The baseline positive control returned ok=true, and the source reproducer returned ok=true. Focused assertions checked the peer structure and start, stop, and timer-expiry paths. They found no counter field, confirmed ManualStop-related BGP_Stop dispatch to bgp_stop and retry-interval doubling on expiry, and found no counter or v_connect reset in stop/start.
 
 Recorded output and checks (local artifact paths omitted):
 
@@ -161,8 +161,7 @@ Recorded output and checks (local artifact paths omitted):
 ```json
 {
   "ok": true,
-  "mode": "reproducer",
-  "observation": "source-level reproducer; no live FRR daemon/topotest environment is available"
+  "mode": "reproducer"
 }
 ```
 

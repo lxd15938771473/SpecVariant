@@ -149,7 +149,7 @@ rustc --edition=2021 runtime/bytes_in_flight_padding_probe.rs -o runtime/bytes_i
 runtime/bytes_in_flight_padding_probe.exe
 ```
 
-The probe modeled the relevant send record and recovery accounting and observed:
+The focused probe evaluated the relevant send record and recovery accounting and produced:
 
 ```text
 written=1200

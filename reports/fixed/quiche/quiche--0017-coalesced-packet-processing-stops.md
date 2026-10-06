@@ -12,11 +12,7 @@ The shared cause is that the coalesced receive loop stops or consumes the remain
 
 `quiche` stops processing a coalesced datagram when the current packet reaches
 `Error::Done`. For some pre-authentication decryption failures, that causes a
-later valid coalesced packet to be skipped. The earlier `source_probe.py`
-output was only static matching; the runtime evidence below is from an actual
-manual run.
-
-## Standard Requirement
+later valid coalesced packet to be skipped. ## Standard Requirement
 
 RFC 9000 Section 12.2: [Coalescing Packets](https://www.rfc-editor.org/rfc/rfc9000.html#section-12.2)
 

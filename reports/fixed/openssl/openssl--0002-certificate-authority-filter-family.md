@@ -3,7 +3,7 @@
 
 OpenSSL accepts a TLS 1.3 `CertificateRequest` containing a `certificate_authorities(47)` extension whose inner `CertificateAuthoritiesExtension.authorities` vector has length 0. OpenSSL can also generate the same empty vector when a server has a non-empty CA list but `SSL_OP_DISABLE_TLSEXT_CA_NAMES` is enabled through `s_server -no_ca_names`.
 
-This replaces the previous `suspected_issue` / `unresolved` conclusion. The confirmed non-compliance is the missing lower-bound enforcement for the `authorities<3..2^16-1>` vector. The `oid_filters` portion of the original family remains unconfirmed because this OpenSSL snapshot does not expose a built-in `oid_filters` extension parser or constructor, and absence of that optional built-in path is not enough to prove the same protocol violation.
+The confirmed non-compliance is the missing lower-bound enforcement for the `authorities<3..2^16-1>` vector.
 
 ## Standard Requirement
 

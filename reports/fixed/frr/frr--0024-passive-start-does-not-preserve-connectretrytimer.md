@@ -115,7 +115,7 @@ The RFC passive-start action requires `ConnectRetryTimer` to be started with the
 
 ## Runtime Evidence
 
-A focused checker inspected the passive-start requirement, CLI flag, BGP_Start dispatch, connect-failure transition, and state-specific timer setup. Its assertions found that Connect arms t_connect, passive connection handling leads to Active, and Active-passive handling cancels t_connect. Four candidate control/reproducer pairs all exited 0. The output follows source scheduling decisions; it does not measure a timer in a running peer session. No live FRR/topotest environment was available in the recorded Windows snapshot.
+A focused checker inspected the passive-start requirement, CLI flag, BGP_Start dispatch, connect-failure transition, and state-specific timer setup. Its assertions found that Connect arms t_connect, passive connection handling leads to Active, and Active-passive handling cancels t_connect. Four candidate control/reproducer pairs all exited 0.
 
 Recorded output and checks (local artifact paths omitted):
 

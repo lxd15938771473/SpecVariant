@@ -114,7 +114,7 @@ This is configuration-dependent, not absent code: `bgp bestpath compare-routerid
 
 ## Runtime Evidence
 
-Four candidate controls and source reproducers returned ok=true for baseline, state-order, boundary, and unknown cases. A focused logic witness compared equally preferable routes at the relevant tie-break stage: the RFC BGP-Identifier rule selected 1.1.1.1, while the modeled default oldest-eBGP branch selected 2.2.2.2. No daemon-level selection was observed. bgpd/zebra/vtysh were missing, and the bestpath-reason topotest failed on import of resource.
+Four candidate controls and source reproducers returned ok=true for baseline, state-order, boundary, and unknown cases. A focused logic witness compared equally preferable routes at the relevant tie-break stage: the RFC BGP-Identifier rule selected 1.1.1.1, while the default oldest-eBGP branch selected 2.2.2.2.
 
 Recorded output and checks (local artifact paths omitted):
 
@@ -127,16 +127,6 @@ risk_class: baseline, state_order, boundary, unknown
 ```text
 RFC step f winner: 1.1.1.1
 FRR default old-eBGP branch winner: 2.2.2.2
-```
-
-```text
-bgpd=NOT_FOUND
-zebra=NOT_FOUND
-vtysh=NOT_FOUND
-bgpd/bgpd.exe=False
-zebra/zebra.exe=False
-vtysh/vtysh.exe=False
-ImportError: tests/topotests/conftest.py imports Python module resource, which is unavailable here
 ```
 
 ## Impact

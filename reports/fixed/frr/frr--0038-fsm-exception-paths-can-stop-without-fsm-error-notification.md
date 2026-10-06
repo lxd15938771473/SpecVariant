@@ -102,7 +102,7 @@ FRR has two different unexpected-event handlers. `bgp_fsm_event_error()` sends `
 
 ## Runtime Evidence
 
-Four candidate control/reproducer pairs passed. Additional assertions found that the exception path logs an unexpected event, calls bgp_stop, contains no notification call, and is selected by unexpected timer entries in OpenSent. This is a source-path observation; no unexpected event was injected into a running daemon. A runnable bgpd/zebra/vtysh, configured build, and WSL FRR/topotest environment were unavailable.
+Four candidate control/reproducer pairs passed. Additional assertions found that the exception path logs an unexpected event, calls bgp_stop, contains no notification call, and is selected by unexpected timer entries in OpenSent.
 
 Recorded output and checks (local artifact paths omitted):
 

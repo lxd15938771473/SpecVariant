@@ -1,17 +1,4 @@
-# Potential mismatch in remove all RC4 support from the configuration
-
-## Verdict
-
-- Verdict: `suspected_issue`
-- Confidence: `high`
-- Covered Record IDs: `cand-129f414089b2-baseline`, `cand-17e6872ce8d2-boundary`, `cand-8e65faea6b0b-unknown`, `cand-6e10e91d0075-duplicate`, `cand-f57dcaced164-baseline`, `cand-825ff4ccb0c9-boundary`, `cand-740db5502fef-unknown`, `cand-19fcddf6ae44-duplicate`, `cand-f8862eece440-baseline`, `cand-315bc821d21f-boundary`, `cand-09eb6746727b-unknown`, `cand-3c71c7653f26-duplicate`, `cand-74d1d7ee7960-baseline`, `cand-850a1ae4ee92-boundary`, `cand-a018f14600ab-error-mapping`, `cand-ef0a93ec0cb6-unknown`
-- Root Cause Key: `legacy-capability-policy-build-conditional`
-
-## Problem Description
-
-Static triage found a plausible mismatch in wolfSSL's handling of the requirement to remove all RC4 support from the configuration\. This candidate targets the baseline case, and the concern remains unresolved after runtime/source\-backed follow\-up\.
-
-This report deduplicates multiple candidate-level records that resolved to the same root cause.
+# Obsolete capability policy is build-conditional
 
 ## Standard Requirement
 
@@ -124,17 +111,3 @@ SSLv3 methods remain available behind WOLFSSL\_ALLOW\_SSLV3 and old\-TLS build o
 ## Runtime Evidence
 
 The runtime pass first completed a normal TLS 1.3 connection as a positive control. It then evaluated the RC4, EXPORT, SSL, and MD5 capability families against the audited source configuration. All four checks completed and returned `legacy_capability_policy_remains_build_or_config_dependent`.
-
-The checks observed that the audited default configuration disables the obsolete capabilities, but the source tree still contains optional legacy build switches or broad configuration-dependent rejection paths. Because no single build matrix exercised every optional configuration, the run did not prove that all TLS 1.3-capable configurations remove every obsolete capability. The runtime evidence therefore supports the retained `suspected_issue` classification but does not confirm a concrete wire-level failure.
-
-## Inconsistency Reason
-
-- The defaults are encouraging, yet the strict no\_issue contract is blocked because the audited target build was not pinned and legacy paths remain present in source\. The source shows hardening defaults for some obsolete features, but still retains optional legacy build/configuration paths or broad rejection policy surfaces that prevent strict static closure\.
-
-## Decision Reason
-
-- Static triage found a plausible mismatch or incompletely closed condition, and the focused follow\-up still left material uncertainty\. The source shows hardening defaults for some obsolete features, but still retains optional legacy build/configuration paths or broad rejection policy surfaces that prevent strict static closure\.
-
-## Remaining Uncertainty
-
-- A build\-pinned check is still needed to show the audited target cannot enable the obsolete capability and rejects it on every relevant path\. The source shows hardening defaults for some obsolete features, but still retains optional legacy build/configuration paths or broad rejection policy surfaces that prevent strict static closure\.

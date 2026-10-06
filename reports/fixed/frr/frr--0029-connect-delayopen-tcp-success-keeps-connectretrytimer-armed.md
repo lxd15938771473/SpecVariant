@@ -82,7 +82,7 @@ The standard requires `ConnectRetryTimer` to be stopped and set to zero when del
 
 ## Runtime Evidence
 
-The existing source reproducer returned ok=true. A focused source-path model began in Connect and applied TCP_connection_open_w_delay with DelayOpen enabled. It found that the handler starts t_delayopen without canceling t_connect, the FSM remains in Connect, and subsequent bgp_timer_set arms t_connect. The model therefore retained or rearmed ConnectRetryTimer while DelayOpenTimer ran. No live-daemon timer observation was recorded.
+The existing source reproducer returned ok=true. A focused check began in Connect and applied TCP_connection_open_w_delay with DelayOpen enabled. It found that the handler starts t_delayopen without canceling t_connect, the FSM remains in Connect, and subsequent bgp_timer_set arms t_connect. ConnectRetryTimer therefore remained active or was rearmed while DelayOpenTimer ran.
 
 Recorded output and checks (local artifact paths omitted):
 
@@ -99,12 +99,12 @@ source checks:
 - bgp_event_update calls bgp_timer_set after success: True
 - Connect state arms t_connect: True
 
-modeled event:
+event:
 - initial_state: Connect
 - event: TCP_connection_open_w_delay
 - delayopen_true: True
 - connectretry_stopped_after_event: False
-- modeled_result: t_connect remains or is rearmed while t_delayopen runs
+- result: t_connect remains or is rearmed while t_delayopen runs
 ```
 
 ## Impact

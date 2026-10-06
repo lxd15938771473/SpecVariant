@@ -76,11 +76,11 @@ At runtime, Hickory loads this as a `Secondary` file-backed zone and answers fro
 
 ## Inconsistency Reason
 
-[RFC 1035](https://www.rfc-editor.org/rfc/rfc1035.html) ties secondary service to zone refresh and requires refresh timers to count down conceptually as time elapses. Hickory implements the `Secondary` label and authoritative serving, but the checked code path has no state for SOA refresh/retry/expire scheduling. Therefore the implementation is partial: the secondary zone surface exists, but RFC-style refresh-timer countdown behavior is missing or not proven reachable.
+[RFC 1035](https://www.rfc-editor.org/rfc/rfc1035.html) ties secondary service to zone refresh and requires refresh timers to count down conceptually as time elapses. Hickory implements the `Secondary` label and authoritative serving, but the checked code path has no state for SOA refresh/retry/expire scheduling. Therefore the implementation is partial: the secondary zone surface exists, but RFC-style refresh-timer countdown behavior is missing.
 
 ## Runtime Evidence
 
-The recorded check first ran `cargo test -q -p hickory-dns example_forwarder -- --nocapture`, which passed. It then started the server with a file-backed Secondary zone for `0.0.127.in-addr.arpa.`; the startup output confirmed the Secondary configuration and three loaded records. A real UDP PTR query for `1.0.0.127.in-addr.arpa.` returned NoError, AA=true, RA=false, and one PTR answer to `localhost.` with TTL 259200. The server log matched that query. This establishes that the Secondary configuration is accepted and serves authoritative data. The absence of a refresh scheduler remains a source-inspection finding; this run did not observe refresh-timer countdown or a primary-server refresh exchange.
+The recorded check first ran `cargo test -q -p hickory-dns example_forwarder -- --nocapture`, which passed. It then started the server with a file-backed Secondary zone for `0.0.127.in-addr.arpa.`; the startup output confirmed the Secondary configuration and three loaded records. A real UDP PTR query for `1.0.0.127.in-addr.arpa.` returned NoError, AA=true, RA=false, and one PTR answer to `localhost.` with TTL 259200. The server log matched that query. This establishes that the Secondary configuration is accepted and serves authoritative data.
 
 Recorded inputs, output, and checks:
 

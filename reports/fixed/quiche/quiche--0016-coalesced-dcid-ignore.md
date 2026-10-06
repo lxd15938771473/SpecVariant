@@ -55,8 +55,6 @@ These paths show that coalesced datagrams are processed packet-by-packet, and th
 
 ## Runtime
 
-Earlier `runtime/source_probe.py` output was only source inspection, so it is not used as runtime evidence here.
-
 Command run from `implementions/quiche`:
 
 ```powershell

@@ -70,7 +70,7 @@ if (CHECK_FLAG(peer->af_flags[afi][safi], PEER_FLAG_SEND_COMMUNITY) &&
 
 ## Runtime Evidence
 
-A focused source-path probe calculated optional-transitive flags and searched the attribute structure, COMMUNITY and LARGE_COMMUNITY writers, route-map community setter, and an intermediate-community topotest. It found 0xc0 for Optional|Transitive versus 0xe0 when Partial is included, no retained Partial state or corresponding writer/setter handling, and an existing intermediate-set-community test scenario. Live execution was blocked: the Docker runner could not identify a git repository root, Windows pytest lacked resource, and WSL lacked pytest. No forwarded packet was captured.
+A focused probe calculated optional-transitive flags and searched the attribute structure, COMMUNITY and LARGE_COMMUNITY writers, route-map community setter, and an intermediate-community topotest. It found 0xc0 for Optional|Transitive versus 0xe0 when Partial is included, no retained Partial state or corresponding writer/setter handling, and an existing intermediate-set-community test scenario.
 
 Recorded output and checks (local artifact paths omitted):
 

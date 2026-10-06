@@ -167,7 +167,7 @@ That matters because it rules out a weaker alternative explanation such as "the 
 
 ## Why This Is a Real Issue
 
-This is not just a documentation mismatch or a source-only caution.
+This is a confirmed capability gap in the audited target.
 
 The runtime recheck establishes all of the following:
 
@@ -181,7 +181,6 @@ That means the checked default target does not satisfy the mandatory-to-implemen
 ## Decision Reason
 
 - Source inspection showed the `cookie` extension was controlled by `WOLFSSL_SEND_HRR_COOKIE`.
-- The previous report could not tell whether that was only a source-level appearance or an actual capability gap in the audited target.
 - The new forced-HRR runtime probe resolves that uncertainty: the audited default build produces a real HRR with no `cookie`, while a separate `WOLFSSL_HRR_COOKIE=yes` build can produce `cookie` only after explicit runtime opt-in.
 
 Therefore this root cause should no longer remain `suspected_issue`. It is a confirmed `issue_found` for the audited default wolfSSL TLS 1.3 build.

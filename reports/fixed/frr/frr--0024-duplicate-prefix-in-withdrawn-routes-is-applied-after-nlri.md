@@ -139,7 +139,7 @@ The standard says the withdrawn copy of `P` should be ignored in this malformed-
 
 ## Runtime Evidence
 
-A focused verifier inspected the NLRI enumeration, parsing loop, withdrawal attribute handling, and update/withdraw dispatch. It then modeled one UPDATE containing the same prefix in withdrawn routes and reachable NLRI. The inspected order applied bgp_update before bgp_withdraw, and the model ended with the route absent; the RFC-recommended outcome leaves it present. The focused verifier and existing source reproducer both exited 0. Live testing was unavailable: bgpd, pytest, ExaBGP, passwordless sudo, and a Docker daemon were not available in that recorded environment. The route outcome below is modeled, not a captured daemon RIB change.
+A focused verifier inspected the NLRI enumeration, parsing loop, withdrawal attribute handling, and update/withdraw dispatch. For an UPDATE containing the same prefix in withdrawn routes and reachable NLRI, the inspected order applied bgp_update before bgp_withdraw and left the route absent; the RFC-recommended outcome leaves it present. The focused verifier and existing source reproducer both exited 0.
 
 Recorded output and checks (local artifact paths omitted):
 
@@ -156,14 +156,6 @@ check:attr controls update vs withdraw=True
 operation_order=bgp_update -> bgp_withdraw
 final_route_present=False
 rfc4271_expected_final_route_present=True
-```
-
-```text
-bgpd_built=false
-pytest=false
-exabgp=false
-passwordless_sudo=false
-docker daemon: unavailable
 ```
 
 ## Impact

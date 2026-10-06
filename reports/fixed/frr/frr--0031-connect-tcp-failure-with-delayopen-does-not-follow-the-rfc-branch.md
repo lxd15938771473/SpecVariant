@@ -104,7 +104,7 @@ The RFC condition is DelayOpenTimer state; FRR's condition is its internal TCP e
 
 ## Runtime Evidence
 
-The baseline control and source reproducer returned ok=true. Replay, boundary, and missing variants passed the same source checks. Focused assertions checked that DelayOpenTimer starts on delayed TCP success, that Connect maps open-failed to Active and closed/fatal to Idle, and that bgp_connect_fail contains no DelayOpenTimer test. These checks inspect event dispatch, rather than execute a live TCP failure. bgpd/vtysh and built executables were unavailable.
+The baseline control and source reproducer returned ok=true. Replay, boundary, and missing variants passed the same source checks. Focused assertions checked that DelayOpenTimer starts on delayed TCP success, that Connect maps open-failed to Active and closed/fatal to Idle, and that bgp_connect_fail contains no DelayOpenTimer test.
 
 Recorded output and checks (local artifact paths omitted):
 

@@ -116,7 +116,7 @@ This should not be reported as a hard protocol violation because the RFC says `S
 
 ## Runtime Evidence
 
-The recorded 2026-09-13 run checked four candidates in control and source-reproducer modes; all passed. A focused model inspected notification code/subcode retention, printing, logging gates, and profile defaults. It found that the traditional profile disables neighbor-change logging by default, so the modeled receive path did not call local zlog_info; enabling logging did, and the datacenter default enables it. Unknown-code/subcode strings existed. No bgpd binary was available, so these were source/configuration-model results rather than observed daemon log output.
+The recorded 2026-09-13 run checked four candidates in control and source-reproducer modes; all passed. A focused check inspected notification code/subcode retention, printing, logging gates, and profile defaults. It found that the traditional profile disables neighbor-change logging by default, so the receive path did not call local zlog_info; enabling logging did, and the datacenter default enables it. Unknown-code/subcode strings existed.
 
 Recorded output and checks (local artifact paths omitted):
 

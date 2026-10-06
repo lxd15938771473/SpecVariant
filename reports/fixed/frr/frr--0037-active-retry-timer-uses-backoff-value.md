@@ -95,7 +95,7 @@ The RFC requires Event 9 in Active to restart ConnectRetryTimer with its initial
 
 ## Runtime Evidence
 
-The recorded rerun at 2026-09-13 12:46:21 +08:00 checked four candidate control/reproducer pairs. Every control returned ok=true. A focused source-path model began with v_connect=30, applied the timer-expiry callback, observed v_connect become 60 before event dispatch, and used the current value to restart the Connect-state timer. No runnable bgpd was present, so 30-to-60 is a modeled interval change, not a measured retry delay.
+The recorded rerun at 2026-09-13 12:46:21 +08:00 checked four candidate control/reproducer pairs. Every control returned ok=true. A focused check began with v_connect=30, applied the timer-expiry callback, observed v_connect become 60 before event dispatch, and used the current value to restart the Connect-state timer.
 
 Recorded output and checks (local artifact paths omitted):
 

@@ -9,9 +9,7 @@
 
 ## Summary
 
-This candidate was originally recorded as `suspected_issue` because the earlier report suspected insufficient long-term protection for retained or external key-share material. The recheck narrows and corrects the finding. The previously suspected external `xxdh_psa_privkey` path is not confirmed; the real issue is in the TLS 1.3 PSK path, where mbedTLS exports a plaintext PSK heap copy and then releases that copy with ordinary `mbedtls_free()` after use, without first zeroizing it.
-
-The candidate should therefore be upgraded from `suspected_issue` to `issue_found`, but the root cause should be described as plaintext PSK-copy lifetime rather than external key-share retention.
+The issue is in the TLS 1.3 PSK path, where mbedTLS exports a plaintext PSK heap copy and then releases that copy with ordinary `mbedtls_free()` after use, without first zeroizing it.
 
 ## Standard Check
 
