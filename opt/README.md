@@ -1,6 +1,7 @@
-# SpecLitmus Multi-Agent Audit Pipeline
+# SpecVariant Multi-Agent Audit Pipeline
 
-This directory is the isolated, optimized workflow requested for the project.
+This directory contains the implementation of the SpecVariant multi-agent
+audit workflow.
 Codex is the coordinator; deterministic scripts enforce evidence and output
 contracts, while bounded Agents perform the judgment-heavy work.
 
@@ -50,11 +51,11 @@ batch-output, merge, and manifest requirements.
 
 ## Outputs
 
-Confirmed and unresolved suspected problems are written as Markdown under
-`reports/`. Each report contains a title, verdict, problem description, exact
-standard text, relevant source code, runtime evidence, inconsistency reason,
-and—when needed—remaining uncertainty. `variant_audit.json` and
-`variant_audit.md` retain the complete three-way decision ledger.
+Audit reports are written as Markdown under `reports/`. Each report contains a
+title, verdict, problem description, exact standard text, relevant source code,
+supporting evidence, inconsistency reason, and recommended disposition.
+`variant_audit.json` and `variant_audit.md` retain the complete three-way
+decision ledger.
 
 ## Verification
 
@@ -64,9 +65,9 @@ Run every Agent's self-tests:
 python opt/scripts/run_all_self_tests.py
 ```
 
-Run the complete demo pipeline, including an independently revalidated standard
-quotation, a real minimal reproducer, final adjudication, Markdown generation,
-and coordinator validation:
+Run the end-to-end integration test for the complete pipeline. The test covers
+an independently revalidated standard quotation, a real minimal reproducer,
+final adjudication, Markdown generation, and coordinator validation:
 
 ```powershell
 python opt/scripts/run_total_test.py
