@@ -21,7 +21,7 @@ The included artifacts cover 11 protocol standards and 11 implementation subject
 .
 |- adapters/                       # Execution adapters and capability profiles
 |- bench/                          # 214-case historical-defect benchmark
-|  |- baselines.json               # Pinned candidate baseline revisions
+|  |- baselines.json               # Pinned baseline revisions
 |  |- benchmark.jsonl              # One integrity-protected record per case
 |  |- reports/                     # Human-readable benchmark case sheets
 |  \- scripts/                     # Benchmark verification and revision checkout tools

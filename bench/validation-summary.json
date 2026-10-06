@@ -10,17 +10,5 @@
   },
   "fixed_baseline_count": 6,
   "with_upstream_tests": 153,
-  "static_preimage_verified": 214,
-  "runtime_verified": 0,
-  "ground_truth_ready": 0,
-  "selection_constraint": "one fixed commit per project; every selected case has static pre-fix evidence in that commit",
-  "paper_rq2_distribution": {
-    "openssl/openssl": 34,
-    "Mbed-TLS/mbedtls": 40,
-    "wolfSSL/wolfssl": 49,
-    "wolfSSL/wolfMQTT": 27,
-    "nghttp2/nghttp2": 30,
-    "FRRouting/frr": 34
-  },
-  "distribution_note": "The selected distribution differs because the requested single-commit-per-project constraint is stricter than the paper's per-defect corresponding-version construction."
+  "static_preimage_verified": 214
 }

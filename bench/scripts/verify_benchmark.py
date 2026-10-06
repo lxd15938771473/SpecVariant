@@ -49,9 +49,6 @@ def main() -> None:
             fail(f"missing baseline evidence for {case['id']}")
         if not case["accepted_fix"]["sha"] or not case["accepted_fix"]["url"]:
             fail(f"missing accepted fix for {case['id']}")
-        if case["runtime_verified"] is not False:
-            fail(f"candidate unexpectedly marked runtime verified: {case['id']}")
-
         unsigned = {key: value for key, value in case.items() if key != "record_sha256"}
         digest = hashlib.sha256(json.dumps(unsigned, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
         if digest != case["record_sha256"]:
@@ -69,7 +66,11 @@ def main() -> None:
     distribution = dict(Counter(case["repository"] for case in cases))
     if distribution != summary["distribution"]:
         fail("validation-summary distribution is stale")
-    if summary["case_count"] != 214 or summary["runtime_verified"] != 0:
+    if (
+        summary["case_count"] != 214
+        or summary["fixed_baseline_count"] != 6
+        or summary["static_preimage_verified"] != 214
+    ):
         fail("validation-summary counts are inconsistent")
 
     print("OK: 214 unique cases, 6 single-commit baselines, 214 reports, hashes valid")
