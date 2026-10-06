@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "task_id": "demo-limit-boundary",
+  "task_id": "integration-limit-boundary",
   "round": 1,
   "remaining_uncertainty": "Whether the implementation rejects the first value above the normative maximum",
   "competing_hypotheses": [

@@ -38,7 +38,7 @@ def make_artifact(source: Path, count: int = 5) -> dict[str, object]:
                 "why_checkable": "The behavior maps to a source-code check.",
                 "eligibility": "eligible",
                 "evidence": {
-                    "source_id": "demo",
+                    "source_id": "fixture",
                     "chunk_id": "chunk-0001",
                     "quote": f"Rule {index}.",
                     "line_start": index,
@@ -50,7 +50,7 @@ def make_artifact(source: Path, count: int = 5) -> dict[str, object]:
     return {
         "schema_version": "speclitmus.requirements.v3",
         "metadata": {
-            "document_id": "demo",
+            "document_id": "fixture",
             "source_sha256": hashlib.sha256(source_bytes).hexdigest(),
             "requirement_count": count,
             "eligible_requirement_count": count,
@@ -199,8 +199,8 @@ class RequirementBatchTests(unittest.TestCase):
                 {
                     "schema_version": "speclitmus.requirement-delta.v1",
                     "metadata": {
-                        "newer_document_id": "demo",
-                        "baseline_document_id": "older-demo",
+                        "newer_document_id": "fixture",
+                        "baseline_document_id": "older-fixture",
                         "comparison_scope": "New or stricter requirements.",
                         "validation": {"status": "passed"},
                     },

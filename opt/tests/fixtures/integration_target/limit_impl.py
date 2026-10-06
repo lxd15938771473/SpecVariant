@@ -1,4 +1,4 @@
-"""Deliberately flawed demo implementation used by the total pipeline test."""
+"""Deliberately flawed fixture used by the end-to-end integration test."""
 
 
 def accepts_limit(value: int) -> bool:

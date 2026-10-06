@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run a real extraction-to-Markdown SpecLitmus integration test."""
+"""Run a real extraction-to-Markdown SpecVariant integration test."""
 
 from __future__ import annotations
 
@@ -189,7 +189,7 @@ def assert_final_report(run_dir: Path, candidate_id: str) -> Path:
 def run_total_test(opt_dir: Path, run_dir: Path) -> dict[str, Any]:
     agents = opt_dir / "agents"
     fixtures = opt_dir / "tests" / "fixtures"
-    target = fixtures / "demo_target"
+    target = fixtures / "integration_target"
     log_dir = run_dir / "pipeline-logs"
 
     if run_dir.exists():
@@ -251,11 +251,11 @@ def run_total_test(opt_dir: Path, run_dir: Path) -> dict[str, Any]:
             sys.executable,
             str(chunker),
             "--input",
-            str(fixtures / "demo_standard.txt"),
+            str(fixtures / "integration_standard.txt"),
             "--out",
             str(run_dir / "chunks.json"),
             "--document-id",
-            "demo-standard-v1",
+            "integration-standard-v1",
             "--max-chars",
             "240",
             "--overlap-paragraphs",
@@ -270,11 +270,11 @@ def run_total_test(opt_dir: Path, run_dir: Path) -> dict[str, Any]:
             sys.executable,
             str(requirement_assembler),
             "--source",
-            str(fixtures / "demo_standard.txt"),
+            str(fixtures / "integration_standard.txt"),
             "--chunks",
             str(run_dir / "chunks.json"),
             "--agent-output-dir",
-            str(fixtures / "demo_agent_extraction"),
+            str(fixtures / "integration_agent_extraction"),
             "--out",
             str(run_dir / "requirements.json"),
         ],
@@ -291,7 +291,7 @@ def run_total_test(opt_dir: Path, run_dir: Path) -> dict[str, Any]:
             "--chunks",
             str(run_dir / "chunks.json"),
             "--source",
-            str(fixtures / "demo_standard.txt"),
+            str(fixtures / "integration_standard.txt"),
         ],
         cwd=opt_dir,
         log_dir=log_dir,
@@ -319,7 +319,7 @@ def run_total_test(opt_dir: Path, run_dir: Path) -> dict[str, Any]:
             "--config",
             str(run_dir / "run_config.json"),
             "--source",
-            str(fixtures / "demo_standard.txt"),
+            str(fixtures / "integration_standard.txt"),
             "--output-dir",
             str(run_dir),
         ],
@@ -345,9 +345,9 @@ def run_total_test(opt_dir: Path, run_dir: Path) -> dict[str, Any]:
                 "standard_evidence": requirement["evidence"],
                 "code_check": {
                     "summary": (
-                        "The demo limit predicate accepts 11."
+                        "The integration fixture's limit predicate accepts 11."
                         if is_limit_bug
-                        else "The demo static triage found no mismatch requiring variants."
+                        else "The fixture triage found no mismatch requiring variants."
                     ),
                     "excerpts": [
                         {
@@ -398,7 +398,7 @@ def run_total_test(opt_dir: Path, run_dir: Path) -> dict[str, Any]:
                     "requirements_sha256": selection_metadata[
                         "requirements_sha256"
                     ],
-                    "target": "demo_target",
+                    "target": "integration_target",
                     "target_revision": "fixture-deliberate-bug-v1",
                     "records": descriptor["requirement_count"],
                 },
@@ -460,7 +460,7 @@ def run_total_test(opt_dir: Path, run_dir: Path) -> dict[str, Any]:
     )
 
     runtime_plan = json.loads(
-        (fixtures / "demo_runtime_plan.json").read_text(encoding="utf-8")
+        (fixtures / "integration_runtime_plan.json").read_text(encoding="utf-8")
     )
     runtime_plan["task_id"] = candidate["candidate_id"]
     for step in runtime_plan["steps"]:
@@ -499,8 +499,8 @@ def run_total_test(opt_dir: Path, run_dir: Path) -> dict[str, Any]:
                 "candidate_id": candidate["candidate_id"],
                 "title": "Limit value 11 is accepted above the normative maximum",
                 "problem_description": (
-                    "The focused boundary variant sends Limit value 11. The demo "
-                    "implementation accepts it even though the standard requires "
+                    "The focused boundary variant sends Limit value 11. The "
+                    "integration fixture accepts it even though the standard requires "
                     "rejection for every value greater than 10."
                 ),
                 "verdict": "issue_found",
@@ -567,9 +567,9 @@ def run_total_test(opt_dir: Path, run_dir: Path) -> dict[str, Any]:
         {
             "schema_version": "1.0",
             "max_rounds": 5,
-            "standard": "demo_standard.txt",
+            "standard": "integration_standard.txt",
             "standard_sha256": requirements_document["metadata"]["source_sha256"],
-            "target": "demo_target",
+            "target": "integration_target",
             "target_revision": "fixture-deliberate-bug-v1",
             "selected_candidate": candidate["candidate_id"],
             "static_triage": "static_triage.json",
@@ -643,7 +643,7 @@ def run_total_test(opt_dir: Path, run_dir: Path) -> dict[str, Any]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run the complete opt SpecLitmus workflow against a demo target."
+        description="Run the complete SpecVariant end-to-end integration test."
     )
     opt_dir = Path(__file__).resolve().parents[1]
     parser.add_argument(
