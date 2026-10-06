@@ -24,7 +24,7 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_BASE_URL = "https://api.bltcy.ai/v1"
+DEFAULT_BASE_URL = "https://api.openai.com/v1"
 DEFAULT_MODEL = "gpt-5.5"
 
 ALLOWED_ROLES = {
@@ -209,7 +209,7 @@ def call_chat_completion(
     api_key: str,
     model: str,
     messages: list[dict[str, str]],
-    temperature: float,
+    temperature: float | None,
     max_tokens: int,
     timeout: int,
 ) -> str:
@@ -217,9 +217,10 @@ def call_chat_completion(
     payload = {
         "model": model,
         "messages": messages,
-        "temperature": temperature,
-        "max_tokens": max_tokens,
+        "max_completion_tokens": max_tokens,
     }
+    if temperature is not None:
+        payload["temperature"] = temperature
     request = urllib.request.Request(
         url,
         data=json.dumps(payload).encode("utf-8"),
@@ -281,7 +282,7 @@ def repair_json_response(
                 + malformed[:18000],
             },
         ],
-        temperature=0.0,
+        temperature=None,
         max_tokens=3200,
         timeout=timeout,
     )
@@ -591,7 +592,7 @@ def generate_raw_variants(
     base_url: str,
     api_key: str,
     model: str,
-    temperature: float,
+    temperature: float | None,
     max_tokens: int,
     timeout: int,
     retries: int,
@@ -847,10 +848,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--litmus", required=True, type=Path, help="Input litmus JSON or JSONL.")
     parser.add_argument("--out-json", required=True, type=Path, help="Output litmus families JSON.")
     parser.add_argument("--out-jsonl", type=Path, default=None, help="Optional flat variant JSONL.")
-    parser.add_argument("--base-url", default=os.getenv("BLTCY_BASE_URL", DEFAULT_BASE_URL))
-    parser.add_argument("--api-key-env", default="BLTCY_API_KEY")
-    parser.add_argument("--model", default=os.getenv("BLTCY_MODEL", DEFAULT_MODEL))
-    parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument("--base-url", default=os.getenv("OPENAI_BASE_URL", DEFAULT_BASE_URL))
+    parser.add_argument("--api-key-env", default="OPENAI_API_KEY")
+    parser.add_argument("--model", default=os.getenv("OPENAI_MODEL", DEFAULT_MODEL))
+    parser.add_argument("--temperature", type=float, default=None, help="Optional sampling temperature; only use with models that support it.")
     parser.add_argument("--max-tokens", type=int, default=4200)
     parser.add_argument("--timeout", type=int, default=90)
     parser.add_argument("--retries", type=int, default=2)

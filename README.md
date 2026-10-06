@@ -64,7 +64,11 @@ The semantic-extraction and generation stages use the official OpenAI API. Set y
 $env:OPENAI_API_KEY="your_api_key"
 ```
 
-Model-calling commands read this key through `--api-key-env OPENAI_API_KEY` and use the official OpenAI API endpoint. Replace `YOUR_MODEL` in the commands with the model selected for the experiment. Run `python <script-name> --help` to view the complete command-line interface.
+Model-calling commands read `OPENAI_API_KEY` and default to `https://api.openai.com/v1`. Set `OPENAI_MODEL` to select a model and `OPENAI_BASE_URL` to override the endpoint. Explicit `--model`, `--base-url`, and `--api-key-env` options take precedence. Replace `YOUR_MODEL` in the commands with the model selected for the experiment. Run `python <script-name> --help` to view the complete command-line interface.
+
+Requests use `max_completion_tokens`; `--max-tokens` controls this budget, including reasoning tokens. Sampling temperature is omitted by default. Set `--temperature` only when the selected model supports it.
+
+For implementation-native OpenSSL tests on Windows, Perl, GCC, and `mingw32-make` are discovered on `PATH`. To select tools explicitly, set `SPECVARIANT_PERL`, `SPECVARIANT_GCC`, and `SPECVARIANT_MINGW32_MAKE` to executable paths or command names. Explicit settings take precedence over automatic discovery and do not fall back if invalid. Perl must pass the OpenSSL MinGW Configure compatibility checks.
 
 ## Reproducible Pipeline
 
@@ -152,6 +156,12 @@ Run all agent self-tests:
 
 ```powershell
 python .\opt\scripts\run_all_self_tests.py
+```
+
+Run the native toolchain discovery tests:
+
+```powershell
+python -m unittest discover -s tests -v
 ```
 
 Machine-readable outputs are written to `opt/test-results/`. Detailed workflow contracts and the reusable-requirement run configuration are documented in [`opt/README.md`](opt/README.md) and [`opt/agents/speclitmus-coordinator/SKILL.md`](opt/agents/speclitmus-coordinator/SKILL.md).

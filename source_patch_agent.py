@@ -30,18 +30,10 @@ from typing import Any
 
 DEFAULT_OUTPUT_DIR = Path("output/generated_tests")
 DEFAULT_WORK_ROOT = Path("output/source_patch_worktrees")
-LOCAL_TOOL_CANDIDATES = {
-    "perl": [
-        r"D:\software\OCaml64\bin\perl.exe",
-        r"C:\texlive\2025\tlpkg\tlperl\bin\perl.exe",
-        r"D:\Application\Git\usr\bin\perl.exe",
-    ],
-    "gcc": [
-        r"D:\Application\mingw64\bin\gcc.exe",
-    ],
-    "mingw32-make": [
-        r"D:\Application\mingw64\bin\mingw32-make.exe",
-    ],
+TOOL_ENV_VARS = {
+    "perl": "SPECVARIANT_PERL",
+    "gcc": "SPECVARIANT_GCC",
+    "mingw32-make": "SPECVARIANT_MINGW32_MAKE",
 }
 
 
@@ -639,14 +631,30 @@ def probe_command(command: list[str], timeout: int = 20) -> dict[str, Any]:
         }
 
 
+def executable_candidates(name: str) -> list[str]:
+    """Resolve an explicit tool setting, or search each directory on PATH."""
+    env_var = TOOL_ENV_VARS.get(name)
+    configured = os.environ.get(env_var) if env_var else None
+    if configured is not None:
+        found = shutil.which(configured) if configured else None
+        return [str(Path(found).resolve())] if found else []
+
+    candidates: list[str] = []
+    seen: set[str] = set()
+    for directory in os.get_exec_path():
+        found = shutil.which(name, path=directory or os.curdir)
+        if found:
+            candidate = str(Path(found).resolve())
+            normalized = os.path.normcase(candidate)
+            if normalized not in seen:
+                seen.add(normalized)
+                candidates.append(candidate)
+    return candidates
+
+
 def find_executable(name: str) -> str | None:
-    found = shutil.which(name)
-    if found:
-        return found
-    for candidate in LOCAL_TOOL_CANDIDATES.get(name, []):
-        if Path(candidate).exists():
-            return candidate
-    return None
+    candidates = executable_candidates(name)
+    return candidates[0] if candidates else None
 
 
 def perl_supports_openssl_configure(perl: str) -> bool:
@@ -678,30 +686,28 @@ def quote_cmd_path(path: str) -> str:
 
 def probe_local_tool(name: str) -> dict[str, Any]:
     path = None
+    candidates = executable_candidates(name)
     if name == "perl":
-        candidates: list[str] = []
-        path_candidate = shutil.which(name)
-        if path_candidate:
-            candidates.append(path_candidate)
-        candidates.extend(LOCAL_TOOL_CANDIDATES.get(name, []))
-        seen: set[str] = set()
         for candidate in candidates:
-            normalized = str(Path(candidate))
-            if normalized in seen or not Path(candidate).exists():
-                continue
-            seen.add(normalized)
             if perl_supports_openssl_configure(candidate):
                 path = candidate
                 break
     else:
-        path = find_executable(name)
+        path = candidates[0] if candidates else None
     if not path:
+        env_var = TOOL_ENV_VARS.get(name)
+        location = env_var if env_var and env_var in os.environ else "PATH"
+        reason = (
+            "no Perl installation satisfies the OpenSSL MinGW Configure checks"
+            if candidates and name == "perl"
+            else "no executable found"
+        )
         return {
             "available": False,
             "path": None,
             "exit_code": None,
             "stdout": "",
-            "stderr": "not found in PATH or known local candidates",
+            "stderr": f"{reason} ({location})",
         }
     return {
         "available": True,
@@ -734,7 +740,7 @@ def probe_environment(args: argparse.Namespace, source_root: Path | None = None)
         "source_tree": {},
     }
     for tool in ("perl", "nmake", "cl", "make", "docker", "wsl", "gcc", "mingw32-make"):
-        probes["local"][tool] = probe_command(["where.exe", tool], timeout=5)
+        probes["local"][tool] = probe_local_tool(tool)
     probes["local"]["known_mingw_toolchain"] = local_mingw_toolchain()
     if args.backend in {"auto", "docker"}:
         probes["docker"]["info"] = probe_command(["docker", "info"], timeout=20)
@@ -772,12 +778,16 @@ def select_default_commands(plan: dict[str, Any], args: argparse.Namespace) -> t
             slug = slugify(plan.get("ir_id"))
             test_name = f"test_speclitmus_{slug}"
             perl = quote_cmd_path(toolchain["tools"]["perl"]["path"])
+            gcc = quote_cmd_path(toolchain["tools"]["gcc"]["path"])
             make = quote_cmd_path(toolchain["tools"]["mingw32-make"]["path"])
-            perl_bin = str(Path(toolchain["tools"]["perl"]["path"]).parent)
-            mingw_bin = str(Path(toolchain["tools"]["mingw32-make"]["path"]).parent)
-            path_prefix = f"set PATH={perl_bin};{mingw_bin};%PATH% && "
+            tool_dirs = list(dict.fromkeys(
+                str(Path(toolchain["tools"][name]["path"]).parent)
+                for name in ("perl", "gcc", "mingw32-make")
+            ))
+            path_prefix = f'set "PATH={";".join(tool_dirs)};%PATH%" && '
             build = (
-                f"{path_prefix}if not exist configdata.pm ({perl} Configure mingw64 "
+                f'{path_prefix}set "CC={gcc}" && '
+                f"if not exist configdata.pm ({perl} Configure mingw64 "
                 f"no-shared no-makedepend no-fips) && {make} -j2 build_sw"
             )
             test = f"{path_prefix}{make} test TESTS={test_name}"

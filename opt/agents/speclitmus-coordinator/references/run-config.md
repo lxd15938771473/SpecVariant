@@ -11,7 +11,7 @@ static-triage run.
   "schema_version": "speclitmus.run-config.v1",
   "requirements": {
     "reuse": true,
-    "artifact": "D:/corpora/rfc8446/requirements.json"
+    "artifact": "extract/rfc8446-extract/requirements.json"
   },
   "static_triage": {
     "start": 1,
@@ -20,6 +20,9 @@ static-triage run.
   }
 }
 ```
+
+Save this configuration in the repository root. Relative artifact paths are
+resolved against the directory containing the configuration file.
 
 `static_triage.start` and `static_triage.end` are 1-based inclusive positions
 in the stable sequence of requirements whose `eligibility` is `eligible`.

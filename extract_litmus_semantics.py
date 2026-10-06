@@ -6,8 +6,8 @@ Output:
   1. per-chunk JSONL with extracted items
   2. merged JSON with all items and run metadata
 
-The API is OpenAI Chat Completions compatible.  By default it calls
-https://api.bltcy.ai/v1/chat/completions and reads BLTCY_API_KEY.
+The script uses the official OpenAI Chat Completions API. By default it calls
+https://api.openai.com/v1/chat/completions and reads OPENAI_API_KEY.
 """
 
 from __future__ import annotations
@@ -24,7 +24,7 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_BASE_URL = "https://api.bltcy.ai/v1"
+DEFAULT_BASE_URL = "https://api.openai.com/v1"
 DEFAULT_MODEL = "gpt-5.5"
 BOUND_EXPR_RE = r"(?:2\s*\^\s*\d+(?:\s*[+-]\s*\d+)?|0x[0-9a-fA-F]+|\d+)"
 
@@ -165,7 +165,7 @@ def call_chat_completion(
     api_key: str,
     model: str,
     messages: list[dict[str, str]],
-    temperature: float,
+    temperature: float | None,
     max_tokens: int,
     timeout: int,
 ) -> str:
@@ -173,9 +173,10 @@ def call_chat_completion(
     payload = {
         "model": model,
         "messages": messages,
-        "temperature": temperature,
-        "max_tokens": max_tokens,
+        "max_completion_tokens": max_tokens,
     }
+    if temperature is not None:
+        payload["temperature"] = temperature
     data = json.dumps(payload).encode("utf-8")
     request = urllib.request.Request(
         url,
@@ -240,7 +241,7 @@ def repair_json_response(
             {"role": "system", "content": REPAIR_SYSTEM_PROMPT},
             {"role": "user", "content": repair_prompt},
         ],
-        temperature=0.0,
+        temperature=None,
         max_tokens=2200,
         timeout=timeout,
     )
@@ -673,7 +674,7 @@ def extract_chunk(
     base_url: str,
     api_key: str,
     model: str,
-    temperature: float,
+    temperature: float | None,
     max_tokens: int,
     prompt_max_chars: int,
     timeout: int,
@@ -780,10 +781,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--chunks", required=True, type=Path, help="Chunks JSONL from chunk_document.py.")
     parser.add_argument("--out-jsonl", required=True, type=Path, help="Per-chunk extraction JSONL.")
     parser.add_argument("--out-json", required=True, type=Path, help="Merged extraction JSON.")
-    parser.add_argument("--base-url", default=os.getenv("BLTCY_BASE_URL", DEFAULT_BASE_URL))
-    parser.add_argument("--api-key-env", default="BLTCY_API_KEY", help="Environment variable holding the API key.")
-    parser.add_argument("--model", default=os.getenv("BLTCY_MODEL", DEFAULT_MODEL))
-    parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument("--base-url", default=os.getenv("OPENAI_BASE_URL", DEFAULT_BASE_URL))
+    parser.add_argument("--api-key-env", default="OPENAI_API_KEY", help="Environment variable holding the API key.")
+    parser.add_argument("--model", default=os.getenv("OPENAI_MODEL", DEFAULT_MODEL))
+    parser.add_argument("--temperature", type=float, default=None, help="Optional sampling temperature; only use with models that support it.")
     parser.add_argument("--max-tokens", type=int, default=1800)
     parser.add_argument("--prompt-max-chars", type=int, default=12000)
     parser.add_argument("--timeout", type=int, default=90)

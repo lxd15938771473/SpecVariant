@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.invalid/specvariant/fixed-version-case.schema.json",
+  "$id": "urn:specvariant:benchmark:fixed-version-case",
   "title": "SpecVariant fixed-version benchmark case",
   "type": "object",
   "required": [

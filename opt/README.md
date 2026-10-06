@@ -34,7 +34,7 @@ reusable requirement corpus and to bound the current static-triage interval:
   "schema_version": "speclitmus.run-config.v1",
   "requirements": {
     "reuse": true,
-    "artifact": "D:/corpora/rfc8446/requirements.json"
+    "artifact": "extract/rfc8446-extract/requirements.json"
   },
   "static_triage": {
     "start": 1,
@@ -43,6 +43,9 @@ reusable requirement corpus and to bound the current static-triage interval:
   }
 }
 ```
+
+Save this configuration in the repository root. Relative artifact paths are
+resolved against the directory containing the configuration file.
 
 `start` and `end` are 1-based and inclusive over eligible requirements.
 `end: null` means the final eligible requirement. See

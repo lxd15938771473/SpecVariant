@@ -79,7 +79,7 @@ the later pipeline stages. A typical request should pin:
 Example request:
 
 ```text
-Use $speclitmus-requirement-extractor on D:\paper\idea\document\rfc9000.txt.
+From the repository root, use $speclitmus-requirement-extractor on document/rfc9000.txt.
 First create deterministic chunks.
 Then have one agent extract each chunk into chunk-results/*.json.
 Then assemble and validate requirements.json.
